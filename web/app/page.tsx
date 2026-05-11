@@ -315,7 +315,7 @@ export default function HomePage() {
               lineHeight: 0.95,
               marginBottom: '1.5rem',
             }}>
-              Саша<br />Мамаев
+              Александр<br />Мамаев
             </h2>
             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.75, marginBottom: '1rem' }}>
               Vibe coder, AI builder, коуч. Строю системы на Claude Code + агентах. Курс — дистилляция того, что работает на практике.
@@ -332,17 +332,16 @@ export default function HomePage() {
           </div>
           <div style={{
             aspectRatio: '4/5',
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-color)',
             borderRadius: '4px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'var(--text-secondary)',
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.75rem',
+            overflow: 'hidden',
+            border: '1px solid var(--border-color)',
           }}>
-            [фото]
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/author.jpg"
+              alt="Александр Мамаев"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+            />
           </div>
         </div>
       </section>
