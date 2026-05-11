@@ -1,0 +1,10 @@
+{
+  "name": "tochka-sborki",
+  "type": "project",
+  "team": "ai",
+  "status": "active",
+  "priority": "P1",
+  "domain": ["education", "web"],
+  "tech": ["nextjs", "mdx", "cloudflare", "typescript", "markdown"],
+  "confidentiality": "public"
+}
