@@ -3,13 +3,12 @@ import { handleSendLink, handleVerify, handleMe, handleLogout } from './auth'
 import type { Env } from '../lib/types'
 
 function makeEnv(): Env {
+  const first = vi.fn().mockResolvedValue(null)
+  const run = vi.fn().mockResolvedValue({ success: true })
   return {
     DB: {
-      prepare: (sql: string) => ({
-        bind: (..._args: unknown[]) => ({
-          first: vi.fn().mockResolvedValue(null),
-          run: vi.fn().mockResolvedValue({ success: true }),
-        }),
+      prepare: (_sql: string) => ({
+        bind: (..._args: unknown[]) => ({ first, run }),
       }),
     } as unknown as D1Database,
     WORKER_JWT_SECRET: 'test-secret-32-characters-minimum!!',
@@ -63,6 +62,27 @@ describe('handleSendLink', () => {
     expect(fetchSpy).toHaveBeenCalledOnce()
     const [url] = fetchSpy.mock.calls[0] as [string]
     expect(url).toBe('https://api.resend.com/emails')
+    fetchSpy.mockRestore()
+  })
+
+  it('returns 502 if Resend fetch fails', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockRejectedValueOnce(new Error('network'))
+    const env = makeEnv()
+    env.DB = {
+      prepare: (_sql: string) => ({
+        bind: (..._args: unknown[]) => ({
+          first: vi.fn().mockResolvedValue(null),
+          run: vi.fn().mockResolvedValue({ success: true }),
+        }),
+      }),
+    } as unknown as D1Database
+    const req = new Request('https://mamaev.coach/api/auth/send-link', {
+      method: 'POST',
+      body: JSON.stringify({ email: 'test@example.com' }),
+      headers: { 'Content-Type': 'application/json' },
+    })
+    const res = await handleSendLink(req, env)
+    expect(res.status).toBe(502)
     fetchSpy.mockRestore()
   })
 })

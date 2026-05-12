@@ -24,23 +24,32 @@ export async function handleSendLink(request: Request, env: Env): Promise<Respon
   const expiresAt = Math.floor(Date.now() / 1000) + 900
   await env.DB.prepare('INSERT INTO magic_links (token, user_id, expires_at) VALUES (?, ?, ?)').bind(token, user.id, expiresAt).run()
 
-  await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from: 'Точка Сборки <noreply@mamaev.coach>',
-      to: [email],
-      subject: 'Войти в Точку Сборки',
-      html: `
-        <p>Нажми, чтобы войти в курс:</p>
-        <p><a href="https://mamaev.coach/auth/verify?token=${token}" style="color:#00ff88">Войти →</a></p>
-        <p style="color:#666;font-size:12px">Ссылка действует 15 минут. Если ты не запрашивал вход — проигнорируй письмо.</p>
-      `,
-    }),
-  })
+  let resendRes: Response
+  try {
+    resendRes = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'Точка Сборки <noreply@mamaev.coach>',
+        to: [email],
+        subject: 'Войти в Точку Сборки',
+        html: `
+          <p>Нажми, чтобы войти в курс:</p>
+          <p><a href="https://mamaev.coach/auth/verify?token=${token}" style="color:#00ff88">Войти →</a></p>
+          <p style="color:#666;font-size:12px">Ссылка действует 15 минут. Если ты не запрашивал вход — проигнорируй письмо.</p>
+        `,
+      }),
+    })
+  } catch {
+    return Response.json({ error: 'Failed to send email' }, { status: 502 })
+  }
+
+  if (!resendRes.ok) {
+    return Response.json({ error: 'Failed to send email' }, { status: 502 })
+  }
 
   return Response.json({ ok: true })
 }
@@ -64,7 +73,8 @@ export async function handleVerify(request: Request, env: Env): Promise<Response
   await env.DB.prepare('UPDATE magic_links SET used_at = ? WHERE token = ?').bind(now, token).run()
 
   const userRow = await env.DB.prepare('SELECT email FROM users WHERE id = ?').bind(link.user_id).first<{ email: string }>()
-  const email = userRow?.email ?? ''
+  if (!userRow) return Response.json({ error: 'Internal error' }, { status: 500 })
+  const email = userRow.email
 
   const jwt = await signJWT(
     { sub: link.user_id, email, iat: now, exp: now + 2592000 },
