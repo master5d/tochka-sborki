@@ -1,15 +1,19 @@
-name: Deploy to Cloudflare Pages
+name: Deploy to Cloudflare
 
 on:
   push:
     branches: [main]
     paths:
       - 'web/**'
+      - 'workers/**'
       - '.github/workflows/deploy.yml'
 
 jobs:
-  deploy:
+  deploy-web:
     runs-on: ubuntu-latest
+    if: |
+      contains(github.event.head_commit.modified, 'web/') ||
+      contains(github.event.head_commit.added, 'web/')
     permissions:
       contents: read
       deployments: write
@@ -36,3 +40,31 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: 252b28b0ef2e1866c532e2622060c809
         run: npx wrangler pages deploy web/out --project-name=tochka-sborki --branch=main
+
+  deploy-workers:
+    runs-on: ubuntu-latest
+    if: |
+      contains(github.event.head_commit.modified, 'workers/') ||
+      contains(github.event.head_commit.added, 'workers/')
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: workers/package-lock.json
+
+      - name: Install dependencies
+        working-directory: workers
+        run: npm ci
+
+      - name: Deploy Worker
+        working-directory: workers
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: 252b28b0ef2e1866c532e2622060c809
+        run: npx wrangler deploy
