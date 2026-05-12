@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { defaultTheme } from '@/lib/themes'
+import { ProgressProvider } from '@/components/progress-provider'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -16,7 +17,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       data-theme={defaultTheme}
       className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <ProgressProvider>
+          {children}
+        </ProgressProvider>
+      </body>
     </html>
   )
 }
