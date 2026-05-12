@@ -44,6 +44,6 @@ export default {
 
     const newHeaders = new Headers(response.headers)
     Object.entries(CORS_HEADERS).forEach(([k, v]) => newHeaders.set(k, v))
-    return new Response(response.body, { status: response.status, headers: newHeaders })
+    return new Response(response.body, { status: response.status, statusText: response.statusText, headers: newHeaders })
   },
 }
