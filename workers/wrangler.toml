@@ -1,0 +1,12 @@
+name = "tochka-sborki-api"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "tochka-sborki-db"
+database_id = "FILL_AFTER_D1_CREATE"
+
+[[routes]]
+pattern = "mamaev.coach/api/*"
+zone_name = "mamaev.coach"
