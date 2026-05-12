@@ -5,7 +5,9 @@ function b64url(data: string): string {
 }
 
 function b64urlDecode(s: string): string {
-  return atob(s.replace(/-/g, '+').replace(/_/g, '/'))
+  s = s.replace(/-/g, '+').replace(/_/g, '/')
+  s = s.padEnd(s.length + (4 - s.length % 4) % 4, '=')
+  return atob(s)
 }
 
 async function getKey(secret: string, usage: KeyUsage[]): Promise<CryptoKey> {
@@ -24,7 +26,7 @@ export async function signJWT(payload: JWTPayload, secret: string): Promise<stri
   const data = `${header}.${body}`
   const key = await getKey(secret, ['sign'])
   const sigBuffer = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(data))
-  const sig = b64url(String.fromCharCode(...new Uint8Array(sigBuffer)))
+  const sig = b64url(Array.from(new Uint8Array(sigBuffer), b => String.fromCharCode(b)).join(''))
   return `${data}.${sig}`
 }
 
