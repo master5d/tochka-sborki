@@ -21,6 +21,7 @@ export function Nav() {
         <Link href="/roadmap/" style={{ color: 'var(--text-secondary)' }}>Roadmap</Link>
         <Link href="/cheatsheet/" style={{ color: 'var(--text-secondary)' }}>Шпаргалка</Link>
         <Link href="/feedback/" style={{ color: 'var(--text-secondary)' }}>Фидбек</Link>
+        <Link href="/dashboard/" style={{ color: 'var(--text-accent)', fontFamily: 'var(--font-mono)' }}>→ Войти</Link>
       </div>
     </nav>
   )
