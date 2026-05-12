@@ -1,12 +1,23 @@
+'use client'
+
 import Link from 'next/link'
 import type { LessonMeta } from '@/lib/content'
+import { useProgress, type ProgressState } from './progress-provider'
 
 interface SidebarProps {
   lessons: LessonMeta[]
   currentSlug?: string
 }
 
+function ProgressIcon({ state }: { state: ProgressState }) {
+  if (state === 'completed') return <span style={{ color: 'var(--text-accent)' }}>●</span>
+  if (state === 'viewed') return <span style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>◐</span>
+  return <span style={{ color: 'var(--border-color)' }}>○</span>
+}
+
 export function Sidebar({ lessons, currentSlug }: SidebarProps) {
+  const { getState } = useProgress()
+
   return (
     <aside style={{
       width: '260px',
@@ -29,19 +40,23 @@ export function Sidebar({ lessons, currentSlug }: SidebarProps) {
       </div>
       {lessons.map(lesson => {
         const active = lesson.slug === currentSlug
+        const state = getState(lesson.slug)
         return (
           <Link key={lesson.slug} href={`/lessons/${lesson.slug}/`} style={{
-            display: 'block',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
             padding: '0.5rem 1rem',
             fontSize: '0.875rem',
             color: active ? 'var(--text-accent)' : 'var(--text-secondary)',
             background: active ? 'var(--border-accent)' : 'transparent',
             borderLeft: active ? '2px solid var(--text-accent)' : '2px solid transparent',
           }}>
-            <span style={{ fontFamily: 'var(--font-mono)', marginRight: '0.5rem', fontSize: '0.75rem' }}>
+            <ProgressIcon state={state} />
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem' }}>
               L{lesson.level}
             </span>
-            {lesson.title}
+            <span style={{ flex: 1 }}>{lesson.title}</span>
           </Link>
         )
       })}
