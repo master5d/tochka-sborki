@@ -10,7 +10,7 @@ function b64urlDecode(s: string): string {
   return atob(s)
 }
 
-async function getKey(secret: string, usage: KeyUsage[]): Promise<CryptoKey> {
+async function getKey(secret: string, usage: string[]): Promise<CryptoKey> {
   return crypto.subtle.importKey(
     'raw',
     new TextEncoder().encode(secret),
