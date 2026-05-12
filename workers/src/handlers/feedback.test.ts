@@ -39,6 +39,35 @@ describe('handleFeedback', () => {
     const [url, init] = fetchSpy.mock.calls[0] as [string, RequestInit]
     expect(url).toBe('https://n8n.example.com/webhook/feedback')
     expect((init.headers as Record<string, string>)['X-Webhook-Secret']).toBe('webhook_secret')
+    const forwarded = JSON.parse(init.body as string)
+    expect(forwarded.lesson).toBe('Meeting 1')
+    expect(typeof forwarded.submitted_at).toBe('string')
+    fetchSpy.mockRestore()
+  })
+
+  it('returns 502 if n8n fetch fails with network error', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockRejectedValueOnce(new Error('Network error'))
+    const req = new Request('https://mamaev.coach/api/feedback', {
+      method: 'POST',
+      body: JSON.stringify({ lesson: 'Meeting 1', recommend: '5', impact: '4', apply: '5' }),
+      headers: { 'Content-Type': 'application/json' },
+    })
+    const res = await handleFeedback(req, makeEnv())
+    expect(res.status).toBe(502)
+    fetchSpy.mockRestore()
+  })
+
+  it('returns 502 if n8n returns non-2xx', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+      new Response(null, { status: 500 })
+    )
+    const req = new Request('https://mamaev.coach/api/feedback', {
+      method: 'POST',
+      body: JSON.stringify({ lesson: 'Meeting 1', recommend: '5', impact: '4', apply: '5' }),
+      headers: { 'Content-Type': 'application/json' },
+    })
+    const res = await handleFeedback(req, makeEnv())
+    expect(res.status).toBe(502)
     fetchSpy.mockRestore()
   })
 })

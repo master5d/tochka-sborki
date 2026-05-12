@@ -2,12 +2,15 @@ import type { Env, JWTPayload } from './lib/types'
 import { verifyJWT } from './lib/jwt'
 
 export function parseCookies(header: string): Record<string, string> {
-  return Object.fromEntries(
-    header.split(';').map(c => {
-      const eq = c.indexOf('=')
-      return [c.slice(0, eq).trim(), c.slice(eq + 1).trim()]
-    })
-  )
+  const result: Record<string, string> = {}
+  for (const part of header.split(';')) {
+    const eq = part.indexOf('=')
+    if (eq === -1) continue
+    const key = part.slice(0, eq).trim()
+    if (!key) continue
+    result[key] = part.slice(eq + 1).trim()
+  }
+  return result
 }
 
 export async function requireAuth(
