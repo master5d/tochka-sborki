@@ -5,7 +5,7 @@ compatibility_date = "2025-01-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "tochka-sborki-db"
-database_id = "FILL_AFTER_D1_CREATE"
+database_id = "c904db4d-a900-4ff1-80ae-6056c150ca53"
 
 [[routes]]
 pattern = "mamaev.coach/api/*"
