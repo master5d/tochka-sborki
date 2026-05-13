@@ -4,8 +4,26 @@ import { requireAuth } from '../middleware'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+function parseLanguage(header: string | null): string {
+  if (!header) return 'unknown'
+  const first = header.split(',')[0].split(';')[0].trim()
+  const code = first.split('-')[0].toLowerCase()
+  return code || 'unknown'
+}
+
+function sanitizeTelegram(handle: string | undefined | null): string | null {
+  if (!handle) return null
+  const cleaned = handle.replace(/^@/, '').trim().slice(0, 32)
+  return cleaned || null
+}
+
+function buildSource(body: { utm_source?: string; utm_medium?: string; utm_campaign?: string }): string {
+  const parts = [body.utm_source, body.utm_medium, body.utm_campaign].filter(Boolean)
+  return parts.length > 0 ? parts.join('/') : 'direct'
+}
+
 export async function handleSendLink(request: Request, env: Env): Promise<Response> {
-  let body: { email?: string }
+  let body: { email?: string; telegram_handle?: string; utm_source?: string; utm_medium?: string; utm_campaign?: string }
   try { body = await request.json() } catch { return Response.json({ error: 'Invalid JSON' }, { status: 400 }) }
 
   const email = body.email?.trim().toLowerCase() ?? ''
@@ -14,10 +32,30 @@ export async function handleSendLink(request: Request, env: Env): Promise<Respon
   }
 
   let user = await env.DB.prepare('SELECT id FROM users WHERE email = ?').bind(email).first<{ id: string }>()
-  if (!user) {
+  const isNewUser = !user
+
+  if (isNewUser) {
     const id = crypto.randomUUID()
-    await env.DB.prepare('INSERT INTO users (id, email, created_at) VALUES (?, ?, ?)').bind(id, email, Math.floor(Date.now() / 1000)).run()
+    const language = parseLanguage(request.headers.get('Accept-Language'))
+    const source = buildSource(body)
+    const telegramHandle = sanitizeTelegram(body.telegram_handle)
+    await env.DB.prepare(
+      'INSERT INTO users (id, email, created_at, language, source, telegram_handle) VALUES (?, ?, ?, ?, ?, ?)'
+    ).bind(id, email, Math.floor(Date.now() / 1000), language, source, telegramHandle).run()
     user = { id }
+
+    // fire-and-forget CRM webhook — failure must not block magic link
+    fetch(env.N8N_CRM_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Webhook-Secret': env.N8N_CRM_SECRET },
+      body: JSON.stringify({
+        email,
+        language,
+        source,
+        telegram_handle: telegramHandle,
+        signed_up_at: new Date().toISOString(),
+      }),
+    }).catch(e => console.error('CRM webhook failed', e))
   }
 
   const token = generateToken()
