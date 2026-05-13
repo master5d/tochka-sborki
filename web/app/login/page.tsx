@@ -3,18 +3,39 @@
 import { useState } from 'react'
 import { Nav } from '@/components/nav'
 
+const inputStyle = {
+  padding: '0.875rem',
+  background: 'var(--bg-surface)',
+  border: '1px solid var(--border-color)',
+  borderRadius: 'var(--radius)',
+  color: 'var(--text-primary)',
+  fontSize: '1rem',
+  fontFamily: 'var(--font-mono)',
+  width: '100%',
+  boxSizing: 'border-box' as const,
+}
+
 export default function LoginPage() {
   const [email, setEmail] = useState('')
+  const [telegram, setTelegram] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'sent' | 'error'>('idle')
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setStatus('loading')
     try {
+      const params = new URLSearchParams(window.location.search)
+      const body: Record<string, string> = { email }
+      if (telegram.trim()) body.telegram_handle = telegram.trim()
+      const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign'] as const
+      for (const key of utmKeys) {
+        const val = params.get(key)
+        if (val) body[key] = val
+      }
       const res = await fetch('/api/auth/send-link', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify(body),
       })
       setStatus(res.ok ? 'sent' : 'error')
     } catch {
@@ -66,15 +87,14 @@ export default function LoginPage() {
               onChange={e => setEmail(e.target.value)}
               placeholder="твой@email.com"
               required
-              style={{
-                padding: '0.875rem',
-                background: 'var(--bg-surface)',
-                border: '1px solid var(--border-color)',
-                borderRadius: 'var(--radius)',
-                color: 'var(--text-primary)',
-                fontSize: '1rem',
-                fontFamily: 'var(--font-mono)',
-              }}
+              style={inputStyle}
+            />
+            <input
+              type="text"
+              value={telegram}
+              onChange={e => setTelegram(e.target.value)}
+              placeholder="@telegram (необязательно)"
+              style={{ ...inputStyle, borderStyle: 'dashed' }}
             />
             {status === 'error' && (
               <p style={{ color: '#ff4444', fontSize: '0.875rem' }}>Что-то пошло не так. Попробуй снова.</p>
