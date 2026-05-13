@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import remarkGfm from 'remark-gfm'
 import { getPageContent } from '@/lib/content'
 import { Nav } from '@/components/nav'
 import { mdxComponents } from '@/components/mdx-components'
@@ -15,7 +16,7 @@ export default async function CheatsheetPage() {
     <>
       <Nav />
       <main style={{ maxWidth: '960px', margin: '0 auto', padding: '2rem 3rem' }}>
-        <MDXRemote source={content} components={mdxComponents} />
+        <MDXRemote source={content} components={mdxComponents} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
       </main>
     </>
   )

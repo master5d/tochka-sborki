@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import remarkGfm from 'remark-gfm'
 import { getAllLessons, getLessonBySlug } from '@/lib/content'
 import { LessonLayout } from '@/components/lesson-layout'
 import { mdxComponents } from '@/components/mdx-components'
@@ -25,7 +26,7 @@ export default async function LessonPage({ params }: Props) {
 
   return (
     <LessonLayout meta={meta} lessons={lessons}>
-      <MDXRemote source={content} components={mdxComponents} />
+      <MDXRemote source={content} components={mdxComponents} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
     </LessonLayout>
   )
 }
