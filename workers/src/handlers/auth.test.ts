@@ -15,6 +15,8 @@ function makeEnv(): Env {
     RESEND_API_KEY: 'resend_key',
     N8N_WEBHOOK_URL: '',
     N8N_WEBHOOK_SECRET: '',
+    N8N_CRM_WEBHOOK_URL: 'https://n8n.synergify.com/webhook/mds-crm',
+    N8N_CRM_SECRET: 'test-crm-secret',
   }
 }
 

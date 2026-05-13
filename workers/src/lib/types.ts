@@ -4,6 +4,8 @@ export interface Env {
   RESEND_API_KEY: string
   N8N_WEBHOOK_URL: string
   N8N_WEBHOOK_SECRET: string
+  N8N_CRM_WEBHOOK_URL: string
+  N8N_CRM_SECRET: string
 }
 
 export interface JWTPayload {
