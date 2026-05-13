@@ -7,6 +7,7 @@ import { Nav } from './nav'
 import { Sidebar } from './sidebar'
 import { AssignmentBlock } from './assignment-block'
 import { useProgress } from './progress-provider'
+import { AuthGuard } from './auth-guard'
 
 interface LessonLayoutProps {
   meta: LessonMeta
@@ -33,7 +34,7 @@ export function LessonLayout({ meta, lessons, children }: LessonLayoutProps) {
   }
 
   return (
-    <>
+    <AuthGuard>
       <Nav />
       <div style={{ display: 'flex', minHeight: 'calc(100vh - 3rem)' }}>
         <Sidebar lessons={lessons} currentSlug={meta.slug} />
@@ -100,6 +101,6 @@ export function LessonLayout({ meta, lessons, children }: LessonLayoutProps) {
           </div>
         </main>
       </div>
-    </>
+    </AuthGuard>
   )
 }

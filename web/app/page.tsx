@@ -106,7 +106,7 @@ export default function HomePage() {
           ))}
         </div>
 
-        <Link href={`/lessons/${lessons[0].slug}/`} style={{
+        <Link href="/login/" style={{
           display: 'inline-block',
           padding: '0.875rem 2.5rem',
           background: 'var(--text-accent)',

@@ -25,6 +25,8 @@ export default function LoginPage() {
     setStatus('loading')
     try {
       const params = new URLSearchParams(window.location.search)
+      const redirect = params.get('redirect')
+      if (redirect) sessionStorage.setItem('login_redirect', redirect)
       const body: Record<string, string> = { email }
       if (telegram.trim()) body.telegram_handle = telegram.trim()
       const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign'] as const

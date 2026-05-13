@@ -21,7 +21,9 @@ export function VerifyClient() {
       .then(r => {
         if (r.ok) {
           setStatus('success')
-          setTimeout(() => router.push('/dashboard'), 1000)
+          const redirect = sessionStorage.getItem('login_redirect') || '/lessons/00-kickstart/'
+          sessionStorage.removeItem('login_redirect')
+          setTimeout(() => router.replace(redirect), 800)
         } else {
           setStatus('error')
         }
