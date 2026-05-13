@@ -11,9 +11,6 @@ on:
 jobs:
   deploy-web:
     runs-on: ubuntu-latest
-    if: |
-      contains(github.event.head_commit.modified, 'web/') ||
-      contains(github.event.head_commit.added, 'web/')
     permissions:
       contents: read
       deployments: write
@@ -43,9 +40,6 @@ jobs:
 
   deploy-workers:
     runs-on: ubuntu-latest
-    if: |
-      contains(github.event.head_commit.modified, 'workers/') ||
-      contains(github.event.head_commit.added, 'workers/')
     permissions:
       contents: read
 
