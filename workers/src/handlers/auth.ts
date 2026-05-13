@@ -86,7 +86,8 @@ export async function handleSendLink(request: Request, env: Env): Promise<Respon
   }
 
   if (!resendRes.ok) {
-    return Response.json({ error: 'Failed to send email' }, { status: 502 })
+    const resendErr = await resendRes.json().catch(() => ({}))
+    return Response.json({ error: 'Failed to send email', resend_status: resendRes.status, resend_error: resendErr }, { status: 502 })
   }
 
   return Response.json({ ok: true })
