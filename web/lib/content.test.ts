@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest'
 import {
   getAllLessons, getLessonBySlug, getPageContent,
-  isMeeting, getMeetingMeta, getNavigationItems,
+  isMeeting, getMeetingMeta, getNavigationItems, getUnitContent,
 } from './content'
 
 describe('getAllLessons', () => {
-  it('returns only numbered lesson files (00-06)', () => {
+  it('returns only flat numbered lesson files', () => {
     const lessons = getAllLessons()
-    expect(lessons.length).toBe(7)
+    expect(lessons.length).toBe(6)  // 01-introduction is now a folder, not a flat file
     for (const lesson of lessons) {
       expect(lesson.slug).toMatch(/^\d{2}-/)
     }
@@ -34,11 +34,18 @@ describe('getAllLessons', () => {
 })
 
 describe('getLessonBySlug', () => {
-  it('returns content and meta for 01-introduction', () => {
-    const result = getLessonBySlug('01-introduction')
+  it('returns content and meta for 01-introduction unit', () => {
+    const result = getUnitContent('01-introduction', 'u1-activation')
     expect(result.content).toBeTruthy()
-    expect(result.meta.title).toBe('Meeting 1: Знакомство')
-    expect(result.meta.order).toBe(1)
+    expect(result.unitMeta.title).toBe('Твой опыт с AI')
+    expect(result.unitMeta.unit).toBe(1)
+  })
+
+  it('getMeetingMeta returns correct data for 01-introduction', () => {
+    const meta = getMeetingMeta('01-introduction')
+    expect(meta.title).toBe('M1: Знакомство')
+    expect(meta.units).toHaveLength(4)
+    expect(meta.units[0].slug).toBe('u1-activation')
   })
 
   it('throws for unknown slug', () => {
