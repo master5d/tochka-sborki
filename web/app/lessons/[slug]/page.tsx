@@ -3,14 +3,14 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
 import {
   getAllLessons,
-  getAllMeetings,
+  getAllModules,
   getNavigationItems,
   getLessonBySlug,
-  getMeetingMeta,
-  isMeeting,
+  getModuleMeta,
+  isModule,
 } from '@/lib/content'
 import { LessonLayout } from '@/components/lesson-layout'
-import { MeetingRedirect } from '@/components/meeting-redirect'
+import { ModuleRedirect } from '@/components/module-redirect'
 import { Nav } from '@/components/nav'
 import { Sidebar } from '@/components/sidebar'
 import { AuthGuard } from '@/components/auth-guard'
@@ -22,17 +22,17 @@ interface Props {
 
 export async function generateStaticParams() {
   const lessons = getAllLessons()
-  const meetings = getAllMeetings()
+  const modules = getAllModules()
   return [
     ...lessons.map(l => ({ slug: l.slug })),
-    ...meetings.map(m => ({ slug: m.slug })),
+    ...modules.map(m => ({ slug: m.slug })),
   ]
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  if (isMeeting(slug)) {
-    const meta = getMeetingMeta(slug)
+  if (isModule(slug)) {
+    const meta = getModuleMeta(slug)
     return { title: `${meta.title} — Точка Сборки`, description: meta.description }
   }
   const { meta } = getLessonBySlug(slug)
@@ -43,15 +43,15 @@ export default async function LessonPage({ params }: Props) {
   const { slug } = await params
   const navItems = getNavigationItems()
 
-  if (isMeeting(slug)) {
-    const meetingMeta = getMeetingMeta(slug)
+  if (isModule(slug)) {
+    const moduleMeta = getModuleMeta(slug)
     return (
       <AuthGuard>
         <Nav />
         <div style={{ display: 'flex', minHeight: 'calc(100vh - 3rem)' }}>
           <Sidebar navItems={navItems} currentSlug={slug} />
           <main style={{ flex: 1, padding: '2rem 3rem' }}>
-            <MeetingRedirect meetingSlug={slug} units={meetingMeta.units} />
+            <ModuleRedirect moduleSlug={slug} units={moduleMeta.units} />
           </main>
         </div>
       </AuthGuard>

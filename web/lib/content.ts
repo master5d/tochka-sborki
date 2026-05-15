@@ -26,13 +26,13 @@ export interface UnitMeta {
   slug: string
   title: string
   unit: number
-  meeting: number
+  module: number
   duration: string
 }
 
-export interface MeetingMeta {
+export interface ModuleMeta {
   slug: string
-  meeting: number
+  module: number
   title: string
   description: string
   duration: string
@@ -44,7 +44,7 @@ export interface NavigationItem {
   slug: string
   title: string
   level: number
-  type: 'lesson' | 'meeting'
+  type: 'lesson' | 'module'
   order: number
   units?: { slug: string; title: string }[]
 }
@@ -84,7 +84,7 @@ export function getPageContent(name: string, locale = 'ru'): { meta: PageMeta; c
   return { meta: data as PageMeta, content }
 }
 
-export function isMeeting(slug: string, locale = 'ru'): boolean {
+export function isModule(slug: string, locale = 'ru'): boolean {
   const dirPath = path.join(contentDir(locale), slug)
   try {
     return fs.statSync(dirPath).isDirectory()
@@ -93,40 +93,40 @@ export function isMeeting(slug: string, locale = 'ru'): boolean {
   }
 }
 
-export function getMeetingMeta(slug: string, locale = 'ru'): MeetingMeta {
+export function getModuleMeta(slug: string, locale = 'ru'): ModuleMeta {
   const metaPath = path.join(contentDir(locale), slug, '_meta.json')
-  if (!fs.existsSync(metaPath)) throw new Error(`Meeting not found: ${slug}`)
+  if (!fs.existsSync(metaPath)) throw new Error(`Module not found: ${slug}`)
   const raw = fs.readFileSync(metaPath, 'utf8')
   let parsed: unknown
   try {
     parsed = JSON.parse(raw)
   } catch {
-    throw new Error(`Invalid JSON in _meta.json for meeting: ${slug}`)
+    throw new Error(`Invalid JSON in _meta.json for module: ${slug}`)
   }
-  return { slug, ...(parsed as Record<string, unknown>) } as MeetingMeta
+  return { slug, ...(parsed as Record<string, unknown>) } as ModuleMeta
 }
 
 export function getUnitContent(
-  meetingSlug: string,
+  moduleSlug: string,
   unitSlug: string,
   locale = 'ru'
 ): { unitMeta: UnitMeta; content: string } {
-  const filepath = path.join(contentDir(locale), meetingSlug, `${unitSlug}.mdx`)
+  const filepath = path.join(contentDir(locale), moduleSlug, `${unitSlug}.mdx`)
   if (!fs.existsSync(filepath)) {
-    throw new Error(`Unit not found: ${meetingSlug}/${unitSlug}`)
+    throw new Error(`Unit not found: ${moduleSlug}/${unitSlug}`)
   }
   const raw = fs.readFileSync(filepath, 'utf8')
   const { data, content } = matter(raw)
   return { unitMeta: { slug: unitSlug, ...data } as UnitMeta, content }
 }
 
-export function getAllMeetings(locale = 'ru'): MeetingMeta[] {
+export function getAllModules(locale = 'ru'): ModuleMeta[] {
   const dir = contentDir(locale)
   const entries = fs.readdirSync(dir, { withFileTypes: true })
   return entries
     .filter(e => e.isDirectory() && /^\d{2}-/.test(e.name))
-    .map(e => getMeetingMeta(e.name, locale))
-    .sort((a, b) => a.meeting - b.meeting)
+    .map(e => getModuleMeta(e.name, locale))
+    .sort((a, b) => a.module - b.module)
 }
 
 export function getNavigationItems(locale = 'ru'): NavigationItem[] {
@@ -136,13 +136,13 @@ export function getNavigationItems(locale = 'ru'): NavigationItem[] {
 
   for (const entry of entries) {
     if (entry.isDirectory() && /^\d{2}-/.test(entry.name)) {
-      const meta = getMeetingMeta(entry.name, locale)
+      const meta = getModuleMeta(entry.name, locale)
       items.push({
         slug: entry.name,
         title: meta.title,
         level: meta.level,
-        order: meta.meeting,
-        type: 'meeting',
+        order: meta.module,
+        type: 'module',
         units: meta.units,
       })
     } else if (entry.isFile() && entry.name.endsWith('.mdx') && /^\d{2}-/.test(entry.name)) {

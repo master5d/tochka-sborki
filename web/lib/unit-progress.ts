@@ -31,16 +31,16 @@ export function useUnitProgress() {
   }, [])
 
   const isCompleted = useCallback(
-    (meetingSlug: string, unitSlug: string): boolean =>
-      progress[meetingSlug]?.[unitSlug] === true,
+    (moduleSlug: string, unitSlug: string): boolean =>
+      progress[moduleSlug]?.[unitSlug] === true,
     [progress]
   )
 
-  const markCompleted = useCallback((meetingSlug: string, unitSlug: string) => {
+  const markCompleted = useCallback((moduleSlug: string, unitSlug: string) => {
     setProgress(prev => {
       const next: UnitProgressMap = {
         ...prev,
-        [meetingSlug]: { ...(prev[meetingSlug] ?? {}), [unitSlug]: true },
+        [moduleSlug]: { ...(prev[moduleSlug] ?? {}), [unitSlug]: true },
       }
       writeProgress(next)
       return next

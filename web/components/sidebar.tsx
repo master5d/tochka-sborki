@@ -50,12 +50,12 @@ export function Sidebar({ navItems, currentSlug, currentUnit }: SidebarProps) {
           textTransform: 'uppercase',
           letterSpacing: '0.1em',
         }}>
-          Уроки курса
+          Модули курса
         </span>
       </div>
 
       {navItems.map(item => {
-        const isActiveMeeting = item.slug === currentSlug
+        const isActiveModule = item.slug === currentSlug
         const isActiveLesson = item.type === 'lesson' && item.slug === currentSlug
 
         if (item.type === 'lesson') {
@@ -80,7 +80,7 @@ export function Sidebar({ navItems, currentSlug, currentUnit }: SidebarProps) {
           )
         }
 
-        // type === 'meeting'
+        // type === 'module'
         return (
           <div key={item.slug}>
             <Link href={`/lessons/${item.slug}/`} style={{
@@ -89,9 +89,9 @@ export function Sidebar({ navItems, currentSlug, currentUnit }: SidebarProps) {
               gap: '0.5rem',
               padding: '0.5rem 1rem',
               fontSize: '0.875rem',
-              color: isActiveMeeting ? 'var(--text-accent)' : 'var(--text-secondary)',
-              background: isActiveMeeting ? 'var(--border-accent)' : 'transparent',
-              borderLeft: isActiveMeeting ? '2px solid var(--text-accent)' : '2px solid transparent',
+              color: isActiveModule ? 'var(--text-accent)' : 'var(--text-secondary)',
+              background: isActiveModule ? 'var(--border-accent)' : 'transparent',
+              borderLeft: isActiveModule ? '2px solid var(--text-accent)' : '2px solid transparent',
             }}>
               <span style={{ color: 'var(--border-color)', fontSize: '0.8rem' }}>⬡</span>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem' }}>
@@ -100,8 +100,8 @@ export function Sidebar({ navItems, currentSlug, currentUnit }: SidebarProps) {
               <span style={{ flex: 1 }}>{item.title}</span>
             </Link>
 
-            {/* Unit sub-items — visible when this meeting is active */}
-            {isActiveMeeting && item.units && (
+            {/* Unit sub-items — visible when this module is active */}
+            {isActiveModule && item.units && (
               <div style={{ paddingLeft: '1rem', borderLeft: '1px solid var(--border-color)', marginLeft: '1rem' }}>
                 {item.units.map(unit => {
                   const isCurrent = unit.slug === currentUnit

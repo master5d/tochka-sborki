@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest'
 import {
   getAllLessons, getLessonBySlug, getPageContent,
-  isMeeting, getMeetingMeta, getNavigationItems, getUnitContent,
+  isModule, getModuleMeta, getNavigationItems, getUnitContent,
 } from './content'
 
 describe('getAllLessons', () => {
   it('returns only flat numbered lesson files', () => {
     const lessons = getAllLessons()
-    expect(lessons.length).toBe(0)  // all meetings migrated to folder/unit structure
+    expect(lessons.length).toBe(0)  // all modules migrated to folder/unit structure
   })
 
   it('lessons are sorted by order ascending', () => {
@@ -38,8 +38,8 @@ describe('getLessonBySlug', () => {
     expect(result.unitMeta.unit).toBe(1)
   })
 
-  it('getMeetingMeta returns correct data for 01-introduction', () => {
-    const meta = getMeetingMeta('01-introduction')
+  it('getModuleMeta returns correct data for 01-introduction', () => {
+    const meta = getModuleMeta('01-introduction')
     expect(meta.title).toBe('M1: Знакомство')
     expect(meta.units).toHaveLength(4)
     expect(meta.units[0].slug).toBe('u1-activation')
@@ -50,45 +50,45 @@ describe('getLessonBySlug', () => {
   })
 })
 
-describe('getMeetingMeta — all meetings', () => {
+describe('getModuleMeta — all modules', () => {
   it('00-kickstart has correct shape', () => {
-    const meta = getMeetingMeta('00-kickstart')
+    const meta = getModuleMeta('00-kickstart')
     expect(meta.title).toBeTruthy()
     expect(meta.units.length).toBeGreaterThanOrEqual(1)
   })
 
   it('02-setup-guide has correct shape', () => {
-    const meta = getMeetingMeta('02-setup-guide')
+    const meta = getModuleMeta('02-setup-guide')
     expect(meta.title).toBeTruthy()
     expect(meta.units.length).toBeGreaterThanOrEqual(1)
   })
 
   it('03-prompt-engineering has correct shape', () => {
-    const meta = getMeetingMeta('03-prompt-engineering')
+    const meta = getModuleMeta('03-prompt-engineering')
     expect(meta.title).toBeTruthy()
     expect(meta.units.length).toBeGreaterThanOrEqual(1)
   })
 
   it('04-context-memory has correct shape', () => {
-    const meta = getMeetingMeta('04-context-memory')
+    const meta = getModuleMeta('04-context-memory')
     expect(meta.title).toBeTruthy()
     expect(meta.units.length).toBeGreaterThanOrEqual(1)
   })
 
   it('05-audio-pipeline has correct shape', () => {
-    const meta = getMeetingMeta('05-audio-pipeline')
+    const meta = getModuleMeta('05-audio-pipeline')
     expect(meta.title).toBeTruthy()
     expect(meta.units.length).toBeGreaterThanOrEqual(1)
   })
 
   it('06-tools has correct shape', () => {
-    const meta = getMeetingMeta('06-tools')
+    const meta = getModuleMeta('06-tools')
     expect(meta.title).toBeTruthy()
     expect(meta.units.length).toBeGreaterThanOrEqual(1)
   })
 
-  it('throws for unknown meeting', () => {
-    expect(() => getMeetingMeta('99-nonexistent')).toThrow()
+  it('throws for unknown module', () => {
+    expect(() => getModuleMeta('99-nonexistent')).toThrow()
   })
 })
 
@@ -105,13 +105,13 @@ describe('getPageContent', () => {
   })
 })
 
-describe('isMeeting', () => {
+describe('isModule', () => {
   it('returns false for flat lesson slug', () => {
-    expect(isMeeting('cheatsheet')).toBe(false)
+    expect(isModule('cheatsheet')).toBe(false)
   })
 
-  it('returns true for meeting slug', () => {
-    expect(isMeeting('01-introduction')).toBe(true)
+  it('returns true for module slug', () => {
+    expect(isModule('01-introduction')).toBe(true)
   })
 })
 
@@ -120,7 +120,7 @@ describe('getNavigationItems', () => {
     const items = getNavigationItems()
     expect(Array.isArray(items)).toBe(true)
     for (const item of items) {
-      expect(['lesson', 'meeting']).toContain(item.type)
+      expect(['lesson', 'module']).toContain(item.type)
       expect(typeof item.slug).toBe('string')
       expect(typeof item.title).toBe('string')
     }
@@ -133,11 +133,11 @@ describe('getNavigationItems', () => {
     }
   })
 
-  it('all items are meetings', () => {
+  it('all items are modules', () => {
     const items = getNavigationItems()
     expect(items.length).toBeGreaterThan(0)
     for (const item of items) {
-      expect(item.type).toBe('meeting')
+      expect(item.type).toBe('module')
     }
   })
 })

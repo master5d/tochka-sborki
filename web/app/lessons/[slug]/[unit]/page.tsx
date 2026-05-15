@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
 import {
-  getAllMeetings,
-  getMeetingMeta,
+  getAllModules,
+  getModuleMeta,
   getUnitContent,
   getNavigationItems,
 } from '@/lib/content'
@@ -18,8 +18,8 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  const meetings = getAllMeetings()
-  return meetings.flatMap(m =>
+  const modules = getAllModules()
+  return modules.flatMap(m =>
     m.units.map(u => ({ slug: m.slug, unit: u.slug }))
   )
 }
@@ -27,35 +27,35 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, unit } = await params
   const { unitMeta } = getUnitContent(slug, unit)
-  const meetingMeta = getMeetingMeta(slug)
+  const moduleMeta = getModuleMeta(slug)
   return {
-    title: `${unitMeta.title} — ${meetingMeta.title} — Точка Сборки`,
-    description: meetingMeta.description,
+    title: `${unitMeta.title} — ${moduleMeta.title} — Точка Сборки`,
+    description: moduleMeta.description,
   }
 }
 
 export default async function UnitPage({ params }: Props) {
-  const { slug: meetingSlug, unit: unitSlug } = await params
-  const meetingMeta = getMeetingMeta(meetingSlug)
-  const { content } = getUnitContent(meetingSlug, unitSlug)
+  const { slug: moduleSlug, unit: unitSlug } = await params
+  const moduleMeta = getModuleMeta(moduleSlug)
+  const { content } = getUnitContent(moduleSlug, unitSlug)
   const navItems = getNavigationItems()
 
-  const unitIndex = meetingMeta.units.findIndex(u => u.slug === unitSlug)
-  const nextUnit = meetingMeta.units[unitIndex + 1] ?? null
+  const unitIndex = moduleMeta.units.findIndex(u => u.slug === unitSlug)
+  const nextUnit = moduleMeta.units[unitIndex + 1] ?? null
 
   return (
     <AuthGuard>
       <Nav />
       <div style={{ display: 'flex', minHeight: 'calc(100vh - 3rem)' }}>
-        <Sidebar navItems={navItems} currentSlug={meetingSlug} currentUnit={unitSlug} />
+        <Sidebar navItems={navItems} currentSlug={moduleSlug} currentUnit={unitSlug} />
         <main style={{ flex: 1, padding: '2rem 3rem', maxWidth: '860px' }}>
           <UnitWizard
-            meetingSlug={meetingSlug}
+            moduleSlug={moduleSlug}
             unitSlug={unitSlug}
             nextUnitSlug={nextUnit?.slug ?? null}
-            meetingTitle={meetingMeta.title}
+            moduleTitle={moduleMeta.title}
             unitIndex={unitIndex}
-            totalUnits={meetingMeta.units.length}
+            totalUnits={moduleMeta.units.length}
           >
             <MDXRemote
               source={content}

@@ -32,7 +32,7 @@ const FAQ = [
   },
   {
     q: 'Сколько времени нужно в неделю?',
-    a: '30–60 минут на встречу + практика. Курс самостоятельный, без дедлайнов.',
+    a: '30–60 минут на модуль + практика. Курс самостоятельный, без дедлайнов.',
   },
   {
     q: 'Чем отличается от других AI-курсов?',
@@ -94,7 +94,7 @@ export default function HomePage() {
           borderBottom: '1px solid var(--border-color)',
         }}>
           {[
-            ['7', 'встреч'],
+            ['7', 'модулей'],
             ['~12', 'часов'],
             ['8', 'упражнений'],
             ['$0', 'стоимость'],
@@ -185,7 +185,7 @@ export default function HomePage() {
             letterSpacing: '0.12em',
             marginBottom: '3rem',
           }}>
-            Программа курса · {lessons.length} встреч
+            Программа курса · {lessons.length} модулей
           </div>
           {lessons.map(lesson => (
             <Link key={lesson.slug} href={`/lessons/${lesson.slug}/`} style={{

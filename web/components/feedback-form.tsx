@@ -3,10 +3,10 @@
 import { useState } from 'react'
 
 const LIKERT = ['1', '2', '3', '4', '5']
-const MEETINGS = [
-  'Meeting 0: Kickstart', 'Meeting 1: Знакомство', 'Meeting 2: Сетап',
-  'Meeting 3: Промпты', 'Meeting 4: Контекст', 'Meeting 5: Pipeline',
-  'Meeting 6: Инструменты',
+const MODULES = [
+  'Module 0: Kickstart', 'Module 1: Знакомство', 'Module 2: Сетап',
+  'Module 3: Промпты', 'Module 4: Контекст', 'Module 5: Pipeline',
+  'Module 6: Инструменты',
 ]
 
 function LikertScale({ name, label, value, onChange }: {
@@ -79,7 +79,7 @@ export function FeedbackForm() {
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
       <div style={{ marginBottom: '2rem' }}>
         <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-primary)', fontWeight: 600 }}>
-          Встреча
+          Модуль
         </label>
         <select
           value={lesson}
@@ -96,8 +96,8 @@ export function FeedbackForm() {
             fontSize: '0.875rem',
           }}
         >
-          <option value="">Выбери встречу...</option>
-          {MEETINGS.map(m => <option key={m} value={m}>{m}</option>)}
+          <option value="">Выбери модуль...</option>
+          {MODULES.map(m => <option key={m} value={m}>{m}</option>)}
         </select>
       </div>
 
