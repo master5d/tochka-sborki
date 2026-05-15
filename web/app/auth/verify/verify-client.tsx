@@ -21,9 +21,14 @@ export function VerifyClient() {
       .then(r => {
         if (r.ok) {
           setStatus('success')
-          const redirect = sessionStorage.getItem('login_redirect') || '/lessons/00-kickstart/'
+          let os: string | null = null
+          try { os = localStorage.getItem('os') } catch { /* ignore */ }
+          const savedRedirect = sessionStorage.getItem('login_redirect')
           sessionStorage.removeItem('login_redirect')
-          setTimeout(() => router.replace(redirect), 800)
+          const destination = !os
+            ? '/onboarding/'
+            : (savedRedirect || '/lessons/00-kickstart/')
+          setTimeout(() => router.replace(destination), 800)
         } else {
           setStatus('error')
         }
