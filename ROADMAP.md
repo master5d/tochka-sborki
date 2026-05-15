@@ -1,6 +1,6 @@
 # 🗺️ Roadmap: Vibe Coder / AI Generalist
 
-> **Карта пути от нонкодера до AI-generalist'а.** 7 элективных тем — выбирай в любом порядке.
+> **Карта пути от нонкодера до AI-generalist'а.** 8 элективных тем — выбирай в любом порядке.
 
 ---
 
@@ -37,6 +37,7 @@
 | [**Контекст и память**](./04-context-memory.md) | Память агентов | 1 ч |
 | [**Pipeline автоматизации**](./05-audio-pipeline.md) | Цепочки действий | 2–3 ч |
 | [**Инструменты расширения**](./06-tools.md) | MCP, Skills, Hooks, Superpowers | 2–3 ч |
+| [**Агентский инжиниринг**](./07-agent-engineering.md) | Оркестрация, prod-инфра, ENERV/SOVERN | 90 мин |
 
 ---
 
@@ -186,6 +187,33 @@
 - Подключённый MCP-сервер и реальный use case
 - Установленный или созданный свой Skill
 - Настроенный хотя бы один Hook под реальный рабочий сценарий
+
+---
+
+## Агентский инжиниринг
+
+От vibe coding к оркестрации систем — где промпт перестаёт работать.
+
+**Юниты:** Когда промпт перестаёт работать · Jagged Intelligence · Оркестрация (ENERV case) · Prototype → Production · Спроектируй своего клона
+
+**Концепции:**
+- Vibe coding vs Agent engineering — границы и переходы
+- Three eras of programming (Karpathy: Software 1.0 / 2.0 / 3.0)
+- Jagged Intelligence — что AI делает блестяще, где проваливается
+- Карта делегирования: AI / AI+tool / Human
+- Архитектура multi-agent pipeline (на примере ENERV: Gmail Trigger → Gemini Router → ACL Transformer)
+- Production stack: Hetzner + Cloudflare Tunnel + Docker + n8n + Langfuse (SOVERN)
+- 5 блоков production-инфры: Execution / Observability / Reliability / Cost / Security
+- Грабли двойного cloudflared, hairpin через публичный IP, Langfuse v3 vs v2
+- 5-fallback LLM routing через LiteLLM
+
+**Инструменты:** n8n, Langfuse, Cloudflare Tunnel, Docker, LiteLLM, Hetzner CX22
+
+**Проекты:**
+- Декомпозиция реальной задачи на AI/Tool/Code узлы
+- Blueprint multi-agent pipeline
+- Production readiness checklist
+- Полная архитектурная спецификация агента (готова к реализации в n8n / Claude Code)
 
 ---
 

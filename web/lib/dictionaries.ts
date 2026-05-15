@@ -72,8 +72,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
       titleLine2: 'Сборки',
       subtitle: 'Курс по vibe-кодингу в потоке. От нонкодера до AI-generalist’а — Claude Code, агенты, автоматизация, деплой.',
       stats: [
-        ['7', 'тем'],
-        ['~12', 'часов'],
+        ['8', 'тем'],
+        ['~14', 'часов'],
         ['8', 'упражнений'],
         ['$0', 'стоимость'],
       ],
@@ -167,8 +167,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
       titleLine2: 'Sborki',
       subtitle: 'A vibe-coding course in flow. From non-coder to AI generalist — Claude Code, agents, automation, deploys.',
       stats: [
-        ['7', 'topics'],
-        ['~12', 'hours'],
+        ['8', 'topics'],
+        ['~14', 'hours'],
         ['8', 'exercises'],
         ['$0', 'cost'],
       ],

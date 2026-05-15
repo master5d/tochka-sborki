@@ -6,6 +6,7 @@ const LIKERT = ['1', '2', '3', '4', '5']
 const MODULES = [
   'Kickstart', 'Знакомство', 'Базовый сетап', 'Промпт-инжиниринг',
   'Контекст и память', 'Pipeline автоматизации', 'Инструменты расширения',
+  'Агентский инжиниринг',
 ]
 
 function LikertScale({ name, label, value, onChange }: {

@@ -1,0 +1,89 @@
+---
+title: "When Prompts Stop Working"
+unit: 1
+module: 7
+duration: "10 min"
+---
+
+<Phase type="activation">
+
+Think back to the last task where you sat down to write a prompt — and 10 minutes in realized that **a single prompt isn't going to cut it**.
+
+Maybe:
+- You need to pull data from 5 sources
+- Run it through analysis
+- Save it in several places
+- Run it on a schedule
+- Get notified when something breaks
+
+That's not a "bad prompt." That's a **different class of problem**.
+
+Write down:
+- What task is currently "stuck" because one prompt isn't enough?
+- How many steps does it have?
+- How many different systems are involved?
+
+</Phase>
+
+<Phase type="reflection">
+
+Karpathy and the community drew a sharp line in 2026:
+
+**Vibe coding** = drops the entry barrier to zero. Any non-coder can build an MVP through ChatGPT in an evening. This is about the **prototype**.
+
+**Agent engineering** = raises the ceiling of the profession. The discipline of coordinating many powerful but unpredictable agents so it all works reliably. This is about **production**.
+
+Quote worth writing down:
+
+> *You can outsource execution but not comprehension.*
+
+A vibe coder writes one prompt and watches what comes out.
+An agent engineer **designs a system** where 5 prompts work in sequence, check each other, recover from errors, and emit traces — so they can figure out **what exactly went wrong** two weeks later.
+
+Think:
+- What in your task is vibe? (quick prototype, single attempt)
+- What is agent engineering? (reliability, repetition, recovery)
+
+</Phase>
+
+<Phase type="concept">
+
+**Signs you've hit the ceiling of vibe coding:**
+
+| Symptom | What it means |
+|---|---|
+| Prompt works 7 out of 10 times | You need verification and retry |
+| You need data from 3+ sources | You need a pipeline, not a prompt |
+| Task repeats every day/hour | You need trigger + scheduling |
+| Errors cost money/trust | You need observability and human-in-loop |
+| You want someone else to run it | You need a spec and UI |
+
+If even one of these applies — welcome to **agent engineering**.
+
+**Three eras of programming** (Karpathy):
+
+```
+Software 1.0  → humans write code
+Software 2.0  → humans write data, ML models "train"
+Software 3.0  → humans write prompts, neural nets "execute"
+```
+
+A vibe coder lives in 3.0 and uses a single neural "worker."
+An agent engineer lives in 3.0 and **orchestrates a team** of neural workers. Plus tools (MCP), plus memory, plus recovery.
+
+</Phase>
+
+<Phase type="practice">
+
+Take the task from the activation phase. Answer in writing:
+
+1. **How many steps** are in the task (including data loading, processing, saving, notifying)
+2. **How many times a week** you'd repeat it if it ran automatically
+3. **How many hours per week** currently go into doing it manually
+4. **Cost of error** — what bad thing happens if step 3 breaks
+
+If the answers are: ≥3 steps, ≥3 times a week, ≥1 hour, error is meaningful — this module is exactly about your task.
+
+Save to `my-experiments/agent-task-scope.md`.
+
+</Phase>
