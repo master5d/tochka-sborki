@@ -10,29 +10,42 @@ const cardStyle = (selected: boolean): React.CSSProperties => ({
   borderRadius: 'var(--radius)',
   cursor: 'pointer',
   textAlign: 'center',
-  background: selected ? 'color-mix(in srgb, var(--text-accent) 8%, var(--bg-primary))' : 'var(--bg-surface)',
-  transition: 'border-color 0.15s, background 0.15s',
+  background: selected ? 'var(--bg-surface)' : 'var(--bg-surface)',
+  outline: selected ? '2px solid var(--text-accent)' : 'none',
+  outlineOffset: '-2px',
+  transition: 'border-color 0.15s, outline 0.15s',
+  width: '100%',
+  fontFamily: 'inherit',
 })
 
 export default function OnboardingPage() {
   const router = useRouter()
   const [os, setOs] = useState<'mac' | 'windows' | null>(null)
+  const [checking, setChecking] = useState(true)
 
   useEffect(() => {
-    if (localStorage.getItem('os')) {
-      router.replace('/lessons/00-kickstart/')
+    try {
+      if (localStorage.getItem('os')) {
+        router.replace('/lessons/00-kickstart/')
+        return
+      }
+    } catch {
+      // localStorage unavailable — stay on page, let user proceed normally
     }
+    setChecking(false)
   }, [router])
-
-  function handleSelect(value: 'mac' | 'windows') {
-    setOs(value)
-  }
 
   function handleStart() {
     if (!os) return
-    localStorage.setItem('os', os)
+    try {
+      localStorage.setItem('os', os)
+    } catch {
+      // localStorage unavailable — proceed anyway, OsBlock will show both variants
+    }
     router.replace('/lessons/00-kickstart/')
   }
+
+  if (checking) return null
 
   return (
     <>
@@ -62,20 +75,33 @@ export default function OnboardingPage() {
           Покажем правильные команды и настройки для твоей системы
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
-          <div style={cardStyle(os === 'mac')} onClick={() => handleSelect('mac')}>
+        <div role="radiogroup" aria-label="Операционная система" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
+          <button
+            type="button"
+            role="radio"
+            aria-checked={os === 'mac'}
+            onClick={() => setOs('mac')}
+            style={cardStyle(os === 'mac')}
+          >
             <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🍎</div>
             <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-primary)', fontSize: '0.9rem' }}>macOS</div>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>Mac / MacBook</div>
-          </div>
-          <div style={cardStyle(os === 'windows')} onClick={() => handleSelect('windows')}>
+          </button>
+          <button
+            type="button"
+            role="radio"
+            aria-checked={os === 'windows'}
+            onClick={() => setOs('windows')}
+            style={cardStyle(os === 'windows')}
+          >
             <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🪟</div>
             <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Windows</div>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>WSL / PowerShell</div>
-          </div>
+          </button>
         </div>
 
         <button
+          type="button"
           onClick={handleStart}
           disabled={!os}
           style={{
