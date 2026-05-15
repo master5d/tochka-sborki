@@ -6,6 +6,7 @@ export type Dictionary = {
     roadmap: string
     cheatsheet: string
     feedback: string
+    certificate: string
     login: string
     logout: string
     osTitle: string
@@ -59,6 +60,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       roadmap: 'Roadmap',
       cheatsheet: 'Шпаргалка',
       feedback: 'Фидбек',
+      certificate: 'Сертификат',
       login: '→ Войти',
       logout: 'Выйти',
       osTitle: 'Сменить OS',
@@ -153,6 +155,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       roadmap: 'Roadmap',
       cheatsheet: 'Cheatsheet',
       feedback: 'Feedback',
+      certificate: 'Certificate',
       login: '→ Sign in',
       logout: 'Sign out',
       osTitle: 'Switch OS',

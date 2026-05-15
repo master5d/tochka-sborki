@@ -63,6 +63,7 @@ export function Nav({ locale: localeProp }: Props = {}) {
         <Link href={`${locale === 'en' ? '/en' : ''}/roadmap/`} style={{ color: 'var(--text-secondary)' }}>{t.nav.roadmap}</Link>
         <Link href={`${locale === 'en' ? '/en' : ''}/cheatsheet/`} style={{ color: 'var(--text-secondary)' }}>{t.nav.cheatsheet}</Link>
         <Link href={`${locale === 'en' ? '/en' : ''}/feedback/`} style={{ color: 'var(--text-secondary)' }}>{t.nav.feedback}</Link>
+        <Link href={`${locale === 'en' ? '/en' : ''}/certificate/`} style={{ color: 'var(--text-accent)' }}>{t.nav.certificate} ◆</Link>
 
         {/* Language switcher */}
         <Link
