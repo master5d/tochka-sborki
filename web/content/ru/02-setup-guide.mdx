@@ -471,17 +471,23 @@ npm start
 
 Этот гайд поможет видеть, сколько токенов использовано:
 
+<OsBlock os="mac">
+
 ```bash
 # Установи jq (для парсинга JSON)
-# На macOS:
 brew install jq
+```
 
-# На Windows (WSL):
-sudo apt-get install jq
+</OsBlock>
 
-# На Linux:
+<OsBlock os="windows">
+
+```bash
+# Установи jq (WSL / Ubuntu)
 sudo apt-get install jq
 ```
+
+</OsBlock>
 
 Добавь в `.claude/settings.json` (после создания первой сессии):
 
