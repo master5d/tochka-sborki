@@ -1,0 +1,92 @@
+---
+title: "Установка инструментов"
+unit: 2
+meeting: 2
+duration: "15 мин"
+---
+
+<Phase type="activation">
+
+Ты уже проверил окружение. Теперь главный вопрос:
+
+Что ты ожидаешь от Claude Code? Что он должен делать для тебя?
+
+Напиши одно-два предложения — не то, что правильно, а то, что ты реально хочешь получить.
+
+</Phase>
+
+<Phase type="reflection">
+
+Большинство людей устанавливают инструменты без понимания — зачем.
+
+Потом они не используют половину возможностей, потому что не знали, что они есть.
+
+Твой ответ из Активации — это контекст. Держи его в голове пока настраиваешь.
+
+</Phase>
+
+<Phase type="concept">
+
+## Установка Claude Code
+
+Claude Code — это CLI (command-line interface), агент который работает прямо в терминале.
+
+### Установка
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+### Проверка
+
+```bash
+claude --version
+claude --help
+```
+
+### Первый запуск
+
+```bash
+cd ~/Documents
+claude
+```
+
+Claude Code откроет интерактивную сессию. Первый раз попросит войти через браузер.
+
+### Git: базовая конфигурация
+
+```bash
+git config --global user.name "Твоё имя"
+git config --global user.email "твоя@почта.com"
+
+# Проверь:
+git config --global user.name
+```
+
+### Полезные настройки терминала
+
+```bash
+# Добавь в ~/.bashrc или ~/.zshrc — полезные алиасы
+alias ll='ls -lah'
+alias gst='git status'
+alias gp='git push'
+```
+
+> 💡 После добавления алиасов: `source ~/.bashrc` (или перезапусти терминал).
+
+</Phase>
+
+<Phase type="practice">
+
+Выполни по порядку:
+
+1. Установи Claude Code: `npm install -g @anthropic-ai/claude-code`
+2. Проверь: `claude --version`
+3. Настрой Git: `git config --global user.name "Твоё имя"`
+4. Запусти Claude Code в любой папке: `cd ~/Documents && claude`
+
+Когда Claude Code откроется — задай ему вопрос: `«Что ты умеешь делать?»`
+
+Сохрани скриншот ответа в `my-experiments/u2-claude-first-run.png`
+
+</Phase>
