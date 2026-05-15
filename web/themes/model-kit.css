@@ -11,7 +11,7 @@
   --font-mono: 'Geist Mono', monospace;
   --radius: 4px;
 
-  /* ELVTR-hybrid: editorial layout tokens */
+  /* ТОЧКА СБОРКИ: editorial layout tokens */
   --display-size: clamp(2.8rem, 7vw, 6.5rem);
   --section-label-size: 0.7rem;
   --number-size: clamp(5rem, 14vw, 11rem);

@@ -177,7 +177,7 @@ export default function HomePage() {
 
       <ProgramVenn />
 
-      {/* ── ПРОГРАММА (ELVTR syllabus) ───────────────────────── */}
+      {/* ── ПРОГРАММА ────────────────────────────────────────── */}
       <section style={{ padding: 'var(--section-gap) 2rem' }}>
         <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
           <div style={{
