@@ -1,5 +1,6 @@
 import type { MDXComponents } from 'mdx/types'
 import { OsBlock } from './os-block'
+import { Phase } from './phase'
 
 export const mdxComponents: MDXComponents = {
   h1: ({ children }) => (
@@ -64,4 +65,5 @@ export const mdxComponents: MDXComponents = {
     <td style={{ borderBottom: '1px solid var(--border-color)', padding: '0.5rem 0.75rem', color: 'var(--text-primary)' }}>{children}</td>
   ),
   OsBlock,
+  Phase,
 }
