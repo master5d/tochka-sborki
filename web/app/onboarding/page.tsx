@@ -10,7 +10,7 @@ const cardStyle = (selected: boolean): React.CSSProperties => ({
   borderRadius: 'var(--radius)',
   cursor: 'pointer',
   textAlign: 'center',
-  background: selected ? 'var(--bg-surface)' : 'var(--bg-surface)',
+  background: selected ? 'color-mix(in srgb, var(--text-accent) 10%, var(--bg-surface))' : 'var(--bg-surface)',
   outline: selected ? '2px solid var(--text-accent)' : 'none',
   outlineOffset: '-2px',
   transition: 'border-color 0.15s, outline 0.15s',

@@ -13,7 +13,8 @@ export function OsBlock({ os, children }: Props) {
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    const raw = localStorage.getItem('os')
+    let raw: string | null = null
+    try { raw = localStorage.getItem('os') } catch { /* ignore */ }
     const valid = VALID_OS.includes(raw as 'mac' | 'windows') ? raw : null
     setStored(valid)
     setReady(true)
