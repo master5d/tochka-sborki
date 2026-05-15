@@ -1,0 +1,14 @@
+{
+  "meeting": 6,
+  "title": "M6: Инструменты расширения",
+  "description": "MCP-серверы, Skills, Hooks и Superpowers workflow",
+  "duration": "75 мин",
+  "level": 6,
+  "units": [
+    { "slug": "u1-activation", "title": "Чего не хватает Claude Code?" },
+    { "slug": "u2-mcp", "title": "MCP: суперсилы через протокол" },
+    { "slug": "u3-hooks", "title": "Hooks: автоматизация событий" },
+    { "slug": "u4-skills", "title": "Skills: модульные способности" },
+    { "slug": "u5-practice", "title": "Подключи и протестируй" }
+  ]
+}
