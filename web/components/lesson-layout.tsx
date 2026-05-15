@@ -1,8 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import type { LessonMeta } from '@/lib/content'
+import type { LessonMeta, NavigationItem } from '@/lib/content'
 import { Nav } from './nav'
 import { Sidebar } from './sidebar'
 import { AssignmentBlock } from './assignment-block'
@@ -11,14 +10,11 @@ import { AuthGuard } from './auth-guard'
 
 interface LessonLayoutProps {
   meta: LessonMeta
-  lessons: LessonMeta[]
+  navItems: NavigationItem[]
   children: React.ReactNode
 }
 
-export function LessonLayout({ meta, lessons, children }: LessonLayoutProps) {
-  const idx = lessons.findIndex(l => l.slug === meta.slug)
-  const prev = lessons[idx - 1]
-  const next = lessons[idx + 1]
+export function LessonLayout({ meta, navItems, children }: LessonLayoutProps) {
   const { getState, markViewed, markCompleted } = useProgress()
   const state = getState(meta.slug)
   const [completing, setCompleting] = useState(false)
@@ -37,7 +33,7 @@ export function LessonLayout({ meta, lessons, children }: LessonLayoutProps) {
     <AuthGuard>
       <Nav />
       <div style={{ display: 'flex', minHeight: 'calc(100vh - 3rem)' }}>
-        <Sidebar lessons={lessons} currentSlug={meta.slug} />
+        <Sidebar navItems={navItems} currentSlug={meta.slug} />
         <main style={{ flex: 1, padding: '2rem 3rem', maxWidth: '860px' }}>
           <div style={{
             marginBottom: '0.5rem',
@@ -85,19 +81,6 @@ export function LessonLayout({ meta, lessons, children }: LessonLayoutProps) {
                 {completing ? '...' : '○ Отметить как пройденный'}
               </button>
             )}
-          </div>
-
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: '1.5rem',
-          }}>
-            {prev
-              ? <Link href={`/lessons/${prev.slug}/`} style={{ fontSize: '0.875rem' }}>← {prev.title}</Link>
-              : <span />}
-            {next
-              ? <Link href={`/lessons/${next.slug}/`} style={{ fontSize: '0.875rem' }}>{next.title} →</Link>
-              : <span />}
           </div>
         </main>
       </div>
