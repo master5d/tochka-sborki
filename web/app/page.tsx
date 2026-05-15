@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getAllLessons } from '@/lib/content'
+import { getAllModules } from '@/lib/content'
 import { Nav } from '@/components/nav'
 
 const FOR_WHO = [
@@ -41,7 +41,7 @@ const FAQ = [
 ]
 
 export default function HomePage() {
-  const lessons = getAllLessons()
+  const lessons = getAllModules()
 
   return (
     <>
