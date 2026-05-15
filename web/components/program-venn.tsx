@@ -1,226 +1,295 @@
-const WILL_BE = [
-  { color: '#fbbf24', shape: 'diamond', text: 'Claude Code с нуля до продакшна — первый деплой уже на M2' },
-  { color: '#f97316', shape: 'square',  text: 'MCP-серверы: подключить реальный инструмент за 20 минут' },
-  { color: '#ef4444', shape: 'circle',  text: 'Pipeline URL → скрапинг → анализ → инсайты' },
-  { color: '#22c55e', shape: 'circle',  text: 'Промпты, которые работают — не «попробуй переформулировать»' },
-  { color: '#3b82f6', shape: 'square',  text: 'Агенты, которые пашут пока ты спишь' },
-  { color: '#a855f7', shape: 'diamond', text: 'CLAUDE.md — агент, который помнит твой контекст' },
+const ITEMS = [
+  { tag: 'M2', text: 'Claude Code с нуля до продакшна — первый деплой' },
+  { tag: 'M6', text: 'MCP-серверы: подключить инструмент за 20 минут' },
+  { tag: 'M5', text: 'Pipeline: URL → скрапинг → анализ → инсайты' },
+  { tag: 'M3', text: 'Промпты, которые работают — не «переформулируй»' },
+  { tag: 'M4', text: 'Агенты, которые пашут пока ты спишь' },
+  { tag: 'M4', text: 'CLAUDE.md — агент, помнящий твой контекст' },
 ]
 
-const WONT_BE = [
+const EXCLUDED = [
   'теории без практики',
-  'обзор 50 нейросетей',
+  'обзоры 50 нейросетей',
   'ChatGPT-туториалы из 2023',
   'домашки без смысла',
 ]
 
-function Shape({ color, shape }: { color: string; shape: string }) {
-  const base: React.CSSProperties = {
-    display: 'inline-block',
-    width: 13,
-    height: 13,
-    background: color,
-    flexShrink: 0,
-    marginTop: 3,
-  }
-  if (shape === 'circle')  return <span style={{ ...base, borderRadius: '50%' }} />
-  if (shape === 'diamond') return <span style={{ ...base, transform: 'rotate(45deg)', marginTop: 2 }} />
-  return <span style={{ ...base, borderRadius: 2 }} />
-}
-
 export function ProgramVenn() {
-  const cx1 = 140, cy = 150, r = 112, cx2 = 272
-  // overlap center x: midpoint of [cx1+r, cx2-r] where cx1+r=252, cx2-r=160 → (252+160)/2=206?
-  // Actually overlap zone: from max(cx1-r, cx2-r)=160 to min(cx1+r, cx2+r)=252 → center=206
-  const overlapCx = (cx1 + r + cx2 - r) / 2  // = (252 + 160) / 2 = 206
-  const rightExclCx = (cx2 - r + cx2 + r) / 2  // but only non-overlap: from cx1+r=252 to cx2+r=384 → center=318
-  const rightTextX = (cx1 + r + cx2 + r) / 2   // center of right non-overlap = (252+384)/2 = 318
+  const cx1 = 150, cy = 160, r = 118, cx2 = 286
+  const overlapCx = (cx1 + r + cx2 - r) / 2
+  const rightCx = (cx1 + r + cx2 + r) / 2
+  const W = cx2 + r + 32
+  const H = cy * 2 + 24
 
   return (
     <section style={{
       padding: 'var(--section-gap) 2rem',
       borderTop: '1px solid var(--border-color)',
+      borderBottom: '1px solid var(--border-color)',
+      background: 'var(--bg-secondary)',
       overflow: 'hidden',
     }}>
       <style>{`
-        @media (max-width: 640px) {
-          .venn-grid { grid-template-columns: 1fr !important; }
-          .venn-svg-wrap { display: none; }
-          .venn-mobile-list { display: flex !important; }
+        @media (max-width: 720px) {
+          .venn-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+          .venn-mobile-excluded { display: flex !important; }
         }
       `}</style>
 
       <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
 
-        {/* Header — lowercase, letter-spaced like the reference */}
+        {/* Section label */}
         <div style={{
           fontFamily: 'var(--font-mono)',
-          fontSize: 'clamp(1.4rem, 3.5vw, 2.2rem)',
-          color: 'var(--text-primary)',
-          letterSpacing: '0.18em',
-          fontWeight: 300,
-          marginBottom: '3rem',
+          fontSize: 'var(--section-label-size)',
+          color: 'var(--text-accent)',
+          textTransform: 'uppercase',
+          letterSpacing: '0.15em',
+          marginBottom: '1rem',
         }}>
-          программа:
+          // программа
         </div>
+
+        {/* Headline */}
+        <h2 style={{
+          fontSize: 'clamp(1.75rem, 4vw, 3rem)',
+          fontWeight: 900,
+          textTransform: 'uppercase',
+          color: 'var(--text-primary)',
+          marginBottom: '3rem',
+          lineHeight: 1,
+          letterSpacing: '-0.02em',
+        }}>
+          Что войдёт<br />в курс
+        </h2>
 
         <div className="venn-grid" style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: '3rem',
+          gap: '4rem',
           alignItems: 'center',
         }}>
 
-          {/* ── Left: scattered bubbles ────────────────────────── */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.4rem' }}>
-            {WILL_BE.map((item, i) => (
-              <div key={i} style={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '0.75rem',
-                marginLeft: [0, 24, 8, 18, 0, 12][i],
+          {/* ── Left: editorial list ──────────────────────────── */}
+          <ol style={{
+            listStyle: 'none',
+            margin: 0,
+            padding: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1.25rem',
+          }}>
+            {ITEMS.map((item, i) => (
+              <li key={i} style={{
+                display: 'grid',
+                gridTemplateColumns: '2.5rem 1fr auto',
+                gap: '1rem',
+                alignItems: 'baseline',
+                paddingBottom: '1.25rem',
+                borderBottom: '1px solid var(--border-color)',
               }}>
-                <Shape color={item.color} shape={item.shape} />
                 <span style={{
-                  fontSize: '0.875rem',
-                  color: 'var(--text-secondary)',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.7rem',
+                  color: 'var(--text-accent)',
+                  letterSpacing: '0.05em',
+                  fontWeight: 700,
+                }}>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span style={{
+                  fontSize: '0.9rem',
+                  color: 'var(--text-primary)',
                   lineHeight: 1.55,
                 }}>
                   {item.text}
                 </span>
-              </div>
+                <span style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.65rem',
+                  color: 'var(--text-secondary)',
+                  letterSpacing: '0.08em',
+                  padding: '0.15rem 0.5rem',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '2px',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {item.tag}
+                </span>
+              </li>
             ))}
-          </div>
+          </ol>
 
-          {/* ── Right: SVG Venn ────────────────────────────────── */}
-          <div className="venn-svg-wrap">
+          {/* ── Right: programmatic Venn ──────────────────────── */}
+          <div>
             <svg
-              viewBox={`0 0 ${cx2 + r + 20} ${cy * 2 + 20}`}
+              viewBox={`0 0 ${W} ${H}`}
               width="100%"
               style={{ display: 'block', overflow: 'visible' }}
+              aria-hidden="true"
             >
               <defs>
-                <radialGradient id="venn-glow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%"   stopColor="#00ff88" stopOpacity="0.10" />
-                  <stop offset="100%" stopColor="#00aaff" stopOpacity="0.04" />
-                </radialGradient>
-                <clipPath id="venn-overlap">
+                {/* Subtle grid pattern */}
+                <pattern id="venn-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+                </pattern>
+                {/* Inner overlap fill clip */}
+                <clipPath id="venn-clip">
                   <circle cx={cx2} cy={cy} r={r} />
                 </clipPath>
               </defs>
 
-              {/* Left circle fill */}
-              <circle cx={cx1} cy={cy} r={r}
-                fill="url(#venn-glow)"
-                stroke="none" />
+              {/* Grid background */}
+              <rect x="0" y="0" width={W} height={H} fill="url(#venn-grid)" />
 
-              {/* Overlap fill — slightly more opaque */}
+              {/* Tick marks at top (coordinate scale) */}
+              {[cx1, overlapCx, cx2, cx2 + r].map((x, i) => (
+                <g key={i}>
+                  <line x1={x} y1={4} x2={x} y2={12} stroke="rgba(0,255,136,0.4)" strokeWidth="0.8" />
+                  <text x={x} y={22} textAnchor="middle" fontSize="6.5" fontFamily="var(--font-mono)" fill="rgba(0,255,136,0.45)" letterSpacing="0.1em">
+                    {['C1', 'INT', 'C2', 'END'][i]}
+                  </text>
+                </g>
+              ))}
+
+              {/* Overlap zone — accent fill */}
               <circle cx={cx1} cy={cy} r={r}
-                fill="rgba(0,255,136,0.06)"
+                fill="rgba(0,255,136,0.07)"
                 stroke="none"
-                clipPath="url(#venn-overlap)" />
+                clipPath="url(#venn-clip)" />
 
-              {/* Left circle border — dashed */}
+              {/* Left circle — INCLUDED (dashed green) */}
               <circle cx={cx1} cy={cy} r={r}
                 fill="none"
-                stroke="rgba(255,255,255,0.18)"
-                strokeWidth="1.5"
-                strokeDasharray="7 5" />
+                stroke="rgba(0,255,136,0.55)"
+                strokeWidth="1.2"
+                strokeDasharray="3 3" />
 
-              {/* Right circle — solid border, no fill */}
+              {/* Right circle — EXCLUDED (solid muted) */}
               <circle cx={cx2} cy={cy} r={r}
                 fill="none"
-                stroke="rgba(255,255,255,0.45)"
-                strokeWidth="1.5" />
+                stroke="rgba(255,255,255,0.3)"
+                strokeWidth="1.2" />
 
-              {/* Label: "то, что будет" — at overlap center */}
-              <text x={overlapCx} y={cy - 8}
+              {/* Crosshair: left circle center */}
+              <g stroke="rgba(0,255,136,0.6)" strokeWidth="0.8">
+                <line x1={cx1 - 4} y1={cy} x2={cx1 + 4} y2={cy} />
+                <line x1={cx1} y1={cy - 4} x2={cx1} y2={cy + 4} />
+              </g>
+              <text x={cx1} y={cy - 70} textAnchor="middle" fontSize="6.5" fontFamily="var(--font-mono)" fill="rgba(0,255,136,0.55)" letterSpacing="0.15em">
+                SCOPE
+              </text>
+
+              {/* Crosshair: right circle center */}
+              <g stroke="rgba(255,255,255,0.4)" strokeWidth="0.8">
+                <line x1={cx2 - 4} y1={cy} x2={cx2 + 4} y2={cy} />
+                <line x1={cx2} y1={cy - 4} x2={cx2} y2={cy + 4} />
+              </g>
+              <text x={cx2} y={cy - 70} textAnchor="middle" fontSize="6.5" fontFamily="var(--font-mono)" fill="rgba(255,255,255,0.4)" letterSpacing="0.15em">
+                EXCLUDED
+              </text>
+
+              {/* Label: "то, что будет" — overlap center */}
+              <text x={overlapCx} y={cy - 6}
                 textAnchor="middle"
-                fontSize="10.5"
+                fontSize="10"
                 fontWeight="700"
-                fill="rgba(255,255,255,0.9)"
-                fontFamily="var(--font-mono)">
-                то, что
+                fontFamily="var(--font-mono)"
+                fill="rgb(0,255,136)"
+                letterSpacing="0.1em">
+                ТО, ЧТО
               </text>
               <text x={overlapCx} y={cy + 8}
                 textAnchor="middle"
-                fontSize="10.5"
+                fontSize="10"
                 fontWeight="700"
-                fill="rgba(255,255,255,0.9)"
-                fontFamily="var(--font-mono)">
-                будет
+                fontFamily="var(--font-mono)"
+                fill="rgb(0,255,136)"
+                letterSpacing="0.1em">
+                БУДЕТ
               </text>
 
-              {/* Label: "то, чего не будет" — right circle, non-overlap half */}
-              <text x={rightTextX} y={cy - 22}
+              {/* Label: "то, чего не будет" — right circle, non-overlap */}
+              <text x={rightCx} y={cy - 16}
                 textAnchor="middle"
-                fontSize="9.5"
+                fontSize="8.5"
                 fontWeight="600"
+                fontFamily="var(--font-mono)"
                 fill="rgba(255,255,255,0.7)"
-                fontFamily="var(--font-mono)">
-                то, чего
+                letterSpacing="0.12em">
+                ТО, ЧЕГО
               </text>
-              <text x={rightTextX} y={cy - 8}
+              <text x={rightCx} y={cy - 4}
                 textAnchor="middle"
-                fontSize="9.5"
+                fontSize="8.5"
                 fontWeight="600"
+                fontFamily="var(--font-mono)"
                 fill="rgba(255,255,255,0.7)"
-                fontFamily="var(--font-mono)">
-                не будет
-              </text>
-              <text x={rightTextX} y={cy + 6}
-                textAnchor="middle"
-                fontSize="9.5"
-                fontWeight="600"
-                fill="rgba(255,255,255,0.7)"
-                fontFamily="var(--font-mono)">
-                на курсе
+                letterSpacing="0.12em">
+                НЕ БУДЕТ
               </text>
 
-              {/* WONT_BE list — below label, inside right circle */}
-              {WONT_BE.map((item, i) => (
+              {/* Exclusion list — inside right circle */}
+              {EXCLUDED.map((item, i) => (
                 <text key={i}
-                  x={rightTextX}
-                  y={cy + 28 + i * 14}
+                  x={rightCx}
+                  y={cy + 14 + i * 12}
                   textAnchor="middle"
-                  fontSize="8"
+                  fontSize="7"
+                  fontFamily="var(--font-mono)"
                   fill="rgba(255,255,255,0.35)"
-                  fontFamily="var(--font-mono)">
-                  — {item}
+                  letterSpacing="0.04em">
+                  · {item}
                 </text>
               ))}
 
-              {/* Provocative text — bottom right, outside circle */}
-              <text x={cx2 + r + 10} y={cy * 2 + 10}
+              {/* Bottom comment */}
+              <text x={W - 4} y={H - 4}
                 textAnchor="end"
-                fontSize="10"
-                fill="rgba(255,255,255,0.35)"
+                fontSize="9"
                 fontFamily="var(--font-mono)"
-                fontStyle="italic">
-                хуйни не будет. и воды тоже.
+                fill="rgba(0,255,136,0.7)"
+                letterSpacing="0.08em">
+                // хуйни не будет. и воды тоже.
               </text>
             </svg>
 
-            {/* Mobile fallback (hidden on desktop via CSS above) */}
-            <div className="venn-mobile-list" style={{
+            {/* Mobile excluded list */}
+            <div className="venn-mobile-excluded" style={{
               display: 'none',
               flexDirection: 'column',
-              gap: '0.5rem',
-              marginTop: '1rem',
+              gap: '0.4rem',
+              marginTop: '1.5rem',
+              paddingTop: '1.5rem',
+              borderTop: '1px solid var(--border-color)',
             }}>
-              {WONT_BE.map((item, i) => (
-                <div key={i} style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                  — {item}
+              <div style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.7rem',
+                color: 'var(--text-secondary)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.15em',
+                marginBottom: '0.5rem',
+              }}>
+                // чего не будет
+              </div>
+              {EXCLUDED.map((item, i) => (
+                <div key={i} style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.8rem',
+                  color: 'var(--text-secondary)',
+                }}>
+                  · {item}
                 </div>
               ))}
               <div style={{
                 marginTop: '1rem',
                 fontFamily: 'var(--font-mono)',
                 fontSize: '0.8rem',
-                color: 'var(--text-secondary)',
-                fontStyle: 'italic',
+                color: 'var(--text-accent)',
+                letterSpacing: '0.05em',
               }}>
-                хуйни не будет. и воды тоже.
+                // хуйни не будет. и воды тоже.
               </div>
             </div>
           </div>
