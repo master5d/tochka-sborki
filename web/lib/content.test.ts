@@ -1,5 +1,8 @@
 import { describe, it, expect } from 'vitest'
-import { getAllLessons, getLessonBySlug, getPageContent } from './content'
+import {
+  getAllLessons, getLessonBySlug, getPageContent,
+  isMeeting, getMeetingMeta, getNavigationItems,
+} from './content'
 
 describe('getAllLessons', () => {
   it('returns only numbered lesson files (00-06)', () => {
@@ -53,5 +56,36 @@ describe('getPageContent', () => {
   it('returns content and meta for roadmap', () => {
     const result = getPageContent('roadmap')
     expect(result.content).toBeTruthy()
+  })
+})
+
+describe('isMeeting', () => {
+  it('returns false for flat lesson slug', () => {
+    expect(isMeeting('cheatsheet')).toBe(false)
+  })
+})
+
+describe('getMeetingMeta', () => {
+  it('throws for unknown meeting', () => {
+    expect(() => getMeetingMeta('99-nonexistent')).toThrow()
+  })
+})
+
+describe('getNavigationItems', () => {
+  it('returns array of NavigationItem with correct shape', () => {
+    const items = getNavigationItems()
+    expect(Array.isArray(items)).toBe(true)
+    for (const item of items) {
+      expect(['lesson', 'meeting']).toContain(item.type)
+      expect(typeof item.slug).toBe('string')
+      expect(typeof item.title).toBe('string')
+    }
+  })
+
+  it('items are sorted by order ascending', () => {
+    const items = getNavigationItems()
+    for (let i = 1; i < items.length; i++) {
+      expect(items[i].order).toBeGreaterThanOrEqual(items[i - 1].order)
+    }
   })
 })
