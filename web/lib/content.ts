@@ -97,7 +97,13 @@ export function getMeetingMeta(slug: string, locale = 'ru'): MeetingMeta {
   const metaPath = path.join(contentDir(locale), slug, '_meta.json')
   if (!fs.existsSync(metaPath)) throw new Error(`Meeting not found: ${slug}`)
   const raw = fs.readFileSync(metaPath, 'utf8')
-  return { slug, ...JSON.parse(raw) } as MeetingMeta
+  let parsed: unknown
+  try {
+    parsed = JSON.parse(raw)
+  } catch {
+    throw new Error(`Invalid JSON in _meta.json for meeting: ${slug}`)
+  }
+  return { slug, ...(parsed as Record<string, unknown>) } as MeetingMeta
 }
 
 export function getUnitContent(
