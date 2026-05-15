@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getAllModules } from '@/lib/content'
 import { Nav } from '@/components/nav'
+import { ProgramVenn } from '@/components/program-venn'
 
 const FOR_WHO = [
   {
@@ -173,6 +174,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <ProgramVenn />
 
       {/* ── ПРОГРАММА (ELVTR syllabus) ───────────────────────── */}
       <section style={{ padding: 'var(--section-gap) 2rem' }}>
