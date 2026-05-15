@@ -1,0 +1,86 @@
+---
+title: "Tune your memory"
+unit: 4
+module: 4
+duration: "10 min"
+---
+
+<Phase type="activation">
+
+You now have CLAUDE.md, TODO.md, AGENTS.md.
+
+But what's missing? What haven't you written down that you'd want Claude to know?
+
+</Phase>
+
+<Phase type="reflection">
+
+A good memory system isn't a one-shot setup. It's a living system.
+
+Rule: if you find yourself explaining the same thing twice — that's a signal to add it to CLAUDE.md.
+
+Rule: if Claude did something wrong and you corrected it — that's a signal to add it to AGENTS.md.
+
+</Phase>
+
+<Phase type="concept">
+
+## When to update what
+
+| Event | Where to update |
+|---------|-------------|
+| Architecture changed | CLAUDE.md |
+| New stack added | CLAUDE.md |
+| Task completed | TODO.md |
+| Agent made a mistake you fixed | AGENTS.md |
+| Small mid-session clarification | `/btw New detail...` |
+
+## Techniques for long sessions
+
+### Context compression
+
+At the start of a new session or when context fills up:
+
+```
+Briefly summarize what's been done and the state of the project.
+Use format: ✅ Done / ❌ Left / ⚠️ Issues
+```
+
+### Prioritizing information
+
+```markdown
+## ⚠️ CRITICAL (always keep in focus)
+[The most important for the current task]
+
+## 📋 CONTEXT (good to know)
+[Additional details]
+```
+
+### Parallel agents for big tasks
+
+For independent subtasks, run several agents:
+
+```
+Agent 1: Find all bugs in the Auth module
+Agent 2: Write tests for the Payment module
+Agent 3: Update API docs
+
+Then merge the results.
+```
+
+</Phase>
+
+<Phase type="practice">
+
+Final task for Meeting 4:
+
+1. Launch Claude Code in your project: `claude`
+2. Give it a task from TODO.md
+3. Update CLAUDE.md if you learned something important about the project during work
+4. After the session: add one rule to AGENTS.md based on something Claude did wrong (if that happened)
+
+Send a `/btw` message with new info — see how the agent reacts.
+
+Save observations to `my-experiments/u4-memory-system.md`
+
+</Phase>

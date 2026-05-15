@@ -1,20 +1,11 @@
-const ITEMS = [
-  'Claude Code с нуля до продакшна — первый деплой',
-  'MCP-серверы: подключить инструмент за 20 минут',
-  'Pipeline: URL → скрапинг → анализ → инсайты',
-  'Промпты, которые работают — не «переформулируй»',
-  'Агенты, которые пашут пока ты спишь',
-  'CLAUDE.md — агент, помнящий твой контекст',
-]
+import { getDictionary, type Locale } from '@/lib/dictionaries'
 
-const EXCLUDED = [
-  'теории без практики',
-  'обзоры 50 нейросетей',
-  'ChatGPT-туториалы из 2023',
-  'домашки без смысла',
-]
+interface Props { locale?: Locale }
 
-export function ProgramVenn() {
+export function ProgramVenn({ locale = 'ru' }: Props = {}) {
+  const t = getDictionary(locale).venn
+  const ITEMS = t.items
+  const EXCLUDED = t.excluded
   const cx1 = 150, cy = 160, r = 118, cx2 = 286
   const overlapCx = (cx1 + r + cx2 - r) / 2
   const rightCx = (cx1 + r + cx2 + r) / 2
@@ -47,7 +38,7 @@ export function ProgramVenn() {
           letterSpacing: '0.15em',
           marginBottom: '1rem',
         }}>
-          // программа
+          {t.label}
         </div>
 
         {/* Headline */}
@@ -60,7 +51,7 @@ export function ProgramVenn() {
           lineHeight: 1,
           letterSpacing: '-0.02em',
         }}>
-          Что войдёт<br />в курс
+          <span style={{ whiteSpace: 'pre-line' }}>{t.heading}</span>
         </h2>
 
         <div className="venn-grid" style={{
@@ -164,7 +155,7 @@ export function ProgramVenn() {
                 <line x1={cx1} y1={cy - 4} x2={cx1} y2={cy + 4} />
               </g>
               <text x={cx1} y={cy - 70} textAnchor="middle" fontSize="6.5" fontFamily="var(--font-mono)" fill="rgba(0,255,136,0.55)" letterSpacing="0.15em">
-                SCOPE
+                {t.scope}
               </text>
 
               {/* Crosshair: right circle center */}
@@ -173,7 +164,7 @@ export function ProgramVenn() {
                 <line x1={cx2} y1={cy - 4} x2={cx2} y2={cy + 4} />
               </g>
               <text x={cx2} y={cy - 70} textAnchor="middle" fontSize="6.5" fontFamily="var(--font-mono)" fill="rgba(255,255,255,0.4)" letterSpacing="0.15em">
-                EXCLUDED
+                {t.excludedLegend}
               </text>
 
               {/* Label: "то, что будет" — overlap center */}
@@ -184,7 +175,7 @@ export function ProgramVenn() {
                 fontFamily="var(--font-mono)"
                 fill="rgb(0,255,136)"
                 letterSpacing="0.1em">
-                ТО, ЧТО
+                {t.inLabel1}
               </text>
               <text x={overlapCx} y={cy + 8}
                 textAnchor="middle"
@@ -193,7 +184,7 @@ export function ProgramVenn() {
                 fontFamily="var(--font-mono)"
                 fill="rgb(0,255,136)"
                 letterSpacing="0.1em">
-                БУДЕТ
+                {t.inLabel2}
               </text>
 
               {/* Label: "то, чего не будет" — right circle, non-overlap */}
@@ -204,7 +195,7 @@ export function ProgramVenn() {
                 fontFamily="var(--font-mono)"
                 fill="rgba(255,255,255,0.7)"
                 letterSpacing="0.12em">
-                ТО, ЧЕГО
+                {t.outLabel1}
               </text>
               <text x={rightCx} y={cy - 4}
                 textAnchor="middle"
@@ -213,7 +204,7 @@ export function ProgramVenn() {
                 fontFamily="var(--font-mono)"
                 fill="rgba(255,255,255,0.7)"
                 letterSpacing="0.12em">
-                НЕ БУДЕТ
+                {t.outLabel2}
               </text>
 
               {/* Exclusion list — inside right circle */}
@@ -237,7 +228,7 @@ export function ProgramVenn() {
                 fontFamily="var(--font-mono)"
                 fill="rgba(0,255,136,0.7)"
                 letterSpacing="0.08em">
-                // хуйни не будет. и воды тоже.
+                {t.provoc}
               </text>
             </svg>
 
@@ -258,7 +249,7 @@ export function ProgramVenn() {
                 letterSpacing: '0.15em',
                 marginBottom: '0.5rem',
               }}>
-                // чего не будет
+                {t.mobileExcludedLabel}
               </div>
               {EXCLUDED.map((item, i) => (
                 <div key={i} style={{
@@ -276,7 +267,7 @@ export function ProgramVenn() {
                 color: 'var(--text-accent)',
                 letterSpacing: '0.05em',
               }}>
-                // хуйни не будет. и воды тоже.
+                {t.provoc}
               </div>
             </div>
           </div>

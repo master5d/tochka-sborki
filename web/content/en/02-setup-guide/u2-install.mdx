@@ -1,0 +1,92 @@
+---
+title: "Installing the tools"
+unit: 2
+module: 2
+duration: "15 min"
+---
+
+<Phase type="activation">
+
+You already checked your environment. Now the main question:
+
+What do you expect from Claude Code? What should it do for you?
+
+Write one or two sentences — not the "correct" answer, but what you actually want from it.
+
+</Phase>
+
+<Phase type="reflection">
+
+Most people install tools without understanding why.
+
+Then they don't use half the features because they didn't know they existed.
+
+Your answer from Activation is your context. Keep it in mind as you set things up.
+
+</Phase>
+
+<Phase type="concept">
+
+## Installing Claude Code
+
+Claude Code is a CLI (command-line interface), an agent that works right in your terminal.
+
+### Install
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+### Check
+
+```bash
+claude --version
+claude --help
+```
+
+### First run
+
+```bash
+cd ~/Documents
+claude
+```
+
+Claude Code will open an interactive session. The first time it'll ask you to log in via your browser.
+
+### Git: basic config
+
+```bash
+git config --global user.name "Your name"
+git config --global user.email "your@email.com"
+
+# Check:
+git config --global user.name
+```
+
+### Handy terminal settings
+
+```bash
+# Add to ~/.bashrc or ~/.zshrc — useful aliases
+alias ll='ls -lah'
+alias gst='git status'
+alias gp='git push'
+```
+
+> 💡 After adding aliases: `source ~/.bashrc` (or restart your terminal).
+
+</Phase>
+
+<Phase type="practice">
+
+Run through these in order:
+
+1. Install Claude Code: `npm install -g @anthropic-ai/claude-code`
+2. Check: `claude --version`
+3. Set up Git: `git config --global user.name "Your name"`
+4. Launch Claude Code in any folder: `cd ~/Documents && claude`
+
+When Claude Code opens — ask it: `"What can you do?"`
+
+Save a screenshot of the answer to `my-experiments/u2-claude-first-run.png`
+
+</Phase>

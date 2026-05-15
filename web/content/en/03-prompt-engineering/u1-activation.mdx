@@ -1,0 +1,71 @@
+---
+title: "My worst prompt"
+unit: 1
+module: 3
+duration: "5 min"
+---
+
+<Phase type="activation">
+
+Think of a prompt you've given AI at some point — and got back a disappointing or useless answer.
+
+**What exactly did you write?** What did the AI reply with instead of what you wanted?
+
+</Phase>
+
+<Phase type="reflection">
+
+Look at your prompt from the outside — through the eyes of someone reading it for the first time:
+
+- What role does the person responding play?
+- What exactly should come out the other end?
+- Were any constraints or quality criteria spelled out?
+
+Most likely — none of that was there. **The AI made assumptions for you.**
+
+</Phase>
+
+<Phase type="concept">
+
+## Why bad prompts give bad results
+
+An LLM is a prediction machine. It continues your text the way a typical person would in that context.
+
+When you write `"Write an article about marketing"` — the model guesses:
+- For whom? (some random audience)
+- How long? (standard length)
+- What style? (neutral)
+- What focus? (general)
+
+**Formula for a bad prompt:**
+```
+Task without context = assumptions without criteria = lottery
+```
+
+**Formula for a good prompt:**
+```
+Role + Task + Inputs + Expected output + Constraints = reproducible result
+```
+
+| Bad prompt | Good prompt |
+|---------------|----------------|
+| 2–3 words | 5–15 sentences |
+| 5–7 iterations | 1–2 iterations |
+| 60% hit rate | 95% hit rate |
+| Different every time | Reproducible |
+
+</Phase>
+
+<Phase type="practice">
+
+Rewrite your bad prompt from Activation. Add:
+
+1. **Role:** who you are and who's answering
+2. **Task:** what exactly needs to be done
+3. **Output:** what should come out
+
+Save both versions to `my-experiments/u1-prompt-before-after.md`
+
+Run both in Claude and compare the results.
+
+</Phase>

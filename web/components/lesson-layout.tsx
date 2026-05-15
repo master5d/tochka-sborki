@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import type { LessonMeta, NavigationItem } from '@/lib/content'
+import { getDictionary, type Locale } from '@/lib/dictionaries'
 import { Nav } from './nav'
 import { Sidebar } from './sidebar'
 import { AssignmentBlock } from './assignment-block'
@@ -12,9 +13,11 @@ interface LessonLayoutProps {
   meta: LessonMeta
   navItems: NavigationItem[]
   children: React.ReactNode
+  locale?: Locale
 }
 
-export function LessonLayout({ meta, navItems, children }: LessonLayoutProps) {
+export function LessonLayout({ meta, navItems, children, locale = 'ru' }: LessonLayoutProps) {
+  const t = getDictionary(locale).lesson
   const { getState, markViewed, markCompleted } = useProgress()
   const state = getState(meta.slug)
   const [completing, setCompleting] = useState(false)
@@ -33,7 +36,7 @@ export function LessonLayout({ meta, navItems, children }: LessonLayoutProps) {
     <AuthGuard>
       <Nav />
       <div style={{ display: 'flex', minHeight: 'calc(100vh - 3rem)' }}>
-        <Sidebar navItems={navItems} currentSlug={meta.slug} />
+        <Sidebar navItems={navItems} currentSlug={meta.slug} locale={locale} />
         <main style={{ flex: 1, padding: '2rem 3rem', maxWidth: '860px' }}>
           <div style={{
             marginBottom: '0.5rem',
@@ -59,7 +62,7 @@ export function LessonLayout({ meta, navItems, children }: LessonLayoutProps) {
                 fontFamily: 'var(--font-mono)',
                 fontSize: '0.8rem',
               }}>
-                ● Урок завершён
+                {t.completed}
               </div>
             ) : (
               <button
@@ -78,7 +81,7 @@ export function LessonLayout({ meta, navItems, children }: LessonLayoutProps) {
                   letterSpacing: '0.08em',
                 }}
               >
-                {completing ? '...' : '○ Отметить как пройденный'}
+                {completing ? t.completing : t.complete}
               </button>
             )}
           </div>

@@ -1,0 +1,95 @@
+---
+title: "Context vs Prompt"
+unit: 2
+module: 4
+duration: "8 min"
+---
+
+<Phase type="activation">
+
+Imagine you're onboarding a new hire onto the team.
+
+What do you explain on day one? (context about the company, role, goals, rules)
+
+What do you write to them in a specific assignment? (what to do right now)
+
+Those are different things. Why?
+
+</Phase>
+
+<Phase type="reflection">
+
+Context = stable background. Assignment = a specific instruction for this moment.
+
+The trouble is, most people mix them in one prompt — re-explaining everything each time. That wastes context, slows you down, and creates confusion.
+
+</Phase>
+
+<Phase type="concept">
+
+## Separating context and prompt
+
+```
+Context = information about the world (goals, roles, rules, data, history)
+Prompt  = a specific instruction for this request
+
+"Write an email" = PROMPT (task)
+
+"I'm a startup founder writing to an investor, style is concise and confident,
+goal: lock in a meeting Wednesday evening" = CONTEXT
+```
+
+### How to separate them explicitly
+
+```markdown
+## CONTEXT
+[Role, goal, constraints, data — the stable stuff]
+
+## TASK
+[The specific instruction for this request]
+```
+
+Or via XML tags:
+
+```xml
+<context>
+You are a code review specialist. The project uses Python 3.11.
+</context>
+
+<task>
+Check this code for security issues.
+</task>
+
+<code>
+[code here]
+</code>
+```
+
+### Where to store stable context
+
+| What | Where to store |
+|-----|-------------|
+| Project rules, stack | CLAUDE.md in the project folder |
+| Personal preferences | ~/.claude/CLAUDE.md |
+| Current tasks | TODO.md |
+| Agent instructions | AGENTS.md |
+
+</Phase>
+
+<Phase type="practice">
+
+Take any task from your work. Split it into two blocks:
+
+```markdown
+## CONTEXT
+[Who you are, what the project is, stack, constraints]
+
+## TASK
+[Only the specific instruction]
+```
+
+Compare the result with how you usually write prompts.
+
+Save to `my-experiments/u2-context-vs-prompt.md`
+
+</Phase>

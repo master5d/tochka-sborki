@@ -1,0 +1,74 @@
+---
+title: "What's Claude Code missing?"
+unit: 1
+module: 6
+duration: "5 min"
+---
+
+<Phase type="activation">
+
+Think of a moment when Claude Code could have done something useful but couldn't — because it didn't have access to the right tool or data.
+
+For example: couldn't open a browser, didn't know what was in your Notion, couldn't see GitHub Issues.
+
+**What was that situation?**
+
+</Phase>
+
+<Phase type="reflection">
+
+Claude Code out of the box is a powerful agent for working with files and code.
+
+But real work touches dozens of other tools: knowledge bases, issue trackers, API services, browsers, messengers.
+
+Three mechanisms solve this: **MCP** (connecting services), **Hooks** (event automation), **Skills** (reusable scenarios).
+
+</Phase>
+
+<Phase type="concept">
+
+## Taxonomy of Claude Code extensions
+
+| Mechanism | What it does | Analogy |
+|----------|-----------|---------|
+| **MCP Server** | Gives the agent new tools (GitHub, Notion, browser) | Installing an app |
+| **Hook** | Runs code on events (before/after an agent action) | An automatic trigger |
+| **Skill** | A reusable scenario called via `/skill-name` | A macro / script |
+
+## Agency levels
+
+| Level | Type | What it can do |
+|---------|-----|-----------|
+| 1 | Basic Responder | Answers questions |
+| 2 | Router | Routes a request to the right agent |
+| **3** | **Tool-Calling** | **Uses external tools — Claude Code with MCP** |
+| 4 | Multi-Agent | Several agents working together |
+| 5 | Autonomous | Acts without human involvement |
+
+Claude Code with MCP is level 3. With Skills and parallel agents — level 4.
+
+</Phase>
+
+<Phase type="practice">
+
+Describe three tasks where you were missing tools:
+
+```markdown
+# What I was missing
+
+## Task 1
+What I wanted: [description]
+What I needed: [which access/tool]
+
+## Task 2
+...
+
+## Task 3
+...
+```
+
+Save to `my-experiments/u1-missing-tools.md`
+
+We'll come back to this in u5-practice — and you'll wire up at least one of them.
+
+</Phase>

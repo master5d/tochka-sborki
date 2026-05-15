@@ -1,0 +1,104 @@
+---
+title: "Skills: modular capabilities"
+unit: 4
+module: 6
+duration: "12 min"
+---
+
+<Phase type="activation">
+
+Do you have a prompt you use over and over?
+
+Like: "Check my code for bugs", "Make a meeting summary", "Write release notes".
+
+What is it? How many times have you used it?
+
+</Phase>
+
+<Phase type="reflection">
+
+A good reusable prompt is already almost a Skill.
+
+A Skill is a named prompt you can call with one command: `/check-code`, `/meeting-summary`, `/release-notes`.
+
+Instead of "find the right prompt → copy → paste" — just `/skill-name`.
+
+</Phase>
+
+<Phase type="concept">
+
+## What is a Skill
+
+A Skill is a Markdown file with instructions that Claude Code runs when you call `/name`.
+
+### Skill file structure
+
+```markdown
+---
+name: meeting-summary
+description: Summarizes a meeting from a transcript or notes
+---
+
+# Meeting Summary Skill
+
+## Goal
+Create a structured meeting recap.
+
+## Instruction
+You are a meeting assistant. Based on the provided data:
+
+1. Pull out the main decisions (3–5 bullets)
+2. Identify tasks with owners and deadlines
+3. Note open questions
+
+## Output format
+### Decisions
+- [list]
+
+### Tasks
+- [ ] [task] — [owner] — [deadline]
+
+### Open questions
+- [list]
+```
+
+### Where to store Skills
+
+- `~/.claude/skills/` — personal, work across all projects
+- `.claude/skills/` — project-scoped, in git
+
+### How to call
+
+```
+/meeting-summary [paste transcript or notes]
+```
+
+## Plugin vs Skill
+
+| | Plugin | Skill |
+|--|--------|-------|
+| What | Package with multiple skills | One specific action |
+| How to use | Install once | Call via `/name` |
+| Example | `firecrawl@local` | `/firecrawl:firecrawl-cli` |
+
+</Phase>
+
+<Phase type="practice">
+
+Create a skill for the task from Activation:
+
+```bash
+mkdir -p ~/.claude/skills
+touch ~/.claude/skills/my-first-skill.md
+```
+
+Fill it out using the template above. Use a real prompt you already have.
+
+Test it:
+```
+/my-first-skill [give real data]
+```
+
+Save the skill file to `my-experiments/u4-my-skill.md`
+
+</Phase>

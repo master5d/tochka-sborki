@@ -2,8 +2,17 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { getDictionary, type Locale } from '@/lib/dictionaries'
 
-export function Nav() {
+interface Props { locale?: Locale }
+
+export function Nav({ locale: localeProp }: Props = {}) {
+  const pathname = usePathname() || '/'
+  const detected: Locale = pathname.startsWith('/en') ? 'en' : 'ru'
+  const locale = localeProp ?? detected
+  const t = getDictionary(locale)
+
   const [email, setEmail] = useState<string | null>(null)
   const [os, setOs] = useState<string | null>(null)
 
@@ -18,7 +27,7 @@ export function Nav() {
   async function handleLogout() {
     await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
     setEmail(null)
-    window.location.replace('/')
+    window.location.replace(locale === 'en' ? '/en/' : '/')
   }
 
   function toggleOs() {
@@ -27,6 +36,12 @@ export function Nav() {
     setOs(next)
     window.location.reload()
   }
+
+  const homeHref = locale === 'en' ? '/en/' : '/'
+  const otherLocale: Locale = locale === 'en' ? 'ru' : 'en'
+  const otherHref = otherLocale === 'en'
+    ? '/en' + (pathname === '/' ? '/' : pathname)
+    : pathname.replace(/^\/en(\/|$)/, '/') || '/'
 
   return (
     <nav style={{
@@ -41,18 +56,36 @@ export function Nav() {
       top: 0,
       zIndex: 10,
     }}>
-      <Link href="/" style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-accent)', fontWeight: 700 }}>
-        ⬡ Точка Сборки
+      <Link href={homeHref} style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-accent)', fontWeight: 700 }}>
+        ⬡ {t.nav.brand}
       </Link>
       <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.875rem', alignItems: 'center' }}>
-        <Link href="/roadmap/" style={{ color: 'var(--text-secondary)' }}>Roadmap</Link>
-        <Link href="/cheatsheet/" style={{ color: 'var(--text-secondary)' }}>Шпаргалка</Link>
-        <Link href="/feedback/" style={{ color: 'var(--text-secondary)' }}>Фидбек</Link>
+        <Link href={`${locale === 'en' ? '/en' : ''}/roadmap/`} style={{ color: 'var(--text-secondary)' }}>{t.nav.roadmap}</Link>
+        <Link href={`${locale === 'en' ? '/en' : ''}/cheatsheet/`} style={{ color: 'var(--text-secondary)' }}>{t.nav.cheatsheet}</Link>
+        <Link href={`${locale === 'en' ? '/en' : ''}/feedback/`} style={{ color: 'var(--text-secondary)' }}>{t.nav.feedback}</Link>
+
+        {/* Language switcher */}
+        <Link
+          href={otherHref}
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.7rem',
+            color: 'var(--text-secondary)',
+            border: '1px solid var(--border-color)',
+            borderRadius: '3px',
+            padding: '2px 6px',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+          }}
+        >
+          {otherLocale === 'en' ? 'EN' : 'RU'}
+        </Link>
+
         {os && (
           <button
             onClick={toggleOs}
-            title="Сменить OS"
-            aria-label={`Текущая OS: ${os === 'mac' ? 'macOS' : 'Windows'}. Нажми для смены.`}
+            title={t.nav.osTitle}
+            aria-label={t.nav.osCurrent(os)}
             style={{
               display: 'flex',
               background: 'var(--bg-surface)',
@@ -96,11 +129,11 @@ export function Nav() {
                 padding: 0,
               }}
             >
-              Выйти
+              {t.nav.logout}
             </button>
           </>
         ) : (
-          <Link href="/login/" style={{ color: 'var(--text-accent)', fontFamily: 'var(--font-mono)' }}>→ Войти</Link>
+          <Link href={`${locale === 'en' ? '/en' : ''}/login/`} style={{ color: 'var(--text-accent)', fontFamily: 'var(--font-mono)' }}>{t.nav.login}</Link>
         )}
       </div>
     </nav>

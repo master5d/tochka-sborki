@@ -1,0 +1,105 @@
+---
+title: "Hooks: event automation"
+unit: 3
+module: 6
+duration: "15 min"
+---
+
+<Phase type="activation">
+
+Are there things you do AFTER every agent response? Or BEFORE giving it a task?
+
+For example: always verify, always save somewhere, always notify a coworker.
+
+What's that task?
+
+</Phase>
+
+<Phase type="reflection">
+
+If you do something after every agent action — that's a Hook.
+
+A Hook is a script that runs automatically on a specific event in Claude Code. No need to remember, no need to do it by hand.
+
+</Phase>
+
+<Phase type="concept">
+
+## Events for Hooks
+
+| Event | When it fires |
+|---------|-----------------|
+| `PreToolUse` | Before the agent uses a tool |
+| `PostToolUse` | After the agent uses a tool |
+| `Notification` | When the agent wants to get your attention |
+| `Stop` | When the agent finishes |
+
+## Hook config
+
+In `.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'File written: ' && date >> ~/claude-log.txt"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+## Practical examples
+
+**Logging:** every time the agent writes a file — save to a log
+
+**Notifications:** when the agent finishes a task — send a message to Telegram
+
+**Validation:** before the agent runs a bash command — check it's safe
+
+**Formatting:** after the agent writes a TypeScript file — run prettier
+
+## Security
+
+A Hook can run any command. A few rules:
+- Don't run hooks from untrusted sources
+- Check what a hook does before adding it
+- For production systems, limit what the agent can do via PreToolUse
+
+</Phase>
+
+<Phase type="practice">
+
+Write your first Hook — a simple one that logs activity:
+
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"$(date): Claude finished a task\" >> ~/claude-activity.log"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Add to `.claude/settings.json`, launch Claude Code, give it any task.
+
+Check the log: `cat ~/claude-activity.log`
+
+Save the config to `my-experiments/u3-my-hook.md`
+
+</Phase>

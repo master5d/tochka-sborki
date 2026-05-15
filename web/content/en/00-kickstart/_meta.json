@@ -1,0 +1,12 @@
+{
+  "module": 0,
+  "title": "Kickstart",
+  "description": "A map for newcomers to AI coding",
+  "duration": "25 min",
+  "level": 0,
+  "units": [
+    { "slug": "u1-map", "title": "Map of AI tools" },
+    { "slug": "u2-tools", "title": "Your first tools" },
+    { "slug": "u3-first-steps", "title": "First steps" }
+  ]
+}

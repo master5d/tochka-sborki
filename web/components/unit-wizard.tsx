@@ -4,9 +4,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { UnitWizardContext } from './unit-wizard-context'
 import { useUnitProgress } from '@/lib/unit-progress'
+import { getDictionary, type Locale } from '@/lib/dictionaries'
 
 const PHASE_COLORS = ['#00ff88', '#00aaff', '#ff9900', '#ff44aa']
-const PHASE_LABELS = ['Активация', 'Рефлексия', 'Концепция', 'Практика']
 const TOTAL_STEPS = 4
 
 interface Props {
@@ -16,6 +16,7 @@ interface Props {
   moduleTitle: string
   unitIndex: number
   totalUnits: number
+  locale?: Locale
   children: React.ReactNode
 }
 
@@ -26,8 +27,12 @@ export function UnitWizard({
   moduleTitle,
   unitIndex,
   totalUnits,
+  locale = 'ru',
   children,
 }: Props) {
+  const t = getDictionary(locale).wizard
+  const PHASE_LABELS = t.phases
+  const prefix = locale === 'en' ? '/en' : ''
   const [currentStep, setCurrentStep] = useState(0)
   const [done, setDone] = useState(false)
   const { markCompleted } = useUnitProgress()
@@ -44,9 +49,9 @@ export function UnitWizard({
 
   function handleNextUnit() {
     if (nextUnitSlug) {
-      router.push(`/lessons/${moduleSlug}/${nextUnitSlug}/`)
+      router.push(`${prefix}/lessons/${moduleSlug}/${nextUnitSlug}/`)
     } else {
-      router.push(`/lessons/${moduleSlug}/`)
+      router.push(`${prefix}/lessons/${moduleSlug}/`)
     }
   }
 
@@ -59,7 +64,7 @@ export function UnitWizard({
         fontSize: '0.7rem',
         color: 'var(--text-secondary)',
       }}>
-        {moduleTitle} · Unit {unitIndex + 1} из {totalUnits}
+        {moduleTitle} · {t.unit(unitIndex + 1, totalUnits)}
       </div>
 
       {/* Phase progress bar */}
@@ -108,7 +113,7 @@ export function UnitWizard({
               fontSize: '0.8rem',
               color: 'var(--text-accent)',
             }}>
-              ● Пройдено
+              {t.done}
             </span>
             <button
               onClick={handleNextUnit}
@@ -124,7 +129,7 @@ export function UnitWizard({
                 cursor: 'pointer',
               }}
             >
-              {nextUnitSlug ? 'Следующий unit →' : 'Модуль завершён →'}
+              {nextUnitSlug ? t.nextUnit : t.moduleComplete}
             </button>
           </>
         ) : currentStep < TOTAL_STEPS - 1 ? (
@@ -142,7 +147,7 @@ export function UnitWizard({
               cursor: 'pointer',
             }}
           >
-            Далее →
+            {t.next}
           </button>
         ) : (
           <button
@@ -158,7 +163,7 @@ export function UnitWizard({
               cursor: 'pointer',
             }}
           >
-            Отметить пройденным ✓
+            {t.complete}
           </button>
         )}
       </div>

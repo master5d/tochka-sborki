@@ -1,0 +1,74 @@
+---
+title: "Magic words"
+unit: 3
+module: 3
+duration: "8 min"
+---
+
+<Phase type="activation">
+
+What kind of AI answer annoys you the most?
+
+Pick one:
+- Too generic and shallow
+- Confident but wrong (hallucinations)
+- Correct but unexplained — you don't understand why
+- Long, watery text instead of a concrete answer
+
+</Phase>
+
+<Phase type="reflection">
+
+Good news: each of those problems can be fixed with one phrase in the prompt.
+
+It's not magic — certain constructions just activate the right patterns in the model. Knowing these phrases is an applied skill, not luck.
+
+</Phase>
+
+<Phase type="concept">
+
+## Phrases that consistently improve results
+
+| Problem | Phrase | Effect |
+|----------|-------|--------|
+| Generic answer | `Think step by step` | Activates a chain of reasoning — model shows its logic |
+| Too abstract | `Give a concrete example` | Validates the abstraction against a real case |
+| Hallucinations | `Only answer if you're sure` | Cuts down on inventing facts |
+| Unclear logic | `Explain your reasoning` | Shows the thinking — easy to spot mistakes |
+| Unstructured output | `Use the format: [table/list/JSON]` | Sets the response structure |
+| Vague task | `Be specific` | Reduces generalizations |
+
+### Example: with and without magic
+
+**Without phrases:**
+```
+Prompt: "What architecture is best for microservices?"
+Result: Generic answer, 50% useful info
+```
+
+**With phrases:**
+```
+Prompt: "What architecture is best for microservices?
+Think step by step, explain your reasoning.
+Give a concrete example for an e-commerce platform.
+Only answer if you're confident in the analysis."
+Result: Structured answer with logic, 95% useful info
+```
+
+### What does NOT work
+
+- `Please` / `Thank you` — politeness doesn't move quality
+- Threats (`this is important for my career`) — no impact
+- Repeating the prompt unchanged — you need to rephrase, not repeat
+
+</Phase>
+
+<Phase type="practice">
+
+Take the prompt from the previous unit (u2-spec-formula.md).
+
+Add 2–3 phrases from the table above that fix your main problem from Activation.
+
+Run both versions and compare. Save to `my-experiments/u3-magic-words.md`.
+
+</Phase>

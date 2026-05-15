@@ -1,0 +1,78 @@
+---
+title: "Environment check"
+unit: 1
+module: 2
+duration: "8 min"
+---
+
+<Phase type="activation">
+
+Open a terminal (any one — VS Code's built-in, Warp, or your system terminal).
+
+What's already installed? Check:
+
+```
+node --version
+git --version
+```
+
+What's it showing? Or did the terminal not even open?
+
+</Phase>
+
+<Phase type="reflection">
+
+Think back to the last time you needed to install and configure something on your own.
+
+What was hardest? What took the longest?
+
+Most people don't lose time on installation — they lose it on **not knowing what they need** and in what order. This unit gives you the map.
+
+</Phase>
+
+<Phase type="concept">
+
+## What you need for agentic coding
+
+The minimal stack for Claude Code:
+
+| Tool | Why | Check |
+|------------|-------|---------|
+| **Node.js 18+** | Runs JavaScript/TypeScript, required for the Claude Code CLI | `node --version` |
+| **Git** | Code versioning, commits, rolling back changes | `git --version` |
+| **Terminal** | Where everything happens | Working? |
+| **Claude Code** | The main agent — we install it in the next unit | — |
+
+### How to check your environment in one command
+
+```bash
+node --version && git --version && echo "Base environment ready ✓"
+```
+
+If there's an error — whichever tool isn't found is the one you need to install.
+
+### What to download if not installed
+
+- **Node.js:** nodejs.org → LTS button (Long Term Support)
+- **Git:** git-scm.com → download for your OS
+- **Warp (recommended terminal):** warp.dev — a modern terminal with AI hints
+
+> 💡 Warp is optional. VS Code's built-in terminal or your system terminal will also work.
+
+</Phase>
+
+<Phase type="practice">
+
+Run the check in your terminal:
+
+```bash
+node --version && git --version
+```
+
+If everything is installed — move on to the next unit.
+
+If something's missing — download from the official site and install it. After installing, check again.
+
+Save a screenshot of the working terminal to `my-experiments/u1-env-check.png`
+
+</Phase>

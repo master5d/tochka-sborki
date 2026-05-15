@@ -1,0 +1,88 @@
+---
+title: "The sins of prompting"
+unit: 4
+module: 3
+duration: "10 min"
+---
+
+<Phase type="activation">
+
+Have you noticed Claude starts to "forget" details from earlier in a long conversation?
+
+Or that it answers confidently but wrong — like it's getting tangled in a pile of info?
+
+Describe a time something like that happened to you.
+
+</Phase>
+
+<Phase type="reflection">
+
+These aren't random — they're systematic error patterns.
+
+Each one has a name and a cause. Know the cause and you know the fix.
+
+</Phase>
+
+<Phase type="concept">
+
+## Five sins of prompting
+
+### 1. Context Rot
+
+The longer the conversation, the worse the model handles early information.
+
+**Fix:** structure information by priority, put the important stuff at the start and repeat it at the end.
+
+### 2. Lost in the Middle
+
+The model over-weights the beginning and end of the context. Critical stuff in the middle gets ignored.
+
+```
+❌ Bad:  [Intro] → [CRITICAL — in the middle] → [Conclusion]
+✅ Good: [CRITICAL — up front] → [Details] → [Repeat CRITICAL]
+```
+
+### 3. Distractors — extra stuff pulls attention
+
+Similar fragments in the context throw the model off the correct answer.
+
+```
+❌ Bad:  Drop 5 files, 2 of which are old versions
+✅ Good: Only relevant files + "Ignore old versions"
+```
+
+### 4. Mixing context and prompt
+
+Context (who you are, what's going on) and instruction (what to do specifically) are different things.
+
+```
+Context = background info (stable)
+Prompt  = the specific task (for this session)
+```
+
+Separate them explicitly — with Markdown headings or XML tags.
+
+### 5. Cursing kills quality
+
+This is a real effect: aggressive tone in the prompt makes results worse.
+
+```
+❌ "This is completely wrong! Redo it now!"
+✅ "That didn't work. Try without recursion."
+```
+
+</Phase>
+
+<Phase type="practice">
+
+Check your prompt from u2-spec-formula.md against the 5 sins:
+
+- [ ] No distractors (no extra info)?
+- [ ] Critical stuff up front, not in the middle?
+- [ ] Context separated from instruction?
+- [ ] Neutral tone, no aggression?
+- [ ] If it's a long conversation — do you summarize before each new task?
+
+Fix anything you find. Save the updated version to `my-experiments/u4-sins-fixed.md`.
+
+</Phase>

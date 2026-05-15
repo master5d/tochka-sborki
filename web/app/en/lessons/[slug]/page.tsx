@@ -11,8 +11,8 @@ import { ModulePage } from '@/components/pages/module-page'
 interface Props { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
-  const lessons = getAllLessons('ru')
-  const modules = getAllModules('ru')
+  const lessons = getAllLessons('en')
+  const modules = getAllModules('en')
   return [
     ...lessons.map(l => ({ slug: l.slug })),
     ...modules.map(m => ({ slug: m.slug })),
@@ -21,15 +21,15 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  if (isModule(slug, 'ru')) {
-    const meta = getModuleMeta(slug, 'ru')
-    return { title: `${meta.title} — Точка Сборки`, description: meta.description }
+  if (isModule(slug, 'en')) {
+    const meta = getModuleMeta(slug, 'en')
+    return { title: `${meta.title} — Tochka Sborki`, description: meta.description }
   }
-  const { meta } = getLessonBySlug(slug, 'ru')
-  return { title: `${meta.title} — Точка Сборки`, description: meta.description }
+  const { meta } = getLessonBySlug(slug, 'en')
+  return { title: `${meta.title} — Tochka Sborki`, description: meta.description }
 }
 
 export default async function Page({ params }: Props) {
   const { slug } = await params
-  return <ModulePage slug={slug} locale="ru" />
+  return <ModulePage slug={slug} locale="en" />
 }

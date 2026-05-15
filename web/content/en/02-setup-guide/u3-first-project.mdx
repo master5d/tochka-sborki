@@ -1,0 +1,108 @@
+---
+title: "Your first project"
+unit: 3
+module: 2
+duration: "12 min"
+---
+
+<Phase type="activation">
+
+Do you have a folder where you keep your work files?
+
+If yes — where is it? Is there a project in it, even a tiny one?
+
+If not — what project would you want to start?
+
+</Phase>
+
+<Phase type="reflection">
+
+Claude Code works in the context of a folder. That matters:
+
+The more organized your file structure is, the more accurately the agent understands what's going on and what you want.
+
+CLAUDE.md is the instruction file for the agent, sitting in the project root. Without it, the agent starts "from scratch" every time.
+
+</Phase>
+
+<Phase type="concept">
+
+## CLAUDE.md — the agent's project memory
+
+CLAUDE.md is a Markdown file that Claude Code reads automatically every time it launches in a folder.
+
+### Minimal template
+
+```markdown
+# Project Context
+
+## My role
+[Who I am, what I know, my experience]
+
+## Project
+[What this project is, why it exists]
+
+## Stack
+- Node.js 18
+- [other tech]
+
+## Folder structure
+- `/src` — main code
+- `/my-experiments` — experiments
+
+## How to run
+[Commands to start]
+
+## What to delegate to Claude
+- Writing code from specs
+- Tests
+- Documentation
+
+## What I decide myself
+- Architecture decisions
+- Final quality review
+```
+
+### Creating a project
+
+```bash
+mkdir -p ~/my-project
+cd ~/my-project
+git init
+touch CLAUDE.md
+mkdir -p src my-experiments
+```
+
+### CLAUDE.md tips
+
+- Keep it under **200 lines** — longer drops the quality of instruction-following
+- Be specific: `"Use 2-space indent"` beats `"format properly"`
+- Update it when architecture or stack changes
+
+</Phase>
+
+<Phase type="practice">
+
+Create your first project:
+
+```bash
+mkdir -p ~/my-ai-project
+cd ~/my-ai-project
+git init
+touch CLAUDE.md
+mkdir -p my-experiments
+```
+
+Fill in CLAUDE.md using the template — write about a real project or task you want to work on.
+
+Then launch Claude Code in that folder:
+
+```bash
+claude
+```
+
+Ask the agent: `"Read CLAUDE.md and tell me what you now know about the project"`
+
+Save the result to `my-experiments/u3-claude-reads-context.md`
+
+</Phase>

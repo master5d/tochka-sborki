@@ -1,0 +1,82 @@
+---
+title: "A professional prompt"
+unit: 5
+module: 3
+duration: "10 min"
+---
+
+<Phase type="activation">
+
+Think of a task that repeats every week for you.
+
+It could be: writing a report, meeting prep, data analysis, content creation, replying to messages.
+
+**What's the task?**
+
+</Phase>
+
+<Phase type="reflection">
+
+Now do the math: if you spend 2 hours/week on it × 50 weeks = 100 hours/year.
+
+If a good prompt cuts that to 30 minutes — you save 75 hours/year. That's almost 2 full work weeks.
+
+**Is it worth investing 20 minutes to write a good prompt for that task?**
+
+</Phase>
+
+<Phase type="concept">
+
+## Meta-prompting: a prompt that writes prompts
+
+If you don't know where to start — ask Claude to write the prompt for you:
+
+```
+You are an expert at writing prompts for language models.
+
+Write a detailed prompt for an assistant that will [task description].
+
+Each of its responses must:
+- [criterion 1]
+- [criterion 2]
+- [criterion 3]
+
+Include all parameters important for quality.
+```
+
+### Template for a reusable assistant
+
+For repeating tasks (Claude Project, Gemini Gem, Claude Code Skill):
+
+```
+Role:         who this assistant is (expertise, style, boundaries)
+Objective:    the main goal — why it exists
+Context:      the situation it's used in
+Instructions: list of rules it operates by
+Notes:        reminders, edge cases, prohibitions
+```
+
+### Checklist before you hit send
+
+- [ ] Role is clear (who's answering, with what expertise)?
+- [ ] Task is specific (what exactly is needed)?
+- [ ] Output is defined (how do you know it's right)?
+- [ ] Constraints are clear (what not to do)?
+- [ ] No distractors (no extra text)?
+- [ ] Important stuff up front (not buried in the middle)?
+
+</Phase>
+
+<Phase type="practice">
+
+Final task for Meeting 3:
+
+Write a **reusable prompt** for your recurring task from Activation.
+
+Use the full CTID structure + magic words + check against the 5 sins.
+
+Save to `my-experiments/u5-reusable-prompt.md`
+
+This is your first professional reusable prompt — save it and use it every week.
+
+</Phase>

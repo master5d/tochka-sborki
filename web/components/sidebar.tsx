@@ -5,11 +5,13 @@ import { useEffect, useState } from 'react'
 import type { NavigationItem } from '@/lib/content'
 import { useProgress } from './progress-provider'
 import { useUnitProgress } from '@/lib/unit-progress'
+import { getDictionary, type Locale } from '@/lib/dictionaries'
 
 interface SidebarProps {
   navItems: NavigationItem[]
   currentSlug?: string
   currentUnit?: string
+  locale?: Locale
 }
 
 function LessonIcon({ state }: { state: 'completed' | 'viewed' | 'none' }) {
@@ -24,10 +26,12 @@ function UnitIcon({ state }: { state: 'completed' | 'current' | 'none' }) {
   return <span style={{ color: 'var(--border-color)', fontSize: '0.7rem' }}>○</span>
 }
 
-export function Sidebar({ navItems, currentSlug, currentUnit }: SidebarProps) {
+export function Sidebar({ navItems, currentSlug, currentUnit, locale = 'ru' }: SidebarProps) {
   const { getState } = useProgress()
   const { isCompleted: isUnitCompleted, ready } = useUnitProgress()
   const [, forceRender] = useState(0)
+  const t = getDictionary(locale)
+  const prefix = locale === 'en' ? '/en' : ''
 
   useEffect(() => {
     if (ready) forceRender(n => n + 1)
@@ -50,7 +54,7 @@ export function Sidebar({ navItems, currentSlug, currentUnit }: SidebarProps) {
           textTransform: 'uppercase',
           letterSpacing: '0.1em',
         }}>
-          Модули курса
+          {t.sidebar.label}
         </span>
       </div>
 
@@ -61,7 +65,7 @@ export function Sidebar({ navItems, currentSlug, currentUnit }: SidebarProps) {
         if (item.type === 'lesson') {
           const state = getState(item.slug)
           return (
-            <Link key={item.slug} href={`/lessons/${item.slug}/`} style={{
+            <Link key={item.slug} href={`${prefix}/lessons/${item.slug}/`} style={{
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem',
@@ -80,7 +84,7 @@ export function Sidebar({ navItems, currentSlug, currentUnit }: SidebarProps) {
         // type === 'module'
         return (
           <div key={item.slug}>
-            <Link href={`/lessons/${item.slug}/`} style={{
+            <Link href={`${prefix}/lessons/${item.slug}/`} style={{
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem',
@@ -103,7 +107,7 @@ export function Sidebar({ navItems, currentSlug, currentUnit }: SidebarProps) {
                   const unitState = completed ? 'completed' : isCurrent ? 'current' : 'none'
 
                   return (
-                    <Link key={unit.slug} href={`/lessons/${item.slug}/${unit.slug}/`} style={{
+                    <Link key={unit.slug} href={`${prefix}/lessons/${item.slug}/${unit.slug}/`} style={{
                       display: 'flex',
                       alignItems: 'center',
                       gap: '0.5rem',

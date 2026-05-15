@@ -1,0 +1,81 @@
+---
+title: "The info you process by hand"
+unit: 1
+module: 5
+duration: "5 min"
+---
+
+<Phase type="activation">
+
+Think back: what did you do with information from the internet in the last 3 days?
+
+For example: opened an article → read it → relayed it to a colleague. Or: watched a video → took notes → saved them somewhere.
+
+**Describe one such cycle** — from getting the info to the result.
+
+</Phase>
+
+<Phase type="reflection">
+
+How much of that was manual work? How long did it take?
+
+Now flip it: which part of that process is mechanical? (copy, summarize, reformat, save)
+
+Mechanical stuff can be automated. Today you'll do it.
+
+</Phase>
+
+<Phase type="concept">
+
+## Every automation = Trigger → Action
+
+This is the foundational mental model:
+
+| Trigger | Action |
+|---------|--------|
+| 6:00 alarm | Phone rings |
+| Payment goes through | Email + SMS to customer |
+| You give the agent a URL | Agent scrapes → analyzes → saves the result |
+
+### Three questions before building a pipeline
+
+1. **Trigger:** what kicks off the process? (you manually, a schedule, a new file, a webhook)
+2. **Action:** what should happen? (scrape → analyze → save → notify)
+3. **Condition:** when should it NOT run? (duplicates, rate limits, errors)
+
+### Today's pipeline
+
+```
+Trigger:  You give an article URL
+   ↓
+Action 1: Firecrawl scrapes the page → returns clean text
+   ↓
+Action 2: Claude analyzes the text
+   ↓
+Action 3: Result saved to a Markdown file
+```
+
+Manual trigger. But the principle is the same — for Zapier, for Claude Code Hooks, all of it.
+
+</Phase>
+
+<Phase type="practice">
+
+Pick an article or page you want to analyze.
+
+Open Claude (claude.ai or Claude Code) and give it this prompt:
+
+```
+Read this article: [paste URL]
+
+Pull out:
+1. Three main insights (concrete, actionable)
+2. One idea I can apply in my work right now
+3. Three questions for further research
+
+Format: Markdown, structured.
+```
+
+Save the result to `my-experiments/u1-pipeline-test.md`
+
+</Phase>
