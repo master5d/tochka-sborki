@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { getAllModules } from '@/lib/content'
 import { Nav } from '@/components/nav'
 import { ProgramVenn } from '@/components/program-venn'
+import { ChatBubble } from '@/components/chat-bubble'
 
 const FOR_WHO = [
   {
@@ -255,34 +256,20 @@ export default function HomePage() {
           }}>
             Вопросы
           </div>
-          {FAQ.map(item => (
-            <details key={item.q} style={{
-              borderBottom: '1px solid var(--border-color)',
-              padding: '1.25rem 0',
-            }}>
-              <summary style={{
-                fontSize: '1rem',
-                fontWeight: 700,
-                color: 'var(--text-primary)',
-                cursor: 'pointer',
-                listStyle: 'none',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-                {item.q}
-                <span style={{ color: 'var(--text-accent)', fontSize: '1.25rem' }}>+</span>
-              </summary>
-              <p style={{
-                marginTop: '0.75rem',
-                color: 'var(--text-secondary)',
-                lineHeight: 1.75,
-                fontSize: '0.9rem',
-              }}>
-                {item.a}
-              </p>
-            </details>
-          ))}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1.25rem',
+            maxWidth: '600px',
+            margin: '0 auto',
+          }}>
+            {FAQ.map(item => (
+              <div key={item.q} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <ChatBubble text={item.q} side="user" maxWidth={420} />
+                <ChatBubble text={item.a} side="agent" maxWidth={520} />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

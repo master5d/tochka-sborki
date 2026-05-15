@@ -13,6 +13,7 @@
     "environment": "node"
   },
   "dependencies": {
+    "@chenglou/pretext": "^0.0.7",
     "geist": "^1.7.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^1.14.0",
