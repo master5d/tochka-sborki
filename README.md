@@ -16,7 +16,7 @@
 
 <div align="center">
 
-**AI Vibe-Coding Course · 7 модулей · Claude Code + MCP + Агенты**
+**AI Vibe-Coding Course · 7 тем · Claude Code + MCP + Агенты**
 
 [![Deploy](https://img.shields.io/badge/deploy-Cloudflare_Pages-orange?style=flat-square&logo=cloudflare)](https://mamaev.coach)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org)
@@ -28,22 +28,22 @@
 
 ## О курсе
 
-**Точка Сборки** — практический курс по вайб-кодингу. Освоение Claude Code, MCP-серверов, агентов и автоматизации через 7 модулей и 28 когнитивных юнитов.
+**Точка Сборки** — практический курс по вайб-кодингу. Освоение Claude Code, MCP-серверов, агентов и автоматизации через 7 элективных тем и 28 когнитивных юнитов.
 
-Каждый модуль разбит на юниты по циклу Колба: **Активация → Рефлексия → Концепция → Практика**.
+Каждая тема разбита на юниты по циклу Колба: **Активация → Рефлексия → Концепция → Практика**. Темы независимы — выбирай в любом порядке.
 
-## Структура
+## Темы
 
 ```
-7 модулей × 3–5 юнитов = 28 когнитивных юнитов
+7 тем × 3–5 юнитов = 28 когнитивных юнитов
 
-M0  Kickstart            — карта AI-мира для нонкодеров
-M1  Знакомство           — Software 3.0, четыре сдвига
-M2  Сетап                — рабочая среда, Claude Code CLI
-M3  Промпты              — формулировка ТЗ, магические слова
-M4  Контекст             — память агента, CLAUDE.md, sub-agents
-M5  Pipeline             — URL → scrape → analyze → insights
-M6  Инструменты          — MCP, Hooks, Skills, Superpowers
+Kickstart                — карта AI-мира для нонкодеров
+Знакомство               — Software 3.0, четыре сдвига
+Базовый сетап            — рабочая среда, Claude Code CLI
+Промпт-инжиниринг        — формулировка ТЗ, магические слова
+Контекст и память        — память агента, CLAUDE.md, sub-agents
+Pipeline автоматизации   — URL → scrape → analyze → insights
+Инструменты расширения   — MCP, Hooks, Skills, Superpowers
 ```
 
 ## Стек

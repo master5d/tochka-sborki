@@ -1,0 +1,121 @@
+<h2>Как выглядит одна когнитивная единица?</h2>
+<p class="subtitle">Выбери структуру, по которой learner проходит материал внутри каждого micro-lesson</p>
+
+<div class="cards">
+
+  <!-- Option A: Linear scroll -->
+  <div class="card" data-choice="linear" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="font-family:monospace;font-size:0.72rem;background:#0a0a0a;border:1px solid #222;border-radius:6px;overflow:hidden;width:100%">
+        <!-- Header -->
+        <div style="padding:8px 12px;background:#111;border-bottom:1px solid #222;display:flex;justify-content:space-between;align-items:center">
+          <span style="color:#00ff88;font-size:0.65rem">M01 · Unit 2 из 4</span>
+          <span style="color:#555;font-size:0.65rem">▓▓░░░░░░ 25%</span>
+        </div>
+        <!-- Phase tag + scroll sections -->
+        <div style="padding:10px 12px">
+          <div style="background:#00ff8820;border-left:3px solid #00ff88;padding:6px 10px;margin-bottom:8px;border-radius:0 4px 4px 0">
+            <div style="color:#00ff88;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em">Активация</div>
+            <div style="color:#aaa;font-size:0.7rem;margin-top:3px">Вспомни: последний раз когда ты давал задачу AI — что пошло не так?</div>
+          </div>
+          <div style="background:#00aaff20;border-left:3px solid #00aaff;padding:6px 10px;margin-bottom:8px;border-radius:0 4px 4px 0">
+            <div style="color:#00aaff;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em">Рефлексия</div>
+            <div style="color:#aaa;font-size:0.7rem;margin-top:3px">Почему это произошло? Чего не хватало в запросе?</div>
+          </div>
+          <div style="background:#ff990020;border-left:3px solid #ff9900;padding:6px 10px;margin-bottom:8px;border-radius:0 4px 4px 0">
+            <div style="color:#ff9900;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em">Концепт</div>
+            <div style="color:#aaa;font-size:0.7rem;margin-top:3px">Промпт = ТЗ, а не команда. Четыре элемента хорошего ТЗ...</div>
+          </div>
+          <div style="background:#ff44aa20;border-left:3px solid #ff44aa;padding:6px 10px;border-radius:0 4px 4px 0">
+            <div style="color:#ff44aa;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em">Практика</div>
+            <div style="color:#aaa;font-size:0.7rem;margin-top:3px">Перепиши свой старый промпт по шаблону. Сохрани в my-experiments/</div>
+          </div>
+        </div>
+        <div style="padding:8px 12px;background:#111;border-top:1px solid #222;text-align:center">
+          <span style="color:#555;font-size:0.65rem">↓ скролл · Юнит считается пройденным когда доскроллил до конца</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A. Линейный скролл</h3>
+      <p>Четыре фазы Колба идут сверху вниз на одной странице. Learner скроллит через все. Навигации нет — только вперёд. Завершение: дошёл до конца страницы.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Плюсы</h4><ul><li>Самый простой в реализации</li><li>Нет решений — куда нажимать</li><li>Естественный паттерн чтения</li></ul></div>
+        <div class="cons"><h4>Минусы</h4><ul><li>Нет принудительного «переваривания»</li><li>Можно пропустить фазу скроллом</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B: Stepped wizard -->
+  <div class="card" data-choice="stepped" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="font-family:monospace;font-size:0.72rem;background:#0a0a0a;border:1px solid #222;border-radius:6px;overflow:hidden;width:100%">
+        <!-- Progress dots -->
+        <div style="padding:8px 12px;background:#111;border-bottom:1px solid #222;display:flex;gap:8px;align-items:center">
+          <div style="width:22px;height:22px;border-radius:50%;background:#00ff88;display:flex;align-items:center;justify-content:center;color:#000;font-size:0.6rem;font-weight:700">1</div>
+          <div style="flex:1;height:2px;background:#333"></div>
+          <div style="width:22px;height:22px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;color:#555;font-size:0.6rem">2</div>
+          <div style="flex:1;height:2px;background:#333"></div>
+          <div style="width:22px;height:22px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;color:#555;font-size:0.6rem">3</div>
+          <div style="flex:1;height:2px;background:#333"></div>
+          <div style="width:22px;height:22px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;color:#555;font-size:0.6rem">4</div>
+        </div>
+        <!-- Active step content -->
+        <div style="padding:12px">
+          <div style="color:#00ff88;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Шаг 1 / 4 — Активация</div>
+          <div style="color:#e0e0e0;font-size:0.8rem;line-height:1.5;margin-bottom:12px">Вспомни последний раз, когда ты давал задачу AI и результат тебя разочаровал. Что именно пошло не так?</div>
+          <div style="background:#111;border:1px solid #333;border-radius:4px;padding:8px;color:#555;font-size:0.7rem;margin-bottom:12px">[Поле для размышления — не обязательно заполнять]</div>
+          <div style="display:flex;justify-content:flex-end">
+            <div style="background:#00ff88;color:#000;font-weight:700;padding:6px 16px;border-radius:4px;font-size:0.75rem">Далее →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B. Пошаговый wizard (Recommended)</h3>
+      <p>Каждая фаза — отдельный «экран» внутри страницы. Learner нажимает «Далее» чтобы перейти к следующей. Нельзя скипнуть фазу. Прогресс-бар сверху.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Плюсы</h4><ul><li>Форсирует паузу между фазами</li><li>Каждая фаза получает полное внимание</li><li>Психологически завершённые шаги</li></ul></div>
+        <div class="cons"><h4>Минусы</h4><ul><li>Больше UI-кода</li><li>Нельзя вернуться к предыдущей фазе без перезагрузки</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option C: Tabs -->
+  <div class="card" data-choice="tabs" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="font-family:monospace;font-size:0.72rem;background:#0a0a0a;border:1px solid #222;border-radius:6px;overflow:hidden;width:100%">
+        <!-- Tabs -->
+        <div style="display:flex;border-bottom:1px solid #222;background:#111">
+          <div style="padding:7px 12px;border-bottom:2px solid #00ff88;color:#00ff88;font-size:0.65rem">Активация</div>
+          <div style="padding:7px 12px;color:#555;font-size:0.65rem">Рефлексия</div>
+          <div style="padding:7px 12px;color:#555;font-size:0.65rem">Концепт</div>
+          <div style="padding:7px 12px;color:#555;font-size:0.65rem">Практика</div>
+        </div>
+        <!-- Tab content -->
+        <div style="padding:12px">
+          <div style="color:#e0e0e0;font-size:0.8rem;line-height:1.5;margin-bottom:12px">Вспомни последний раз, когда ты давал задачу AI и результат тебя разочаровал. Что именно пошло не так?</div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="color:#555;font-size:0.65rem">✓ Прочитал — отметь и переходи</span>
+            <div style="background:#00ff88;color:#000;font-weight:700;padding:5px 12px;border-radius:4px;font-size:0.7rem">Отметить →</div>
+          </div>
+        </div>
+        <div style="padding:6px 12px;background:#111;border-top:1px solid #222;display:flex;gap:6px">
+          <div style="width:8px;height:8px;border-radius:50%;background:#00ff88"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#333"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#333"></div>
+          <div style="width:8px;height:8px;border-radius:50%;background:#333"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C. Табы с отметкой</h3>
+      <p>Четыре таба = четыре фазы Колба. Learner сам переключает. Каждый таб надо «отметить» перед следующим. Свобода навигации с лёгким барьером.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Плюсы</h4><ul><li>Learner видит все фазы сразу</li><li>Можно вернуться к любой</li></ul></div>
+        <div class="cons"><h4>Минусы</h4><ul><li>Соблазн кликнуть сразу на «Концепт»</li><li>Барьер слабее чем wizard</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>

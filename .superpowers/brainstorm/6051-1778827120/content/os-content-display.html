@@ -1,0 +1,66 @@
+<h2>Как показывать OS-специфичный контент в уроках?</h2>
+<p class="subtitle">Три варианта отображения — выбери что удобнее для студента</p>
+
+<div class="cards">
+  <div class="card" data-choice="tabs" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="font-family:monospace;font-size:0.78rem;background:#0a0a0a;border:1px solid #333;border-radius:6px;overflow:hidden">
+        <div style="display:flex;border-bottom:1px solid #333">
+          <div style="padding:6px 14px;background:#1a1a1a;border-right:1px solid #333;color:#00ff88;font-size:0.75rem">🍎 Mac</div>
+          <div style="padding:6px 14px;color:#555;font-size:0.75rem">🪟 Windows</div>
+        </div>
+        <div style="padding:10px 14px;color:#e0e0e0">brew install node</div>
+      </div>
+      <div style="margin-top:8px;font-size:0.7rem;color:#666;font-family:monospace">Каждый code block — отдельный tab switcher</div>
+    </div>
+    <div class="card-body">
+      <h3>A. Tabs на каждом блоке</h3>
+      <p>Переключатель Mac/Win прямо над кодом. Студент видит оба варианта и может переключаться.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Плюсы</h4><ul><li>Видно оба варианта</li><li>Можно сравнить</li></ul></div>
+        <div class="cons"><h4>Минусы</h4><ul><li>Много UI-элементов</li><li>Загромождает урок</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="hidden" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="font-family:monospace;font-size:0.78rem;background:#0a0a0a;border:1px solid #333;border-radius:6px;padding:10px 14px">
+        <div style="color:#888;font-size:0.7rem;margin-bottom:6px">// Показывается только твой вариант (Mac)</div>
+        <div style="color:#e0e0e0">brew install node</div>
+        <div style="color:#888;font-size:0.7rem;margin-top:8px;font-style:italic">Windows-секция скрыта</div>
+      </div>
+      <div style="margin-top:8px;font-size:0.7rem;color:#666;font-family:monospace">OS выбрана один раз → контент фильтруется</div>
+    </div>
+    <div class="card-body">
+      <h3>B. Скрытые секции (Recommended)</h3>
+      <p>Студент выбрал OS в wizard → нерелевантные секции не показываются вообще. Чистый, фокусный опыт.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Плюсы</h4><ul><li>Чистый урок</li><li>Нет когнитивного шума</li></ul></div>
+        <div class="cons"><h4>Минусы</h4><ul><li>Нельзя сравнить</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="toggle" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="display:flex;align-items:center;gap:8px;background:#0a0a0a;border:1px solid #333;border-radius:6px;padding:8px 12px">
+        <div style="font-family:monospace;font-size:0.7rem;color:#888">Показываю для:</div>
+        <div style="display:flex;gap:4px">
+          <div style="padding:3px 10px;background:#00ff88;color:#000;border-radius:4px;font-size:0.7rem;font-weight:700">Mac</div>
+          <div style="padding:3px 10px;background:#1a1a1a;color:#555;border-radius:4px;font-size:0.7rem;border:1px solid #333">Win</div>
+        </div>
+      </div>
+      <div style="margin-top:8px;font-family:monospace;font-size:0.78rem;background:#0a0a0a;border:1px solid #333;border-radius:6px;padding:10px 14px;color:#e0e0e0">brew install node</div>
+      <div style="margin-top:6px;font-size:0.7rem;color:#666;font-family:monospace">Один глобальный переключатель в Nav или sidebar</div>
+    </div>
+    <div class="card-body">
+      <h3>C. Глобальный toggle в Nav</h3>
+      <p>В шапке сайта — кнопка Mac/Win. Переключает контент на всём сайте сразу. Видно текущий выбор.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Плюсы</h4><ul><li>Легко переключить</li><li>Всегда видно</li></ul></div>
+        <div class="cons"><h4>Минусы</h4><ul><li>UI сложнее</li><li>Надо помнить про него</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -41,7 +41,7 @@ export function LessonLayout({ meta, navItems, children }: LessonLayoutProps) {
             fontSize: '0.75rem',
             color: 'var(--text-accent)',
           }}>
-            Level {meta.level} · {meta.duration}
+            {meta.duration}
           </div>
           {children}
           {meta.assignment && <AssignmentBlock text={meta.assignment} />}

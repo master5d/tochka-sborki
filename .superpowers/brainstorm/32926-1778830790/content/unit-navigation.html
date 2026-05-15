@@ -1,0 +1,130 @@
+<h2>Навигация между unit'ами</h2>
+<p class="subtitle">Как learner видит структуру meeting'а и переходит между micro-lessons</p>
+
+<div class="cards">
+
+  <!-- Option A: Nested sidebar -->
+  <div class="card" data-choice="nested-sidebar" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="display:flex;font-family:monospace;font-size:0.72rem;background:#0a0a0a;border:1px solid #222;border-radius:6px;overflow:hidden;height:230px">
+        <!-- Sidebar -->
+        <div style="width:160px;background:#111;border-right:1px solid #222;padding:10px 0;flex-shrink:0;overflow-y:auto">
+          <div style="padding:4px 12px;color:#555;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Встречи</div>
+          <div style="padding:5px 12px;color:#555;font-size:0.7rem">M0 Карта</div>
+          <!-- M1 expanded -->
+          <div style="padding:5px 12px;color:#00ff88;font-size:0.7rem;font-weight:700">M1 Введение ▾</div>
+          <div style="padding:4px 12px 4px 20px;color:#00ff88;font-size:0.65rem;background:#00ff8810;border-left:2px solid #00ff88;margin-left:12px">✓ U1 Активация</div>
+          <div style="padding:4px 12px 4px 20px;color:#fff;font-size:0.65rem;background:#ffffff08;border-left:2px solid #00ff88;margin-left:12px">→ U2 Четыре сдвига</div>
+          <div style="padding:4px 12px 4px 20px;color:#555;font-size:0.65rem;border-left:2px solid #333;margin-left:12px">○ U3 Клоны</div>
+          <div style="padding:4px 12px 4px 20px;color:#555;font-size:0.65rem;border-left:2px solid #333;margin-left:12px">○ U4 Практика</div>
+          <!-- M2 collapsed -->
+          <div style="padding:5px 12px;color:#555;font-size:0.7rem">M2 Настройка ▸</div>
+          <div style="padding:5px 12px;color:#555;font-size:0.7rem">M3 Промпты ▸</div>
+          <div style="padding:5px 12px;color:#555;font-size:0.7rem">M4 Контекст ▸</div>
+        </div>
+        <!-- Main content area -->
+        <div style="flex:1;padding:12px;overflow:hidden">
+          <div style="color:#555;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">M1 · Unit 2 из 4</div>
+          <div style="color:#fff;font-size:0.85rem;font-weight:700;margin-bottom:6px">Четыре сдвига в работе с AI</div>
+          <!-- Wizard phase indicator -->
+          <div style="display:flex;gap:4px;margin-bottom:10px">
+            <div style="flex:1;height:3px;background:#00ff88;border-radius:2px"></div>
+            <div style="flex:1;height:3px;background:#333;border-radius:2px"></div>
+            <div style="flex:1;height:3px;background:#333;border-radius:2px"></div>
+            <div style="flex:1;height:3px;background:#333;border-radius:2px"></div>
+          </div>
+          <div style="color:#00ff88;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Шаг 1/4 · Активация</div>
+          <div style="color:#aaa;font-size:0.75rem;line-height:1.5;margin-bottom:10px">Вспомни последний AI-запрос, который разочаровал тебя. Что именно пошло не так?</div>
+          <div style="display:flex;justify-content:flex-end">
+            <div style="background:#00ff88;color:#000;font-weight:700;padding:5px 12px;border-radius:4px;font-size:0.7rem">Далее →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A. Вложенный sidebar (Recommended)</h3>
+      <p>Unit'ы раскрываются в боковом меню под названием meeting'а. Текущий unit подсвечен. Завершённые отмечены ✓. Learner видит весь путь и своё место в нём.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Плюсы</h4><ul><li>Постоянная навигационная карта</li><li>Прогресс виден в сайдбаре</li><li>Можно вернуться к любому unit'у</li></ul></div>
+        <div class="cons"><h4>Минусы</h4><ul><li>Сайдбар становится длиннее</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B: Meeting landing page -->
+  <div class="card" data-choice="meeting-landing" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="font-family:monospace;font-size:0.72rem;background:#0a0a0a;border:1px solid #222;border-radius:6px;overflow:hidden">
+        <!-- Meeting overview page -->
+        <div style="padding:8px 14px;background:#111;border-bottom:1px solid #222;color:#00ff88;font-size:0.65rem">M1 — Введение</div>
+        <div style="padding:12px 14px">
+          <div style="color:#fff;font-size:0.8rem;font-weight:700;margin-bottom:8px">Meeting 1: Software 3.0</div>
+          <div style="color:#555;font-size:0.65rem;margin-bottom:10px">4 unit'а · ~30 мин · твой прогресс: 1/4</div>
+          <!-- Unit cards in a grid -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+            <div style="background:#00ff8815;border:1px solid #00ff8840;border-radius:4px;padding:8px">
+              <div style="color:#00ff88;font-size:0.6rem;margin-bottom:2px">✓ Завершён</div>
+              <div style="color:#aaa;font-size:0.7rem;font-weight:700">U1 · Активация</div>
+              <div style="color:#555;font-size:0.65rem">Твой опыт с AI</div>
+            </div>
+            <div style="background:#ffffff08;border:2px solid #00ff88;border-radius:4px;padding:8px">
+              <div style="color:#00ff88;font-size:0.6rem;margin-bottom:2px">→ Сейчас здесь</div>
+              <div style="color:#fff;font-size:0.7rem;font-weight:700">U2 · 4 сдвига</div>
+              <div style="color:#555;font-size:0.65rem">Новая парадигма</div>
+            </div>
+            <div style="background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:8px;opacity:0.5">
+              <div style="color:#555;font-size:0.6rem;margin-bottom:2px">Заблокирован</div>
+              <div style="color:#666;font-size:0.7rem;font-weight:700">U3 · Клоны</div>
+              <div style="color:#444;font-size:0.65rem">5 типов агентов</div>
+            </div>
+            <div style="background:#0a0a0a;border:1px solid #222;border-radius:4px;padding:8px;opacity:0.5">
+              <div style="color:#555;font-size:0.6rem;margin-bottom:2px">Заблокирован</div>
+              <div style="color:#666;font-size:0.7rem;font-weight:700">U4 · Практика</div>
+              <div style="color:#444;font-size:0.65rem">Первый промпт</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B. Лендинг meeting'а</h3>
+      <p>Нажав на "Meeting 1" в сайдбаре — попадаешь на страницу-обзор со всеми unit'ами как карточки. Оттуда входишь в конкретный unit. Завершённые разблокируют следующие.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Плюсы</h4><ul><li>Красивый обзор всей встречи</li><li>Gamification: «разблокировать»</li></ul></div>
+        <div class="cons"><h4>Минусы</h4><ul><li>Лишний клик для старта</li><li>Принудительная последовательность может раздражать</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option C: Linear prev/next only -->
+  <div class="card" data-choice="linear-nav" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="font-family:monospace;font-size:0.72rem;background:#0a0a0a;border:1px solid #222;border-radius:6px;overflow:hidden">
+        <!-- Minimal header -->
+        <div style="padding:8px 14px;background:#111;border-bottom:1px solid #222;display:flex;justify-content:space-between;align-items:center">
+          <span style="color:#555;font-size:0.65rem">M1 · U2/4 · Шаг 1/4</span>
+          <span style="color:#00ff88;font-size:0.65rem">▓▓░░░░░░ 12%</span>
+        </div>
+        <!-- Content -->
+        <div style="padding:12px 14px">
+          <div style="color:#fff;font-size:0.85rem;font-weight:700;margin-bottom:6px">Четыре сдвига</div>
+          <div style="color:#aaa;font-size:0.75rem;line-height:1.5;margin-bottom:12px">Активация: вспомни последний AI-запрос, который разочаровал тебя...</div>
+        </div>
+        <!-- Bottom navigation -->
+        <div style="padding:8px 14px;background:#111;border-top:1px solid #222;display:flex;justify-content:space-between;align-items:center">
+          <div style="color:#555;font-size:0.7rem;padding:5px 10px;border:1px solid #333;border-radius:4px">← U1 Активация</div>
+          <div style="background:#00ff88;color:#000;font-weight:700;padding:5px 12px;border-radius:4px;font-size:0.7rem">Следующий шаг →</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C. Только Prev / Next</h3>
+      <p>Нет сайдбара с unit'ами. Только кнопки «назад/вперёд» внизу страницы и прогресс-бар сверху. Максимальный фокус на текущем unit'е.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Плюсы</h4><ul><li>Минималистично</li><li>Нет соблазна прыгать вперёд</li></ul></div>
+        <div class="cons"><h4>Минусы</h4><ul><li>Learner не видит где находится в курсе</li><li>Дезориентирует при возврате</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>

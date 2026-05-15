@@ -1,10 +1,10 @@
 const ITEMS = [
-  { tag: 'M2', text: 'Claude Code с нуля до продакшна — первый деплой' },
-  { tag: 'M6', text: 'MCP-серверы: подключить инструмент за 20 минут' },
-  { tag: 'M5', text: 'Pipeline: URL → скрапинг → анализ → инсайты' },
-  { tag: 'M3', text: 'Промпты, которые работают — не «переформулируй»' },
-  { tag: 'M4', text: 'Агенты, которые пашут пока ты спишь' },
-  { tag: 'M4', text: 'CLAUDE.md — агент, помнящий твой контекст' },
+  'Claude Code с нуля до продакшна — первый деплой',
+  'MCP-серверы: подключить инструмент за 20 минут',
+  'Pipeline: URL → скрапинг → анализ → инсайты',
+  'Промпты, которые работают — не «переформулируй»',
+  'Агенты, которые пашут пока ты спишь',
+  'CLAUDE.md — агент, помнящий твой контекст',
 ]
 
 const EXCLUDED = [
@@ -79,42 +79,29 @@ export function ProgramVenn() {
             flexDirection: 'column',
             gap: '1.25rem',
           }}>
-            {ITEMS.map((item, i) => (
+            {ITEMS.map((text, i) => (
               <li key={i} style={{
                 display: 'grid',
-                gridTemplateColumns: '2.5rem 1fr auto',
-                gap: '1rem',
+                gridTemplateColumns: '1.25rem 1fr',
+                gap: '0.75rem',
                 alignItems: 'baseline',
                 paddingBottom: '1.25rem',
                 borderBottom: '1px solid var(--border-color)',
               }}>
                 <span style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.7rem',
+                  fontSize: '0.85rem',
                   color: 'var(--text-accent)',
-                  letterSpacing: '0.05em',
-                  fontWeight: 700,
+                  lineHeight: 1.5,
                 }}>
-                  {String(i + 1).padStart(2, '0')}
+                  ▸
                 </span>
                 <span style={{
-                  fontSize: '0.9rem',
+                  fontSize: '0.95rem',
                   color: 'var(--text-primary)',
                   lineHeight: 1.55,
                 }}>
-                  {item.text}
-                </span>
-                <span style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.65rem',
-                  color: 'var(--text-secondary)',
-                  letterSpacing: '0.08em',
-                  padding: '0.15rem 0.5rem',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '2px',
-                  whiteSpace: 'nowrap',
-                }}>
-                  {item.tag}
+                  {text}
                 </span>
               </li>
             ))}

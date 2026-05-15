@@ -1,0 +1,189 @@
+<h2>Дизайн: Когнитивные единицы в LMS</h2>
+<p class="subtitle">Полная архитектура — проверь каждый раздел</p>
+
+<div style="max-width:860px;margin:0 auto">
+
+  <!-- Section 1: Architecture -->
+  <div class="section">
+    <div style="font-family:monospace;font-size:0.65rem;color:#00ff88;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.75rem">01 / Общая архитектура</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem">
+      <div style="background:#111;border:1px solid #222;border-radius:6px;padding:1rem">
+        <div style="font-family:monospace;font-size:0.65rem;color:#ff9900;margin-bottom:0.5rem">БЫЛО</div>
+        <div style="font-family:monospace;font-size:0.75rem;color:#aaa;line-height:1.8">
+          /lessons/01-introduction/<br>
+          → одна большая MDX-страница<br>
+          → 400–700 строк<br>
+          → нет пауз<br>
+          → теория сразу
+        </div>
+      </div>
+      <div style="background:#111;border:1px solid #00ff88;border-radius:6px;padding:1rem;display:flex;align-items:center;justify-content:center">
+        <div style="font-family:monospace;font-size:1.5rem;color:#00ff88">→</div>
+      </div>
+      <div style="background:#001a00;border:1px solid #00ff88;border-radius:6px;padding:1rem">
+        <div style="font-family:monospace;font-size:0.65rem;color:#00ff88;margin-bottom:0.5rem">СТАЛО</div>
+        <div style="font-family:monospace;font-size:0.75rem;color:#aaa;line-height:1.8">
+          /lessons/01-introduction/u1/<br>
+          /lessons/01-introduction/u2/<br>
+          /lessons/01-introduction/u3/<br>
+          → каждый unit = 4-шаговый wizard<br>
+          → 80–150 строк MDX
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: File structure -->
+  <div class="section">
+    <div style="font-family:monospace;font-size:0.65rem;color:#00ff88;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.75rem">02 / Файловая структура</div>
+    <div style="background:#0a0a0a;border:1px solid #222;border-radius:6px;padding:1.25rem;font-family:monospace;font-size:0.75rem;line-height:1.9;color:#aaa">
+      <span style="color:#555">web/content/ru/</span><br>
+      &nbsp;&nbsp;<span style="color:#00aaff">01-introduction/</span> &nbsp;<span style="color:#333">← папка вместо одного файла</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fff">_meta.json</span> &nbsp;<span style="color:#333">← порядок и названия unit'ов</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fff">u1-activation.mdx</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fff">u2-four-shifts.mdx</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fff">u3-clones.mdx</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fff">u4-practice.mdx</span><br>
+      &nbsp;&nbsp;<span style="color:#00aaff">02-setup-guide/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#aaa">u1-… u2-… u3-…</span><br>
+      &nbsp;&nbsp;<span style="color:#555">03-prompt-engineering/ …</span><br>
+      <br>
+      <span style="color:#555">web/app/lessons/</span><br>
+      &nbsp;&nbsp;<span style="color:#00aaff">[meeting]/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fff">page.tsx</span> &nbsp;<span style="color:#333">← редирект на первый незавершённый unit</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#00aaff">[unit]/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#fff">page.tsx</span> &nbsp;<span style="color:#333">← unit-страница с wizard'ом</span><br>
+    </div>
+  </div>
+
+  <!-- Section 3: MDX format -->
+  <div class="section">
+    <div style="font-family:monospace;font-size:0.65rem;color:#00ff88;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.75rem">03 / Формат MDX unit'а</div>
+    <div style="background:#0a0a0a;border:1px solid #222;border-radius:6px;padding:1.25rem;font-family:monospace;font-size:0.75rem;line-height:1.7">
+      <span style="color:#555">---</span><br>
+      <span style="color:#00aaff">title</span><span style="color:#aaa">: "Четыре сдвига"</span><br>
+      <span style="color:#00aaff">unit</span><span style="color:#aaa">: 2</span><br>
+      <span style="color:#00aaff">meeting</span><span style="color:#aaa">: 1</span><br>
+      <span style="color:#00aaff">duration</span><span style="color:#aaa">: "10 мин"</span><br>
+      <span style="color:#555">---</span><br>
+      <br>
+      <span style="color:#00ff88">&lt;Phase type="activation"&gt;</span><br>
+      <span style="color:#aaa">Вспомни последний AI-запрос, который разочаровал тебя.<br>Что именно пошло не так?</span><br>
+      <span style="color:#00ff88">&lt;/Phase&gt;</span><br>
+      <br>
+      <span style="color:#00aaff">&lt;Phase type="reflection"&gt;</span><br>
+      <span style="color:#aaa">Почему это произошло? Чего не хватало — контекста, роли, критериев?</span><br>
+      <span style="color:#00aaff">&lt;/Phase&gt;</span><br>
+      <br>
+      <span style="color:#ff9900">&lt;Phase type="concept"&gt;</span><br>
+      <span style="color:#aaa">## Сдвиг 1: От команд → к делегированию<br>LLM — не калькулятор, это джуниор-коллега…</span><br>
+      <span style="color:#ff9900">&lt;/Phase&gt;</span><br>
+      <br>
+      <span style="color:#ff44aa">&lt;Phase type="practice"&gt;</span><br>
+      <span style="color:#aaa">Перепиши свой старый промпт по шаблону Role+Task+Output.<br>Сохрани в `my-experiments/u2-shift.md`</span><br>
+      <span style="color:#ff44aa">&lt;/Phase&gt;</span>
+    </div>
+  </div>
+
+  <!-- Section 4: localStorage schema -->
+  <div class="section">
+    <div style="font-family:monospace;font-size:0.65rem;color:#00ff88;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.75rem">04 / localStorage schema</div>
+    <div style="background:#0a0a0a;border:1px solid #222;border-radius:6px;padding:1.25rem;font-family:monospace;font-size:0.75rem;line-height:1.7">
+      <span style="color:#555">// ключ: "unit_progress"</span><br>
+      <span style="color:#ff9900">{</span><br>
+      &nbsp;&nbsp;<span style="color:#00aaff">"01-introduction"</span><span style="color:#aaa">: {</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#00aaff">"u1-activation"</span><span style="color:#aaa">: </span><span style="color:#00ff88">true</span><span style="color:#aaa">,</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#00aaff">"u2-four-shifts"</span><span style="color:#aaa">: </span><span style="color:#ff4444">false</span><br>
+      &nbsp;&nbsp;<span style="color:#aaa">},</span><br>
+      &nbsp;&nbsp;<span style="color:#00aaff">"02-setup-guide"</span><span style="color:#aaa">: {}</span><br>
+      <span style="color:#ff9900">}</span>
+    </div>
+    <div style="font-family:monospace;font-size:0.7rem;color:#555;margin-top:0.5rem">Сайдбар читает этот объект при монтировании и показывает ✓/→/○ для каждого unit'а</div>
+  </div>
+
+  <!-- Section 5: New components -->
+  <div class="section">
+    <div style="font-family:monospace;font-size:0.65rem;color:#00ff88;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.75rem">05 / Новые компоненты</div>
+    <table style="width:100%;border-collapse:collapse;font-family:monospace;font-size:0.75rem">
+      <tr style="border-bottom:1px solid #222">
+        <td style="padding:8px 12px;color:#fff;font-weight:700">UnitWizard</td>
+        <td style="padding:8px 12px;color:#aaa">Оборачивает Phase-компоненты. Управляет currentStep (useState). Показывает прогресс-бар и кнопки Далее/Готово.</td>
+      </tr>
+      <tr style="border-bottom:1px solid #222;background:#0a0a0a">
+        <td style="padding:8px 12px;color:#fff;font-weight:700">Phase</td>
+        <td style="padding:8px 12px;color:#aaa">type: 'activation'|'reflection'|'concept'|'practice'. Рендерит заголовок фазы + children. Видима только если currentStep совпадает.</td>
+      </tr>
+      <tr style="border-bottom:1px solid #222">
+        <td style="padding:8px 12px;color:#fff;font-weight:700">UnitSidebar</td>
+        <td style="padding:8px 12px;color:#aaa">Расширяет текущий Sidebar. Читает unit_progress из localStorage. Показывает unit'ы как вложенный список под meeting'ом.</td>
+      </tr>
+      <tr style="background:#0a0a0a">
+        <td style="padding:8px 12px;color:#fff;font-weight:700">MeetingIndex</td>
+        <td style="padding:8px 12px;color:#aaa">Страница /lessons/[meeting]/. Сервер-компонент, читает _meta.json. Редиректит на первый незавершённый unit (client-side после чтения localStorage).</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Section 6: Content split proposal -->
+  <div class="section">
+    <div style="font-family:monospace;font-size:0.65rem;color:#00ff88;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.75rem">06 / Разбивка контента по unit'ам (предложение)</div>
+    <table style="width:100%;border-collapse:collapse;font-family:monospace;font-size:0.72rem">
+      <thead>
+        <tr style="border-bottom:1px solid #333">
+          <th style="text-align:left;padding:6px 10px;color:#555;font-weight:400">Meeting</th>
+          <th style="text-align:left;padding:6px 10px;color:#555;font-weight:400">Unit'ы</th>
+          <th style="padding:6px 10px;color:#555;font-weight:400">N</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #111">
+          <td style="padding:7px 10px;color:#aaa">M0 Kickstart</td>
+          <td style="padding:7px 10px;color:#666">u1-map · u2-tools · u3-first-steps</td>
+          <td style="text-align:center;padding:7px 10px;color:#aaa">3</td>
+        </tr>
+        <tr style="border-bottom:1px solid #111;background:#0a0a0a">
+          <td style="padding:7px 10px;color:#aaa">M1 Introduction</td>
+          <td style="padding:7px 10px;color:#666">u1-activation · u2-four-shifts · u3-clones · u4-practice</td>
+          <td style="text-align:center;padding:7px 10px;color:#aaa">4</td>
+        </tr>
+        <tr style="border-bottom:1px solid #111">
+          <td style="padding:7px 10px;color:#aaa">M2 Setup Guide</td>
+          <td style="padding:7px 10px;color:#666">u1-env-check · u2-install · u3-first-project</td>
+          <td style="text-align:center;padding:7px 10px;color:#aaa">3</td>
+        </tr>
+        <tr style="border-bottom:1px solid #111;background:#0a0a0a">
+          <td style="padding:7px 10px;color:#aaa">M3 Prompt Eng.</td>
+          <td style="padding:7px 10px;color:#666">u1-activation · u2-spec-formula · u3-magic-words · u4-sins · u5-practice</td>
+          <td style="text-align:center;padding:7px 10px;color:#aaa">5</td>
+        </tr>
+        <tr style="border-bottom:1px solid #111">
+          <td style="padding:7px 10px;color:#aaa">M4 Context</td>
+          <td style="padding:7px 10px;color:#666">u1-activation · u2-context-vs-prompt · u3-memory · u4-practice</td>
+          <td style="text-align:center;padding:7px 10px;color:#aaa">4</td>
+        </tr>
+        <tr style="border-bottom:1px solid #111;background:#0a0a0a">
+          <td style="padding:7px 10px;color:#aaa">M5 Pipeline</td>
+          <td style="padding:7px 10px;color:#666">u1-activation · u2-pipeline-theory · u3-build · u4-reflect</td>
+          <td style="text-align:center;padding:7px 10px;color:#aaa">4</td>
+        </tr>
+        <tr>
+          <td style="padding:7px 10px;color:#aaa">M6 Tools</td>
+          <td style="padding:7px 10px;color:#666">u1-activation · u2-mcp · u3-hooks · u4-skills · u5-practice</td>
+          <td style="text-align:center;padding:7px 10px;color:#aaa">5</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr style="border-top:1px solid #333">
+          <td colspan="2" style="padding:7px 10px;color:#555">Итого unit'ов</td>
+          <td style="text-align:center;padding:7px 10px;color:#00ff88;font-weight:700">28</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div style="background:#001a00;border:1px solid #00ff88;border-radius:6px;padding:1rem;font-family:monospace;font-size:0.75rem;color:#66cc66;margin-top:1rem">
+    Это дизайн — не финальный план. Смотри каждый раздел. Что хочешь изменить до того, как я запишу spec?
+  </div>
+
+</div>

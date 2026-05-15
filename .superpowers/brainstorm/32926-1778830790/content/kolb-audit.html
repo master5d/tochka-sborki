@@ -1,0 +1,111 @@
+<h2>Педагогический аудит: Точка Сборки × Цикл Колба</h2>
+<p class="subtitle">Что есть сейчас — и где дыры</p>
+
+<div style="max-width:860px;margin:0 auto">
+
+  <!-- Kolb cycle legend -->
+  <div style="display:flex;gap:0.5rem;margin-bottom:2rem;flex-wrap:wrap">
+    <span style="background:#00ff88;color:#000;padding:3px 10px;border-radius:4px;font-size:0.7rem;font-family:monospace;font-weight:700">1 Опыт</span>
+    <span style="background:#00aaff;color:#000;padding:3px 10px;border-radius:4px;font-size:0.7rem;font-family:monospace;font-weight:700">2 Рефлексия</span>
+    <span style="background:#ff9900;color:#000;padding:3px 10px;border-radius:4px;font-size:0.7rem;font-family:monospace;font-weight:700">3 Концепция</span>
+    <span style="background:#ff44aa;color:#000;padding:3px 10px;border-radius:4px;font-size:0.7rem;font-family:monospace;font-weight:700">4 Эксперимент</span>
+    <span style="background:#222;color:#555;padding:3px 10px;border-radius:4px;font-size:0.7rem;font-family:monospace">✗ отсутствует</span>
+    <span style="background:#222;color:#aaa;padding:3px 10px;border-radius:4px;font-size:0.7rem;font-family:monospace">~ частично</span>
+  </div>
+
+  <!-- Audit table -->
+  <table style="width:100%;border-collapse:collapse;font-family:monospace;font-size:0.8rem">
+    <thead>
+      <tr style="border-bottom:2px solid #333">
+        <th style="text-align:left;padding:8px 12px;color:#666;font-weight:400">Модуль</th>
+        <th style="padding:8px;color:#00ff88;font-weight:700">1 Опыт</th>
+        <th style="padding:8px;color:#00aaff;font-weight:700">2 Рефлексия</th>
+        <th style="padding:8px;color:#ff9900;font-weight:700">3 Концепция</th>
+        <th style="padding:8px;color:#ff44aa;font-weight:700">4 Эксперимент</th>
+        <th style="text-align:left;padding:8px 12px;color:#666;font-weight:400">Главная проблема</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #1a1a1a">
+        <td style="padding:10px 12px;color:#fff">00-kickstart</td>
+        <td style="text-align:center;padding:8px;color:#555">✗</td>
+        <td style="text-align:center;padding:8px;color:#555">✗</td>
+        <td style="text-align:center;padding:8px;color:#ff9900">✓</td>
+        <td style="text-align:center;padding:8px;color:#aaa">~</td>
+        <td style="padding:8px 12px;color:#666;font-size:0.75rem">Сразу карта местности без привязки к опыту читателя</td>
+      </tr>
+      <tr style="border-bottom:1px solid #1a1a1a;background:#0a0a0a">
+        <td style="padding:10px 12px;color:#fff">01-introduction</td>
+        <td style="text-align:center;padding:8px;color:#555">✗</td>
+        <td style="text-align:center;padding:8px;color:#555">✗</td>
+        <td style="text-align:center;padding:8px;color:#ff9900">✓✓</td>
+        <td style="text-align:center;padding:8px;color:#aaa">~</td>
+        <td style="padding:8px 12px;color:#ff4444;font-size:0.75rem">Открывается теорией Software 1/2/3. Нет активации. Дз только в конце.</td>
+      </tr>
+      <tr style="border-bottom:1px solid #1a1a1a">
+        <td style="padding:10px 12px;color:#fff">02-setup-guide</td>
+        <td style="text-align:center;padding:8px;color:#555">✗</td>
+        <td style="text-align:center;padding:8px;color:#555">✗</td>
+        <td style="text-align:center;padding:8px;color:#ff9900">✓✓</td>
+        <td style="text-align:center;padding:8px;color:#ff44aa">✓</td>
+        <td style="padding:8px 12px;color:#666;font-size:0.75rem">Справочник установки. Функциональный, но без педагогики.</td>
+      </tr>
+      <tr style="border-bottom:1px solid #1a1a1a;background:#0a0a0a">
+        <td style="padding:10px 12px;color:#fff">03-prompt-engineering</td>
+        <td style="text-align:center;padding:8px;color:#555">✗</td>
+        <td style="text-align:center;padding:8px;color:#555">✗</td>
+        <td style="text-align:center;padding:8px;color:#ff9900">✓✓✓</td>
+        <td style="text-align:center;padding:8px;color:#aaa">~</td>
+        <td style="padding:8px 12px;color:#ff4444;font-size:0.75rem">Дублирует 4 сдвига из Meeting 1. Огромный теоретический монолит (700+ строк).</td>
+      </tr>
+      <tr style="border-bottom:1px solid #1a1a1a">
+        <td style="padding:10px 12px;color:#fff">04-context-memory</td>
+        <td style="text-align:center;padding:8px;color:#555">✗</td>
+        <td style="text-align:center;padding:8px;color:#555">✗</td>
+        <td style="text-align:center;padding:8px;color:#ff9900">✓✓</td>
+        <td style="text-align:center;padding:8px;color:#aaa">~</td>
+        <td style="padding:8px 12px;color:#aaa;font-size:0.75rem">Паттерн тот же — сначала теория</td>
+      </tr>
+      <tr style="border-bottom:1px solid #1a1a1a;background:#0a0a0a">
+        <td style="padding:10px 12px;color:#fff">05-audio-pipeline</td>
+        <td style="text-align:center;padding:8px;color:#00ff88">✓</td>
+        <td style="text-align:center;padding:8px;color:#555">✗</td>
+        <td style="text-align:center;padding:8px;color:#ff9900">✓✓</td>
+        <td style="text-align:center;padding:8px;color:#ff44aa">✓✓</td>
+        <td style="padding:8px 12px;color:#aaa;font-size:0.75rem">Лучший модуль — pipeline даёт конкретный опыт через практику</td>
+      </tr>
+      <tr style="border-bottom:1px solid #1a1a1a">
+        <td style="padding:10px 12px;color:#fff">06-tools</td>
+        <td style="text-align:center;padding:8px;color:#555">✗</td>
+        <td style="text-align:center;padding:8px;color:#555">✗</td>
+        <td style="text-align:center;padding:8px;color:#ff9900">✓✓✓</td>
+        <td style="text-align:center;padding:8px;color:#aaa">~</td>
+        <td style="padding:8px 12px;color:#aaa;font-size:0.75rem">MCP-каталог без активации. Всё в одном месте.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Summary -->
+  <div style="margin-top:2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+    <div style="background:#1a0000;border:1px solid #440000;border-radius:6px;padding:1.25rem">
+      <div style="font-family:monospace;font-size:0.65rem;color:#ff4444;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem">Системные проблемы</div>
+      <ul style="font-family:monospace;font-size:0.8rem;color:#cc6666;margin:0;padding-left:1.25rem;line-height:1.9">
+        <li>Этапы 1 и 2 (Опыт + Рефлексия) <strong>полностью отсутствуют</strong> в 6/7 модулях</li>
+        <li>Все уроки — монолит без пауз и чекпоинтов</li>
+        <li>Домашка всегда в самом конце — не встроена в процесс</li>
+        <li>«4 сдвига» повторяются в M1 и M3 почти дословно</li>
+        <li>Нет структуры «сессия» — нельзя остановиться на половине урока</li>
+      </ul>
+    </div>
+    <div style="background:#001a00;border:1px solid #004400;border-radius:6px;padding:1.25rem">
+      <div style="font-family:monospace;font-size:0.65rem;color:#00ff88;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.75rem">Что работает</div>
+      <ul style="font-family:monospace;font-size:0.8rem;color:#66cc66;margin:0;padding-left:1.25rem;line-height:1.9">
+        <li>Примеры кода и до/после сравнения — хорошие «якоря»</li>
+        <li>M05 (audio pipeline) близок к идеалу — задача даёт конкретный опыт</li>
+        <li>Feedback-форма в конце каждого урока — рефлексия есть, но слабая</li>
+        <li>Чеклист «результат Meeting X» — хорошая точка концептуализации</li>
+      </ul>
+    </div>
+  </div>
+
+</div>

@@ -72,9 +72,6 @@ export function Sidebar({ navItems, currentSlug, currentUnit }: SidebarProps) {
               borderLeft: isActiveLesson ? '2px solid var(--text-accent)' : '2px solid transparent',
             }}>
               <LessonIcon state={state} />
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem' }}>
-                L{item.level}
-              </span>
               <span style={{ flex: 1 }}>{item.title}</span>
             </Link>
           )
@@ -94,9 +91,6 @@ export function Sidebar({ navItems, currentSlug, currentUnit }: SidebarProps) {
               borderLeft: isActiveModule ? '2px solid var(--text-accent)' : '2px solid transparent',
             }}>
               <span style={{ color: 'var(--border-color)', fontSize: '0.8rem' }}>⬡</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem' }}>
-                M{item.level}
-              </span>
               <span style={{ flex: 1 }}>{item.title}</span>
             </Link>
 

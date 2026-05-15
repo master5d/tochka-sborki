@@ -40,7 +40,7 @@ describe('getLessonBySlug', () => {
 
   it('getModuleMeta returns correct data for 01-introduction', () => {
     const meta = getModuleMeta('01-introduction')
-    expect(meta.title).toBe('M1: Знакомство')
+    expect(meta.title).toBe('Знакомство')
     expect(meta.units).toHaveLength(4)
     expect(meta.units[0].slug).toBe('u1-activation')
   })

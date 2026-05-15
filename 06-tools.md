@@ -1,0 +1,477 @@
+# Meeting 6: Инструменты расширения
+
+## 🎯 Цели встречи
+- Понять протокол MCP и как подключать серверы
+- Освоить Agent Skills как модульные возможности
+- Настроить Hooks для автоматизации рабочего процесса
+- Познакомиться с Superpowers — дисциплинированным workflow
+
+## 📋 Предварительные требования
+- Пройти Meeting 2 (сетап и Claude Code CLI)
+- Пройти Meeting 4 (контекст и CLAUDE.md)
+
+---
+
+## 📡 Claude Code: Always-On агент
+
+Ключевой сдвиг: от **"спросил — ждёшь"** к **always-on агенту**.
+
+Claude Code поддерживает двусторонний чат-мост через Telegram и Discord:
+проверяй работу агента с телефона, получай уведомления о CI-ошибках, одобряй действия — без открытия терминала.
+
+**Зачем:**
+- Проверяй работу Claude с мобильного устройства
+- CI-ошибка → автоматическое расследование агентом
+- Постоянный фоновый агент не требует твоего присутствия
+
+---
+
+## 🤖 Таксономия агентов: 5 уровней
+
+Прежде чем погружаться в инструменты — важно понять, на каком уровне ты строишь.
+
+| Уровень | Тип | Что умеет | Примеры |
+| :---: | :--- | :--- | :--- |
+| 1 | **Basic Responder** | Отвечает на вопросы, генерирует текст | ChatGPT с базовым промптом |
+| 2 | **Router Pattern** | Классифицирует запрос, направляет к нужному агенту/функции | Поддержка с авторотером |
+| 3 | **Tool-Calling** | Использует внешние инструменты: API, файлы, поиск, код | Claude Code с MCP-серверами |
+| 4 | **Multi-Agent** | Несколько специализированных агентов работают вместе | CrewAI, Superpowers |
+| 5 | **Autonomous Agent** | Ставит цели, планирует, помнит, действует без участия человека | Claude computer use |
+
+**Ключевой вопрос:** на каком уровне твоя задача?
+
+- Нужен ответ? → Уровень 1
+- Нужен разбор входящих и routing? → Уровень 2
+- Нужно действие (файл, email, API)? → Уровень 3
+- Нужна параллельная работа нескольких экспертов? → Уровень 4
+- Нужен агент, который работает сам неделями? → Уровень 5
+
+> 💡 Claude Code — это Уровень 3 из коробки, с MCP и Skills легко доходит до Уровня 4. Тебе не нужен Уровень 5 для большинства реальных задач.
+
+---
+
+## 🔌 MCP: Model Context Protocol
+
+MCP — стандарт интеграции внешних инструментов в LLM-агентов.
+Три примитива:
+
+| Примитив | Кем управляется | Что это |
+| --- | --- | --- |
+| **Tools** | Модель | Функции, которые LLM может вызывать: API-запросы, файлы, выполнение кода |
+| **Resources** | Приложение | Источники данных (как GET-эндпоинты): файлы, записи БД |
+| **Prompts** | Пользователь | Шаблоны и best practices для оптимального использования |
+
+---
+
+## ⚠️ MCP: Частые проблемы
+
+**Ошибки подключения (~60% проблем):**
+- `Server transport closed unexpectedly`
+- Синтаксические ошибки в JSON-конфиге
+- Конфликты портов
+
+**Окружение:**
+- Отсутствует нужный runtime (Node.js, Python)
+- Неверные переменные окружения (ключи)
+- Проблемы с путями
+
+> 💡 Проверь статус серверов командой `/mcp` — показывает все подключённые серверы, их статус и источник конфига.
+
+---
+
+## 🔍 MCP: Tool Search
+
+Проблема: 50+ инструментов = 10–55К токенов сразу. Opus 4 при 30+ инструментах → точность падает до 4%.
+
+**Решение — динамическая загрузка:**
+
+| | До | После |
+| --- | --- | --- |
+| Инструментов в контексте | Все сразу | Только нужные |
+| Токены (58 инструментов) | 55К | 8.5К (−85%) |
+| Точность (Opus 4.6) | ~4% | 90%+ |
+
+**Как работает:**
+1. Инструменты помечаются как отложенные
+2. Claude видит только `search tool`
+3. Ищет нужные инструменты по запросу
+4. Загружает 3–5 релевантных
+5. Использует их
+
+Два режима: **Regex** (точный поиск по паттернам) и **BM25** (семантический поиск).
+
+Включается автоматически при `>10%` контекста на инструменты, или явно: `defer_loading: true`.
+
+---
+
+## 🌐 MCP: Рекомендуемые серверы
+
+**Официальные (Anthropic):**
+- `GitHub` — репозитории, PR, issues
+- `Postgres` — read-only доступ к БД
+- `Slack` — каналы и сообщения
+- `Google Drive` — файлы и поиск
+- `Puppeteer` — браузерная автоматизация
+- `Brave Search` — веб-поиск
+
+**Продуктивность:**
+- `Notion` — страницы, базы данных
+- `Asana` — задачи, проекты
+- `Linear` — тикеты, спринты
+- `Firecrawl` — web scraping и поиск
+
+**Каталоги:**
+- [awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers)
+- [modelcontextprotocol.io](http://modelcontextprotocol.io/)
+- [glama.ai/mcp/servers](https://glama.ai/mcp/servers)
+
+---
+
+## ⚙️ MCP: Как подключить сервер
+
+Три способа:
+
+**1. CLI (рекомендуется):**
+```bash
+claude mcp add github \
+  --transport stdio \
+  -- npx @modelcontextprotocol/server-github
+```
+
+**2. Через settings.json:**
+```json
+// .claude/settings.json или ~/.claude/settings.json
+{
+  "mcpServers": {
+    "github": { ... }
+  }
+}
+```
+
+**3. Через Plugin Marketplace:**
+```bash
+/plugin marketplace add <name>
+```
+
+**Проверка:**
+```bash
+claude mcp list
+```
+
+**Удаление:**
+```bash
+claude mcp remove <name>
+```
+
+---
+
+## 🧩 Agent Skills: Что это
+
+Agent Skills — модульные возможности, расширяющие функциональность Claude Code.
+Это объединение Software 1.0 (скрипты, логика) и Software 2.0 (LLM) в одном модуле.
+
+**Где живут:**
+- `~/.claude/skills/` — персональные навыки
+- `.claude/skills/` — навыки проекта (например, SOP, фирменные стандарты)
+
+**Что дают:**
+- Полный доступ к сети и файловой системе
+- Скрипты выполняются **без расхода токенов**
+- Можно включать большие документации и датасеты (брендбук, воркфлоу)
+- Автоматически обнаруживаются Claude при релевантной задаче
+
+---
+
+## 📊 Skills: Трёхуровневая загрузка
+
+Прогрессивная модель — загружается только то, что нужно:
+
+| Уровень | Что загружается | Когда |
+| --- | --- | --- |
+| 1. Метаданные | YAML frontmatter | При старте Claude |
+| 2. Инструкции | Основное тело SKILL.md | При триггере навыка |
+| 3. Ресурсы | Скрипты, шаблоны, данные | Только по требованию |
+
+> 💡 Навык может содержать десятки файлов, но если задаче нужен один — загрузится только он. Без потерь контекста.
+
+---
+
+## 📦 Skills: Официальные навыки Anthropic
+
+Установка коллекции:
+```bash
+/plugin marketplace add anthropics/skills
+```
+
+**Document Skills:**
+- `pdf` — генерация и работа с PDF
+- `pptx` — создание презентаций PowerPoint
+- `docx` — создание и редактирование Word
+- `xlsx` — работа с Excel таблицами
+
+**Creative:**
+- `canvas-design` — визуальный дизайн в PNG/PDF
+- `frontend-design` — production-grade UI
+- `algorithmic-art` — генеративное искусство
+
+---
+
+## 📚 Skills: Каталоги и ресурсы
+
+- [SkillsMP.com](http://skillsmp.com/) — главный каталог (96 000+ навыков)
+- [github.com/anthropics/skills](https://github.com/anthropics/skills) — официальный репозиторий
+- [github.com/travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills) — community коллекция
+- [github.com/VoltAgent/awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills) — 200+ навыков
+- [obra/superpowers](https://github.com/obra/superpowers) — 20+ core навыков
+- [agentskills.io](https://agentskills.io/) — документация стандарта
+
+Стандарт: все навыки используют формат `SKILL.md`.
+
+---
+
+## 🪝 Claude Code Hooks
+
+Hooks — shell-команды, которые запускаются **автоматически** в определённые моменты работы Claude Code.
+
+**Конфигурация:** `~/.claude/settings.json` или `.claude/settings.json` в проекте. Настройка через `/hooks`.
+
+**Типы событий:**
+
+| Событие | Когда срабатывает | Пример использования |
+| --- | --- | --- |
+| `PreToolUse` | Перед выполнением инструмента | Логирование, блокировка опасных операций |
+| `PostToolUse` | После выполнения инструмента | Автоформатирование кода, запуск тестов |
+| `Notification` | Когда Claude ждёт ввода | Звуковое уведомление, сообщение в Slack |
+| `Stop` | Когда Claude закончил работу | Статистика сессии, итоговый отчёт |
+| `SessionStart` | При старте сессии | Загрузка конфигурации, проверка окружения |
+
+---
+
+## 🪝 Hooks: Практические кейсы
+
+**1. Уведомления:**
+- Звук при завершении задачи
+- Всплывающее уведомление
+- Сообщение в Slack / Telegram
+
+**2. Автоформатирование:**
+- `prettier` для `.ts`/`.tsx` файлов
+- `gofmt` для `.go`
+- `black` для Python
+
+**3. Логирование:**
+- Запись всех команд
+- Аудит действий
+- Метрики использования
+
+**4. Валидация кода:**
+- Проверка на соответствие стилю
+- Линтинг после изменений
+- Проверка на безопасность
+
+**5. Контроль доступа:**
+- Блокировка production файлов
+- Защита sensitive директорий
+- Автоодобрение безопасных операций
+
+**6. CI/CD интеграция:**
+- Автозапуск тестов после изменений
+- Проверка build перед коммитом
+
+---
+
+## 🪝 Hooks: Примеры конфигурации
+
+**Звук + уведомление при ожидании ввода:**
+```json
+"hooks": {
+  "Notification": [{
+    "matcher": "",
+    "hooks": [
+      {
+        "type": "command",
+        "command": "afplay /System/Library/Sounds/Glass.aiff"
+      },
+      {
+        "type": "command",
+        "command": "osascript -e 'display notification \"Claude ждёт\" with title \"Claude Code\" sound name \"Glass\"'"
+      }
+    ]
+  }]
+}
+```
+
+**Автоформатирование TypeScript после редактирования:**
+```json
+"hooks": {
+  "PostToolUse": [{
+    "matcher": "Edit|Write",
+    "hooks": [{
+      "type": "command",
+      "command": "if echo '$TOOL_INPUT' | grep -q '\\.ts\\|\\.tsx'; then npx prettier --write '$FILE_PATH'; fi"
+    }]
+  }]
+}
+```
+
+**Блокировка опасных операций:**
+```json
+"hooks": {
+  "PreToolUse": [{
+    "matcher": "Bash",
+    "hooks": [{
+      "type": "command",
+      "command": "if echo '$TOOL_INPUT' | grep -qE 'rm -rf|drop table|git push -f'; then echo 'BLOCKED' && exit 1; fi"
+    }]
+  }]
+}
+```
+
+---
+
+## ⚡ Superpowers: Дисциплинированный workflow
+
+[github.com/obra/superpowers](https://github.com/obra/superpowers) — коллекция из 20+ навыков, которые превращают Claude Code из помощника в систему с дисциплиной.
+
+**Философия:** не просто инструменты — это **процессы**, которым Claude следует автоматически.
+
+```bash
+/plugin marketplace add obra/superpowers
+```
+
+**Ключевые workflow:**
+- `Brainstorming` — структурированное исследование идеи перед кодом
+- `Writing Plans` — создание плана реализации
+- `Executing Plans` — пошаговое выполнение с чекпоинтами
+- `TDD` — test-driven development: RED → GREEN → REFACTOR
+- `Systematic Debugging` — отладка по методологии
+- `Verification` — проверка перед завершением
+- `Code Review` — запрос и получение ревью
+
+---
+
+## ⚡ Superpowers: Полный цикл разработки
+
+```
+Brainstorm → Plan → Execute → Verify → Review → Finish Branch
+```
+
+1. **Brainstorm** — исследование и выбор подхода
+2. **Write Plan** — пошаговый план: файлы, зависимости, порядок
+3. **Execute Plan** — реализация с чекпоинтами после каждого шага
+4. **Verification** — автоматическая проверка: тесты, build, lint
+5. **Code Review** — структурированный ревью изменений
+6. **Finish Branch** — решение: merge, PR или cleanup
+
+**Что важно:**
+- Claude сам выбирает нужный workflow
+- Навыки срабатывают автоматически
+- Каждый шаг документируется
+- Человек принимает решения на чекпоинтах
+
+> 💡 Дисциплина встроена в процесс, а не зависит от памяти разработчика.
+
+---
+
+## 🐍 Multi-Agent Python: CrewAI
+
+Когда нужен Уровень 4 с кастомным Python-кодом — CrewAI даёт минималистичный способ собрать команду агентов.
+
+**Три строительных блока:**
+
+```python
+from crewai import Agent, Task, Crew
+from crewai_tools import DuckDuckGoSearchTool
+
+# 1. Агент = роль + цель + бэкстори
+researcher = Agent(
+    role="Research Analyst",
+    goal="Find current trends in AI tooling",
+    backstory="You are a senior analyst who finds accurate, up-to-date information",
+    tools=[DuckDuckGoSearchTool()],
+    verbose=True
+)
+
+writer = Agent(
+    role="Content Writer",
+    goal="Write clear, concise summaries for non-technical readers",
+    backstory="You translate complex research into actionable insights",
+    verbose=True
+)
+
+# 2. Задача = описание + агент + ожидаемый результат
+research_task = Task(
+    description="Research the top 5 AI coding tools in 2025 with market data",
+    agent=researcher,
+    expected_output="Bullet list of 5 tools with description and use case"
+)
+
+write_task = Task(
+    description="Write a 300-word summary of the research for a product manager",
+    agent=writer,
+    expected_output="A 300-word report in Markdown"
+)
+
+# 3. Crew = команда + задачи + запуск
+crew = Crew(agents=[researcher, writer], tasks=[research_task, write_task])
+result = crew.kickoff()
+```
+
+**Когда CrewAI, когда Claude Code + Superpowers?**
+
+| | Claude Code + Skills | CrewAI (Python) |
+| :--- | :--- | :--- |
+| Языки | Любой (через CLI) | Python |
+| Контроль | CLAUDE.md, hooks, MCP | Код |
+| Кастомизация | Markdown skill-файлы | Полная свобода кода |
+| Лучше для | Рабочего ноутбука, IDE | Production-pipeline, API |
+
+> 💡 Начни с Claude Code + Superpowers. CrewAI — следующий шаг, когда задача переросла в production-систему.
+
+---
+
+## 🏋️ Практика
+
+Выбери одно из заданий:
+
+**Задание 1: Настроить MCP-сервер**
+- [ ] Выбери сервер из каталога (рекомендуем: GitHub, Brave Search, Firecrawl)
+- [ ] Установи: `claude mcp add <name>`
+- [ ] Протестируй в реальной задаче
+- [ ] Опиши результат в my-experiments/
+
+**Задание 2: Создать свой Skill**
+- [ ] Используй `/skill-creator`
+- [ ] Тема: автоматизация твоего workflow
+- [ ] Добавь хотя бы один скрипт
+- [ ] Протестируй
+
+**Задание 3: Настроить Hook**
+- [ ] Выбери событие из таблицы (начни с `Notification` или `PostToolUse`)
+- [ ] Напиши команду
+- [ ] Добавь в `.claude/settings.json`
+- [ ] Проверь срабатывание
+
+---
+
+## ✅ Чеклист
+
+- [ ] Понимаешь три примитива MCP (Tools, Resources, Prompts)
+- [ ] Умеешь подключить MCP-сервер через CLI
+- [ ] Знаешь, что такое Tool Search и зачем он нужен
+- [ ] Понимаешь разницу между MCP-сервером, Skill и Hook
+- [ ] Создал или установил хотя бы один Skill
+- [ ] Настроил хотя бы один Hook
+- [ ] Знаешь цикл Superpowers: Brainstorm → Plan → Execute → Verify
+
+---
+
+## 📊 Feedback после Meeting 6
+
+Перед переходом к EXERCISES — заполни `my-experiments/feedback-m6.md` (скопируй из [`my-templates/feedback-template.md`](./my-templates/feedback-template.md), 3–5 мин).
+
+Это делает курс самосовершенствующимся: твой сигнал (опционально, анонимно) идёт в [`course-feedback/`](./course-feedback/) и помогает автору улучшать модули.
+
+---
+
+**Время:** 2–3 часа

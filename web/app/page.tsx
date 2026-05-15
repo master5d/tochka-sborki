@@ -98,7 +98,7 @@ export default function HomePage() {
           borderBottom: '1px solid var(--border-color)',
         }}>
           {[
-            ['7', 'модулей'],
+            ['7', 'тем'],
             ['~12', 'часов'],
             ['8', 'упражнений'],
             ['$0', 'стоимость'],
@@ -191,12 +191,12 @@ export default function HomePage() {
             letterSpacing: '0.12em',
             marginBottom: '3rem',
           }}>
-            Программа курса · {lessons.length} модулей
+            Темы курса · выбирай в любом порядке
           </div>
           {lessons.map(lesson => (
             <Link key={lesson.slug} href={`/lessons/${lesson.slug}/`} style={{
               display: 'grid',
-              gridTemplateColumns: '6rem 1fr auto',
+              gridTemplateColumns: '1fr auto',
               gap: '1.5rem',
               alignItems: 'start',
               padding: '1.5rem 0',
@@ -204,16 +204,6 @@ export default function HomePage() {
               color: 'inherit',
               transition: 'opacity 0.2s',
             }}>
-              <span style={{
-                fontSize: 'var(--number-size)',
-                fontWeight: 900,
-                color: 'var(--border-color)',
-                lineHeight: 0.85,
-                letterSpacing: '-0.04em',
-                userSelect: 'none',
-              }}>
-                {String(lesson.level).padStart(2, '0')}
-              </span>
               <div>
                 <div style={{
                   fontFamily: 'var(--font-mono)',
@@ -223,10 +213,10 @@ export default function HomePage() {
                   letterSpacing: '0.12em',
                   marginBottom: '0.4rem',
                 }}>
-                  Level {lesson.level} · {lesson.duration}
+                  {lesson.duration}
                 </div>
                 <h3 style={{
-                  fontSize: '1.25rem',
+                  fontSize: '1.5rem',
                   fontWeight: 700,
                   color: 'var(--text-primary)',
                   marginBottom: '0.4rem',
@@ -235,7 +225,7 @@ export default function HomePage() {
                 </h3>
                 <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>{lesson.description}</p>
               </div>
-              <span style={{ color: 'var(--text-accent)', fontSize: '1.5rem', lineHeight: 1 }}>+</span>
+              <span style={{ color: 'var(--text-accent)', fontSize: '1.5rem', lineHeight: 1 }}>→</span>
             </Link>
           ))}
         </div>

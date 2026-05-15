@@ -4,9 +4,8 @@ import { useState } from 'react'
 
 const LIKERT = ['1', '2', '3', '4', '5']
 const MODULES = [
-  'Module 0: Kickstart', 'Module 1: Знакомство', 'Module 2: Сетап',
-  'Module 3: Промпты', 'Module 4: Контекст', 'Module 5: Pipeline',
-  'Module 6: Инструменты',
+  'Kickstart', 'Знакомство', 'Базовый сетап', 'Промпт-инжиниринг',
+  'Контекст и память', 'Pipeline автоматизации', 'Инструменты расширения',
 ]
 
 function LikertScale({ name, label, value, onChange }: {
