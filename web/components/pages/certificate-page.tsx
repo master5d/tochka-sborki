@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Nav } from '@/components/nav'
+import { Footer } from '@/components/footer'
 import { CertificateSVG } from '@/components/certificate-svg'
 import type { Locale } from '@/lib/dictionaries'
 
@@ -260,6 +261,7 @@ export function CertificatePage({ locale }: Props) {
           </div>
         </div>
       </main>
+      <Footer locale={locale} />
     </>
   )
 }

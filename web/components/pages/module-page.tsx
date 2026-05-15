@@ -9,6 +9,7 @@ import {
 import { LessonLayout } from '@/components/lesson-layout'
 import { ModuleRedirect } from '@/components/module-redirect'
 import { Nav } from '@/components/nav'
+import { Footer } from '@/components/footer'
 import { Sidebar } from '@/components/sidebar'
 import { AuthGuard } from '@/components/auth-guard'
 import { mdxComponents } from '@/components/mdx-components'
@@ -18,6 +19,7 @@ interface Props { slug: string; locale: Locale }
 
 export function ModulePage({ slug, locale }: Props) {
   const navItems = getNavigationItems(locale)
+  const topics = navItems.filter(i => i.type === 'module').map(i => ({ slug: i.slug, title: i.title }))
 
   if (isModule(slug, locale)) {
     const moduleMeta = getModuleMeta(slug, locale)
@@ -30,6 +32,7 @@ export function ModulePage({ slug, locale }: Props) {
             <ModuleRedirect moduleSlug={slug} units={moduleMeta.units} locale={locale} />
           </main>
         </div>
+        <Footer locale={locale} topics={topics} />
       </AuthGuard>
     )
   }

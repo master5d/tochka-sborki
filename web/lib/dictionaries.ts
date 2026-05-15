@@ -51,6 +51,21 @@ export type Dictionary = {
     moduleComplete: string
     phases: string[]
   }
+  footer: {
+    tagline: string
+    topicsLabel: string
+    resourcesLabel: string
+    authorLabel: string
+    courseLabel: string
+    authorName: string
+    sendFeedback: string
+    githubRepo: string
+    viewSource: string
+    license: string
+    licenseFull: string
+    rights: string
+    builtWith: string
+  }
 }
 
 export const dictionaries: Record<Locale, Dictionary> = {
@@ -148,6 +163,21 @@ export const dictionaries: Record<Locale, Dictionary> = {
       moduleComplete: 'Модуль завершён →',
       phases: ['Активация', 'Рефлексия', 'Концепция', 'Практика'],
     },
+    footer: {
+      tagline: 'Курс по vibe-кодингу. От нуля до агентских систем — 8 элективных тем.',
+      topicsLabel: '// темы',
+      resourcesLabel: '// материалы',
+      authorLabel: '// автор',
+      courseLabel: '// проект',
+      authorName: 'Александр Мамаев',
+      sendFeedback: 'Оставить фидбек →',
+      githubRepo: 'GitHub @master5d',
+      viewSource: 'Посмотреть код →',
+      license: 'MIT',
+      licenseFull: 'MIT License',
+      rights: 'Открытый курс. Используй, форкай, делись.',
+      builtWith: 'Собрано с Claude Code',
+    },
   },
   en: {
     nav: {
@@ -242,6 +272,21 @@ export const dictionaries: Record<Locale, Dictionary> = {
       nextUnit: 'Next unit →',
       moduleComplete: 'Topic complete →',
       phases: ['Activation', 'Reflection', 'Concept', 'Practice'],
+    },
+    footer: {
+      tagline: 'A vibe-coding course. From zero to agentic systems across 8 elective topics.',
+      topicsLabel: '// topics',
+      resourcesLabel: '// resources',
+      authorLabel: '// author',
+      courseLabel: '// project',
+      authorName: 'Alexander Mamaev',
+      sendFeedback: 'Send feedback →',
+      githubRepo: 'GitHub @master5d',
+      viewSource: 'View source →',
+      license: 'MIT',
+      licenseFull: 'MIT License',
+      rights: 'Open course. Use it, fork it, share it.',
+      builtWith: 'Built with Claude Code',
     },
   },
 }

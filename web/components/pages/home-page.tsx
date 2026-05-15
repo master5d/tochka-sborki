@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { getAllModules } from '@/lib/content'
 import { getDictionary, type Locale } from '@/lib/dictionaries'
 import { Nav } from '@/components/nav'
+import { Footer } from '@/components/footer'
 import { ProgramVenn } from '@/components/program-venn'
 import { ChatBubble } from '@/components/chat-bubble'
 
@@ -293,6 +294,8 @@ export function HomePage({ locale }: Props) {
           </div>
         </div>
       </section>
+
+      <Footer locale={locale} topics={modules.map(m => ({ slug: m.slug, title: m.title }))} />
     </>
   )
 }

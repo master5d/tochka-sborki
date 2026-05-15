@@ -6,6 +6,7 @@ import {
   getNavigationItems,
 } from '@/lib/content'
 import { Nav } from '@/components/nav'
+import { Footer } from '@/components/footer'
 import { Sidebar } from '@/components/sidebar'
 import { UnitWizard } from '@/components/unit-wizard'
 import { AuthGuard } from '@/components/auth-guard'
@@ -45,6 +46,7 @@ export function UnitPage({ moduleSlug, unitSlug, locale }: Props) {
           </UnitWizard>
         </main>
       </div>
+      <Footer locale={locale} topics={navItems.filter(i => i.type === 'module').map(i => ({ slug: i.slug, title: i.title }))} />
     </AuthGuard>
   )
 }

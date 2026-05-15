@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import type { LessonMeta, NavigationItem } from '@/lib/content'
 import { getDictionary, type Locale } from '@/lib/dictionaries'
 import { Nav } from './nav'
+import { Footer } from './footer'
 import { Sidebar } from './sidebar'
 import { AssignmentBlock } from './assignment-block'
 import { useProgress } from './progress-provider'
@@ -87,6 +88,7 @@ export function LessonLayout({ meta, navItems, children, locale = 'ru' }: Lesson
           </div>
         </main>
       </div>
+      <Footer locale={locale} topics={navItems.filter(i => i.type === 'module').map(i => ({ slug: i.slug, title: i.title }))} />
     </AuthGuard>
   )
 }
