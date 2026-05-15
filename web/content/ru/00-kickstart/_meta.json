@@ -1,0 +1,12 @@
+{
+  "meeting": 0,
+  "title": "M0: Kickstart",
+  "description": "Карта местности для тех, кто впервые в AI-coding",
+  "duration": "25 мин",
+  "level": 0,
+  "units": [
+    { "slug": "u1-map", "title": "Карта AI-инструментов" },
+    { "slug": "u2-tools", "title": "Твои первые инструменты" },
+    { "slug": "u3-first-steps", "title": "Первые шаги" }
+  ]
+}

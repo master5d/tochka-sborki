@@ -7,10 +7,7 @@ import {
 describe('getAllLessons', () => {
   it('returns only flat numbered lesson files', () => {
     const lessons = getAllLessons()
-    expect(lessons.length).toBe(6)  // 01-introduction is now a folder, not a flat file
-    for (const lesson of lessons) {
-      expect(lesson.slug).toMatch(/^\d{2}-/)
-    }
+    expect(lessons.length).toBe(0)  // all meetings migrated to folder/unit structure
   })
 
   it('lessons are sorted by order ascending', () => {
@@ -53,6 +50,48 @@ describe('getLessonBySlug', () => {
   })
 })
 
+describe('getMeetingMeta — all meetings', () => {
+  it('00-kickstart has correct shape', () => {
+    const meta = getMeetingMeta('00-kickstart')
+    expect(meta.title).toBeTruthy()
+    expect(meta.units.length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('02-setup-guide has correct shape', () => {
+    const meta = getMeetingMeta('02-setup-guide')
+    expect(meta.title).toBeTruthy()
+    expect(meta.units.length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('03-prompt-engineering has correct shape', () => {
+    const meta = getMeetingMeta('03-prompt-engineering')
+    expect(meta.title).toBeTruthy()
+    expect(meta.units.length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('04-context-memory has correct shape', () => {
+    const meta = getMeetingMeta('04-context-memory')
+    expect(meta.title).toBeTruthy()
+    expect(meta.units.length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('05-audio-pipeline has correct shape', () => {
+    const meta = getMeetingMeta('05-audio-pipeline')
+    expect(meta.title).toBeTruthy()
+    expect(meta.units.length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('06-tools has correct shape', () => {
+    const meta = getMeetingMeta('06-tools')
+    expect(meta.title).toBeTruthy()
+    expect(meta.units.length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('throws for unknown meeting', () => {
+    expect(() => getMeetingMeta('99-nonexistent')).toThrow()
+  })
+})
+
 describe('getPageContent', () => {
   it('returns content and meta for cheatsheet', () => {
     const result = getPageContent('cheatsheet')
@@ -70,11 +109,9 @@ describe('isMeeting', () => {
   it('returns false for flat lesson slug', () => {
     expect(isMeeting('cheatsheet')).toBe(false)
   })
-})
 
-describe('getMeetingMeta', () => {
-  it('throws for unknown meeting', () => {
-    expect(() => getMeetingMeta('99-nonexistent')).toThrow()
+  it('returns true for meeting slug', () => {
+    expect(isMeeting('01-introduction')).toBe(true)
   })
 })
 
@@ -93,6 +130,14 @@ describe('getNavigationItems', () => {
     const items = getNavigationItems()
     for (let i = 1; i < items.length; i++) {
       expect(items[i].order).toBeGreaterThanOrEqual(items[i - 1].order)
+    }
+  })
+
+  it('all items are meetings', () => {
+    const items = getNavigationItems()
+    expect(items.length).toBeGreaterThan(0)
+    for (const item of items) {
+      expect(item.type).toBe('meeting')
     }
   })
 })
