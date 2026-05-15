@@ -3,7 +3,6 @@ import { getAllModules } from '@/lib/content'
 import { Nav } from '@/components/nav'
 import { ProgramVenn } from '@/components/program-venn'
 import { ChatBubble } from '@/components/chat-bubble'
-import { HeroAscii } from '@/components/hero-ascii'
 
 const FOR_WHO = [
   {
@@ -66,7 +65,19 @@ export default function HomePage() {
         }}>
           ⬡ Открытый курс · Бесплатно
         </div>
-        <HeroAscii />
+        <h1 style={{
+          fontFamily: 'var(--font-display), system-ui, sans-serif',
+          fontSize: 'clamp(3.5rem, 12vw, 10rem)',
+          fontWeight: 900,
+          lineHeight: 0.85,
+          color: 'var(--text-primary)',
+          marginBottom: '2rem',
+          textTransform: 'uppercase',
+          letterSpacing: '-0.06em',
+          fontStretch: '100%',
+        }}>
+          Точка<br />Сборки
+        </h1>
         <p style={{
           fontSize: '1.2rem',
           color: 'var(--text-secondary)',
