@@ -10,6 +10,9 @@ on:
       - 'workers/**'
       - '.github/workflows/deploy.yml'
 
+env:
+  CF_ACCOUNT: '252b28b0ef2e1866c532e2622060c809'
+
 jobs:
   # ── ai.mamaev.coach (course) ──────────────────────────────
   deploy-web:
@@ -33,8 +36,12 @@ jobs:
       - name: Deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: 252b28b0ef2e1866c532e2622060c809
-        run: npx wrangler pages deploy web/out --project-name=tochka-sborki --branch=main
+          CLOUDFLARE_ACCOUNT_ID: ${{ env.CF_ACCOUNT }}
+        run: |
+          npx wrangler pages deploy web/out \
+            --project-name=tochka-sborki \
+            --branch=main \
+            --commit-message="${{ github.sha }}"
 
   # ── mamaev.coach (landing hub) ────────────────────────────
   deploy-hub:
@@ -55,11 +62,22 @@ jobs:
       - name: Build
         working-directory: hub
         run: npm run build
+      - name: Ensure project exists
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ env.CF_ACCOUNT }}
+        run: |
+          npx wrangler pages project create mamaev-coach-hub \
+            --production-branch=main || echo "Project already exists"
       - name: Deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: 252b28b0ef2e1866c532e2622060c809
-        run: npx wrangler pages deploy hub/out --project-name=mamaev-coach-hub --branch=main
+          CLOUDFLARE_ACCOUNT_ID: ${{ env.CF_ACCOUNT }}
+        run: |
+          npx wrangler pages deploy hub/out \
+            --project-name=mamaev-coach-hub \
+            --branch=main \
+            --commit-message="${{ github.sha }}"
 
   # ── mentor.mamaev.coach (B2B one-pager) ───────────────────
   deploy-mentor:
@@ -80,11 +98,22 @@ jobs:
       - name: Build
         working-directory: mentor
         run: npm run build
+      - name: Ensure project exists
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ env.CF_ACCOUNT }}
+        run: |
+          npx wrangler pages project create mamaev-coach-mentor \
+            --production-branch=main || echo "Project already exists"
       - name: Deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: 252b28b0ef2e1866c532e2622060c809
-        run: npx wrangler pages deploy mentor/out --project-name=mamaev-coach-mentor --branch=main
+          CLOUDFLARE_ACCOUNT_ID: ${{ env.CF_ACCOUNT }}
+        run: |
+          npx wrangler pages deploy mentor/out \
+            --project-name=mamaev-coach-mentor \
+            --branch=main \
+            --commit-message="${{ github.sha }}"
 
   # ── workers (auth API) ────────────────────────────────────
   deploy-workers:
@@ -105,5 +134,5 @@ jobs:
         working-directory: workers
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: 252b28b0ef2e1866c532e2622060c809
+          CLOUDFLARE_ACCOUNT_ID: ${{ env.CF_ACCOUNT }}
         run: npx wrangler deploy
