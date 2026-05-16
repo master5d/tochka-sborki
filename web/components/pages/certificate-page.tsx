@@ -72,7 +72,7 @@ export function CertificatePage({ locale }: Props) {
 
   const certUrl = typeof window !== 'undefined'
     ? `${window.location.origin}${locale === 'en' ? '/en' : ''}/certificate/`
-    : 'https://mamaev.coach/certificate/'
+    : 'https://ai.mamaev.coach/certificate/'
 
   function downloadSvg() {
     if (!svgRef.current) return

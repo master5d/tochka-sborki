@@ -20,7 +20,7 @@ const COPY = {
     caption1: 'от одной клавиши —',
     caption2: 'к симфонии агентов',
     footer: '28 юнитов · 7 тем',
-    url: 'mamaev.coach/certificate',
+    url: 'ai.mamaev.coach/certificate',
   },
   en: {
     brand: 'TOCHKA SBORKI',
@@ -32,7 +32,7 @@ const COPY = {
     caption1: 'from a single key —',
     caption2: 'to a symphony of agents',
     footer: '28 units · 7 topics',
-    url: 'mamaev.coach/certificate',
+    url: 'ai.mamaev.coach/certificate',
   },
 }
 

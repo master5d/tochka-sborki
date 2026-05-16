@@ -1,0 +1,16 @@
+[data-theme="model-kit"] {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #111118;
+  --bg-surface: #16161f;
+  --text-primary: #e8e8f0;
+  --text-secondary: #9090a8;
+  --text-accent: #00ff88;
+  --border-color: #2a2a3a;
+  --border-accent: #00ff8840;
+  --font-mono: 'Geist Mono', monospace;
+  --radius: 4px;
+  --display-size: clamp(2.8rem, 7vw, 6.5rem);
+  --section-label-size: 0.7rem;
+  --section-gap: 5rem;
+  --content-max: 1100px;
+}
