@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { Unbounded } from 'next/font/google'
+import { LangSuggestBanner } from '../components/lang-suggest-banner'
 import './globals.css'
 
 const unbounded = Unbounded({
@@ -23,7 +24,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       data-theme="model-kit"
       className={`${GeistSans.variable} ${GeistMono.variable} ${unbounded.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <LangSuggestBanner />
+        {children}
+      </body>
     </html>
   )
 }
