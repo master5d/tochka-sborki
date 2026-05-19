@@ -45,17 +45,19 @@ export async function handleSendLink(request: Request, env: Env): Promise<Respon
     user = { id }
 
     // fire-and-forget CRM webhook — failure must not block magic link
-    fetch(env.N8N_CRM_WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Webhook-Secret': env.N8N_CRM_SECRET },
-      body: JSON.stringify({
-        email,
-        language,
-        source,
-        telegram_handle: telegramHandle,
-        signed_up_at: new Date().toISOString(),
-      }),
-    }).catch(e => console.error('CRM webhook failed', e))
+    if (env.N8N_CRM_WEBHOOK_URL) {
+      fetch(env.N8N_CRM_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Webhook-Secret': env.N8N_CRM_SECRET },
+        body: JSON.stringify({
+          email,
+          language,
+          source,
+          telegram_handle: telegramHandle,
+          signed_up_at: new Date().toISOString(),
+        }),
+      }).catch(e => console.error('CRM webhook failed', e))
+    }
   }
 
   const token = generateToken()
@@ -76,17 +78,18 @@ export async function handleSendLink(request: Request, env: Env): Promise<Respon
         subject: 'Войти в Точку Сборки',
         html: `
           <p>Нажми, чтобы войти в курс:</p>
-          <p><a href="https://mamaev.coach/auth/verify?token=${token}" style="color:#00ff88">Войти →</a></p>
+          <p><a href="https://ai.mamaev.coach/auth/verify?token=${token}" style="color:#00ff88">Войти →</a></p>
           <p style="color:#666;font-size:12px">Ссылка действует 15 минут. Если ты не запрашивал вход — проигнорируй письмо.</p>
         `,
       }),
     })
-  } catch {
-    return Response.json({ error: 'Failed to send email' }, { status: 502 })
+  } catch (e) {
+    return Response.json({ error: 'Failed to send email', details: e instanceof Error ? e.message : String(e) }, { status: 502 })
   }
 
   if (!resendRes.ok) {
-    return Response.json({ error: 'Failed to send email' }, { status: 502 })
+    const errorText = await resendRes.text()
+    return Response.json({ error: 'Failed to send email', status: resendRes.status, details: errorText }, { status: 502 })
   }
 
   return Response.json({ ok: true })

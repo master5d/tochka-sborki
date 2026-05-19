@@ -8,5 +8,5 @@ database_name = "tochka-sborki-db"
 database_id = "c904db4d-a900-4ff1-80ae-6056c150ca53"
 
 [[routes]]
-pattern = "mamaev.coach/api/*"
+pattern = "ai.mamaev.coach/api/*"
 zone_name = "mamaev.coach"

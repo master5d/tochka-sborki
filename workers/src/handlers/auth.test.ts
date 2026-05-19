@@ -22,7 +22,7 @@ function makeEnv(): Env {
 
 describe('handleSendLink', () => {
   it('returns 400 for missing email', async () => {
-    const req = new Request('https://mamaev.coach/api/auth/send-link', {
+    const req = new Request('https://ai.mamaev.coach/api/auth/send-link', {
       method: 'POST',
       body: JSON.stringify({}),
       headers: { 'Content-Type': 'application/json' },
@@ -32,7 +32,7 @@ describe('handleSendLink', () => {
   })
 
   it('returns 400 for invalid email format', async () => {
-    const req = new Request('https://mamaev.coach/api/auth/send-link', {
+    const req = new Request('https://ai.mamaev.coach/api/auth/send-link', {
       method: 'POST',
       body: JSON.stringify({ email: 'not-an-email' }),
       headers: { 'Content-Type': 'application/json' },
@@ -55,7 +55,7 @@ describe('handleSendLink', () => {
       }),
     } as unknown as D1Database
 
-    const req = new Request('https://mamaev.coach/api/auth/send-link', {
+    const req = new Request('https://ai.mamaev.coach/api/auth/send-link', {
       method: 'POST',
       body: JSON.stringify({ email: 'test@example.com' }),
       headers: { 'Content-Type': 'application/json' },
@@ -81,7 +81,7 @@ describe('handleSendLink', () => {
         }),
       }),
     } as unknown as D1Database
-    const req = new Request('https://mamaev.coach/api/auth/send-link', {
+    const req = new Request('https://ai.mamaev.coach/api/auth/send-link', {
       method: 'POST',
       body: JSON.stringify({ email: 'test@example.com' }),
       headers: { 'Content-Type': 'application/json' },
@@ -109,7 +109,7 @@ describe('handleSendLink enrichment', () => {
       }),
     } as unknown as D1Database
 
-    const req = new Request('https://mamaev.coach/api/auth/send-link', {
+    const req = new Request('https://ai.mamaev.coach/api/auth/send-link', {
       method: 'POST',
       body: JSON.stringify({ email: 'new@example.com', telegram_handle: '@sasha' }),
       headers: {
@@ -142,7 +142,7 @@ describe('handleSendLink enrichment', () => {
       }),
     } as unknown as D1Database
 
-    const req = new Request('https://mamaev.coach/api/auth/send-link', {
+    const req = new Request('https://ai.mamaev.coach/api/auth/send-link', {
       method: 'POST',
       body: JSON.stringify({ email: 'existing@example.com' }),
       headers: { 'Content-Type': 'application/json' },
@@ -171,7 +171,7 @@ describe('handleSendLink enrichment', () => {
       }),
     } as unknown as D1Database
 
-    const req = new Request('https://mamaev.coach/api/auth/send-link', {
+    const req = new Request('https://ai.mamaev.coach/api/auth/send-link', {
       method: 'POST',
       body: JSON.stringify({ email: 'test@example.com' }),
       headers: { 'Content-Type': 'application/json' },
@@ -197,7 +197,7 @@ describe('handleSendLink enrichment', () => {
       }),
     } as unknown as D1Database
 
-    const req = new Request('https://mamaev.coach/api/auth/send-link', {
+    const req = new Request('https://ai.mamaev.coach/api/auth/send-link', {
       method: 'POST',
       body: JSON.stringify({ email: 'utm@example.com', utm_source: 'telegram', utm_medium: 'post', utm_campaign: 'course1' }),
       headers: { 'Content-Type': 'application/json' },
@@ -212,7 +212,7 @@ describe('handleSendLink enrichment', () => {
 
 describe('handleLogout', () => {
   it('clears session cookie', async () => {
-    const req = new Request('https://mamaev.coach/api/auth/logout', { method: 'POST' })
+    const req = new Request('https://ai.mamaev.coach/api/auth/logout', { method: 'POST' })
     const res = await handleLogout(req, makeEnv())
     expect(res.status).toBe(200)
     expect(res.headers.get('Set-Cookie')).toContain('session=;')

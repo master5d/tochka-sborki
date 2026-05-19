@@ -15,7 +15,7 @@ function makeEnv(overrides: Partial<Env> = {}): Env {
 
 describe('handleFeedback', () => {
   it('returns 400 if required fields missing', async () => {
-    const req = new Request('https://mamaev.coach/api/feedback', {
+    const req = new Request('https://ai.mamaev.coach/api/feedback', {
       method: 'POST',
       body: JSON.stringify({ lesson: 'Meeting 1' }),
       headers: { 'Content-Type': 'application/json' },
@@ -28,7 +28,7 @@ describe('handleFeedback', () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
       new Response(null, { status: 200 })
     )
-    const req = new Request('https://mamaev.coach/api/feedback', {
+    const req = new Request('https://ai.mamaev.coach/api/feedback', {
       method: 'POST',
       body: JSON.stringify({ lesson: 'Meeting 1', recommend: '5', impact: '4', apply: '5' }),
       headers: { 'Content-Type': 'application/json' },
@@ -47,7 +47,7 @@ describe('handleFeedback', () => {
 
   it('returns 502 if n8n fetch fails with network error', async () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockRejectedValueOnce(new Error('Network error'))
-    const req = new Request('https://mamaev.coach/api/feedback', {
+    const req = new Request('https://ai.mamaev.coach/api/feedback', {
       method: 'POST',
       body: JSON.stringify({ lesson: 'Meeting 1', recommend: '5', impact: '4', apply: '5' }),
       headers: { 'Content-Type': 'application/json' },
@@ -61,7 +61,7 @@ describe('handleFeedback', () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
       new Response(null, { status: 500 })
     )
-    const req = new Request('https://mamaev.coach/api/feedback', {
+    const req = new Request('https://ai.mamaev.coach/api/feedback', {
       method: 'POST',
       body: JSON.stringify({ lesson: 'Meeting 1', recommend: '5', impact: '4', apply: '5' }),
       headers: { 'Content-Type': 'application/json' },
