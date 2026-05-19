@@ -45,10 +45,12 @@ export async function handleSendLink(request: Request, env: Env): Promise<Respon
     user = { id }
 
     // fire-and-forget CRM webhook — failure must not block magic link
-    if (env.N8N_CRM_WEBHOOK_URL) {
-      fetch(env.N8N_CRM_WEBHOOK_URL, {
+    // strip BOM / stray whitespace that can sneak in via copy-pasted secrets
+    const crmUrl = env.N8N_CRM_WEBHOOK_URL?.replace(/^﻿/, '').trim()
+    if (crmUrl) {
+      fetch(crmUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Webhook-Secret': env.N8N_CRM_SECRET },
+        headers: { 'Content-Type': 'application/json', 'X-Webhook-Secret': (env.N8N_CRM_SECRET ?? '').replace(/^﻿/, '').trim() },
         body: JSON.stringify({
           email,
           language,
