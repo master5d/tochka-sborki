@@ -9,6 +9,10 @@ level: 0
 
 A quick reference for working with Claude Code and prompt engineering.
 
+<OsToggle label="Commands for:" />
+
+> 💡 Pick your system — Mac- and Windows-specific commands will be filtered. Without a selection both variants are shown.
+
 ---
 
 ## ⌨️ Hotkeys
@@ -25,13 +29,35 @@ A quick reference for working with Claude Code and prompt engineering.
 | `Ctrl+V` | Paste (supports images) |
 | `Ctrl+F` | Search the current conversation |
 | `Shift+Tab` | Toggle mode: Plan → Normal → Auto-accept |
-| `Alt+P` | Quick-switch to Plan mode |
-| `Alt+T` | Enable ultrathink (deep analysis) |
 | `\+Enter` / `Ctrl+J` | New line without sending |
 | `Esc+Esc` | Cancel current input |
 | `/` at line start | Open slash-command autocomplete |
 | `!` at line start | Run a bash command from the prompt |
 | `@filename` | Add a file/folder to context |
+
+<OsBlock os="mac">
+
+**Mac-specific keys:**
+
+| Key | Action |
+| --- | --- |
+| `Option+P` | Quick-switch to Plan mode |
+| `Option+T` | Enable ultrathink (deep analysis) |
+| `Cmd+V` | Paste (supports images) |
+
+</OsBlock>
+
+<OsBlock os="windows">
+
+**Windows-specific keys:**
+
+| Key | Action |
+| --- | --- |
+| `Alt+P` | Quick-switch to Plan mode |
+| `Alt+T` | Enable ultrathink (deep analysis) |
+| `Ctrl+V` | Paste (supports images) |
+
+</OsBlock>
 
 ---
 
@@ -240,6 +266,8 @@ Or the `Alt+T` key. Useful for: architectural decisions, tough bugs, ambiguous s
 
 ## 🏃 Quick start (5 minutes)
 
+<OsBlock os="mac">
+
 ```bash
 # 1. Create and enter a project
 mkdir my-project && cd my-project
@@ -256,6 +284,31 @@ claude
 
 # 5. Give it the first task
 ```
+
+</OsBlock>
+
+<OsBlock os="windows">
+
+```powershell
+# 1. Create and enter a project
+mkdir my-project; cd my-project
+
+# 2. Create context files (PowerShell)
+ni CLAUDE.md, TODO.md, AGENTS.md -ItemType File
+
+# 3. Initialize CLAUDE.md
+claude
+/init       # ← inside Claude Code
+
+# 4. Or fill in manually:
+# Stack, how to run, agent instructions
+
+# 5. Give it the first task
+```
+
+> 💡 Alternative via WSL/Git Bash: `mkdir my-project && cd my-project && touch CLAUDE.md TODO.md AGENTS.md`
+
+</OsBlock>
 
 ---
 
@@ -513,22 +566,45 @@ Analyze interview.txt and find the main user pain points.
 
 ## 🔐 Git commands (quick)
 
+Same on both systems — Git is identical everywhere:
+
 ```bash
-# Status
-git status
-
-# Add files
-git add .
-
-# Commit
-git commit -m "Description"
-
-# Push
-git push origin main
-
-# Pull
-git pull origin main
+git status                          # Status
+git add .                           # Stage all files
+git commit -m "Description"         # Commit
+git push origin main                # Push
+git pull origin main                # Pull
 ```
+
+---
+
+## 🖥️ Mac / Windows differences
+
+Where the commands actually diverge (everything else is identical):
+
+| Need | macOS / Linux | Windows (PowerShell) |
+| --- | --- | --- |
+| Create an empty file | `touch file.md` | `ni file.md -ItemType File` |
+| Create multiple | `touch a.md b.md c.md` | `ni a.md, b.md, c.md -ItemType File` |
+| Chain commands | `cmd1 && cmd2` | `cmd1; cmd2` (or `&&` on pwsh 7+) |
+| Pipe a file into Claude | `cat err.log \| claude -p ...` | `Get-Content err.log \| claude -p ...` |
+| Env variable | `export KEY=value` | `$env:KEY = "value"` |
+| Hotkey: Plan mode | `Option+P` | `Alt+P` |
+| Hotkey: ultrathink | `Option+T` | `Alt+T` |
+| Paste | `Cmd+V` | `Ctrl+V` |
+| Home `.claude` path | `~/.claude/` | `$env:USERPROFILE\.claude\` |
+
+<OsBlock os="windows">
+
+> 💡 **Tip for Windows devs:** install WSL2 + Git Bash so you can run bash commands from tutorials. PowerShell works too, but many AI blogs assume bash.
+
+</OsBlock>
+
+<OsBlock os="mac">
+
+> 💡 **Tip for Mac:** use iTerm2 or Warp instead of the stock Terminal — they pair better with Claude Code (patterns, colors, hotkeys).
+
+</OsBlock>
 
 ---
 

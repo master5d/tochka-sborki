@@ -65,6 +65,10 @@ CLAUDE.md is a Markdown file that Claude Code reads automatically every time it 
 
 ### Creating a project
 
+<OsToggle label="Commands for:" />
+
+<OsBlock os="mac">
+
 ```bash
 mkdir -p ~/my-project
 cd ~/my-project
@@ -72,6 +76,20 @@ git init
 touch CLAUDE.md
 mkdir -p src my-experiments
 ```
+
+</OsBlock>
+
+<OsBlock os="windows">
+
+```powershell
+New-Item -ItemType Directory $HOME\my-project -Force
+cd $HOME\my-project
+git init
+ni CLAUDE.md -ItemType File
+New-Item -ItemType Directory src, my-experiments -Force
+```
+
+</OsBlock>
 
 ### CLAUDE.md tips
 
@@ -85,6 +103,8 @@ mkdir -p src my-experiments
 
 Create your first project:
 
+<OsBlock os="mac">
+
 ```bash
 mkdir -p ~/my-ai-project
 cd ~/my-ai-project
@@ -92,6 +112,20 @@ git init
 touch CLAUDE.md
 mkdir -p my-experiments
 ```
+
+</OsBlock>
+
+<OsBlock os="windows">
+
+```powershell
+New-Item -ItemType Directory $HOME\my-ai-project -Force
+cd $HOME\my-ai-project
+git init
+ni CLAUDE.md -ItemType File
+New-Item -ItemType Directory my-experiments -Force
+```
+
+</OsBlock>
 
 Fill in CLAUDE.md using the template — write about a real project or task you want to work on.
 

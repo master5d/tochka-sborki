@@ -27,6 +27,8 @@ Your answer from Activation is your context. Keep it in mind as you set things u
 
 <Phase type="concept">
 
+<OsToggle label="Commands for:" />
+
 ## Installing Claude Code
 
 Claude Code is a CLI (command-line interface), an agent that works right in your terminal.
@@ -37,6 +39,8 @@ Claude Code is a CLI (command-line interface), an agent that works right in your
 npm install -g @anthropic-ai/claude-code
 ```
 
+> 💡 `npm install -g` works the same in bash and PowerShell.
+
 ### Check
 
 ```bash
@@ -46,14 +50,29 @@ claude --help
 
 ### First run
 
+<OsBlock os="mac">
+
 ```bash
 cd ~/Documents
 claude
 ```
 
+</OsBlock>
+
+<OsBlock os="windows">
+
+```powershell
+cd $HOME\Documents
+claude
+```
+
+</OsBlock>
+
 Claude Code will open an interactive session. The first time it'll ask you to log in via your browser.
 
 ### Git: basic config
+
+Same on every system:
 
 ```bash
 git config --global user.name "Your name"
@@ -65,6 +84,8 @@ git config --global user.name
 
 ### Handy terminal settings
 
+<OsBlock os="mac">
+
 ```bash
 # Add to ~/.bashrc or ~/.zshrc — useful aliases
 alias ll='ls -lah'
@@ -73,6 +94,31 @@ alias gp='git push'
 ```
 
 > 💡 After adding aliases: `source ~/.bashrc` (or restart your terminal).
+
+</OsBlock>
+
+<OsBlock os="windows">
+
+PowerShell uses a profile script instead of `.bashrc`. Open the profile:
+
+```powershell
+# Create it if it doesn't exist yet
+if (!(Test-Path $PROFILE)) { ni $PROFILE -ItemType File -Force }
+# Open in editor
+notepad $PROFILE
+```
+
+Add functions (PowerShell aliases don't take parameters cleanly, so use functions):
+
+```powershell
+function gst { git status }
+function gp  { git push }
+function ll  { Get-ChildItem -Force }
+```
+
+> 💡 After saving: `. $PROFILE` (dot-space) or restart PowerShell.
+
+</OsBlock>
 
 </Phase>
 
@@ -83,7 +129,23 @@ Run through these in order:
 1. Install Claude Code: `npm install -g @anthropic-ai/claude-code`
 2. Check: `claude --version`
 3. Set up Git: `git config --global user.name "Your name"`
-4. Launch Claude Code in any folder: `cd ~/Documents && claude`
+4. Launch Claude Code in any folder:
+
+<OsBlock os="mac">
+
+```bash
+cd ~/Documents && claude
+```
+
+</OsBlock>
+
+<OsBlock os="windows">
+
+```powershell
+cd $HOME\Documents; claude
+```
+
+</OsBlock>
 
 When Claude Code opens — ask it: `"What can you do?"`
 

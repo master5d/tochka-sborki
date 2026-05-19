@@ -9,6 +9,10 @@ level: 0
 
 Быстрая справка для работы с Claude Code и промпт-инжинирингом.
 
+<OsToggle />
+
+> 💡 Выбери свою систему — Mac- и Windows-специфичные команды будут показаны для неё. Без выбора видны оба варианта.
+
 ---
 
 ## ⌨️ Горячие клавиши
@@ -25,13 +29,35 @@ level: 0
 | `Ctrl+V` | Вставить (поддерживает изображения) |
 | `Ctrl+F` | Поиск по тексту текущего диалога |
 | `Shift+Tab` | Переключить режим: Plan → Normal → Auto-accept |
-| `Alt+P` | Быстро переключить в Plan-режим |
-| `Alt+T` | Включить ultrathink (глубокий анализ) |
 | `\+Enter` / `Ctrl+J` | Новая строка без отправки |
 | `Esc+Esc` | Отменить текущий ввод |
 | `/` в начале строки | Открыть автокомплит слэш-команд |
 | `!` в начале строки | Выполнить bash-команду из промпта |
 | `@filename` | Добавить файл/папку в контекст |
+
+<OsBlock os="mac">
+
+**Mac-специфичные клавиши:**
+
+| Клавиша | Действие |
+| --- | --- |
+| `Option+P` | Быстро переключить в Plan-режим |
+| `Option+T` | Включить ultrathink (глубокий анализ) |
+| `Cmd+V` | Вставить (поддерживает изображения) |
+
+</OsBlock>
+
+<OsBlock os="windows">
+
+**Windows-специфичные клавиши:**
+
+| Клавиша | Действие |
+| --- | --- |
+| `Alt+P` | Быстро переключить в Plan-режим |
+| `Alt+T` | Включить ultrathink (глубокий анализ) |
+| `Ctrl+V` | Вставить (поддерживает изображения) |
+
+</OsBlock>
 
 ---
 
@@ -240,6 +266,8 @@ think → think hard → think harder → ultrathink
 
 ## 🏃 Быстрый старт (5 минут)
 
+<OsBlock os="mac">
+
 ```bash
 # 1. Создай и войди в проект
 mkdir my-project && cd my-project
@@ -256,6 +284,31 @@ claude
 
 # 5. Дай первую задачу
 ```
+
+</OsBlock>
+
+<OsBlock os="windows">
+
+```powershell
+# 1. Создай и войди в проект
+mkdir my-project; cd my-project
+
+# 2. Создай контекстные файлы (PowerShell)
+ni CLAUDE.md, TODO.md, AGENTS.md -ItemType File
+
+# 3. Инициализируй CLAUDE.md
+claude
+/init       # ← внутри Claude Code
+
+# 4. Или заполни вручную:
+# Stack, как запустить, инструкции агенту
+
+# 5. Дай первую задачу
+```
+
+> 💡 Альтернатива через WSL/Git Bash: `mkdir my-project && cd my-project && touch CLAUDE.md TODO.md AGENTS.md`
+
+</OsBlock>
 
 ---
 
@@ -513,22 +566,45 @@ claude
 
 ## 🔐 Git команды (быстро)
 
+Одинаковы на обеих системах — Git одинаковый везде:
+
 ```bash
-# Статус
-git status
-
-# Добавить файлы
-git add .
-
-# Коммит
-git commit -m "Описание"
-
-# Пуш
-git push origin main
-
-# Пул
-git pull origin main
+git status                          # Статус
+git add .                           # Добавить все файлы
+git commit -m "Описание"            # Коммит
+git push origin main                # Пуш
+git pull origin main                # Пул
 ```
+
+---
+
+## 🖥️ Различия Mac / Windows
+
+Где команды реально расходятся (остальное — одинаково):
+
+| Что нужно | macOS / Linux | Windows (PowerShell) |
+| --- | --- | --- |
+| Создать пустой файл | `touch file.md` | `ni file.md -ItemType File` |
+| Создать несколько | `touch a.md b.md c.md` | `ni a.md, b.md, c.md -ItemType File` |
+| Цепочка команд | `cmd1 && cmd2` | `cmd1; cmd2` (или `&&` в pwsh 7+) |
+| Pipe файла в Claude | `cat err.log \| claude -p ...` | `Get-Content err.log \| claude -p ...` |
+| Переменная окружения | `export KEY=value` | `$env:KEY = "value"` |
+| Hotkey: Plan-режим | `Option+P` | `Alt+P` |
+| Hotkey: ultrathink | `Option+T` | `Alt+T` |
+| Вставка | `Cmd+V` | `Ctrl+V` |
+| Путь к домашнему `.claude` | `~/.claude/` | `$env:USERPROFILE\.claude\` |
+
+<OsBlock os="windows">
+
+> 💡 **Совет для Windows-разработчиков:** установи WSL2 + Git Bash для bash-команд из туториалов. PowerShell тоже подходит, но многие AI-блоги пишут под bash.
+
+</OsBlock>
+
+<OsBlock os="mac">
+
+> 💡 **Совет для Mac:** используй iTerm2 или Warp вместо штатного Terminal — лучше работают с Claude Code (паттерны, цвета, hotkeys).
+
+</OsBlock>
 
 ---
 
