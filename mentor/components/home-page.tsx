@@ -8,16 +8,36 @@ export function HomePage({ locale }: Props) {
   const year = new Date().getFullYear()
 
   return (
-    <>
+    <main>
       <LangSwitcher locale={locale} />
+      <style>{`
+        @media (max-width: 720px) {
+          .mentor-hero { padding: 3rem 1.25rem 2.5rem !important; }
+          .mentor-hero h1 {
+            font-size: clamp(1.85rem, 8vw, 4rem) !important;
+            letter-spacing: -0.02em !important;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            line-height: 0.95 !important;
+          }
+          .mentor-hero .mentor-hero-tagline { font-size: 0.7rem !important; word-break: break-word; }
+          .mentor-section { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+          .mentor-section h2 {
+            font-size: clamp(1.5rem, 6vw, 2.5rem) !important;
+            word-break: break-word;
+            letter-spacing: -0.02em !important;
+          }
+          .mentor-process-row { grid-template-columns: 2.5rem 1fr !important; gap: 0.75rem !important; }
+        }
+      `}</style>
 
       {/* ── HERO ────────────────────────────────────────────────── */}
-      <section style={{
+      <section className="mentor-hero" style={{
         padding: '6rem 2rem 4rem',
         maxWidth: 'var(--content-max)',
         margin: '0 auto',
       }}>
-        <div style={{
+        <div className="mentor-hero-tagline" style={{
           fontFamily: 'var(--font-mono)',
           fontSize: 'var(--section-label-size)',
           color: 'var(--text-accent)',
@@ -96,7 +116,7 @@ export function HomePage({ locale }: Props) {
       </section>
 
       {/* ── SERVICES ───────────────────────────────────────────── */}
-      <section style={{
+      <section className="mentor-section" style={{
         padding: 'var(--section-gap) 2rem',
         borderTop: '1px solid var(--border-color)',
       }}>
@@ -185,7 +205,7 @@ export function HomePage({ locale }: Props) {
       </section>
 
       {/* ── CASES ──────────────────────────────────────────────── */}
-      <section style={{
+      <section className="mentor-section" style={{
         padding: 'var(--section-gap) 2rem',
         background: 'var(--bg-secondary)',
         borderTop: '1px solid var(--border-color)',
@@ -276,7 +296,7 @@ export function HomePage({ locale }: Props) {
       </section>
 
       {/* ── PROCESS ────────────────────────────────────────────── */}
-      <section style={{
+      <section className="mentor-section" style={{
         padding: 'var(--section-gap) 2rem',
       }}>
         <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
@@ -304,7 +324,7 @@ export function HomePage({ locale }: Props) {
           </h2>
           <div style={{ maxWidth: '720px' }}>
             {t.process.map(([num, text]) => (
-              <div key={num} style={{
+              <div key={num} className="mentor-process-row" style={{
                 display: 'grid',
                 gridTemplateColumns: '4rem 1fr',
                 gap: '1.5rem',
@@ -335,7 +355,7 @@ export function HomePage({ locale }: Props) {
       </section>
 
       {/* ── CONTACT ────────────────────────────────────────────── */}
-      <section style={{
+      <section className="mentor-section" style={{
         padding: 'var(--section-gap) 2rem',
         background: 'var(--bg-secondary)',
         borderTop: '1px solid var(--border-color)',
@@ -411,6 +431,6 @@ export function HomePage({ locale }: Props) {
           ))}
         </span>
       </footer>
-    </>
+    </main>
   )
 }

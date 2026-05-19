@@ -22,6 +22,7 @@ export function LangSwitcher({ locale }: Props) {
   return (
     <Link
       href={href}
+      className="lang-switcher-pill"
       style={{
         position: 'fixed',
         top: '1rem',
@@ -39,6 +40,11 @@ export function LangSwitcher({ locale }: Props) {
         textDecoration: 'none',
       }}
     >
+      <style>{`
+        @media (max-width: 720px) {
+          .lang-switcher-pill { top: auto !important; bottom: 1rem !important; right: 1rem !important; }
+        }
+      `}</style>
       {otherLabel}
     </Link>
   )

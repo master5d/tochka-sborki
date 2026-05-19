@@ -7,11 +7,24 @@ export function HomePage({ locale }: Props) {
   const t = getDictionary(locale)
 
   return (
-    <>
+    <main>
       <LangSwitcher locale={locale} />
+      <style>{`
+        @media (max-width: 720px) {
+          .hub-hero { padding: 3rem 1.25rem 2rem !important; }
+          .hub-hero h1 {
+            font-size: clamp(1.85rem, 8.5vw, 4rem) !important;
+            letter-spacing: -0.03em !important;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            line-height: 0.95 !important;
+          }
+          .hub-section { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+        }
+      `}</style>
 
       {/* ── HERO ────────────────────────────────────────────────── */}
-      <section style={{
+      <section className="hub-hero" style={{
         padding: '6rem 2rem 3rem',
         maxWidth: 'var(--content-max)',
         margin: '0 auto',
@@ -51,7 +64,7 @@ export function HomePage({ locale }: Props) {
       </section>
 
       {/* ── PROJECTS ───────────────────────────────────────────── */}
-      <section style={{
+      <section className="hub-section" style={{
         padding: 'var(--section-gap) 2rem',
         borderTop: '1px solid var(--border-color)',
       }}>
@@ -217,6 +230,6 @@ export function HomePage({ locale }: Props) {
       }}>
         © {new Date().getFullYear()} · mamaev.coach · {t.footerTagline}
       </footer>
-    </>
+    </main>
   )
 }
