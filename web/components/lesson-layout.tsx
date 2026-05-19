@@ -9,6 +9,7 @@ import { Sidebar } from './sidebar'
 import { AssignmentBlock } from './assignment-block'
 import { useProgress } from './progress-provider'
 import { AuthGuard } from './auth-guard'
+import { MobileGate } from './mobile-gate'
 
 interface LessonLayoutProps {
   meta: LessonMeta
@@ -35,6 +36,7 @@ export function LessonLayout({ meta, navItems, children, locale = 'ru' }: Lesson
 
   return (
     <AuthGuard>
+      <MobileGate locale={locale}>
       <Nav />
       <div style={{ display: 'flex', minHeight: 'calc(100vh - 3rem)' }}>
         <Sidebar navItems={navItems} currentSlug={meta.slug} locale={locale} />
@@ -89,6 +91,7 @@ export function LessonLayout({ meta, navItems, children, locale = 'ru' }: Lesson
         </main>
       </div>
       <Footer locale={locale} topics={navItems.filter(i => i.type === 'module').map(i => ({ slug: i.slug, title: i.title }))} />
+      </MobileGate>
     </AuthGuard>
   )
 }

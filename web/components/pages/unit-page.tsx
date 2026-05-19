@@ -10,6 +10,7 @@ import { Footer } from '@/components/footer'
 import { Sidebar } from '@/components/sidebar'
 import { UnitWizard } from '@/components/unit-wizard'
 import { AuthGuard } from '@/components/auth-guard'
+import { MobileGate } from '@/components/mobile-gate'
 import { mdxComponents } from '@/components/mdx-components'
 import type { Locale } from '@/lib/dictionaries'
 
@@ -25,6 +26,7 @@ export function UnitPage({ moduleSlug, unitSlug, locale }: Props) {
 
   return (
     <AuthGuard>
+      <MobileGate locale={locale}>
       <Nav locale={locale} />
       <div style={{ display: 'flex', minHeight: 'calc(100vh - 3rem)' }}>
         <Sidebar navItems={navItems} currentSlug={moduleSlug} currentUnit={unitSlug} locale={locale} />
@@ -47,6 +49,7 @@ export function UnitPage({ moduleSlug, unitSlug, locale }: Props) {
         </main>
       </div>
       <Footer locale={locale} topics={navItems.filter(i => i.type === 'module').map(i => ({ slug: i.slug, title: i.title }))} />
+      </MobileGate>
     </AuthGuard>
   )
 }
