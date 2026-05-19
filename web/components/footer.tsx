@@ -5,6 +5,9 @@ interface Props {
   locale?: Locale
   /** Topic list to render (slug + title). If omitted, topics column is empty. */
   topics?: { slug: string; title: string }[]
+  /** Show the prominent "get certificate" CTA button. Off for reference pages
+   *  (roadmap, cheatsheet) where it's contextually irrelevant. */
+  showCertificateCta?: boolean
 }
 
 const REPO_URL = 'https://github.com/master5d/tochka-sborki'
@@ -28,7 +31,7 @@ const linkStyle: React.CSSProperties = {
   lineHeight: 1.5,
 }
 
-export function Footer({ locale = 'ru', topics = [] }: Props = {}) {
+export function Footer({ locale = 'ru', topics = [], showCertificateCta = true }: Props = {}) {
   const t = getDictionary(locale).footer
   const prefix = locale === 'en' ? '/en' : ''
   const year = new Date().getFullYear()
@@ -78,22 +81,24 @@ export function Footer({ locale = 'ru', topics = [] }: Props = {}) {
             </p>
           </div>
 
-          {/* Certificate CTA */}
-          <Link href={`${prefix}/certificate/`} style={{
-            padding: '0.875rem 1.5rem',
-            background: 'transparent',
-            border: '1px solid var(--text-accent)',
-            color: 'var(--text-accent)',
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.8rem',
-            textTransform: 'uppercase',
-            letterSpacing: '0.1em',
-            borderRadius: 'var(--radius)',
-            textDecoration: 'none',
-            whiteSpace: 'nowrap',
-          }}>
-            ◆ {getDictionary(locale).nav.certificate}
-          </Link>
+          {/* Certificate CTA — hidden on reference pages */}
+          {showCertificateCta && (
+            <Link href={`${prefix}/certificate/`} style={{
+              padding: '0.875rem 1.5rem',
+              background: 'transparent',
+              border: '1px solid var(--text-accent)',
+              color: 'var(--text-accent)',
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.8rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              borderRadius: 'var(--radius)',
+              textDecoration: 'none',
+              whiteSpace: 'nowrap',
+            }}>
+              ◆ {getDictionary(locale).nav.certificate}
+            </Link>
+          )}
         </div>
 
         {/* ── Middle: 4 columns ──────────────────────────────────── */}

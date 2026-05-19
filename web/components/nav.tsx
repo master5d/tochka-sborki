@@ -43,6 +43,21 @@ export function Nav({ locale: localeProp }: Props = {}) {
     ? '/en' + (pathname === '/' ? '/' : pathname)
     : pathname.replace(/^\/en(\/|$)/, '/') || '/'
 
+  // Active-link detection (next.config has trailingSlash: true, so paths end with /)
+  const normalize = (p: string) => p.replace(/\/+$/, '') || '/'
+  const here = normalize(pathname)
+  const isActive = (href: string) => here === normalize(href)
+  const navLinkStyle = (href: string): React.CSSProperties => {
+    const active = isActive(href)
+    return {
+      color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
+      borderBottom: active ? '2px solid var(--text-accent)' : '2px solid transparent',
+      paddingBottom: '1px',
+      textDecoration: 'none',
+      fontWeight: active ? 600 : 400,
+    }
+  }
+
   return (
     <nav style={{
       borderBottom: '1px solid var(--border-color)',
@@ -67,10 +82,10 @@ export function Nav({ locale: localeProp }: Props = {}) {
       </Link>
       <div style={{ display: 'flex', gap: '1rem', fontSize: '0.875rem', alignItems: 'center' }}>
         <div className="nav-secondary-links" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-        <Link href={`${locale === 'en' ? '/en' : ''}/roadmap/`} style={{ color: 'var(--text-secondary)' }}>{t.nav.roadmap}</Link>
-        <Link href={`${locale === 'en' ? '/en' : ''}/cheatsheet/`} style={{ color: 'var(--text-secondary)' }}>{t.nav.cheatsheet}</Link>
-        <Link href={`${locale === 'en' ? '/en' : ''}/feedback/`} style={{ color: 'var(--text-secondary)' }}>{t.nav.feedback}</Link>
-        <Link href={`${locale === 'en' ? '/en' : ''}/certificate/`} style={{ color: 'var(--text-accent)' }}>{t.nav.certificate} <span aria-hidden="true">◆</span></Link>
+        {(() => { const h = `${locale === 'en' ? '/en' : ''}/roadmap/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.roadmap}</Link> })()}
+        {(() => { const h = `${locale === 'en' ? '/en' : ''}/cheatsheet/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.cheatsheet}</Link> })()}
+        {(() => { const h = `${locale === 'en' ? '/en' : ''}/feedback/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.feedback}</Link> })()}
+        {(() => { const h = `${locale === 'en' ? '/en' : ''}/certificate/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.certificate} <span aria-hidden="true">◆</span></Link> })()}
         </div>
 
         {/* Language switcher */}

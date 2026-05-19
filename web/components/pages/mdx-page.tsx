@@ -17,7 +17,7 @@ export function MdxPage({ name, locale }: Props) {
       <main style={{ maxWidth: '960px', margin: '0 auto', padding: '2rem 3rem' }}>
         <MDXRemote source={content} components={mdxComponents} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
       </main>
-      <Footer locale={locale} topics={modules.map(m => ({ slug: m.slug, title: m.title }))} />
+      <Footer locale={locale} topics={modules.map(m => ({ slug: m.slug, title: m.title }))} showCertificateCta={false} />
     </>
   )
 }
