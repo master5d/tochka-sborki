@@ -19,10 +19,12 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [telegram, setTelegram] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'sent' | 'error'>('idle')
+  const [errorMsg, setErrorMsg] = useState('')
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setStatus('loading')
+    setErrorMsg('')
     try {
       const params = new URLSearchParams(window.location.search)
       const redirect = params.get('redirect')
@@ -39,9 +41,17 @@ export default function LoginPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       })
-      setStatus(res.ok ? 'sent' : 'error')
-    } catch {
+      
+      if (res.ok) {
+        setStatus('sent')
+      } else {
+        const data = await res.json().catch(() => ({}))
+        setStatus('error')
+        setErrorMsg(data.message || data.error || 'Что-то пошло не так. Попробуй снова.')
+      }
+    } catch (err) {
       setStatus('error')
+      setErrorMsg(err instanceof Error ? err.message : 'Ошибка сети. Проверь подключение.')
     }
   }
 
@@ -99,7 +109,7 @@ export default function LoginPage() {
               style={{ ...inputStyle, borderStyle: 'dashed' }}
             />
             {status === 'error' && (
-              <p style={{ color: '#ff4444', fontSize: '0.875rem' }}>Что-то пошло не так. Попробуй снова.</p>
+              <p style={{ color: '#ff4444', fontSize: '0.875rem' }}>{errorMsg}</p>
             )}
             <button
               type="submit"
