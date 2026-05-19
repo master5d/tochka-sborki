@@ -1,7 +1,13 @@
 # Project Context
 
 ## Проект
-Точка Сборки — открытый курс по agentic AI в потоке. **Agent-agnostic**: концепции работают с Claude Code, Hermes (SOVERN), Aider, Cline, и др. 9 модулей + упражнения + шпаргалка. Язык контента — русский + English. Refactor 2026-05-18: добавлен модуль 03-stack-selection (Behind-GFW + Sovereign), модули 03→04 ... 07→08.
+Точка Сборки — открытый курс по agentic AI в потоке. **Agent-agnostic**: концепции работают с Claude Code, Hermes (SOVERN), Aider, Cline, и др. 9 модулей + упражнения + шпаргалка. **Bilingual**: RU (основной) + EN (`/en/` маршруты). Refactor 2026-05-18: добавлен модуль 03-stack-selection (Behind-GFW + Sovereign), модули 03→04 ... 07→08.
+
+## Три сайта (один репо, три CF Pages проекта)
+- **`web/`** → `ai.mamaev.coach` — LMS курса (проект `tochka-sborki`)
+- **`hub/`** → `mamaev.coach` — личный лендинг (проект `mamaev-coach-hub`)
+- **`mentor/`** → `mentor.mamaev.coach` — B2B agent-engineering (проект `mamaev-coach-mentor`)
+- **`workers/`** → `ai.mamaev.coach/api/*` — CF Worker (auth magic-link, progress, feedback, CRM). Все три сайта bilingual (RU `/`, EN `/en/`).
 
 ## Структура
 ```
@@ -24,13 +30,17 @@ my-experiments/         — Рабочая папка студента (шабл
 my-templates/           — Шаблоны для работы
 course-feedback/        — Author layer feedback-петли (submissions/, digests/, README)
 docs/superpowers/       — Spec'ы и планы (brainstorming, writing-plans)
-web/                    — Next.js 16 LMS сайт (mamaev.coach), см. web/README.md
-  web/app/              — App Router страницы
-  web/content/ru/       — MDX-версии уроков с frontmatter
-  web/components/       — Nav, Sidebar, LessonLayout, MDX-компоненты
-  web/lib/              — content.ts (getAllLessons), тесты
-  web/public/           — статика (author.jpg)
-.github/workflows/      — deploy.yml: GitHub Actions → CF Pages CI/CD
+web/                    — Next.js 16 LMS сайт (ai.mamaev.coach), см. web/README.md
+  web/app/              — App Router; RU `/` + EN `/en/` зеркало
+  web/content/{ru,en}/  — MDX-версии уроков (9 модулей) с frontmatter
+  web/components/       — Nav, Sidebar, LessonLayout/UnitWizard, MDX-компоненты,
+                          OsToggle/OsBlock, AgentToggle/AgentBlock/StackMatrix,
+                          MobileGate, LangSuggestBanner
+  web/lib/              — content.ts, dictionaries.ts (RU+EN), тесты
+hub/                    — лендинг mamaev.coach (Next.js, bilingual)
+mentor/                 — B2B mentor.mamaev.coach (Next.js, bilingual)
+workers/                — CF Worker (Hono-less router): auth/progress/feedback/CRM
+.github/workflows/      — deploy.yml: 4 jobs (web/hub/mentor/workers) → CF Pages/Workers
 ```
 
 ## Стек
@@ -41,24 +51,32 @@ web/                    — Next.js 16 LMS сайт (mamaev.coach), см. web/RE
 - Firecrawl (веб-скрапинг в Meeting 5)
 
 ### Web / LMS (папка `web/`)
-- Next.js 16 App Router, `output: 'export'` (статичный сайт)
-- MDX (`next-mdx-remote`) — контент из `web/content/ru/*.mdx`
+- Next.js 16 App Router, `output: 'export'` (статичный сайт), `trailingSlash: true`
+- MDX (`next-mdx-remote`) — контент из `web/content/{ru,en}/**`
+- Локализация: `lib/dictionaries.ts` (RU+EN), компоненты принимают `locale`
 - CSS Custom Properties + Tailwind 4 — темы через `data-theme` атрибут
-- Geist Mono — основной моноширинный шрифт
-- Cloudflare Pages — хостинг (`mamaev.coach`)
+- Cloudflare Pages хостинг + CF Worker для API (`workers/`)
 - GitHub Actions — CI/CD (`.github/workflows/deploy.yml`)
 - Vitest — тесты (`web/lib/content.test.ts`)
 
-Контент `.mdx` в `web/content/ru/` — копии уроков с frontmatter (title, description, level, duration, order).
+### Backend (`workers/`)
+- CF Worker на `ai.mamaev.coach/api/*`. Эндпоинты: auth (magic-link через Resend),
+  progress (D1 SQLite), feedback, CRM webhook.
+- **CRM pipeline**: новый юзер → Worker fires `N8N_CRM_WEBHOOK_URL` (n8n workflow
+  `mds-crm` на n8n.synergify.com) → создаёт строку в Notion. Секрет
+  `N8N_CRM_SECRET` должен совпадать с IF-нодой «Check Secret» в n8n.
+- D1 база `tochka-sborki-db`; секреты через `wrangler secret put` (не в коде).
 
 ## Инструкции для Claude Code
-- Весь контент пишется на **русском языке**
+- Контент пишется на **русском** (основной), затем зеркалится в **EN** (`content/en/`, `/en/` маршруты)
 - Формат файлов — Markdown с emoji-заголовками
 - Нумерация файлов: `XX-topic.md` (01, 02, 03...)
-- Студенческие файлы → `my-experiments/`
-- Шаблоны → `my-templates/`
-- При добавлении нового Meeting обновлять: INDEX.md, README.md
+- Студенческие файлы → `my-experiments/`; шаблоны → `my-templates/`
+- При добавлении нового Meeting обновлять: INDEX.md, README.md, оба `content/{ru,en}/`
+- Новый UI-текст → в `web/lib/dictionaries.ts` (RU+EN), не хардкодить в компонентах
+- OS-специфичные команды → `<OsBlock os="mac|windows">`; стек-специфичные → `<AgentBlock stack="...">`
 - Сохранять единый стиль: секции с emoji, таблицы, чеклисты `- [ ]`, blockquote tips `> 💡`
 - Лимит CLAUDE.md ~200 строк
-- При обновлении урока (.md) — обновить соответствующий .mdx в `web/content/ru/`
-- Деплой автоматический: `git push main` → CI запускается автоматически
+- При обновлении урока (.md) — обновить соответствующий .mdx в `web/content/{ru,en}/`
+- Деплой автоматический: `git push main` → CI (4 jobs по path-фильтрам)
+- Секреты Worker'а — только через `wrangler secret put`, остерегаться BOM при copy-paste

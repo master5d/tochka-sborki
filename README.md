@@ -16,9 +16,9 @@
 
 <div align="center">
 
-**AI Vibe-Coding Course · 8 тем · Claude Code + MCP + Агенты**
+**Agentic-AI Course · 9 тем · agent-agnostic (Claude Code / Sovereign / Cloud-OSS / Behind-GFW) · RU + EN**
 
-[![Deploy](https://img.shields.io/badge/deploy-Cloudflare_Pages-orange?style=flat-square&logo=cloudflare)](https://mamaev.coach)
+[![Deploy](https://img.shields.io/badge/deploy-Cloudflare_Pages-orange?style=flat-square&logo=cloudflare)](https://ai.mamaev.coach)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
@@ -117,5 +117,5 @@ Push в `main` → GitHub Actions → Cloudflare Pages автоматическ�
 ---
 
 <div align="center">
-  <sub>Сделано с Claude Code · <a href="https://mamaev.coach">mamaev.coach</a></sub>
+  <sub>Сделано с Claude Code · <a href="https://ai.mamaev.coach">ai.mamaev.coach</a></sub>
 </div>
