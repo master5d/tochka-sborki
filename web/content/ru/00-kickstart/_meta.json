@@ -5,8 +5,8 @@
   "duration": "25 мин",
   "level": 0,
   "units": [
-    { "slug": "u1-map", "title": "Карта AI-инструментов" },
-    { "slug": "u2-tools", "title": "Твои первые инструменты" },
+    { "slug": "u1-map", "title": "Твоя идея-призрак" },
+    { "slug": "u2-tools", "title": "Карта инструментов" },
     { "slug": "u3-first-steps", "title": "Первые шаги" }
   ]
 }
