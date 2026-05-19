@@ -4,6 +4,7 @@ import { GeistMono } from 'geist/font/mono'
 import { Unbounded } from 'next/font/google'
 import { defaultTheme } from '@/lib/themes'
 import { ProgressProvider } from '@/components/progress-provider'
+import { LangSuggestBanner } from '@/components/lang-suggest-banner'
 import './globals.css'
 
 const unbounded = Unbounded({
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body>
         <ProgressProvider>
+          <LangSuggestBanner />
           {children}
         </ProgressProvider>
       </body>
