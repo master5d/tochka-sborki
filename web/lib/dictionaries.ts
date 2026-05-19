@@ -61,6 +61,26 @@ export type Dictionary = {
     switchAction: string
     dismissAction: string
   }
+  feedback: {
+    pageLabel: string
+    pageHeading: string
+    pageSubtitle: string
+    moduleLabel: string
+    modulePlaceholder: string
+    likertDisagree: string
+    likertAgree: string
+    recommendLabel: string
+    impactLabel: string
+    applyLabel: string
+    unclearLabel: string
+    otherLabel: string
+    submitting: string
+    submit: string
+    successMessage: string
+    errorMessage: string
+    pageTitle: string
+    pageDescription: string
+  }
   wizard: {
     unit: (i: number, total: number) => string
     next: string
@@ -182,6 +202,26 @@ export const dictionaries: Record<Locale, Dictionary> = {
       message: '🌐 This site is also available in English.',
       switchAction: 'Switch to English →',
       dismissAction: 'Stay in Russian',
+    },
+    feedback: {
+      pageLabel: '⬡ Фидбек',
+      pageHeading: 'Оцени\nкурс',
+      pageSubtitle: 'Твой отзыв помогает курсу самообновляться. 2 минуты — и урок станет лучше для следующего студента.',
+      moduleLabel: 'Модуль',
+      modulePlaceholder: 'Выбери модуль...',
+      likertDisagree: 'Не согласен',
+      likertAgree: 'Согласен',
+      recommendLabel: 'Я бы порекомендовал(а) этот курс другу или коллеге',
+      impactLabel: 'Этот урок изменил то, как я думаю о работе с AI',
+      applyLabel: 'Я знаю, как применить это прямо сейчас',
+      unclearLabel: 'Что было непонятно или хотелось бы разобрать подробнее? (опционально)',
+      otherLabel: 'Что ещё хочешь сказать? (опционально)',
+      submitting: 'Отправляем...',
+      submit: 'Отправить фидбек →',
+      successMessage: '✓ Спасибо! Фидбек отправлен.',
+      errorMessage: 'Что-то пошло не так, попробуй снова.',
+      pageTitle: 'Фидбек — Точка Сборки',
+      pageDescription: 'Обратная связь по курсу',
     },
     mobileGate: {
       title: '💻 Этот урок — для десктопа',
@@ -315,6 +355,26 @@ export const dictionaries: Record<Locale, Dictionary> = {
       message: '🌐 Этот сайт также доступен на русском.',
       switchAction: 'Переключить на русский →',
       dismissAction: 'Остаться на английском',
+    },
+    feedback: {
+      pageLabel: '⬡ Feedback',
+      pageHeading: 'Rate the\ncourse',
+      pageSubtitle: 'Your feedback helps the course self-update. 2 minutes — and the lesson gets better for the next student.',
+      moduleLabel: 'Module',
+      modulePlaceholder: 'Pick a module...',
+      likertDisagree: 'Disagree',
+      likertAgree: 'Agree',
+      recommendLabel: 'I would recommend this course to a friend or colleague',
+      impactLabel: 'This lesson changed how I think about working with AI',
+      applyLabel: 'I know how to apply this right now',
+      unclearLabel: 'What was unclear or what would you like covered in more depth? (optional)',
+      otherLabel: 'Anything else you want to say? (optional)',
+      submitting: 'Sending...',
+      submit: 'Send feedback →',
+      successMessage: '✓ Thanks! Feedback sent.',
+      errorMessage: 'Something went wrong, try again.',
+      pageTitle: 'Feedback — Tochka Sborki',
+      pageDescription: 'Feedback on the course',
     },
     mobileGate: {
       title: '💻 This lesson is for desktop',

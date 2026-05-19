@@ -1,16 +1,18 @@
 'use client'
 
 import { useState } from 'react'
+import { getDictionary, type Locale } from '@/lib/dictionaries'
 
 const LIKERT = ['1', '2', '3', '4', '5']
-const MODULES = [
-  'Kickstart', 'Знакомство', 'Базовый сетап', 'Промпт-инжиниринг',
-  'Контекст и память', 'Pipeline автоматизации', 'Инструменты расширения',
-  'Агентский инжиниринг',
-]
 
-function LikertScale({ name, label, value, onChange }: {
+interface FeedbackFormProps {
+  locale?: Locale
+  modules: string[]
+}
+
+function LikertScale({ name, label, value, onChange, disagree, agree }: {
   name: string; label: string; value: string; onChange: (v: string) => void
+  disagree: string; agree: string
 }) {
   return (
     <fieldset style={{ border: 'none', marginBottom: '2rem' }}>
@@ -18,7 +20,7 @@ function LikertScale({ name, label, value, onChange }: {
         {label}
       </legend>
       <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', minWidth: '5rem' }}>Не согласен</span>
+        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', minWidth: '5rem' }}>{disagree}</span>
         {LIKERT.map(v => (
           <label key={v} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem', cursor: 'pointer' }}>
             <input
@@ -30,13 +32,14 @@ function LikertScale({ name, label, value, onChange }: {
             <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{v}</span>
           </label>
         ))}
-        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', minWidth: '4rem' }}>Согласен</span>
+        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', minWidth: '4rem' }}>{agree}</span>
       </div>
     </fieldset>
   )
 }
 
-export function FeedbackForm() {
+export function FeedbackForm({ locale = 'ru', modules }: FeedbackFormProps) {
+  const t = getDictionary(locale).feedback
   const [lesson, setLesson] = useState('')
   const [recommend, setRecommend] = useState('')
   const [impact, setImpact] = useState('')
@@ -52,7 +55,7 @@ export function FeedbackForm() {
       const res = await fetch('/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lesson, recommend, impact, apply, unclear, other }),
+        body: JSON.stringify({ lesson, recommend, impact, apply, unclear, other, locale }),
       })
       setStatus(res.ok ? 'success' : 'error')
     } catch {
@@ -70,7 +73,7 @@ export function FeedbackForm() {
         fontFamily: 'var(--font-mono)',
         fontSize: '0.875rem',
       }}>
-        ✓ Спасибо! Фидбек отправлен.
+        {t.successMessage}
       </div>
     )
   }
@@ -79,7 +82,7 @@ export function FeedbackForm() {
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
       <div style={{ marginBottom: '2rem' }}>
         <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-primary)', fontWeight: 600 }}>
-          Модуль
+          {t.moduleLabel}
         </label>
         <select
           value={lesson}
@@ -96,33 +99,39 @@ export function FeedbackForm() {
             fontSize: '0.875rem',
           }}
         >
-          <option value="">Выбери модуль...</option>
-          {MODULES.map(m => <option key={m} value={m}>{m}</option>)}
+          <option value="">{t.modulePlaceholder}</option>
+          {modules.map(m => <option key={m} value={m}>{m}</option>)}
         </select>
       </div>
 
       <LikertScale
         name="recommend"
-        label="Я бы порекомендовал(а) этот курс другу или коллеге"
+        label={t.recommendLabel}
         value={recommend}
         onChange={setRecommend}
+        disagree={t.likertDisagree}
+        agree={t.likertAgree}
       />
       <LikertScale
         name="impact"
-        label="Этот урок изменил то, как я думаю о работе с AI"
+        label={t.impactLabel}
         value={impact}
         onChange={setImpact}
+        disagree={t.likertDisagree}
+        agree={t.likertAgree}
       />
       <LikertScale
         name="apply"
-        label="Я знаю, как применить это прямо сейчас"
+        label={t.applyLabel}
         value={apply}
         onChange={setApply}
+        disagree={t.likertDisagree}
+        agree={t.likertAgree}
       />
 
       <div style={{ marginBottom: '2rem' }}>
         <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-primary)', fontWeight: 600 }}>
-          Что было непонятно или хотелось бы разобрать подробнее? (опционально)
+          {t.unclearLabel}
         </label>
         <textarea
           value={unclear}
@@ -145,7 +154,7 @@ export function FeedbackForm() {
 
       <div style={{ marginBottom: '2rem' }}>
         <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-primary)', fontWeight: 600 }}>
-          Что ещё хочешь сказать? (опционально)
+          {t.otherLabel}
         </label>
         <textarea
           value={other}
@@ -168,7 +177,7 @@ export function FeedbackForm() {
 
       {status === 'error' && (
         <p style={{ color: '#ff4444', marginBottom: '1rem', fontSize: '0.875rem' }}>
-          Что-то пошло не так, попробуй снова.
+          {t.errorMessage}
         </p>
       )}
 
@@ -190,7 +199,7 @@ export function FeedbackForm() {
           alignSelf: 'flex-start',
         }}
       >
-        {status === 'loading' ? 'Отправляем...' : 'Отправить фидбек →'}
+        {status === 'loading' ? t.submitting : t.submit}
       </button>
     </form>
   )

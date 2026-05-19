@@ -4,7 +4,7 @@ import { FeedbackForm } from '@/components/feedback-form'
 import { getDictionary } from '@/lib/dictionaries'
 import { getAllModules } from '@/lib/content'
 
-const t = getDictionary('ru').feedback
+const t = getDictionary('en').feedback
 
 export const metadata: Metadata = {
   title: t.pageTitle,
@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 }
 
 export default function FeedbackPage() {
-  const modules = getAllModules('ru').map(m => m.title)
+  const modules = getAllModules('en').map(m => m.title)
   return (
     <>
-      <Nav />
+      <Nav locale="en" />
       <main style={{ maxWidth: '640px', margin: '0 auto', padding: '4rem 2rem' }}>
         <div style={{
           fontFamily: 'var(--font-mono)',
@@ -41,7 +41,7 @@ export default function FeedbackPage() {
         <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', lineHeight: 1.75 }}>
           {t.pageSubtitle}
         </p>
-        <FeedbackForm locale="ru" modules={modules} />
+        <FeedbackForm locale="en" modules={modules} />
       </main>
     </>
   )
