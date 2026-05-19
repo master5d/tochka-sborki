@@ -1,5 +1,9 @@
 import type { MDXComponents } from 'mdx/types'
 import { OsBlock } from './os-block'
+import { OsToggle } from './os-toggle'
+import { AgentBlock } from './agent-block'
+import { AgentToggle } from './agent-toggle'
+import { StackMatrix } from './stack-matrix'
 import { Phase } from './phase'
 
 export const mdxComponents: MDXComponents = {
@@ -65,5 +69,9 @@ export const mdxComponents: MDXComponents = {
     <td style={{ borderBottom: '1px solid var(--border-color)', padding: '0.5rem 0.75rem', color: 'var(--text-primary)' }}>{children}</td>
   ),
   OsBlock,
+  OsToggle,
+  AgentBlock,
+  AgentToggle,
+  StackMatrix,
   Phase,
 }

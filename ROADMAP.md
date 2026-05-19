@@ -33,11 +33,11 @@
 | [**Kickstart**](./00-kickstart.md) | Ориентация в AI-мире | 20–30 мин |
 | [**Знакомство**](./01-introduction.md) | Software 3.0 и четыре сдвига | 30 мин |
 | [**Базовый сетап**](./02-setup-guide.md) | Рабочая среда и инструменты | 2–3 ч |
-| [**Промпт-инжиниринг**](./03-prompt-engineering.md) | Формулировка ТЗ | 1–2 ч |
-| [**Контекст и память**](./04-context-memory.md) | Память агентов | 1 ч |
-| [**Pipeline автоматизации**](./05-audio-pipeline.md) | Цепочки действий | 2–3 ч |
-| [**Инструменты расширения**](./06-tools.md) | MCP, Skills, Hooks, Superpowers | 2–3 ч |
-| [**Агентский инжиниринг**](./07-agent-engineering.md) | Оркестрация, prod-инфра, ENERV/SOVERN | 90 мин |
+| [**Промпт-инжиниринг**](./04-prompt-engineering.md) | Формулировка ТЗ | 1–2 ч |
+| [**Контекст и память**](./05-context-memory.md) | Память агентов | 1 ч |
+| [**Pipeline автоматизации**](./06-audio-pipeline.md) | Цепочки действий | 2–3 ч |
+| [**Инструменты расширения**](./07-tools.md) | MCP, Skills, Hooks, Superpowers | 2–3 ч |
+| [**Агентский инжиниринг**](./08-agent-engineering.md) | Оркестрация, prod-инфра, ENERV/SOVERN | 90 мин |
 
 ---
 
@@ -207,7 +207,7 @@
 - Грабли двойного cloudflared, hairpin через публичный IP, Langfuse v3 vs v2
 - 5-fallback LLM routing через LiteLLM
 
-**Инструменты:** n8n, Langfuse, Cloudflare Tunnel, Docker, LiteLLM, Hetzner CX22
+**Инструменты:** n8n, Langfuse, Cloudflare Tunnel, Docker, LiteLLM, Hetzner CX23
 
 **Проекты:**
 - Декомпозиция реальной задачи на AI/Tool/Code узлы

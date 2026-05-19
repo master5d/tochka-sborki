@@ -10,10 +10,10 @@
 4. [00-kickstart.md](./00-kickstart.md) - **Meeting 0 (опционально):** карта местности для нонкодеров
 5. [01-introduction.md](./01-introduction.md) - Meeting 1: Знакомство
 6. [02-setup-guide.md](./02-setup-guide.md) - Meeting 2: Сетап
-7. [03-prompt-engineering.md](./03-prompt-engineering.md) - Meeting 3: Промпты
-8. [04-context-memory.md](./04-context-memory.md) - Meeting 4: Контекст
-9. [05-audio-pipeline.md](./05-audio-pipeline.md) - Meeting 5: Pipeline
-10. [06-tools.md](./06-tools.md) - Meeting 6: MCP, Skills, Hooks
+7. [04-prompt-engineering.md](./04-prompt-engineering.md) - Meeting 3: Промпты
+8. [05-context-memory.md](./05-context-memory.md) - Meeting 4: Контекст
+9. [06-audio-pipeline.md](./06-audio-pipeline.md) - Meeting 5: Pipeline
+10. [07-tools.md](./07-tools.md) - Meeting 6: MCP, Skills, Hooks
 11. [EXERCISES.md](./EXERCISES.md) - 8 практических упражнений
 12. [CHEATSHEET.md](./CHEATSHEET.md) - Шпаргалка для работы
 13. [course-feedback/README.md](./course-feedback/README.md) - 📊 Feedback loop курса (опционально, для автора/вдумчивых студентов)
@@ -78,7 +78,7 @@
 ---
 
 #### Meeting 3: Промпт-инжиниринг
-📄 [03-prompt-engineering.md](./03-prompt-engineering.md)
+📄 [04-prompt-engineering.md](./04-prompt-engineering.md)
 
 **Ключевые концепции:**
 - Open Claw философия
@@ -95,7 +95,7 @@
 ---
 
 #### Meeting 4: Контекст и память
-📄 [04-context-memory.md](./04-context-memory.md)
+📄 [05-context-memory.md](./05-context-memory.md)
 
 **Темы:**
 - Как агенты удерживают информацию
@@ -111,7 +111,7 @@
 ---
 
 #### Meeting 6: Инструменты расширения
-📄 [06-tools.md](./06-tools.md)
+📄 [07-tools.md](./07-tools.md)
 
 **Что узнаешь:**
 - MCP: три примитива (Tools, Resources, Prompts)
@@ -190,10 +190,10 @@
 ├── 📄 00-kickstart.md              ← Meeting 0 (опционально для нонкодеров)
 ├── 📄 01-introduction.md           ← Meeting 1
 ├── 📄 02-setup-guide.md            ← Meeting 2
-├── 📄 03-prompt-engineering.md     ← Meeting 3
-├── 📄 04-context-memory.md         ← Meeting 4
-├── 📄 05-audio-pipeline.md         ← Meeting 5
-├── 📄 06-tools.md                  ← Meeting 6
+├── 📄 04-prompt-engineering.md     ← Meeting 3
+├── 📄 05-context-memory.md         ← Meeting 4
+├── 📄 06-audio-pipeline.md         ← Meeting 5
+├── 📄 07-tools.md                  ← Meeting 6
 ├── 📄 EXERCISES.md                 ← 8 упражнений
 ├── 📄 CHEATSHEET.md                ← Шпаргалка
 │
@@ -241,12 +241,12 @@
 - [ ] Запусти claude-code первый раз
 
 ### День 3: Промпт-инжиниринг (2-3 часа)
-- [ ] Прочитай 03-prompt-engineering.md (Meeting 3)
+- [ ] Прочитай 04-prompt-engineering.md (Meeting 3)
 - [ ] Выполни упражнения 1-5 из EXERCISES.md
 - [ ] Создай свой шаблон промпта
 
 ### День 4: Контекст и память (2-3 часа)
-- [ ] Прочитай 04-context-memory.md (Meeting 4)
+- [ ] Прочитай 05-context-memory.md (Meeting 4)
 - [ ] Выполни упражнения 6-8 из EXERCISES.md
 - [ ] Создай систему памяти для реального проекта
 
@@ -338,10 +338,10 @@
 | Я вообще не кодил, где база? | 00-kickstart.md |
 | Четыре сдвига в агентах? | 01-introduction.md |
 | Как установить всё? | 02-setup-guide.md |
-| Как писать промпты? | 03-prompt-engineering.md |
-| Как управлять контекстом? | 04-context-memory.md |
+| Как писать промпты? | 04-prompt-engineering.md |
+| Как управлять контекстом? | 05-context-memory.md |
 | Какие команды Claude Code? | CHEATSHEET.md |
-| Как подключить MCP, Skills, Hooks? | 06-tools.md |
+| Как подключить MCP, Skills, Hooks? | 07-tools.md |
 | Как построить автоматизацию? | my-templates/automation-recipes.md |
 | Как оставить feedback после модуля? | my-templates/feedback-template.md |
 | Финальное JTBD-интервью? | my-templates/feedback-final-jtbd.md |
@@ -363,7 +363,7 @@
 ## ❓ FAQ
 
 **Q: С чего начать?**
-A: Если новичок - прочитай 01-introduction.md. Если уже разработчик - начни с 03-prompt-engineering.md.
+A: Если новичок - прочитай 01-introduction.md. Если уже разработчик - начни с 04-prompt-engineering.md.
 
 **Q: Сколько времени займёт весь курс?**
 A: 12-16 часов активного обучения + бесконечная практика.
