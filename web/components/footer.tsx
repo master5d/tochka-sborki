@@ -205,9 +205,8 @@ export function Footer({ locale = 'ru', topics = [] }: Props = {}) {
             fontFamily: 'var(--font-mono)',
             fontSize: 'var(--section-label-size)',
             color: 'var(--text-secondary)',
-            opacity: 0.7,
           }}>
-            ⬡ {t.builtWith}
+            <span aria-hidden="true">⬡ </span>{t.builtWith}
           </div>
         </div>
       </div>

@@ -10,6 +10,7 @@ const lessonsHref = (locale: Locale, slug: string) =>
   locale === 'en' ? `/en/lessons/${slug}/` : `/lessons/${slug}/`
 const loginHref = (locale: Locale) => locale === 'en' ? '/en/login/' : '/login/'
 const feedbackHref = (locale: Locale) => locale === 'en' ? '/en/feedback/' : '/feedback/'
+const programAnchor = '#program'
 
 interface Props { locale: Locale }
 
@@ -20,21 +21,37 @@ export function HomePage({ locale }: Props) {
   return (
     <>
       <Nav locale={locale} />
+      <style>{`
+        @media (max-width: 720px) {
+          .home-hero { padding: 3rem 1.25rem 3rem !important; }
+          .home-author { grid-template-columns: 1fr !important; gap: 2rem !important; }
+          .home-author-img { max-width: 280px; margin: 0 auto; }
+          .home-program-section { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+          .home-program-card { padding: 1.25rem 0 !important; gap: 1rem !important; }
+          .home-program-card h3 { font-size: 1.2rem !important; }
+          .home-program-aside { min-width: auto !important; }
+          .home-section { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+        }
+      `}</style>
+      <main>
 
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section style={{
+      <section className="home-hero" style={{
         padding: '5rem 2rem 4rem',
         maxWidth: 'var(--content-max)',
         margin: '0 auto',
       }}>
-        <div style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: 'var(--section-label-size)',
-          color: 'var(--text-accent)',
-          textTransform: 'uppercase',
-          letterSpacing: '0.15em',
-          marginBottom: '1.5rem',
-        }}>
+        <div
+          aria-label={t.hero.tagline.replace(/^[^\wА-Яа-я]+/, '')}
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--section-label-size)',
+            color: 'var(--text-accent)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.15em',
+            marginBottom: '1.5rem',
+          }}
+        >
           {t.hero.tagline}
         </div>
         <h1 style={{
@@ -76,24 +93,37 @@ export function HomePage({ locale }: Props) {
           ))}
         </div>
 
-        <Link href={loginHref(locale)} style={{
-          display: 'inline-block',
-          padding: '0.875rem 2.5rem',
-          background: 'var(--text-accent)',
-          color: '#000',
-          fontWeight: 900,
-          fontFamily: 'var(--font-mono)',
-          fontSize: '0.875rem',
-          textTransform: 'uppercase',
-          letterSpacing: '0.08em',
-          borderRadius: 'var(--radius)',
-        }}>
-          {t.hero.cta}
-        </Link>
+        <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <a href={programAnchor} style={{
+            display: 'inline-block',
+            padding: '0.875rem 2.5rem',
+            background: 'var(--text-accent)',
+            color: '#000',
+            fontWeight: 900,
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.875rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            borderRadius: 'var(--radius)',
+            textDecoration: 'none',
+          }}>
+            {t.hero.cta}
+          </a>
+          <Link href={loginHref(locale)} style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.875rem',
+            color: 'var(--text-secondary)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            textDecoration: 'none',
+          }}>
+            {t.hero.ctaSecondary}
+          </Link>
+        </div>
       </section>
 
       {/* ── ДЛЯ КОГО ─────────────────────────────────────────── */}
-      <section style={{
+      <section className="home-section" style={{
         padding: 'var(--section-gap) 2rem',
         background: 'var(--bg-secondary)',
         borderTop: '1px solid var(--border-color)',
@@ -147,7 +177,7 @@ export function HomePage({ locale }: Props) {
       <ProgramVenn locale={locale} />
 
       {/* ── ПРОГРАММА ────────────────────────────────────────── */}
-      <section style={{ padding: 'var(--section-gap) 2rem' }}>
+      <section id="program" className="home-program-section" style={{ padding: 'var(--section-gap) 2rem', scrollMarginTop: '2rem' }}>
         <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
           <div style={{
             fontFamily: 'var(--font-mono)',
@@ -160,87 +190,74 @@ export function HomePage({ locale }: Props) {
             {t.program.sectionLabel}
           </div>
           {modules.map(m => (
-            <Link key={m.slug} href={lessonsHref(locale, m.slug)} style={{
+            <Link key={m.slug} href={lessonsHref(locale, m.slug)} className="home-program-card" style={{
               display: 'grid',
               gridTemplateColumns: '1fr auto',
               gap: '1.5rem',
-              alignItems: 'start',
-              padding: '1.5rem 0',
+              alignItems: 'baseline',
+              padding: '1.75rem 0',
               borderBottom: '1px solid var(--border-color)',
               color: 'inherit',
               transition: 'opacity 0.2s',
+              textDecoration: 'none',
             }}>
               <div>
-                <div style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: 'var(--section-label-size)',
-                  color: 'var(--text-accent)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.12em',
-                  marginBottom: '0.4rem',
-                }}>
-                  {m.duration}
-                </div>
                 <h3 style={{
-                  fontSize: '1.5rem',
+                  fontSize: 'clamp(1.5rem, 2.4vw, 1.875rem)',
                   fontWeight: 700,
                   color: 'var(--text-primary)',
-                  marginBottom: '0.4rem',
+                  marginBottom: '0.5rem',
+                  letterSpacing: '-0.01em',
+                  lineHeight: 1.15,
                 }}>
                   {m.title}
                 </h3>
-                <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>{m.description}</p>
+                <p style={{
+                  fontSize: '0.95rem',
+                  color: 'var(--text-secondary)',
+                  lineHeight: 1.55,
+                  maxWidth: '60ch',
+                }}>
+                  {m.description}
+                </p>
               </div>
-              <span style={{ color: 'var(--text-accent)', fontSize: '1.5rem', lineHeight: 1 }}>→</span>
+              <div className="home-program-aside" style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                gap: '0.75rem',
+                minWidth: '80px',
+              }}>
+                <span style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.7rem',
+                  color: 'var(--text-secondary)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  padding: '0.25rem 0.55rem',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '3px',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {m.duration}
+                </span>
+                <span aria-hidden="true" style={{ color: 'var(--text-accent)', fontSize: '1.25rem', lineHeight: 1 }}>→</span>
+              </div>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* ── FAQ ──────────────────────────────────────────────── */}
-      <section style={{
-        padding: 'var(--section-gap) 2rem',
-        background: 'var(--bg-secondary)',
-        borderTop: '1px solid var(--border-color)',
-      }}>
-        <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
-          <div style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: 'var(--section-label-size)',
-            color: 'var(--text-secondary)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.12em',
-            marginBottom: '2rem',
-          }}>
-            {t.faq.label}
-          </div>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1.25rem',
-            maxWidth: '600px',
-            margin: '0 auto',
-          }}>
-            {t.faq.items.map(item => (
-              <div key={item.q} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <ChatBubble text={item.q} side="user" maxWidth={420} />
-                <ChatBubble text={item.a} side="agent" maxWidth={520} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── ОБ АВТОРЕ ────────────────────────────────────────── */}
-      <section style={{
+      <section className="home-section" style={{
         padding: 'var(--section-gap) 2rem',
         borderTop: '1px solid var(--border-color)',
       }}>
-        <div style={{
+        <div className="home-author" style={{
           maxWidth: 'var(--content-max)',
           margin: '0 auto',
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
           gap: '4rem',
           alignItems: 'center',
         }}>
@@ -279,11 +296,12 @@ export function HomePage({ locale }: Props) {
               {t.author.cta}
             </Link>
           </div>
-          <div style={{
+          <div className="home-author-img" style={{
             aspectRatio: '4/5',
             borderRadius: '4px',
             overflow: 'hidden',
             border: '1px solid var(--border-color)',
+            width: '100%',
           }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -295,6 +313,41 @@ export function HomePage({ locale }: Props) {
         </div>
       </section>
 
+      {/* ── FAQ ──────────────────────────────────────────────── */}
+      <section className="home-section" style={{
+        padding: 'var(--section-gap) 2rem',
+        background: 'var(--bg-secondary)',
+        borderTop: '1px solid var(--border-color)',
+      }}>
+        <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
+          <div style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--section-label-size)',
+            color: 'var(--text-secondary)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.12em',
+            marginBottom: '2rem',
+          }}>
+            {t.faq.label}
+          </div>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1.25rem',
+            maxWidth: '600px',
+            margin: '0 auto',
+          }}>
+            {t.faq.items.map(item => (
+              <div key={item.q} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <ChatBubble text={item.q} side="user" maxWidth={420} />
+                <ChatBubble text={item.a} side="agent" maxWidth={520} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      </main>
       <Footer locale={locale} topics={modules.map(m => ({ slug: m.slug, title: m.title }))} />
     </>
   )

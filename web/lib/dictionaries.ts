@@ -19,6 +19,7 @@ export type Dictionary = {
     subtitle: string
     stats: [string, string][]
     cta: string
+    ctaSecondary: string
   }
   forWhoLabel: string
   forWhoHeading: string
@@ -42,6 +43,24 @@ export type Dictionary = {
   author: { label: string; name: string; bio: string; cta: string }
   sidebar: { label: string }
   lesson: { complete: string; completing: string; completed: string }
+  mobileGate: {
+    title: string
+    body: string
+    emailAction: string
+    emailSending: string
+    emailSent: string
+    emailFailed: string
+    qrAction: string
+    qrHint: string
+    continueAction: string
+    dismissHint: string
+    backToHome: string
+  }
+  langSuggest: {
+    message: string
+    switchAction: string
+    dismissAction: string
+  }
   wizard: {
     unit: (i: number, total: number) => string
     next: string
@@ -85,19 +104,20 @@ export const dictionaries: Record<Locale, Dictionary> = {
       tagline: '⬡ Открытый курс · Бесплатно',
       titleLine1: 'Точка',
       titleLine2: 'Сборки',
-      subtitle: 'Курс по vibe-кодингу в потоке. От нонкодера до AI-generalist’а — Claude Code, агенты, автоматизация, деплой.',
+      subtitle: 'Курс по agentic AI в потоке. От нонкодера до AI-generalist’а — Claude Code, Hermes/Aider, локальные модели, MCP, оркестрация. Твой стек на выбор.',
       stats: [
-        ['8', 'тем'],
-        ['~14', 'часов'],
+        ['9', 'тем'],
+        ['~15', 'часов'],
         ['8', 'упражнений'],
         ['$0', 'стоимость'],
       ],
-      cta: 'Начать →',
+      cta: 'Программа ↓',
+      ctaSecondary: '→ Войти',
     },
     forWhoLabel: 'Для кого',
     forWhoHeading: 'Этот курс для тебя, если...',
     forWho: [
-      { title: 'Хочешь понять AI изнутри', body: 'Не просто пользоваться ChatGPT, а строить с ним — pipeline\'ы, агентов, автоматизации.' },
+      { title: 'Хочешь понять AI изнутри', body: 'Не просто пользоваться ChatGPT, а строить с ним — pipeline’ы, агентов, автоматизации.' },
       { title: 'Уже пробовал, но не систематизировал', body: 'Промпты работают хаотично. Хочешь выстроить процесс, который масштабируется.' },
       { title: 'Строишь AI-продукт', body: 'Нужен практический фундамент: Claude Code, MCP, агенты, деплой — без воды.' },
       { title: 'Ценишь суверенитет', body: 'Walk-away экономика, open-source стек, никаких lock-in платформ.' },
@@ -109,12 +129,15 @@ export const dictionaries: Record<Locale, Dictionary> = {
       label: '// программа',
       heading: 'Что войдёт\nв курс',
       items: [
-        'Claude Code с нуля до продакшна — первый деплой',
-        'MCP-серверы: подключить инструмент за 20 минут',
+        'Карта местности AI-кодинга для нонкодеров',
+        'Software 3.0 — четыре сдвига в разработке',
+        'Базовый сетап: Warp, Claude Code, Git, Marp',
+        'Выбор стека: Claude / Sovereign / Cloud-OSS / Behind-GFW',
+        'Промпт-инжиниринг: магические слова и формулы',
+        'CLAUDE.md, контекст и система памяти',
         'Pipeline: URL → скрапинг → анализ → инсайты',
-        'Промпты, которые работают — не «переформулируй»',
-        'Агенты, которые пашут пока ты спишь',
-        'CLAUDE.md — агент, помнящий твой контекст',
+        'MCP-серверы, Hooks, Skills, Superpowers',
+        'Агентский инжиниринг и оркестрация систем',
       ],
       excluded: [
         'теории без практики',
@@ -154,6 +177,25 @@ export const dictionaries: Record<Locale, Dictionary> = {
       completing: '...',
       completed: '● Урок завершён',
     },
+    langSuggest: {
+      // Shown to EN-locale visitors on RU pages — written in English
+      message: '🌐 This site is also available in English.',
+      switchAction: 'Switch to English →',
+      dismissAction: 'Stay in Russian',
+    },
+    mobileGate: {
+      title: '💻 Этот урок — для десктопа',
+      body: 'Тебе понадобится терминал, чтобы делать практику. Регистрация и обзор работают на мобилке, но уроки лучше открывать с ноута / десктопа.',
+      emailAction: '✉️  Прислать ссылку на email',
+      emailSending: '⏳ Отправляю…',
+      emailSent: '✓ Ссылка отправлена на твой email. Открой её на ноуте.',
+      emailFailed: 'Не получилось отправить. Попробуй QR-код или продолжи на мобиле.',
+      qrAction: '📱 Показать QR-код',
+      qrHint: 'Отсканируй с ноутбука — урок откроется в нём.',
+      continueAction: 'Всё равно открыть на мобиле',
+      dismissHint: 'Не показывать 7 дней',
+      backToHome: '← На главную',
+    },
     wizard: {
       unit: (i: number, total: number) => `Unit ${i} из ${total}`,
       next: 'Далее →',
@@ -164,7 +206,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       phases: ['Активация', 'Рефлексия', 'Концепция', 'Практика'],
     },
     footer: {
-      tagline: 'Курс по vibe-кодингу. От нуля до агентских систем — 8 элективных тем.',
+      tagline: 'Курс по agentic AI. От нуля до агентских систем — 9 элективных тем, твой стек на выбор.',
       topicsLabel: '// темы',
       resourcesLabel: '// материалы',
       authorLabel: '// автор',
@@ -195,19 +237,20 @@ export const dictionaries: Record<Locale, Dictionary> = {
       tagline: '⬡ Open course · Free',
       titleLine1: 'Tochka',
       titleLine2: 'Sborki',
-      subtitle: 'A vibe-coding course in flow. From non-coder to AI generalist — Claude Code, agents, automation, deploys.',
+      subtitle: 'An agentic-AI course in flow. From non-coder to AI generalist — Claude Code, Hermes/Aider, local models, MCP, orchestration. Pick your stack.',
       stats: [
-        ['8', 'topics'],
-        ['~14', 'hours'],
+        ['9', 'topics'],
+        ['~15', 'hours'],
         ['8', 'exercises'],
         ['$0', 'cost'],
       ],
-      cta: 'Start →',
+      cta: 'See program ↓',
+      ctaSecondary: '→ Sign in',
     },
     forWhoLabel: 'Who it’s for',
     forWhoHeading: 'This course is for you if...',
     forWho: [
-      { title: 'You want to understand AI from inside', body: 'Not just use ChatGPT — build with it: pipelines, agents, automations.' },
+      { title: 'You want to understand AI from the inside', body: 'Not just use ChatGPT — build with it: pipelines, agents, automation.' },
       { title: 'You’ve tried but it’s not systematic', body: 'Prompts work hit-or-miss. You want a process that scales.' },
       { title: 'You’re building an AI product', body: 'You need a practical foundation: Claude Code, MCP, agents, deploys — no fluff.' },
       { title: 'You value sovereignty', body: 'Walk-away economics, open-source stack, no platform lock-in.' },
@@ -219,12 +262,15 @@ export const dictionaries: Record<Locale, Dictionary> = {
       label: '// program',
       heading: 'What’s\nincluded',
       items: [
-        'Claude Code from zero to production — first deploy',
-        'MCP servers: hook up a real tool in 20 minutes',
+        'Map of AI-coding tools for non-coders',
+        'Software 3.0 — four shifts in development',
+        'Setup essentials: Warp, Claude Code, Git, Marp',
+        'Stack selection: Claude / Sovereign / Cloud-OSS / Behind-GFW',
+        'Prompt engineering: magic words and formulas',
+        'CLAUDE.md, context, and memory systems',
         'Pipeline: URL → scrape → analyze → insights',
-        'Prompts that work — not «try rephrasing»',
-        'Agents that hustle while you sleep',
-        'CLAUDE.md — an agent that remembers your context',
+        'MCP servers, Hooks, Skills, Superpowers',
+        'Agent engineering and system orchestration',
       ],
       excluded: [
         'theory without practice',
@@ -251,7 +297,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       ],
     },
     author: {
-      label: 'About author',
+      label: 'About the author',
       name: 'Alexander\nMamaev',
       bio: 'Vibe coder, AI builder, coach. I build systems on Claude Code + agents. This course is a distillation of what actually works.',
       cta: 'Send feedback →',
@@ -264,6 +310,25 @@ export const dictionaries: Record<Locale, Dictionary> = {
       completing: '...',
       completed: '● Lesson complete',
     },
+    langSuggest: {
+      // Shown to RU-locale visitors on EN pages — written in Russian
+      message: '🌐 Этот сайт также доступен на русском.',
+      switchAction: 'Переключить на русский →',
+      dismissAction: 'Остаться на английском',
+    },
+    mobileGate: {
+      title: '💻 This lesson is for desktop',
+      body: 'You’ll need a terminal for the practice. Sign-up and browsing work on mobile, but lessons are best opened on a laptop / desktop.',
+      emailAction: '✉️  Email me the link',
+      emailSending: '⏳ Sending…',
+      emailSent: '✓ Link sent to your email. Open it on your laptop.',
+      emailFailed: 'Couldn’t send. Try the QR code or continue on mobile.',
+      qrAction: '📱 Show QR code',
+      qrHint: 'Scan from your laptop — the lesson will open there.',
+      continueAction: 'Open on mobile anyway',
+      dismissHint: 'Don’t show for 7 days',
+      backToHome: '← Back to home',
+    },
     wizard: {
       unit: (i: number, total: number) => `Unit ${i} of ${total}`,
       next: 'Next →',
@@ -274,7 +339,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       phases: ['Activation', 'Reflection', 'Concept', 'Practice'],
     },
     footer: {
-      tagline: 'A vibe-coding course. From zero to agentic systems across 8 elective topics.',
+      tagline: 'An agentic-AI course. From zero to agentic systems across 9 elective topics, pick your stack.',
       topicsLabel: '// topics',
       resourcesLabel: '// resources',
       authorLabel: '// author',

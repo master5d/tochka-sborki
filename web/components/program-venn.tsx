@@ -21,11 +21,36 @@ export function ProgramVenn({ locale = 'ru' }: Props = {}) {
       overflow: 'hidden',
     }}>
       <style>{`
+        .venn-sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+        }
         @media (max-width: 720px) {
           .venn-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
           .venn-mobile-excluded { display: flex !important; }
+          .venn-svg-wrap { display: none !important; }
         }
       `}</style>
+
+      {/* Screen-reader semantic version of the Venn diagram */}
+      <div className="venn-sr-only">
+        <h3>{t.heading.replace('\n', ' ')}</h3>
+        <p>{t.inLabel1} {t.inLabel2}:</p>
+        <ul>
+          {t.items.map((item, i) => <li key={`in-${i}`}>{item}</li>)}
+        </ul>
+        <p>{t.outLabel1} {t.outLabel2}:</p>
+        <ul>
+          {t.excluded.map((item, i) => <li key={`out-${i}`}>{item}</li>)}
+        </ul>
+      </div>
 
       <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
 
@@ -100,6 +125,7 @@ export function ProgramVenn({ locale = 'ru' }: Props = {}) {
 
           {/* ── Right: programmatic Venn ──────────────────────── */}
           <div>
+            <div className="venn-svg-wrap">
             <svg
               viewBox={`0 0 ${W} ${H}`}
               width="100%"
@@ -231,6 +257,7 @@ export function ProgramVenn({ locale = 'ru' }: Props = {}) {
                 {t.provoc}
               </text>
             </svg>
+            </div>
 
             {/* Mobile excluded list */}
             <div className="venn-mobile-excluded" style={{

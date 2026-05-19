@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Design Audit · ai.mamaev.coach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f0f0e;
+    --panel:#161614;
+    --panel-2:#1c1c1a;
+    --ink:#ebe7df;
+    --ink-dim:#8b867c;
+    --line:#2a2926;
+    --accent:#d6ff4b;       /* lime — для меток / акцентов */
+    --warn:#ffb454;
+    --crit:#ff6b5b;
+    --ok:#7ad6a3;
+    --mono:"JetBrains Mono", ui-monospace, monospace;
+    --sans:"Inter", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  body{font-size:15px;line-height:1.55}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:64px 32px 120px}
+  .mono{font-family:var(--mono);letter-spacing:-0.01em}
+  .dim{color:var(--ink-dim)}
+  .rule{height:1px;background:var(--line);margin:48px 0}
+  .label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim)}
+
+  /* header */
+  header.top{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;padding-bottom:24px;border-bottom:1px solid var(--line)}
+  .crumbs{font-family:var(--mono);font-size:12px;color:var(--ink-dim)}
+  .crumbs b{color:var(--ink);font-weight:500}
+  h1{font-family:var(--sans);font-weight:700;font-size:56px;line-height:1.02;letter-spacing:-0.03em;margin:24px 0 12px;text-wrap:balance}
+  .sub{font-size:18px;color:var(--ink-dim);max-width:62ch}
+
+  /* meta strip */
+  .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:40px;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .meta>div{padding:18px 20px;border-right:1px solid var(--line);background:var(--panel)}
+  .meta>div:last-child{border-right:0}
+  .meta .k{font-family:var(--mono);font-size:11px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.1em}
+  .meta .v{font-family:var(--mono);font-size:22px;margin-top:4px}
+  .score-pill{display:inline-flex;align-items:baseline;gap:6px}
+  .score-pill .num{font-size:28px;font-weight:600}
+  .score-pill .out{color:var(--ink-dim);font-size:14px}
+
+  /* section */
+  section{margin-top:72px}
+  h2{font-family:var(--sans);font-size:32px;font-weight:600;letter-spacing:-0.02em;margin:0 0 8px}
+  h2 .sec-num{font-family:var(--mono);color:var(--ink-dim);font-weight:400;font-size:18px;margin-right:14px;vertical-align:1px}
+  h3{font-size:18px;font-weight:600;margin:32px 0 8px;letter-spacing:-0.01em}
+  p{margin:8px 0}
+  ul.clean{list-style:none;padding:0;margin:8px 0}
+  ul.clean li{padding:6px 0;border-bottom:1px dashed var(--line);display:flex;gap:12px;align-items:flex-start}
+  ul.clean li:last-child{border-bottom:0}
+  ul.clean li::before{content:"·";color:var(--ink-dim);font-family:var(--mono)}
+
+  /* findings */
+  .findings{display:flex;flex-direction:column;gap:16px;margin-top:24px}
+  .finding{border:1px solid var(--line);border-radius:6px;background:var(--panel);padding:20px 22px;display:grid;grid-template-columns:120px 1fr;gap:24px;align-items:start}
+  .sev{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border-radius:3px;border:1px solid;width:fit-content;line-height:1}
+  .sev.crit{color:var(--crit);border-color:color-mix(in srgb, var(--crit) 50%, transparent)}
+  .sev.warn{color:var(--warn);border-color:color-mix(in srgb, var(--warn) 50%, transparent)}
+  .sev.nit{color:var(--ink-dim);border-color:var(--line)}
+  .sev.win{color:var(--ok);border-color:color-mix(in srgb, var(--ok) 50%, transparent)}
+  .finding .title{font-weight:600;font-size:17px;margin-bottom:6px;letter-spacing:-0.01em}
+  .finding .body{color:#cfcabf;font-size:14.5px;line-height:1.55}
+  .finding .body code{font-family:var(--mono);background:#000;border:1px solid var(--line);padding:1px 6px;border-radius:3px;font-size:12.5px}
+  .finding .fix{margin-top:10px;font-family:var(--mono);font-size:12.5px;color:var(--ink-dim);border-left:2px solid var(--accent);padding:2px 0 2px 10px}
+  .finding .fix b{color:var(--accent);font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-size:11px;margin-right:8px}
+
+  .left-meta{display:flex;flex-direction:column;gap:8px}
+  .where{font-family:var(--mono);font-size:11px;color:var(--ink-dim);letter-spacing:.05em}
+
+  /* score bars */
+  .scorecard{display:grid;grid-template-columns:1fr 1fr;gap:14px 32px;margin-top:20px}
+  .row{display:grid;grid-template-columns:180px 1fr 40px;gap:14px;align-items:center;font-family:var(--mono);font-size:12.5px}
+  .bar{height:6px;background:var(--panel-2);border-radius:2px;overflow:hidden;position:relative}
+  .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:2px}
+  .bar i.mid{background:var(--warn)}
+  .bar i.low{background:var(--crit)}
+  .row .v{text-align:right;color:var(--ink-dim)}
+
+  /* tldr */
+  .tldr{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:32px}
+  .tldr>div{padding:24px 26px;background:var(--panel)}
+  .tldr>div+div{border-left:1px solid var(--line)}
+  .tldr h4{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-dim);margin:0 0 12px}
+  .tldr ul{margin:0;padding-left:18px}
+  .tldr li{padding:5px 0}
+
+  /* annotated screenshot block */
+  .screen{margin-top:24px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--panel)}
+  .screen .head{display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--ink-dim);letter-spacing:.05em}
+  .screen .body{padding:0;position:relative}
+  .mock{display:block;width:100%;height:auto;background:#fff;color:#111}
+
+  /* mock hero */
+  .mock-hero{padding:48px 56px;font-family:var(--sans);background:#fafaf7}
+  .mock-hero .navbar{display:flex;justify-content:space-between;font-family:var(--mono);font-size:13px;color:#444;border-bottom:1px solid #e7e4dc;padding-bottom:14px;margin-bottom:60px}
+  .mock-hero .pill{font-family:var(--mono);font-size:12px;color:#666;letter-spacing:.05em}
+  .mock-hero .title{font-size:108px;line-height:1;letter-spacing:-0.04em;font-weight:700;margin:24px 0 24px;color:#111}
+  .mock-hero .lede{font-size:18px;max-width:60ch;color:#333;line-height:1.5}
+  .mock-hero .stats{display:flex;gap:48px;margin-top:48px;font-family:var(--mono)}
+  .mock-hero .stats .n{font-size:38px;color:#111}
+  .mock-hero .stats .l{font-size:11px;color:#888;letter-spacing:.1em;text-transform:uppercase}
+  .cta{display:inline-block;margin-top:36px;background:#111;color:#fafaf7;font-family:var(--mono);font-size:14px;padding:14px 22px;border-radius:3px}
+  /* annotation overlays */
+  .ann{position:absolute;font-family:var(--mono);font-size:11.5px;background:var(--bg);color:var(--accent);border:1px solid var(--accent);padding:3px 8px;border-radius:3px;letter-spacing:.05em;white-space:nowrap}
+  .ann.warn{color:var(--warn);border-color:var(--warn)}
+  .ann.crit{color:var(--crit);border-color:var(--crit)}
+  .ann::before{content:"";position:absolute;width:40px;height:1px;background:currentColor}
+
+  /* footer */
+  footer{margin-top:96px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--ink-dim)}
+
+  @media (max-width:760px){
+    .wrap{padding:40px 20px 80px}
+    h1{font-size:38px}
+    h2{font-size:24px}
+    .meta{grid-template-columns:repeat(2,1fr)}
+    .meta>div:nth-child(2){border-right:0}
+    .meta>div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+    .tldr{grid-template-columns:1fr}
+    .tldr>div+div{border-left:0;border-top:1px solid var(--line)}
+    .finding{grid-template-columns:1fr}
+    .scorecard{grid-template-columns:1fr}
+    .row{grid-template-columns:120px 1fr 40px}
+    .mock-hero{padding:24px}
+    .mock-hero .title{font-size:54px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <div class="crumbs">design-audit · <b>ai.mamaev.coach</b> · v1.0</div>
+      <h1>Точка Сборки — дизайн-аудит</h1>
+      <p class="sub">Ревью лендинга открытого курса по vibe-кодингу. Фокус: визуальная иерархия, типографика, информационная архитектура, конверсия и tone of voice.</p>
+    </div>
+  </header>
+
+  <div class="meta">
+    <div>
+      <div class="k">overall</div>
+      <div class="v score-pill"><span class="num">7.4</span><span class="out">/ 10</span></div>
+    </div>
+    <div>
+      <div class="k">findings</div>
+      <div class="v">18</div>
+    </div>
+    <div>
+      <div class="k">critical</div>
+      <div class="v" style="color:var(--crit)">2</div>
+    </div>
+    <div>
+      <div class="k">quick wins</div>
+      <div class="v" style="color:var(--accent)">7</div>
+    </div>
+  </div>
+
+  <!-- TL;DR -->
+  <section>
+    <div class="label">// tl;dr</div>
+    <h2><span class="sec-num">01</span>Главное в двух колонках</h2>
+    <div class="tldr">
+      <div>
+        <h4>что работает</h4>
+        <ul>
+          <li>Сильный <b>tone of voice</b> — узнаваемый, без корпоративной ваты.</li>
+          <li>Чистая <b>дев-эстетика</b>: моно, <code>// комменты</code>, угловые скобки, lo-fi.</li>
+          <li>Хорошая <b>структура hero</b>: бейдж → заголовок → лид → 4 цифры → CTA.</li>
+          <li>FAQ с <code>agent</code>-меткой — нативно к теме, не банально.</li>
+          <li>Чёткое позиционирование: «не обзор нейросетей, а стек».</li>
+        </ul>
+      </div>
+      <div>
+        <h4>что чинить в первую очередь</h4>
+        <ul>
+          <li><b>Несоответствие цифр</b>: «8 тем» в hero, но в «Что войдёт» — 6 пунктов.</li>
+          <li><b>Сломанный визуальный блок</b> с Venn-диаграммой scope/excluded — каша из текста.</li>
+          <li><b>«хуйни не будет»</b> — режет аудиторию пополам. Решить осознанно, не по инерции.</li>
+          <li><b>Дубль футера</b>: «// чего не будет» появляется дважды подряд.</li>
+          <li>CTA <code>Начать →</code> ведёт в <code>/login</code> — фрикшн до ценности.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scorecard -->
+  <section>
+    <div class="label">// scorecard</div>
+    <h2><span class="sec-num">02</span>Оценка по осям</h2>
+    <div class="scorecard">
+      <div class="row"><span>Позиционирование</span><span class="bar"><i style="width:90%"></i></span><span class="v">9.0</span></div>
+      <div class="row"><span>Tone&nbsp;of&nbsp;voice</span><span class="bar"><i style="width:85%"></i></span><span class="v">8.5</span></div>
+      <div class="row"><span>Типографика</span><span class="bar"><i class="mid" style="width:75%"></i></span><span class="v">7.5</span></div>
+      <div class="row"><span>Иерархия</span><span class="bar"><i class="mid" style="width:70%"></i></span><span class="v">7.0</span></div>
+      <div class="row"><span>Информ. архитектура</span><span class="bar"><i class="mid" style="width:65%"></i></span><span class="v">6.5</span></div>
+      <div class="row"><span>Конверсия / CTA</span><span class="bar"><i class="mid" style="width:60%"></i></span><span class="v">6.0</span></div>
+      <div class="row"><span>Консистентность</span><span class="bar"><i class="low" style="width:55%"></i></span><span class="v">5.5</span></div>
+      <div class="row"><span>Доступность (a11y)</span><span class="bar"><i class="low" style="width:50%"></i></span><span class="v">5.0</span></div>
+    </div>
+    <p class="dim" style="margin-top:18px;font-size:13.5px">Оценки — экспертные, не пользовательский тест. Для валидации нужны 5 модераторных сессий + Lighthouse / axe DevTools прогон.</p>
+  </section>
+
+  <!-- Annotated hero -->
+  <section>
+    <div class="label">// hero · аннотация</div>
+    <h2><span class="sec-num">03</span>Первый экран</h2>
+    <p class="dim">Реконструкция с разметкой того, что работает (зелёное) и что просит внимания.</p>
+
+    <div class="screen">
+      <div class="head"><span>mock · ai.mamaev.coach /</span><span>1440 × 900</span></div>
+      <div class="body">
+        <div class="mock-hero">
+          <div class="navbar">
+            <div>⬡ Точка Сборки</div>
+            <div>Roadmap &nbsp; Шпаргалка &nbsp; Фидбек &nbsp; Сертификат ◆ &nbsp; EN &nbsp; → Войти</div>
+          </div>
+          <div class="pill">⬡ Открытый курс · Бесплатно</div>
+          <div class="title">Точка&nbsp;Сборки</div>
+          <div class="lede">Курс по vibe-кодингу в потоке. От нонкодера до AI-generalist'а — Claude Code, агенты, автоматизация, деплой.</div>
+          <div class="stats">
+            <div><div class="n">8</div><div class="l">тем</div></div>
+            <div><div class="n">~14</div><div class="l">часов</div></div>
+            <div><div class="n">8</div><div class="l">упражнений</div></div>
+            <div><div class="n">$0</div><div class="l">стоимость</div></div>
+          </div>
+          <a class="cta">Начать →</a>
+        </div>
+      </div>
+    </div>
+
+    <ul class="clean" style="margin-top:20px">
+      <li><b style="color:var(--ok)">+</b> Лид с tagline «в потоке» — быстро объясняет, для кого.</li>
+      <li><b style="color:var(--ok)">+</b> Цифры в моно — единая ритмика с навигацией и кодом ниже.</li>
+      <li><b style="color:var(--warn)">!</b> CTA <code>Начать →</code> ведёт сразу на <code>/login</code>. Это барьер: до знакомства с программой требуют логин. Должен быть «Посмотреть программу» или прокрутить-на-якорь.</li>
+      <li><b style="color:var(--warn)">!</b> 6 пунктов навигации в одну строку без визуального разделителя — плотно, на узких экранах схлопывается криво.</li>
+      <li><b style="color:var(--crit)">×</b> Заголовок «Точка Сборки» дублирует логотип в шапке и название во всём интерфейсе. Можно вместо имени поставить <b>результат</b>: «За 14 часов — от нонкодера до AI-generalist'а».</li>
+    </ul>
+  </section>
+
+  <!-- Findings -->
+  <section>
+    <div class="label">// findings</div>
+    <h2><span class="sec-num">04</span>Замечания по пунктам</h2>
+
+    <div class="findings">
+
+      <!-- CRIT -->
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev crit">critical</span>
+          <span class="where">hero · stats</span>
+        </div>
+        <div>
+          <div class="title">Цифра «8 тем» не сходится с программой</div>
+          <div class="body">
+            В hero заявлено <code>8 тем</code> и <code>8 упражнений</code>, в секции «Что войдёт в курс» перечислено <b>6 пунктов</b>, а в списке «Темы курса» внизу — снова 8 (Kickstart, Знакомство, Setup, Prompt, Context, Pipeline, Tools, Agent). Несовпадение читается как небрежность и подрывает доверие именно там, где курс продаёт себя «практикой без воды».
+          </div>
+          <div class="fix"><b>fix</b> Привести «Что войдёт» к 8 буллетам (или к 6 в hero), а ещё лучше — заменить эту секцию ссылками на 8 уроков с длительностью.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev crit">critical</span>
+          <span class="where">scope/excluded блок</span>
+        </div>
+        <div>
+          <div class="title">Venn-диаграмма scope / excluded схлопнулась в текстовое месиво</div>
+          <div class="body">
+            Парсер увидел блок как <code>C1INTC2ENDSCOPEEXCLUDEDТО,ЧТО БУДЕТТО, ЧЕГО НЕ БУДЕТ...</code> — это значит SVG/CSS-композиция с пересекающимися кругами, и поверх неё повторно отрендерен список «// чего не будет». В DOM он скорее всего есть и для скринридера, и для SEO как мусор. Визуально, вероятно, выглядит нормально, но <b>семантически и для копипаста — сломано</b>.
+          </div>
+          <div class="fix"><b>fix</b> Текст внутри SVG — через <code>&lt;text&gt;</code> с <code>aria-hidden</code>, и отдельный <code>&lt;ul&gt;</code> с <code>.sr-only</code> для скринридеров. Убрать дубль ниже.</div>
+        </div>
+      </div>
+
+      <!-- WARN -->
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev warn">important</span>
+          <span class="where">hero · CTA</span>
+        </div>
+        <div>
+          <div class="title">Главный CTA — <code>/login</code>, а не «программа»</div>
+          <div class="body">
+            «Начать →» в курсе, который пользователь видит впервые, ведёт на форму логина. Это классический <b>premature gate</b>: посетителю предлагают зарегистрироваться до того, как он понял, что внутри. Логин уместен после прокрутки или как вторичный CTA.
+          </div>
+          <div class="fix"><b>fix</b> Primary: «Смотреть программу ↓» (якорь). Secondary: «Войти →». На странице урока — уже логин-гейт для трекинга прогресса.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev warn">important</span>
+          <span class="where">brand · copy</span>
+        </div>
+        <div>
+          <div class="title">«хуйни не будет. и воды тоже» — осознанный выбор?</div>
+          <div class="body">
+            Мат в подзаголовке секции — это сильный фильтр аудитории. Он отлично работает на «своих» (инди-девы, твиттер-аудитория, тех, кто пришёл с mamaev.coach), и режет всех, кто принёс курс начальству, корпоративных клиентов и LinkedIn-аудиторию. Это <b>не баг — это позиционирование</b>, но стоит решить это явно, а не «оставить как было».
+          </div>
+          <div class="fix"><b>fix</b> Если оставляем — продублировать энергию в hero (сейчас он формальнее, чем фразу ниже, что создаёт диссонанс). Если убираем — заменить на «без обзоров и душнины».</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev warn">important</span>
+          <span class="where">footer / between sections</span>
+        </div>
+        <div>
+          <div class="title">Дублированный блок «// чего не будет»</div>
+          <div class="body">
+            В выгрузке секция появляется дважды подряд: один раз внутри Venn-блока, второй — самостоятельным списком. Скорее всего это запасной fallback, оставшийся в DOM. Воспринимается как баг.
+          </div>
+          <div class="fix"><b>fix</b> Удалить второй рендер, либо показывать его только на мобильных как замену Venn.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev warn">important</span>
+          <span class="where">«Что войдёт» · нумерация</span>
+        </div>
+        <div>
+          <div class="title">Нумерованный список с глифом <code>▸</code> — конфликт паттернов</div>
+          <div class="body">
+            <code>1. ▸ Claude Code с нуля</code> — у одного элемента два маркера: цифра и треугольник. Это два разных языка списка одновременно. Цифра обещает <b>порядок</b>, а ниже стоит «выбирай в любом порядке» — противоречие.
+          </div>
+          <div class="fix"><b>fix</b> Убрать цифры (оставить ▸) — если порядок свободный. Или превратить в табличку: ▸ название · длительность · сложность.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev warn">important</span>
+          <span class="where">список тем</span>
+        </div>
+        <div>
+          <div class="title">Карточки уроков сплющены в одну строку</div>
+          <div class="body">
+            <code>25 мин Kickstart Карта местности... →</code> — длительность, название и описание идут одним потоком. Глаз не цепляется за заголовок. На 8 одинаковых карточках это становится «стеной».
+          </div>
+          <div class="fix"><b>fix</b> Иерархия в карточке: <b>название</b> большим, длительность моно-меткой в углу, описание мельче. Можно ещё добавить <code>#tag</code> (basics / advanced) для сканирования.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev warn">important</span>
+          <span class="where">a11y</span>
+        </div>
+        <div>
+          <div class="title">Глифы как навигация без текстовых меток</div>
+          <div class="body">
+            <code>⬡</code>, <code>◆</code>, <code>▸</code>, <code>→</code> — много геометрических символов как часть нав-копий. Скринридер прочитает «белый шестиугольник сертификат чёрный ромб». Также сомнительный контраст серого <code>// комментов</code> на тёмном фоне (если он близок к <code>#666</code> на <code>#0e0e0e</code>).
+          </div>
+          <div class="fix"><b>fix</b> Декоративные глифы — <code>aria-hidden="true"</code>. Проверить контраст текстов через axe / Lighthouse. Метаданные ссылок («открывает в новой вкладке» для GitHub).</div>
+        </div>
+      </div>
+
+      <!-- NITS -->
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev nit">nit</span>
+          <span class="where">hero · заголовок</span>
+        </div>
+        <div>
+          <div class="title">Двойной пробел в «Точка&nbsp;&nbsp;Сборки»</div>
+          <div class="body">
+            В выгрузке между словами два пробела (<code>Точка&nbsp;&nbsp;Сборки</code>). Возможно — намеренный кернинг для большого размера, но в HTML это лучше делать через <code>letter-spacing</code> или <code>word-spacing</code>, а не <code>&amp;nbsp;&amp;nbsp;</code> — иначе ломается на мобильных.
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev nit">nit</span>
+          <span class="where">типографика</span>
+        </div>
+        <div>
+          <div class="title">Смесь типографских кавычек</div>
+          <div class="body">
+            «AI-generalist'а», «generalist'а» — апостроф ASCII. В русском тексте по типографике уместен <code>’</code> (U+2019), либо вовсе убрать («AI-универсала»). Эти мелочи незаметны поодиночке, но создают ощущение «черновика», особенно у читателя, ценящего ремесло.
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev nit">nit</span>
+          <span class="where">«Об авторе»</span>
+        </div>
+        <div>
+          <div class="title">Автор как finishing move, а не как доверие в начале</div>
+          <div class="body">
+            Сейчас «Об авторе» — последняя секция перед футером. У бесплатного курса от <b>одного автора</b> доверие к этому автору — главный двигатель регистрации. Особенно если у вас уже есть аудитория с <code>mamaev.coach</code>.
+          </div>
+          <div class="fix"><b>fix</b> Подтянуть мини-биографию (фото + 1 строка + 2 ссылки) ближе к hero или сразу под «Для кого».</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev nit">nit</span>
+          <span class="where">FAQ</span>
+        </div>
+        <div>
+          <div class="title">Метка <code>agent</code> у ответов — приятный штрих, но семантически непонятная</div>
+          <div class="body">
+            Похоже, ответы стилизованы как реплики агента (Claude?). Без подписи «отвечает агент курса» это читается как технический мусор. Если задумка — показать, что курс «отвечает сам собой» — обыграйте: <code>↳ claude · agent</code>.
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev nit">nit</span>
+          <span class="where">футер</span>
+        </div>
+        <div>
+          <div class="title">Футер повторяет навигацию шапки + темы + материалы — много</div>
+          <div class="body">
+            В футере 4 колонки + копирайт + лицензия + «собрано с Claude Code». Это нормально для open-source проекта, но плотность ссылок выше, чем у самой страницы. Имеет смысл компрессировать в 2 колонки.
+          </div>
+        </div>
+      </div>
+
+      <!-- WINS -->
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev win">win</span>
+          <span class="where">brand system</span>
+        </div>
+        <div>
+          <div class="title">Глиф <code>⬡</code> + сертификатский <code>◆</code> — отличная знаковая система</div>
+          <div class="body">
+            Два геометрических примитива работают как мини-айдентика: шестиугольник — продукт, ромб — достижение/сертификат. Хочется увидеть это раскрытым: в favicon, OG-картинке, в svg-фоне hero как стая редких шестиугольников.
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev win">win</span>
+          <span class="where">копирайтинг</span>
+        </div>
+        <div>
+          <div class="title">«Курс — дистилляция того, что работает на практике»</div>
+          <div class="body">
+            Лучшая строчка на странице. Перенесите её в hero как лид или подзаголовок — она сильнее текущего «От нонкодера до AI-generalist'а». «Дистилляция» = редко, точно, по-инженерски.
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="left-meta">
+          <span class="sev win">win</span>
+          <span class="where">monetization</span>
+        </div>
+        <div>
+          <div class="title">$0 как одна из четырёх главных цифр — сильно</div>
+          <div class="body">
+            Цена как заявление, в ряд с длительностью и объёмом — это уже позиционирование. Не «бесплатный курс», а «<code>$0</code> · стоимость». Поддержите внизу: блоком про MIT-лицензию и форк-friendly подход на уровне hero, а не футера.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Recommendations -->
+  <section>
+    <div class="label">// next steps</div>
+    <h2><span class="sec-num">05</span>Что делать на этой неделе</h2>
+
+    <h3>1 час — quick wins (можно сегодня)</h3>
+    <ul class="clean">
+      <li>Привести цифру тем к единому значению (8 везде).</li>
+      <li>Убрать дубль «// чего не будет».</li>
+      <li>Заменить ASCII-апостроф <code>'</code> на <code>’</code>.</li>
+      <li>Декоративные глифы — <code>aria-hidden="true"</code>.</li>
+      <li>Поменять primary CTA на «Программа ↓», login — secondary.</li>
+    </ul>
+
+    <h3>День — структурные правки</h3>
+    <ul class="clean">
+      <li>Переверстать «Что войдёт в курс» как 8 ссылок-карточек с длительностью.</li>
+      <li>Пересобрать Venn-блок (или заменить на двухколоночное scope / out-of-scope).</li>
+      <li>Поднять «Об авторе» в верхнюю треть страницы.</li>
+      <li>Сделать карточки уроков с реальной иерархией заголовка / описания.</li>
+    </ul>
+
+    <h3>Неделя — позиционирование и тесты</h3>
+    <ul class="clean">
+      <li>A/B-тест: «хуйни не будет» vs «без воды и обзоров» (метрика — scroll-depth + login click).</li>
+      <li>Прогнать Lighthouse и axe DevTools, починить контраст и a11y.</li>
+      <li>5 моделируемых сессий: «найди как начать первый урок» — посмотреть, где ломается путь.</li>
+      <li>OG-image и favicon с тем же <code>⬡</code> — сейчас, вероятно, дефолтные.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="label">// outside the scope</div>
+    <h2><span class="sec-num">06</span>Что не покрыто и нужно отдельно</h2>
+    <ul class="clean">
+      <li>Страницы уроков (<code>/lessons/*</code>) — UX чтения, навигация между темами, прогресс.</li>
+      <li>Onboarding после <code>/login</code> — самый важный момент удержания.</li>
+      <li>EN-версия — копирайт там обычно теряет 30% энергии русского. Нужен отдельный паспорт тона.</li>
+      <li>Мобильная вёрстка — без скриншотов с устройства не дам уверенной оценки.</li>
+      <li>Сертификат — отдельная страница, отдельный UX, отдельный аудит.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>design-audit · ai.mamaev.coach</span>
+    <span>v1.0 · 2026-05-18</span>
+  </footer>
+
+</div>
+</body>
+</html>

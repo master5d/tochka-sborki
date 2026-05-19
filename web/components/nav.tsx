@@ -56,14 +56,22 @@ export function Nav({ locale: localeProp }: Props = {}) {
       top: 0,
       zIndex: 10,
     }}>
-      <Link href={homeHref} style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-accent)', fontWeight: 700 }}>
-        ⬡ {t.nav.brand}
+      <style>{`
+        @media (max-width: 720px) {
+          .nav-secondary-links { display: none !important; }
+          .nav-brand-glyph { display: none !important; }
+        }
+      `}</style>
+      <Link href={homeHref} style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-accent)', fontWeight: 700, whiteSpace: 'nowrap' }}>
+        <span className="nav-brand-glyph" aria-hidden="true">⬡ </span>{t.nav.brand}
       </Link>
-      <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.875rem', alignItems: 'center' }}>
+      <div style={{ display: 'flex', gap: '1rem', fontSize: '0.875rem', alignItems: 'center' }}>
+        <div className="nav-secondary-links" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
         <Link href={`${locale === 'en' ? '/en' : ''}/roadmap/`} style={{ color: 'var(--text-secondary)' }}>{t.nav.roadmap}</Link>
         <Link href={`${locale === 'en' ? '/en' : ''}/cheatsheet/`} style={{ color: 'var(--text-secondary)' }}>{t.nav.cheatsheet}</Link>
         <Link href={`${locale === 'en' ? '/en' : ''}/feedback/`} style={{ color: 'var(--text-secondary)' }}>{t.nav.feedback}</Link>
-        <Link href={`${locale === 'en' ? '/en' : ''}/certificate/`} style={{ color: 'var(--text-accent)' }}>{t.nav.certificate} ◆</Link>
+        <Link href={`${locale === 'en' ? '/en' : ''}/certificate/`} style={{ color: 'var(--text-accent)' }}>{t.nav.certificate} <span aria-hidden="true">◆</span></Link>
+        </div>
 
         {/* Language switcher */}
         <Link
