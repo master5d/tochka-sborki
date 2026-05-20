@@ -42,6 +42,10 @@ export function UnitWizard({
     setCurrentStep(s => Math.min(s + 1, TOTAL_STEPS - 1))
   }
 
+  function handleBack() {
+    setCurrentStep(s => Math.max(s - 1, 0))
+  }
+
   function handleComplete() {
     markCompleted(moduleSlug, unitSlug)
     setDone(true)
@@ -102,10 +106,28 @@ export function UnitWizard({
         paddingTop: '1.5rem',
         borderTop: '1px solid var(--border-color)',
         display: 'flex',
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         alignItems: 'center',
         gap: '1rem',
       }}>
+        {!done && currentStep > 0 ? (
+          <button
+            onClick={handleBack}
+            style={{
+              padding: '0.75rem 1.25rem',
+              background: 'transparent',
+              border: '1px solid var(--border-color)',
+              color: 'var(--text-secondary)',
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.8rem',
+              borderRadius: 'var(--radius)',
+              cursor: 'pointer',
+            }}
+          >
+            {t.back}
+          </button>
+        ) : <span />}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         {done ? (
           <>
             <span style={{
@@ -166,6 +188,7 @@ export function UnitWizard({
             {t.complete}
           </button>
         )}
+        </div>
       </div>
     </UnitWizardContext.Provider>
   )

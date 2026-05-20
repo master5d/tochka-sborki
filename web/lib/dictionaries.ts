@@ -84,6 +84,7 @@ export type Dictionary = {
   }
   wizard: {
     unit: (i: number, total: number) => string
+    back: string
     next: string
     complete: string
     done: string
@@ -269,6 +270,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
     wizard: {
       unit: (i: number, total: number) => `Unit ${i} из ${total}`,
+      back: '← Назад',
       next: 'Далее →',
       complete: 'Отметить пройденным ✓',
       done: '● Пройдено',
@@ -452,6 +454,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
     wizard: {
       unit: (i: number, total: number) => `Unit ${i} of ${total}`,
+      back: '← Back',
       next: 'Next →',
       complete: 'Mark complete ✓',
       done: '● Done',
