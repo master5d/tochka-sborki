@@ -1,5 +1,6 @@
 # Scratch / temp
 .tmp/
+.superpowers/
 
 # Diagnostic artifacts (Lighthouse runs, audit screenshots) — regenerated on demand
 docs/**/report.html
