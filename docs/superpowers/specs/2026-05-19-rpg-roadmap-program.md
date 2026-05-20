@@ -51,11 +51,12 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 
 ## Current position
 
-> **2026-05-19** — Program kickoff; D1–D8 locked. **SP1 design spec written** and self-reviewed:
-> `2026-05-19-rpg-sp1-intake-character-sheet-design.md`. Validated via visual companion: questionnaire
-> format (wizard, one-at-a-time) + Character Sheet layout + friendly russified attribute names
-> (Тех-разум / Самообучение / Стойкость / Темп / Харизма / Размах, variant A). **Awaiting user review
-> of the SP1 spec.** Next: on approval → invoke writing-plans skill to create the SP1 implementation plan.
+> **2026-05-19** — Program kickoff; D1–D8 locked. SP1 spec approved. **SP1 implementation plan written**
+> and self-reviewed: `docs/superpowers/plans/2026-05-19-rpg-sp1-intake-character-sheet.md` — 16 tasks,
+> 6 phases (data layer → scoring TDD → questions content → Worker API+Gemini → frontend → verification).
+> Validated via visual companion: wizard format + Character Sheet layout + russified attribute names
+> (Тех-разум / Самообучение / Стойкость / Темп / Харизма / Размах, variant A). **Next: choose execution
+> mode (subagent-driven vs inline) and begin implementing SP1.**
 
 ## How to resume if lost
 
