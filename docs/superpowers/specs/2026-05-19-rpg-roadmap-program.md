@@ -51,12 +51,15 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 
 ## Current position
 
-> **2026-05-19** — Program kickoff; D1–D8 locked. SP1 spec approved. **SP1 implementation plan written**
-> and self-reviewed: `docs/superpowers/plans/2026-05-19-rpg-sp1-intake-character-sheet.md` — 16 tasks,
-> 6 phases (data layer → scoring TDD → questions content → Worker API+Gemini → frontend → verification).
-> Validated via visual companion: wizard format + Character Sheet layout + russified attribute names
-> (Тех-разум / Самообучение / Стойкость / Темп / Харизма / Размах, variant A). **Next: choose execution
-> mode (subagent-driven vs inline) and begin implementing SP1.**
+> **2026-05-19** — Program kickoff; D1–D8 locked. SP1 spec + plan approved.
+>
+> **2026-05-20** — **SP1 implemented on branch `rpg-sp1-intake`** via subagent-driven execution.
+> Tasks 1–15 of 16 done (15 commits, 32 files, +1611/-154). Build green (119 pages); all intake
+> tests pass (scoring 12, gemini 3, intake API 3, attributes 2, questions 6, visible 1). Pre-existing
+> 4 failures in `lib/content.test.ts` (stale module slugs from 2026-05-18 renumbering — also fail on
+> main, unrelated to SP1). **Task 16 (deploy) NOT done — held for user decision:** shipping the hard
+> gate forces all users + owner through the 63-question intake; also needs `GEMINI_API_KEY` Worker
+> secret set + remote D1 migration (`0003`) applied. Branch NOT merged to main yet.
 
 ## How to resume if lost
 
