@@ -33,7 +33,7 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 
 | Sub-project | Scope | Depends on | Status |
 |-------------|-------|-----------|--------|
-| **SP1 — Intake → Character Sheet** | 62q/7-module questionnaire (A–G), scoring → 6 attributes (INT/WIS/CON/DEX/CHA/STR), class assignment (6 + Wanderer), World Skin assignment (G3 inference + G9 override), register/language, G11 → backstory + legendary title. Output: Character Sheet artifact. | — | 🟡 Spec written — user review → [SP1 design](./2026-05-19-rpg-sp1-intake-character-sheet-design.md) |
+| **SP1 — Intake → Character Sheet** | 62q/7-module questionnaire (A–G), scoring → 6 attributes (INT/WIS/CON/DEX/CHA/STR), class assignment (6 + Wanderer), World Skin assignment (G3 inference + G9 override), register/language, G11 → backstory + legendary title. Output: Character Sheet artifact. | — | ✅ **Shipped 2026-05-20** (merged to main, deployed) → [SP1 design](./2026-05-19-rpg-sp1-intake-character-sheet-design.md) · [plan](../plans/2026-05-19-rpg-sp1-intake-character-sheet.md) |
 | **SP2 — RPG Roadmap** | Quest Log, zones (mapped to modules 00–08), class-based module reordering, daily quests from COG budget, Niche Dungeons. Rendered through World Skin. | SP1 | ⚪ Not started |
 | **SP3 — XP / Leveling** | XP economy, 5 levels, unlocks, reward ceremony design (G10). | SP1, SP2 | ⚪ Not started |
 | **SP4 — Burnout / Calibration / Re-engagement** | Anxiety interventions, mandatory rest days, post-Boss-Battle calibration, G11-anchored re-engagement. | SP1, SP2, SP3 | ⚪ Not started |
@@ -60,9 +60,14 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 > 63-step counter, RU+EN, graceful API-404). **Final code review (B):** verdict SHIP-WITH-FIXES, no
 > criticals; applied fixes — wizard persists on step-change + clamps step; `classifyFilmSkin` uses
 > split keys; character sheet null-score guard.
-> **Task 16 (deploy) STILL held for user decision:** shipping the hard gate forces all users + owner
-> through the 63-question intake; needs `GEMINI_API_KEY` Worker secret + remote D1 migration (`0003`)
-> applied + merge `rpg-sp1-intake` → main. Branch NOT merged yet.
+> **SP1 SHIPPED 2026-05-20.** `GEMINI_API_KEY` set on prod Worker (via wrangler masked prompt);
+> `intake_profiles` table created on remote D1 via Cloudflare dashboard console (local API token
+> lacks D1 perms — code 7403/10000); merged `rpg-sp1-intake` → `main` (`--no-ff`, merge `f58b395`)
+> and pushed. main build green (117 pages), 41/41 tests. CI deploying web + workers.
+> **Branch `rpg-sp1-intake` still exists** (not deleted). **Next program step: SP2 — RPG Roadmap.**
+>
+> Post-deploy TODO: smoke the live flow (login → intake → /character → gated lessons) once CI finishes;
+> the hard gate is now live for all users.
 
 ## How to resume if lost
 
