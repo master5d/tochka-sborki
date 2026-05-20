@@ -54,12 +54,15 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 > **2026-05-19** — Program kickoff; D1–D8 locked. SP1 spec + plan approved.
 >
 > **2026-05-20** — **SP1 implemented on branch `rpg-sp1-intake`** via subagent-driven execution.
-> Tasks 1–15 of 16 done (15 commits, 32 files, +1611/-154). Build green (119 pages); all intake
-> tests pass (scoring 12, gemini 3, intake API 3, attributes 2, questions 6, visible 1). Pre-existing
-> 4 failures in `lib/content.test.ts` (stale module slugs from 2026-05-18 renumbering — also fail on
-> main, unrelated to SP1). **Task 16 (deploy) NOT done — held for user decision:** shipping the hard
-> gate forces all users + owner through the 63-question intake; also needs `GEMINI_API_KEY` Worker
-> secret set + remote D1 migration (`0003`) applied. Branch NOT merged to main yet.
+> Tasks 1–15 of 16 done. Build green (119 pages); full web suite 41/41 green (fixed the 4 stale
+> `lib/content.test.ts` slugs as part of this pass); workers gemini 3/3.
+> **Local smoke (A):** `/quest-intake` + `/en/quest-intake` render correctly via dev server (wizard,
+> 63-step counter, RU+EN, graceful API-404). **Final code review (B):** verdict SHIP-WITH-FIXES, no
+> criticals; applied fixes — wizard persists on step-change + clamps step; `classifyFilmSkin` uses
+> split keys; character sheet null-score guard.
+> **Task 16 (deploy) STILL held for user decision:** shipping the hard gate forces all users + owner
+> through the 63-question intake; needs `GEMINI_API_KEY` Worker secret + remote D1 migration (`0003`)
+> applied + merge `rpg-sp1-intake` → main. Branch NOT merged yet.
 
 ## How to resume if lost
 
