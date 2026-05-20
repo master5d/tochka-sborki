@@ -106,6 +106,14 @@ export type Dictionary = {
     rights: string
     builtWith: string
   }
+  notFound: {
+    code: string
+    label: string
+    heading: string
+    body: string
+    ctaHome: string
+    ctaProgram: string
+  }
 }
 
 export const dictionaries: Record<Locale, Dictionary> = {
@@ -262,6 +270,14 @@ export const dictionaries: Record<Locale, Dictionary> = {
       rights: 'Открытый курс. Используй, форкай, делись.',
       builtWith: 'Собрано с Claude Code',
     },
+    notFound: {
+      code: '404',
+      label: '⬡ Тупик',
+      heading: 'Здесь\nпусто',
+      body: 'Этой страницы не существует. Как и того проекта, который ты всё откладываешь «на потом». Хватит блуждать по ссылкам — иди и собери что-нибудь.',
+      ctaHome: 'На главную',
+      ctaProgram: 'К программе →',
+    },
   },
   en: {
     nav: {
@@ -415,6 +431,14 @@ export const dictionaries: Record<Locale, Dictionary> = {
       licenseFull: 'MIT License',
       rights: 'Open course. Use it, fork it, share it.',
       builtWith: 'Built with Claude Code',
+    },
+    notFound: {
+      code: '404',
+      label: '⬡ Dead end',
+      heading: 'Nothing\nhere',
+      body: 'This page does not exist. Neither does that project you keep putting off until "later". Stop wandering through dead links — go build something.',
+      ctaHome: 'Home',
+      ctaProgram: 'See program →',
     },
   },
 }
