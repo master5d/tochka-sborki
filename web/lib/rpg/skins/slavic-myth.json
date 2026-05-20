@@ -1,0 +1,79 @@
+{
+  "skin": "slavic-myth",
+  "zoneNames": {
+    "00-kickstart": {
+      "ru": "Родная Околица",
+      "en": "The Familiar Outskirts"
+    },
+    "01-introduction": {
+      "ru": "Тайная Поляна",
+      "en": "The Secret Glade"
+    },
+    "02-setup-guide": {
+      "ru": "Мастерская Домового",
+      "en": "The Domovoy's Workshop"
+    },
+    "03-stack-selection": {
+      "ru": "Камень на Распутье",
+      "en": "The Crossroads Stone"
+    },
+    "04-prompt-engineering": {
+      "ru": "Родник Живого Слова",
+      "en": "The Spring of Living Words"
+    },
+    "05-context-memory": {
+      "ru": "Волшебный Клубок",
+      "en": "The Magic Ball of Yarn"
+    },
+    "06-audio-pipeline": {
+      "ru": "Чудо-Мельница",
+      "en": "The Wonder-Mill"
+    },
+    "07-tools": {
+      "ru": "Кузня Сварога",
+      "en": "Svarog's Forge"
+    },
+    "08-agent-engineering": {
+      "ru": "Агентов Хоровод",
+      "en": "The Agents' Round Dance"
+    }
+  },
+  "questTitles": {
+    "00-kickstart": {
+      "ru": "Зачин: Как в путь-дорожку собирались",
+      "en": "The Beginning: Preparing for the Road Ahead"
+    },
+    "01-introduction": {
+      "ru": "Сказ о диве дивном, Software 3.0",
+      "en": "A Tale of the Wondrous Software 3.0"
+    },
+    "02-setup-guide": {
+      "ru": "Наладить очаг для своих agent-помощников",
+      "en": "Setting up the Hearth for Your Agents"
+    },
+    "03-stack-selection": {
+      "ru": "Какой agentic-стек тебе по сердцу придётся",
+      "en": "Which Agentic-Stack Will Suit Your Path"
+    },
+    "04-prompt-engineering": {
+      "ru": "Сплести prompt, что дело любое спорит",
+      "en": "Weaving a Prompt to Master Any Task"
+    },
+    "05-context-memory": {
+      "ru": "Как agent помнит, куда нить ведёт",
+      "en": "How an Agent Remembers Where the Thread Leads"
+    },
+    "06-audio-pipeline": {
+      "ru": "Запустить workflow, что сам мелет муку",
+      "en": "Starting a Workflow that Grinds Its Own Flour"
+    },
+    "07-tools": {
+      "ru": "Оснастить MCP-серверы и прочие Skills-хитрости",
+      "en": "Equipping MCP-Servers and Other Cunning Skills"
+    },
+    "08-agent-engineering": {
+      "ru": "Как водить хоровод систем агентов мудро",
+      "en": "Wisely Leading the Round Dance of Agents"
+    }
+  }
+}

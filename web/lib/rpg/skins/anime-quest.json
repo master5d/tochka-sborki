@@ -1,0 +1,79 @@
+{
+  "skin": "anime-quest",
+  "zoneNames": {
+    "00-kickstart": {
+      "ru": "Врата Пробуждения",
+      "en": "Gates of Awakening"
+    },
+    "01-introduction": {
+      "ru": "Хроники Перемен",
+      "en": "Chronicles of Change"
+    },
+    "02-setup-guide": {
+      "ru": "Кузница Героя",
+      "en": "The Hero's Forge"
+    },
+    "03-stack-selection": {
+      "ru": "Перепутье Судеб",
+      "en": "Crossroads of Fate"
+    },
+    "04-prompt-engineering": {
+      "ru": "Башня Заклинаний",
+      "en": "Tower of Incantations"
+    },
+    "05-context-memory": {
+      "ru": "Потоки Памяти",
+      "en": "Streams of Memory"
+    },
+    "06-audio-pipeline": {
+      "ru": "Сердце Механизма",
+      "en": "The Core Mechanism"
+    },
+    "07-tools": {
+      "ru": "Арсенал Богов",
+      "en": "The Gods' Arsenal"
+    },
+    "08-agent-engineering": {
+      "ru": "Трон Оркестратора",
+      "en": "The Orchestrator's Throne"
+    }
+  },
+  "questTitles": {
+    "00-kickstart": {
+      "ru": "Пробуди свой Код!",
+      "en": "Awaken Your Code!"
+    },
+    "01-introduction": {
+      "ru": "Узри Грядущее: Эпоха Software 3.0!",
+      "en": "Witness the Future: The Age of Software 3.0!"
+    },
+    "02-setup-guide": {
+      "ru": "Вооружись для Битвы: Настройка Среды!",
+      "en": "Arm Yourself for Battle: Environment Setup!"
+    },
+    "03-stack-selection": {
+      "ru": "Выбери Свой Путь: Искусство Agentic-Стека!",
+      "en": "Choose Your Path: Master the Agentic Stack!"
+    },
+    "04-prompt-engineering": {
+      "ru": "Овладей Силой Слов: Магия Prompt-инжиниринга!",
+      "en": "Master the Power of Words: Prompt Engineering Magic!"
+    },
+    "05-context-memory": {
+      "ru": "Управляй Потоком: Секреты Контекста и Памяти",
+      "en": "Control the Flow: Secrets of Context & Memory"
+    },
+    "06-audio-pipeline": {
+      "ru": "Запусти Механизм: Твой Первый Pipeline!",
+      "en": "Start the Engine: Your First Automation Pipeline!"
+    },
+    "07-tools": {
+      "ru": "Пробуди Сверхсилу: MCP, Skills и Hooks!",
+      "en": "Awaken Superpowers: MCP, Skills & Hooks!"
+    },
+    "08-agent-engineering": {
+      "ru": "Стань Дирижёром: Искусство Agent-инжиниринга!",
+      "en": "Become the Conductor: The Art of Agent Engineering!"
+    }
+  }
+}

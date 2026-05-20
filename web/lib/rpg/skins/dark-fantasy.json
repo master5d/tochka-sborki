@@ -1,0 +1,79 @@
+{
+  "skin": "dark-fantasy",
+  "zoneNames": {
+    "00-kickstart": {
+      "ru": "Проклятый Рубеж",
+      "en": "The Cursed Frontier"
+    },
+    "01-introduction": {
+      "ru": "Алтарь Перемен",
+      "en": "The Altar of Change"
+    },
+    "02-setup-guide": {
+      "ru": "Рунный Круг",
+      "en": "The Runic Circle"
+    },
+    "03-stack-selection": {
+      "ru": "Перепутье Клятв",
+      "en": "The Crossroads of Oaths"
+    },
+    "04-prompt-engineering": {
+      "ru": "Скрипторий Молчания",
+      "en": "The Scriptorium of Silence"
+    },
+    "05-context-memory": {
+      "ru": "Некрополь Воспоминаний",
+      "en": "The Necropolis of Memories"
+    },
+    "06-audio-pipeline": {
+      "ru": "Цех Големов",
+      "en": "The Golem Workshop"
+    },
+    "07-tools": {
+      "ru": "Арсенал Еретика",
+      "en": "The Heretic's Arsenal"
+    },
+    "08-agent-engineering": {
+      "ru": "Костяной Собор",
+      "en": "The Bone Cathedral"
+    }
+  },
+  "questTitles": {
+    "00-kickstart": {
+      "ru": "Карта Искажённых Земель",
+      "en": "A Map of the Twisted Lands"
+    },
+    "01-introduction": {
+      "ru": "Завет Третьей Зари",
+      "en": "The Covenant of the Third Dawn"
+    },
+    "02-setup-guide": {
+      "ru": "Начертать Печати для агентного кодирования",
+      "en": "To Inscribe the Seals for Agentic Coding"
+    },
+    "03-stack-selection": {
+      "ru": "Выбрать свой agentic-стек и судьбу",
+      "en": "To Choose Your Agentic Stack and Fate"
+    },
+    "04-prompt-engineering": {
+      "ru": "Сплести совершенный prompt для подчинения",
+      "en": "To Weave a Prompt of Subjugation"
+    },
+    "05-context-memory": {
+      "ru": "Управление потоками памяти agent'а",
+      "en": "Governing an Agent's Memory Streams"
+    },
+    "06-audio-pipeline": {
+      "ru": "Вдохнуть жизнь в свой первый workflow",
+      "en": "To Breathe Life into Your First Workflow"
+    },
+    "07-tools": {
+      "ru": "Обретение Сил: MCP-серверы, Skills, Hooks",
+      "en": "Acquiring Powers: MCP-Servers, Skills, Hooks"
+    },
+    "08-agent-engineering": {
+      "ru": "От prompt'а к легиону: искусство оркестрации",
+      "en": "From Prompt to Legion: The Art of Orchestration"
+    }
+  }
+}

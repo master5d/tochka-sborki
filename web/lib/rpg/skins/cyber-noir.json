@@ -1,0 +1,79 @@
+{
+  "skin": "cyber-noir",
+  "zoneNames": {
+    "00-kickstart": {
+      "ru": "Нулевой Квартал",
+      "en": "Sector Zero"
+    },
+    "01-introduction": {
+      "ru": "Инфо-притон 'Синтаксис'",
+      "en": "The Syntax Den"
+    },
+    "02-setup-guide": {
+      "ru": "Подпольная мастерская",
+      "en": "The Back-Alley Workshop"
+    },
+    "03-stack-selection": {
+      "ru": "Чёрный рынок кода",
+      "en": "The Code Blackmarket"
+    },
+    "04-prompt-engineering": {
+      "ru": "Допросная ячейка AI",
+      "en": "AI Interrogation Cell"
+    },
+    "05-context-memory": {
+      "ru": "Архивы 'Мнемозина'",
+      "en": "The Mnemosyne Archives"
+    },
+    "06-audio-pipeline": {
+      "ru": "Конвейер данных",
+      "en": "The Data Pipeline"
+    },
+    "07-tools": {
+      "ru": "Хром-мастерская 'Экзокортекс'",
+      "en": "The 'Exocortex' Chromeshop"
+    },
+    "08-agent-engineering": {
+      "ru": "Штаб Синдиката",
+      "en": "The Syndicate HQ"
+    }
+  },
+  "questTitles": {
+    "00-kickstart": {
+      "ru": "Протереть глаза и не задавать вопросов.",
+      "en": "Wipe your optics, ask no questions."
+    },
+    "01-introduction": {
+      "ru": "Услышать шёпот призрака в машине.",
+      "en": "Catch the ghost's whisper in the machine."
+    },
+    "02-setup-guide": {
+      "ru": "Собрать свой первый ржавый терминал.",
+      "en": "Assemble your first rust-bucket terminal."
+    },
+    "03-stack-selection": {
+      "ru": "Выбрать свой яд: Claude, Sovereign или OSS.",
+      "en": "Choose your poison: Claude, Sovereign, or OSS."
+    },
+    "04-prompt-engineering": {
+      "ru": "Заставить машину сказать то, что нужно.",
+      "en": "Make the machine say what you need."
+    },
+    "05-context-memory": {
+      "ru": "Подбросить agent'у пару ложных воспоминаний.",
+      "en": "Plant a few false memories in an agent."
+    },
+    "06-audio-pipeline": {
+      "ru": "Поставить корпоративный фид на прослушку.",
+      "en": "Automate the corporate surveillance feed."
+    },
+    "07-tools": {
+      "ru": "Прикрутить agent'у пару нелегальных Skills.",
+      "en": "Bolt a few illegal Skills onto your agent."
+    },
+    "08-agent-engineering": {
+      "ru": "Заставь своих agent'ов говорить друг с другом.",
+      "en": "Make your agents talk to each other."
+    }
+  }
+}

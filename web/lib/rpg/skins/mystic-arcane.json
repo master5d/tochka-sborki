@@ -1,0 +1,79 @@
+{
+  "skin": "mystic-arcane",
+  "zoneNames": {
+    "00-kickstart": {
+      "ru": "Врата Познания",
+      "en": "Gates of Cognition"
+    },
+    "01-introduction": {
+      "ru": "Залы Прозрения",
+      "en": "Halls of Insight"
+    },
+    "02-setup-guide": {
+      "ru": "Круг Призывателя",
+      "en": "The Summoner's Circle"
+    },
+    "03-stack-selection": {
+      "ru": "Перекресток Стихий",
+      "en": "Crossroads of Elements"
+    },
+    "04-prompt-engineering": {
+      "ru": "Башня Заклинаний",
+      "en": "Tower of Incantations"
+    },
+    "05-context-memory": {
+      "ru": "Хроники Акаши",
+      "en": "The Akashic Records"
+    },
+    "06-audio-pipeline": {
+      "ru": "Руническая Цепь",
+      "en": "The Runic Chain"
+    },
+    "07-tools": {
+      "ru": "Кузница Душ",
+      "en": "The Soulforge"
+    },
+    "08-agent-engineering": {
+      "ru": "Совет Архимагов",
+      "en": "The Archmages' Council"
+    }
+  },
+  "questTitles": {
+    "00-kickstart": {
+      "ru": "Зажечь Искру Сознания",
+      "en": "Igniting the Spark of Consciousness"
+    },
+    "01-introduction": {
+      "ru": "Откровение Третьей Эпохи",
+      "en": "The Revelation of the Third Epoch"
+    },
+    "02-setup-guide": {
+      "ru": "Начертать руны для призыва agent'а",
+      "en": "Inscribing Runes to Summon an Agent"
+    },
+    "03-stack-selection": {
+      "ru": "Определить свою Стихию Силы",
+      "en": "Define Your Element of Power"
+    },
+    "04-prompt-engineering": {
+      "ru": "Искусство плетения prompt-заклинаний",
+      "en": "The Art of Weaving Prompt-Spells"
+    },
+    "05-context-memory": {
+      "ru": "Запечатать знание в кристалл контекста",
+      "en": "Sealing Knowledge in a Crystal of Context"
+    },
+    "06-audio-pipeline": {
+      "ru": "Оживить свой первый рунический механизм",
+      "en": "Animate Your First Runic Mechanism"
+    },
+    "07-tools": {
+      "ru": "Призвать MCP-серверы и обрести Skills",
+      "en": "Summon MCP-servers and Acquire Skills"
+    },
+    "08-agent-engineering": {
+      "ru": "От заклинаний к великим ритуалам",
+      "en": "From Spells to Grand Rituals"
+    }
+  }
+}

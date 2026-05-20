@@ -1,0 +1,79 @@
+{
+  "skin": "space-opera",
+  "zoneNames": {
+    "00-kickstart": {
+      "ru": "Академия 'Прометей'",
+      "en": "Prometheus Academy"
+    },
+    "01-introduction": {
+      "ru": "Горизонт Событий",
+      "en": "The Event Horizon"
+    },
+    "02-setup-guide": {
+      "ru": "Сборочный цех 'Ковчег'",
+      "en": "Assembly Hangar 'Ark'"
+    },
+    "03-stack-selection": {
+      "ru": "Верфи 'Тайфун'",
+      "en": "Typhoon Shipyards"
+    },
+    "04-prompt-engineering": {
+      "ru": "Мостик 'Оракул'",
+      "en": "The Oracle Bridge"
+    },
+    "05-context-memory": {
+      "ru": "Архивы Акаши",
+      "en": "The Akashic Archives"
+    },
+    "06-audio-pipeline": {
+      "ru": "Инженерный отсек",
+      "en": "The Engineering Deck"
+    },
+    "07-tools": {
+      "ru": "Кузница 'Гефест'",
+      "en": "The Hephaestus Forge"
+    },
+    "08-agent-engineering": {
+      "ru": "Командный центр флота",
+      "en": "Fleet Command Center"
+    }
+  },
+  "questTitles": {
+    "00-kickstart": {
+      "ru": "Проложить курс к звёздам AI",
+      "en": "Charting a Course to the AI Stars"
+    },
+    "01-introduction": {
+      "ru": "Заря новой эры: Software 3.0",
+      "en": "Dawn of a New Era: Software 3.0"
+    },
+    "02-setup-guide": {
+      "ru": "Калибровка систем для полёта",
+      "en": "Calibrating Systems for Takeoff"
+    },
+    "03-stack-selection": {
+      "ru": "Выбор корабля для миссии",
+      "en": "Choosing Your Vessel for the Mission"
+    },
+    "04-prompt-engineering": {
+      "ru": "Язык Вселенной: мастерство prompt-инжиниринга",
+      "en": "The Language of the Universe: Prompt Mastery"
+    },
+    "05-context-memory": {
+      "ru": "Хроники экспедиции: управление памятью agent",
+      "en": "Expedition Chronicles: Managing Agent Memory"
+    },
+    "06-audio-pipeline": {
+      "ru": "Запуск первого конвейера автоматизации",
+      "en": "Launching the First Automation Pipeline"
+    },
+    "07-tools": {
+      "ru": "Арсенал капитана: MCP, Skills и Hooks",
+      "en": "The Captain's Arsenal: MCP, Skills & Hooks"
+    },
+    "08-agent-engineering": {
+      "ru": "Оркестрация флота: за пределами промптов",
+      "en": "Orchestrating the Fleet: Beyond Prompts"
+    }
+  }
+}

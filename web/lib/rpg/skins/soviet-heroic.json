@@ -1,0 +1,79 @@
+{
+  "skin": "soviet-heroic",
+  "zoneNames": {
+    "00-kickstart": {
+      "ru": "Учебка",
+      "en": "The Training Ground"
+    },
+    "01-introduction": {
+      "ru": "Агитпункт",
+      "en": "Agitation Point"
+    },
+    "02-setup-guide": {
+      "ru": "Конструкторское бюро",
+      "en": "Design Bureau"
+    },
+    "03-stack-selection": {
+      "ru": "Арсенал",
+      "en": "The Arsenal"
+    },
+    "04-prompt-engineering": {
+      "ru": "Штабная комната",
+      "en": "The HQ Room"
+    },
+    "05-context-memory": {
+      "ru": "Партийный архив",
+      "en": "The Party Archive"
+    },
+    "06-audio-pipeline": {
+      "ru": "Производственный конвейер",
+      "en": "Production Conveyor"
+    },
+    "07-tools": {
+      "ru": "Секретный НИИ",
+      "en": "Secret Research Institute"
+    },
+    "08-agent-engineering": {
+      "ru": "Генштаб",
+      "en": "The General Staff"
+    }
+  },
+  "questTitles": {
+    "00-kickstart": {
+      "ru": "Ориентирование на местности",
+      "en": "Terrain Orientation"
+    },
+    "01-introduction": {
+      "ru": "Светлое будущее: Software 3.0",
+      "en": "The Bright Future: Software 3.0"
+    },
+    "02-setup-guide": {
+      "ru": "Получить допуск к станку",
+      "en": "Get Clearance for the Machine Tool"
+    },
+    "03-stack-selection": {
+      "ru": "Подобрать снаряжение по задаче",
+      "en": "Select Equipment for the Mission"
+    },
+    "04-prompt-engineering": {
+      "ru": "Составить директиву для agent'а",
+      "en": "Draft a Directive for the Agent"
+    },
+    "05-context-memory": {
+      "ru": "Завести личное дело на agent'а",
+      "en": "Create a Personal File for the Agent"
+    },
+    "06-audio-pipeline": {
+      "ru": "Наладить workflow по-стахановски",
+      "en": "Set Up the Workflow, Stakhanovite-Style"
+    },
+    "07-tools": {
+      "ru": "Освоить сверхспособности советского инженера",
+      "en": "Master the Superpowers of a Soviet Engineer"
+    },
+    "08-agent-engineering": {
+      "ru": "Оркестровать бригаду agent'ов",
+      "en": "Orchestrate a Brigade of Agents"
+    }
+  }
+}
