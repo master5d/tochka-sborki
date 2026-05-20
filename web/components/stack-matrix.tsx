@@ -81,7 +81,7 @@ export function StackMatrix({ interactive = true }: Props) {
   function pick(next: Stack) {
     if (!interactive) return
     try { localStorage.setItem('stack', next) } catch { /* ignore */ }
-    window.location.reload()
+    setStored(next)
   }
 
   return (
