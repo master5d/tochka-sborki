@@ -34,7 +34,7 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 | Sub-project | Scope | Depends on | Status |
 |-------------|-------|-----------|--------|
 | **SP1 — Intake → Character Sheet** | 62q/7-module questionnaire (A–G), scoring → 6 attributes (INT/WIS/CON/DEX/CHA/STR), class assignment (6 + Wanderer), World Skin assignment (G3 inference + G9 override), register/language, G11 → backstory + legendary title. Output: Character Sheet artifact. | — | ✅ **Shipped 2026-05-20** (merged to main, deployed) → [SP1 design](./2026-05-19-rpg-sp1-intake-character-sheet-design.md) · [plan](../plans/2026-05-19-rpg-sp1-intake-character-sheet.md) |
-| **SP2 — RPG Roadmap** | Quest Log, zones (mapped to modules 00–08), class-based module reordering, daily quests from COG budget, Niche Dungeons. Rendered through World Skin. | SP1 | 🟡 In progress — sliced. **SP2a** (Quest Log + World Map) spec written → [SP2a design](./2026-05-20-rpg-sp2a-quest-log-design.md). Later slices: SP2b daily-quests, SP2c Niche Dungeons. |
+| **SP2 — RPG Roadmap** | Quest Log, zones (mapped to modules 00–08), class-based module reordering, daily quests from COG budget, Niche Dungeons. Rendered through World Skin. | SP1 | 🟡 In progress — sliced. **SP2a** (Quest Log + World Map) ✅ **shipped 2026-05-20** (themed skin packs pending → wanderer fallback live) → [SP2a design](./2026-05-20-rpg-sp2a-quest-log-design.md) · [plan](../plans/2026-05-20-rpg-sp2a-quest-log.md). Later: SP2b daily-quests, SP2c Niche Dungeons. |
 | **SP3 — XP / Leveling** | XP economy, 5 levels, unlocks, reward ceremony design (G10). | SP1, SP2 | ⚪ Not started |
 | **SP4 — Burnout / Calibration / Re-engagement** | Anxiety interventions, mandatory rest days, post-Boss-Battle calibration, G11-anchored re-engagement. | SP1, SP2, SP3 | ⚪ Not started |
 | **World Skin engine** (cross-cutting) | 7 skins as content data (names, tone, NPC archetypes, boss names, agent analogies): Slavic Myth, Dark Fantasy, Cyber Noir, Space Opera, Anime Quest, Soviet Heroic, Mystic Arcane + Wanderer fallback. Read by SP2–SP4. | grows with SP2+ | ⚪ Not started |
@@ -72,9 +72,16 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 > **2026-05-20 (later)** — Started **SP2**, sliced it. **SP2a = Quest Log + World Map** brainstormed
 > (replaces /dashboard; reorder+soft access; skin content via dev-time Gemini → static JSON packs;
 > winding SVG map). Spec written: `2026-05-20-rpg-sp2a-quest-log-design.md`. Validated via visual
-> companion (quest feed + winding-path zone map, Slavic-Myth example). **Awaiting user review of SP2a
-> spec → then writing-plans.** Token-saving note: bulk skin content offloaded to Gemini (controller
-> reviews), code/logic stays Claude.
+> companion (quest feed + winding-path zone map, Slavic-Myth example).
+>
+> **SP2a SHIPPED 2026-05-20** via subagent-driven execution (11 tasks, ~12 commits, 61/61 web tests,
+> build green). Final opus review: SHIP-WITH-FIXES → fixes applied (localized zoneName fallback,
+> progress `loaded` gate to stop X/9 flicker, fill-branch collapse). Merged `rpg-sp2a-quest-log` → main
+> (`6682f49`) + pushed; CI deploying. **`/dashboard` is now the Quest Log for all users.**
+> **Pending (T10): themed skin packs** — until generated, ALL skins use the neutral `wanderer.json`
+> fallback (functional, generic names). To generate: run `node scripts/gen-skins.mjs` with
+> `GEMINI_API_KEY` in local env (user's key), controller reviews + commits the 7 JSON packs.
+> Branch `rpg-sp2a-quest-log` retained. Post-deploy: authed e2e (login → /dashboard quest log renders).
 
 ## How to resume if lost
 
