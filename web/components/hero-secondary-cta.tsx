@@ -27,7 +27,7 @@ export function HeroSecondaryCta({ locale }: Props) {
   }, [])
 
   const base = locale === 'en' ? '/en' : ''
-  const href = authed ? `${base}/lessons/00-kickstart/` : `${base}/login/`
+  const href = authed ? `${base}/dashboard/` : `${base}/login/`
   const label = authed ? t.hero.ctaSecondaryAuthed : t.hero.ctaSecondary
 
   return <Link href={href} style={linkStyle}>{label}</Link>
