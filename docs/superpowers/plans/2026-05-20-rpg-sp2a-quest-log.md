@@ -442,7 +442,7 @@ const profile = { char_class: 'healer', world_skin: 'slavic-myth', niche: 'massa
 
 describe('buildQuestLog', () => {
   it('orders by class, marks first non-completed as current', () => {
-    const vm = buildQuestLog(profile, modules, ['00-kickstart'], () => 'completed', pack, 'ru')
+    const vm = buildQuestLog(profile, modules, ['00-kickstart'], (s: string) => s === '00-kickstart' ? 'completed' : 'none', pack, 'ru')
     // healer order starts 00,01,...; 00 completed → current is 01
     expect(vm.zones[0].status).toBe('completed')
     const current = vm.zones.find(z => z.status === 'current')
