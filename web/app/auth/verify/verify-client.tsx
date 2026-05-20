@@ -24,10 +24,13 @@ export function VerifyClient() {
           let os: string | null = null
           try { os = localStorage.getItem('os') } catch { /* ignore */ }
           const savedRedirect = sessionStorage.getItem('login_redirect')
+          const savedLocale = sessionStorage.getItem('login_locale')
           sessionStorage.removeItem('login_redirect')
+          sessionStorage.removeItem('login_locale')
+          const base = savedLocale === 'en' ? '/en' : ''
           const destination = !os
-            ? '/onboarding/'
-            : (savedRedirect || '/lessons/00-kickstart/')
+            ? `${base}/onboarding/`
+            : (savedRedirect || `${base}/lessons/00-kickstart/`)
           setTimeout(() => router.replace(destination), 800)
         } else {
           setStatus('error')

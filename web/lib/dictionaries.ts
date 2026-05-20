@@ -114,6 +114,27 @@ export type Dictionary = {
     ctaHome: string
     ctaProgram: string
   }
+  login: {
+    label: string
+    heading: string
+    emailPlaceholder: string
+    telegramPlaceholder: string
+    submit: string
+    sending: string
+    sentConfirm: (email: string) => string
+    defaultError: string
+    networkError: string
+    footnote: string
+    pageTitle: string
+  }
+  onboarding: {
+    step: string
+    heading: string
+    subtitle: string
+    radioLabel: string
+    start: string
+    changeLater: string
+  }
 }
 
 export const dictionaries: Record<Locale, Dictionary> = {
@@ -278,6 +299,27 @@ export const dictionaries: Record<Locale, Dictionary> = {
       ctaHome: 'На главную',
       ctaProgram: 'К программе →',
     },
+    login: {
+      label: '⬡ Вход',
+      heading: 'Войти\nв курс',
+      emailPlaceholder: 'твой@email.com',
+      telegramPlaceholder: '@telegram (необязательно)',
+      submit: 'Получить ссылку →',
+      sending: 'Отправляем...',
+      sentConfirm: (email: string) => `✓ Ссылка отправлена на ${email}. Проверь почту.`,
+      defaultError: 'Что-то пошло не так. Попробуй снова.',
+      networkError: 'Ошибка сети. Проверь подключение.',
+      footnote: 'Без паролей. Получишь ссылку на почту — один клик и ты внутри.',
+      pageTitle: 'Вход — Точка Сборки',
+    },
+    onboarding: {
+      step: '⬡ Шаг 1 из 1',
+      heading: 'На чём\nработаешь?',
+      subtitle: 'Покажем правильные команды и настройки для твоей системы',
+      radioLabel: 'Операционная система',
+      start: 'Начать курс →',
+      changeLater: 'Можно изменить позже в настройках',
+    },
   },
   en: {
     nav: {
@@ -439,6 +481,27 @@ export const dictionaries: Record<Locale, Dictionary> = {
       body: 'This page does not exist. Neither does that project you keep putting off until "later". Stop wandering through dead links — go build something.',
       ctaHome: 'Home',
       ctaProgram: 'See program →',
+    },
+    login: {
+      label: '⬡ Sign in',
+      heading: 'Enter\nthe course',
+      emailPlaceholder: 'your@email.com',
+      telegramPlaceholder: '@telegram (optional)',
+      submit: 'Get the link →',
+      sending: 'Sending...',
+      sentConfirm: (email: string) => `✓ Link sent to ${email}. Check your inbox.`,
+      defaultError: 'Something went wrong. Try again.',
+      networkError: 'Network error. Check your connection.',
+      footnote: 'No passwords. You get a link in your inbox — one click and you are in.',
+      pageTitle: 'Sign in — Tochka Sborki',
+    },
+    onboarding: {
+      step: '⬡ Step 1 of 1',
+      heading: 'What do you\nwork on?',
+      subtitle: 'We will show the right commands and setup for your system',
+      radioLabel: 'Operating system',
+      start: 'Start the course →',
+      changeLater: 'You can change this later in settings',
     },
   },
 }

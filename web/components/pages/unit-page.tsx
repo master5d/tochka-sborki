@@ -25,7 +25,7 @@ export function UnitPage({ moduleSlug, unitSlug, locale }: Props) {
   const nextUnit = moduleMeta.units[unitIndex + 1] ?? null
 
   return (
-    <AuthGuard>
+    <AuthGuard locale={locale}>
       <MobileGate locale={locale}>
       <Nav locale={locale} />
       <div style={{ display: 'flex', minHeight: 'calc(100vh - 3rem)' }}>

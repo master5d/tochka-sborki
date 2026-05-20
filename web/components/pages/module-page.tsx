@@ -24,7 +24,7 @@ export function ModulePage({ slug, locale }: Props) {
   if (isModule(slug, locale)) {
     const moduleMeta = getModuleMeta(slug, locale)
     return (
-      <AuthGuard>
+      <AuthGuard locale={locale}>
         <Nav locale={locale} />
         <div style={{ display: 'flex', minHeight: 'calc(100vh - 3rem)' }}>
           <Sidebar navItems={navItems} currentSlug={slug} locale={locale} />

@@ -35,9 +35,9 @@ export function LessonLayout({ meta, navItems, children, locale = 'ru' }: Lesson
   }
 
   return (
-    <AuthGuard>
+    <AuthGuard locale={locale}>
       <MobileGate locale={locale}>
-      <Nav />
+      <Nav locale={locale} />
       <div style={{ display: 'flex', minHeight: 'calc(100vh - 3rem)' }}>
         <Sidebar navItems={navItems} currentSlug={meta.slug} locale={locale} />
         <main style={{ flex: 1, padding: '2rem 3rem', maxWidth: '860px' }}>
