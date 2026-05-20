@@ -82,6 +82,12 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 > fallback (functional, generic names). To generate: run `node scripts/gen-skins.mjs` with
 > `GEMINI_API_KEY` in local env (user's key), controller reviews + commits the 7 JSON packs.
 > Branch `rpg-sp2a-quest-log` retained. Post-deploy: authed e2e (login → /dashboard quest log renders).
+>
+> **2026-05-20 (final) — SP2a COMPLETE.** All 7 themed skin packs generated via `gen-skins.mjs`
+> (user's Gemini key), controller-reviewed (Cyrillic intact, distinct per-world tone, technical terms
+> preserved), structural test 9/9, committed + deployed (CI success). `/dashboard` now renders the
+> Quest Log with full World-Skin theming per learner. **SP2a fully shipped. Next: SP2b (daily quests
+> from cog budget) or SP2c (Niche Dungeons).**
 
 ## How to resume if lost
 
