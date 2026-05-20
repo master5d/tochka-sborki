@@ -34,7 +34,7 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 | Sub-project | Scope | Depends on | Status |
 |-------------|-------|-----------|--------|
 | **SP1 — Intake → Character Sheet** | 62q/7-module questionnaire (A–G), scoring → 6 attributes (INT/WIS/CON/DEX/CHA/STR), class assignment (6 + Wanderer), World Skin assignment (G3 inference + G9 override), register/language, G11 → backstory + legendary title. Output: Character Sheet artifact. | — | ✅ **Shipped 2026-05-20** (merged to main, deployed) → [SP1 design](./2026-05-19-rpg-sp1-intake-character-sheet-design.md) · [plan](../plans/2026-05-19-rpg-sp1-intake-character-sheet.md) |
-| **SP2 — RPG Roadmap** | Quest Log, zones (mapped to modules 00–08), class-based module reordering, daily quests from COG budget, Niche Dungeons. Rendered through World Skin. | SP1 | ⚪ Not started |
+| **SP2 — RPG Roadmap** | Quest Log, zones (mapped to modules 00–08), class-based module reordering, daily quests from COG budget, Niche Dungeons. Rendered through World Skin. | SP1 | 🟡 In progress — sliced. **SP2a** (Quest Log + World Map) spec written → [SP2a design](./2026-05-20-rpg-sp2a-quest-log-design.md). Later slices: SP2b daily-quests, SP2c Niche Dungeons. |
 | **SP3 — XP / Leveling** | XP economy, 5 levels, unlocks, reward ceremony design (G10). | SP1, SP2 | ⚪ Not started |
 | **SP4 — Burnout / Calibration / Re-engagement** | Anxiety interventions, mandatory rest days, post-Boss-Battle calibration, G11-anchored re-engagement. | SP1, SP2, SP3 | ⚪ Not started |
 | **World Skin engine** (cross-cutting) | 7 skins as content data (names, tone, NPC archetypes, boss names, agent analogies): Slavic Myth, Dark Fantasy, Cyber Noir, Space Opera, Anime Quest, Soviet Heroic, Mystic Arcane + Wanderer fallback. Read by SP2–SP4. | grows with SP2+ | ⚪ Not started |
@@ -68,6 +68,13 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 >
 > Post-deploy TODO: smoke the live flow (login → intake → /character → gated lessons) once CI finishes;
 > the hard gate is now live for all users.
+>
+> **2026-05-20 (later)** — Started **SP2**, sliced it. **SP2a = Quest Log + World Map** brainstormed
+> (replaces /dashboard; reorder+soft access; skin content via dev-time Gemini → static JSON packs;
+> winding SVG map). Spec written: `2026-05-20-rpg-sp2a-quest-log-design.md`. Validated via visual
+> companion (quest feed + winding-path zone map, Slavic-Myth example). **Awaiting user review of SP2a
+> spec → then writing-plans.** Token-saving note: bulk skin content offloaded to Gemini (controller
+> reviews), code/logic stays Claude.
 
 ## How to resume if lost
 
