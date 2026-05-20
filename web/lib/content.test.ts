@@ -63,26 +63,26 @@ describe('getModuleMeta — all modules', () => {
     expect(meta.units.length).toBeGreaterThanOrEqual(1)
   })
 
-  it('03-prompt-engineering has correct shape', () => {
-    const meta = getModuleMeta('03-prompt-engineering')
+  it('04-prompt-engineering has correct shape', () => {
+    const meta = getModuleMeta('04-prompt-engineering')
     expect(meta.title).toBeTruthy()
     expect(meta.units.length).toBeGreaterThanOrEqual(1)
   })
 
-  it('04-context-memory has correct shape', () => {
-    const meta = getModuleMeta('04-context-memory')
+  it('05-context-memory has correct shape', () => {
+    const meta = getModuleMeta('05-context-memory')
     expect(meta.title).toBeTruthy()
     expect(meta.units.length).toBeGreaterThanOrEqual(1)
   })
 
-  it('05-audio-pipeline has correct shape', () => {
-    const meta = getModuleMeta('05-audio-pipeline')
+  it('06-audio-pipeline has correct shape', () => {
+    const meta = getModuleMeta('06-audio-pipeline')
     expect(meta.title).toBeTruthy()
     expect(meta.units.length).toBeGreaterThanOrEqual(1)
   })
 
-  it('06-tools has correct shape', () => {
-    const meta = getModuleMeta('06-tools')
+  it('07-tools has correct shape', () => {
+    const meta = getModuleMeta('07-tools')
     expect(meta.title).toBeTruthy()
     expect(meta.units.length).toBeGreaterThanOrEqual(1)
   })

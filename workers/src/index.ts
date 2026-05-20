@@ -2,6 +2,8 @@ import type { Env } from './lib/types'
 import { handleFeedback } from './handlers/feedback'
 import { handleSendLink, handleVerify, handleMe, handleLogout } from './handlers/auth'
 import { handleView, handleComplete, handleList } from './handlers/progress'
+import { handleMe as handleIntakeMe, handleProgress as handleIntakeProgress, handleSubmit as handleIntakeSubmit } from './handlers/intake'
+import { requireAuth } from './middleware'
 
 const ALLOWED_ORIGINS = [
   'https://ai.mamaev.coach',
@@ -14,7 +16,7 @@ function getCorsHeaders(request: Request) {
   const allowedOrigin = ALLOWED_ORIGINS.includes(origin || '') ? origin! : ALLOWED_ORIGINS[0]
   return {
     'Access-Control-Allow-Origin': allowedOrigin,
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Credentials': 'true',
   }
@@ -51,6 +53,27 @@ export default {
         response = await handleComplete(request, env)
       } else if (path === '/api/progress/list' && method === 'GET') {
         response = await handleList(request, env)
+      } else if (path === '/api/intake/me' && method === 'GET') {
+        const auth = await requireAuth(request, env)
+        response = auth instanceof Response ? auth : await handleIntakeMe(env.DB, auth.sub)
+      } else if (path === '/api/intake/progress' && method === 'PATCH') {
+        const auth = await requireAuth(request, env)
+        if (auth instanceof Response) {
+          response = auth
+        } else {
+          let body: { answers?: any; currentStep?: number }
+          try { body = await request.json() } catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }) }
+          response = await handleIntakeProgress(env.DB, auth.sub, { answers: body.answers ?? {}, currentStep: body.currentStep ?? 0 })
+        }
+      } else if (path === '/api/intake/submit' && method === 'POST') {
+        const auth = await requireAuth(request, env)
+        if (auth instanceof Response) {
+          response = auth
+        } else {
+          let body: { answers?: any }
+          try { body = await request.json() } catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }) }
+          response = await handleIntakeSubmit(env.DB, auth.sub, { answers: body.answers ?? {} }, env.GEMINI_API_KEY)
+        }
       } else {
         response = new Response('Not Found', { status: 404 })
       }
