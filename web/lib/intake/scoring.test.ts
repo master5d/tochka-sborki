@@ -31,3 +31,41 @@ describe('assignClass', () => {
     expect(assignClass({ int: 5, wis: 5, con: 5, dex: 5, cha: 5, str: 5 })).toBe('wanderer')
   })
 })
+
+import { assignWorldSkin, computeCogTier, scoreProfile } from './scoring'
+
+describe('assignWorldSkin', () => {
+  it('G9 explicit choice wins over G3', () => {
+    expect(assignWorldSkin({ G9: 'cyber-noir', G3: 'Ведьмак' })).toEqual({ skin: 'cyber-noir', source: 'g9' })
+  })
+  it('falls back to wanderer when neither present', () => {
+    expect(assignWorldSkin({})).toEqual({ skin: 'wanderer', source: 'wanderer-fallback' })
+  })
+  it('leaves G3 to async classification (returns g3 marker)', () => {
+    expect(assignWorldSkin({ G3: 'Ведьмак' })).toEqual({ skin: 'wanderer', source: 'g3' })
+  })
+})
+
+describe('computeCogTier', () => {
+  it('downshifts when G6 says under 3 min despite long D2', () => {
+    expect(computeCogTier({ D2: '30_45', G6: 'under3' })).toBe(1)
+  })
+  it('uses D2 when consistent', () => {
+    expect(computeCogTier({ D2: '30_45', G6: '10_30' })).toBe(3)
+  })
+})
+
+describe('scoreProfile', () => {
+  it('produces a full ScoreResult', () => {
+    const r = scoreProfile({
+      C1: 'tier0', A5: 'supported', A6: 'professional', F2: 'massage',
+      E3: 'community', E4: 'high', D2: '15_20', G6: '10_30',
+      G8: 'ty', G12: 'ru-tech', G9: 'slavic-myth',
+    })
+    expect(r.charLevel).toBe(0)
+    expect(r.register).toBe('ty')
+    expect(r.sheetLanguage).toBe('ru-tech')
+    expect(r.niche).toBe('massage')
+    expect(r.worldSkin).toBe('slavic-myth')
+  })
+})

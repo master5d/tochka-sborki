@@ -1,5 +1,5 @@
 import { SCORING } from './scoring-weights'
-import type { Answers, AttributeCode, CharacterClass } from './types'
+import type { Answers, AttributeCode, CharacterClass, WorldSkin, ScoreResult } from './types'
 
 const SOURCES: Record<AttributeCode, { ids: string[]; rawMax: number; range: number }> = {
   INT: { ids: ['C1', 'C3', 'C4', 'C8', 'D3', 'D7'], rawMax: 40, range: 30 },
@@ -40,4 +40,41 @@ export function assignClass(a: Attributes): CharacterClass {
   if (a.dex >= 15 && a.str >= 12 && a.int >= 10 && a.wis < 15) return 'operator'
   if (a.cha >= 15 && a.con >= 15 && a.int < 15) return 'healer'
   return 'wanderer'
+}
+
+const CHAR_LEVEL: Record<string, number> = { tier0: 0, tier1: 1, tier2: 2, tier3: 3, tier4: 4 }
+const COG_BY_D2: Record<string, number> = { '5_10': 1, '15_20': 2, '30_45': 3, '60_plus': 4 }
+
+export function assignWorldSkin(answers: Answers): { skin: WorldSkin; source: 'g9' | 'g3' | 'wanderer-fallback' } {
+  const g9 = answers['G9'] as string | undefined
+  if (g9) return { skin: g9 as WorldSkin, source: 'g9' }
+  if (answers['G3']) return { skin: 'wanderer', source: 'g3' }
+  return { skin: 'wanderer', source: 'wanderer-fallback' }
+}
+
+export function computeCogTier(answers: Answers): number {
+  const base = COG_BY_D2[answers['D2'] as string] ?? 2
+  if (answers['G6'] === 'under3') return 1
+  return base
+}
+
+const STR_NUMERIC_IDS = ['F4', 'A9']
+
+export function scoreProfile(answers: Answers): ScoreResult {
+  const attrs = computeAttributes(answers)
+  const { skin, source } = assignWorldSkin(answers)
+  const strInputs = STR_NUMERIC_IDS.filter(id => answers[id] != null).length
+  return {
+    int: attrs.int, wis: attrs.wis, con: attrs.con, dex: attrs.dex, cha: attrs.cha, str: attrs.str,
+    charClass: assignClass(attrs),
+    charLevel: CHAR_LEVEL[answers['C1'] as string] ?? 0,
+    worldSkin: skin,
+    worldSkinSource: source,
+    cogTier: computeCogTier(answers),
+    register: (answers['G8'] as string) ?? 'adaptive',
+    sheetLanguage: (answers['G12'] as string) ?? 'ru-tech',
+    niche: (answers['F2'] as string) ?? null,
+    os: (answers['OS'] as string) ?? null,
+    strLowConfidence: strInputs < 2,
+  }
 }
