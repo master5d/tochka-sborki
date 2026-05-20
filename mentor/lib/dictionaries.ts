@@ -43,6 +43,13 @@ export interface Dictionary {
     switchAction: string
     dismissAction: string
   }
+  notFound: {
+    code: string
+    label: string
+    heading: string
+    body: string
+    ctaHome: string
+  }
 }
 
 export const CONTACT_EMAIL = 'mamaev.sasha@gmail.com'
@@ -121,6 +128,13 @@ export const dictionaries: Record<Locale, Dictionary> = {
       switchAction: 'Switch to English →',
       dismissAction: 'Stay in Russian',
     },
+    notFound: {
+      code: '404',
+      label: '⚙  Страница не найдена',
+      heading: 'Этой\nстраницы\nнет',
+      body: 'Ссылка устарела или ведёт в никуда. Вернёмся к делу — посмотрите услуги или напишите напрямую.',
+      ctaHome: 'На главную →',
+    },
   },
   en: {
     hero: {
@@ -194,6 +208,13 @@ export const dictionaries: Record<Locale, Dictionary> = {
       message: '🌐 Этот сайт также доступен на русском.',
       switchAction: 'Переключить на русский →',
       dismissAction: 'Остаться на английском',
+    },
+    notFound: {
+      code: '404',
+      label: '⚙  Page not found',
+      heading: 'This page\ndoes not\nexist',
+      body: 'The link is outdated or leads nowhere. Let’s get back to business — take a look at the services or reach out directly.',
+      ctaHome: 'Home →',
     },
   },
 }

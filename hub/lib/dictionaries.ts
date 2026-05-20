@@ -33,6 +33,13 @@ export interface Dictionary {
     toEn: string
     toRu: string
   }
+  notFound: {
+    code: string
+    label: string
+    heading: string
+    body: string
+    ctaHome: string
+  }
 }
 
 const SOCIALS_COMMON: Social[] = [
@@ -78,6 +85,13 @@ export const dictionaries: Record<Locale, Dictionary> = {
       toEn: 'EN',
       toRu: 'RU',
     },
+    notFound: {
+      code: '404',
+      label: '⬡ Тупик',
+      heading: 'Здесь\nпусто',
+      body: 'Этой страницы нет. Зато есть всё остальное — проекты, курс, контакты.',
+      ctaHome: 'На главную →',
+    },
   },
   en: {
     tagline: '// mamaev.coach',
@@ -115,6 +129,13 @@ export const dictionaries: Record<Locale, Dictionary> = {
     langSwitch: {
       toEn: 'EN',
       toRu: 'RU',
+    },
+    notFound: {
+      code: '404',
+      label: '⬡ Dead end',
+      heading: 'Nothing\nhere',
+      body: 'This page does not exist. But everything else does — projects, the course, contacts.',
+      ctaHome: 'Home →',
     },
   },
 }
