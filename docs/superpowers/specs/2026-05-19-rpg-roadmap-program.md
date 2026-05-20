@@ -24,12 +24,16 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 | D2 | Scope shape | Decomposed into 4 sub-projects + 1 cross-cutting World Skin layer |
 | D3 | First sub-project | **SP1 — Intake → Character Sheet**, full 62-question / 7-module instrument |
 | D4 | World Skin in SP1 | Skin is only *assigned + stored + reflected in Character Sheet*; full multi-skin rendering is SP2 |
+| D5 | Flow placement | Questionnaire at **`/quest-intake`**, shown after first login; **hard gate** — course content locked until completed (OS-onboarding reconciliation TBD in SP1 spec) |
+| D6 | Generation engine | Deterministic scoring/class/skin-by-G9 in code; generative parts (G3 film classification, Character Sheet prose) via **Google Gemini API** (user's existing Google AI Studio Pro subscription), called from CF Worker with `GEMINI_API_KEY` secret |
+| D7 | Questionnaire UX | **Wizard, one question at a time** (Typeform-style), progress bar, resumable mid-way; reuses spirit of existing `UnitWizard` |
+| D8 | Character Sheet output | **In-app page `/character`** (shown right after questionnaire + accessible from nav); Telegram/email delivery deferred to a later sub-project |
 
 ## Decomposition
 
 | Sub-project | Scope | Depends on | Status |
 |-------------|-------|-----------|--------|
-| **SP1 — Intake → Character Sheet** | 62q/7-module questionnaire (A–G), scoring → 6 attributes (INT/WIS/CON/DEX/CHA/STR), class assignment (6 + Wanderer), World Skin assignment (G3 inference + G9 override), register/language, G11 → backstory + legendary title. Output: Character Sheet artifact. | — | 🟡 Brainstorming |
+| **SP1 — Intake → Character Sheet** | 62q/7-module questionnaire (A–G), scoring → 6 attributes (INT/WIS/CON/DEX/CHA/STR), class assignment (6 + Wanderer), World Skin assignment (G3 inference + G9 override), register/language, G11 → backstory + legendary title. Output: Character Sheet artifact. | — | 🟡 Spec written — user review → [SP1 design](./2026-05-19-rpg-sp1-intake-character-sheet-design.md) |
 | **SP2 — RPG Roadmap** | Quest Log, zones (mapped to modules 00–08), class-based module reordering, daily quests from COG budget, Niche Dungeons. Rendered through World Skin. | SP1 | ⚪ Not started |
 | **SP3 — XP / Leveling** | XP economy, 5 levels, unlocks, reward ceremony design (G10). | SP1, SP2 | ⚪ Not started |
 | **SP4 — Burnout / Calibration / Re-engagement** | Anxiety interventions, mandatory rest days, post-Boss-Battle calibration, G11-anchored re-engagement. | SP1, SP2, SP3 | ⚪ Not started |
@@ -47,10 +51,11 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 
 ## Current position
 
-> **2026-05-19** — Program kickoff. D1–D4 locked. Brainstorming **SP1**: clarifying questions in
-> progress (flow placement, scoring approach, data model, Character Sheet output, resumability,
-> gating). Visual companion accepted (will be used for Character Sheet / World Skin mockups).
-> Next deliverable: SP1 design spec at `docs/superpowers/specs/2026-05-19-rpg-sp1-intake-character-sheet-design.md`.
+> **2026-05-19** — Program kickoff; D1–D8 locked. **SP1 design spec written** and self-reviewed:
+> `2026-05-19-rpg-sp1-intake-character-sheet-design.md`. Validated via visual companion: questionnaire
+> format (wizard, one-at-a-time) + Character Sheet layout + friendly russified attribute names
+> (Тех-разум / Самообучение / Стойкость / Темп / Харизма / Размах, variant A). **Awaiting user review
+> of the SP1 spec.** Next: on approval → invoke writing-plans skill to create the SP1 implementation plan.
 
 ## How to resume if lost
 
