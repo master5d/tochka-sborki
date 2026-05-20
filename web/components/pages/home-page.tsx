@@ -5,10 +5,10 @@ import { Nav } from '@/components/nav'
 import { Footer } from '@/components/footer'
 import { ProgramVenn } from '@/components/program-venn'
 import { ChatBubble } from '@/components/chat-bubble'
+import { HeroSecondaryCta } from '@/components/hero-secondary-cta'
 
 const lessonsHref = (locale: Locale, slug: string) =>
   locale === 'en' ? `/en/lessons/${slug}/` : `/lessons/${slug}/`
-const loginHref = (locale: Locale) => locale === 'en' ? '/en/login/' : '/login/'
 const feedbackHref = (locale: Locale) => locale === 'en' ? '/en/feedback/' : '/feedback/'
 const programAnchor = '#program'
 
@@ -109,16 +109,7 @@ export function HomePage({ locale }: Props) {
           }}>
             {t.hero.cta}
           </a>
-          <Link href={loginHref(locale)} style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.875rem',
-            color: 'var(--text-secondary)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.08em',
-            textDecoration: 'none',
-          }}>
-            {t.hero.ctaSecondary}
-          </Link>
+          <HeroSecondaryCta locale={locale} />
         </div>
       </section>
 

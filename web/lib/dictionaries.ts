@@ -20,6 +20,7 @@ export type Dictionary = {
     stats: [string, string][]
     cta: string
     ctaSecondary: string
+    ctaSecondaryAuthed: string
   }
   forWhoLabel: string
   forWhoHeading: string
@@ -133,6 +134,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       ],
       cta: 'Программа ↓',
       ctaSecondary: '→ Войти',
+      ctaSecondaryAuthed: '→ Продолжить курс',
     },
     forWhoLabel: 'Для кого',
     forWhoHeading: 'Этот курс для тебя, если...',
@@ -286,6 +288,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       ],
       cta: 'See program ↓',
       ctaSecondary: '→ Sign in',
+      ctaSecondaryAuthed: '→ Continue course',
     },
     forWhoLabel: 'Who it’s for',
     forWhoHeading: 'This course is for you if...',
