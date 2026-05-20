@@ -16,7 +16,7 @@ interface Props { modules: Record<string, { title: string; duration: string }>; 
 
 export function DashboardClient({ modules, locale }: Props) {
   const router = useRouter()
-  const { getState } = useProgress()
+  const { getState, loaded } = useProgress()
   const [profile, setProfile] = useState<any>(null)
   const [pack, setPack] = useState<SkinPack | null>(null)
 
@@ -34,7 +34,7 @@ export function DashboardClient({ modules, locale }: Props) {
       .catch(() => router.replace(locale === 'en' ? '/en/quest-intake/' : '/quest-intake/'))
   }, [router, locale])
 
-  if (!profile) return (<><Nav locale={locale} /><main style={{ maxWidth: 660, margin: '0 auto', padding: '4rem 1.5rem' }}><p style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>…</p></main></>)
+  if (!profile || !loaded) return (<><Nav locale={locale} /><main style={{ maxWidth: 660, margin: '0 auto', padding: '4rem 1.5rem' }}><p style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>…</p></main></>)
 
   const accent = SKINS_META[profile.world_skin as keyof typeof SKINS_META]?.accent ?? 'var(--text-accent)'
   const glyph = SKINS_META[profile.world_skin as keyof typeof SKINS_META]?.glyph ?? '⬡'

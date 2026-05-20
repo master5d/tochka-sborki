@@ -20,7 +20,7 @@ export function WorldMap({ zones, accent, glyph }: { zones: ZoneVM[]; accent: st
         {zones.map((z, i) => {
           const p = pts[i]
           const done = z.status === 'completed', cur = z.status === 'current'
-          const fill = done ? accent : cur ? accent : 'var(--bg-surface)'
+          const fill = (done || cur) ? accent : 'var(--bg-surface)'
           const opacity = z.status === 'todo' ? 0.5 : 1
           return (
             <g key={z.slug} className={cur ? 'wm-cur' : undefined} opacity={opacity}

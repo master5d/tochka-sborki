@@ -14,12 +14,14 @@ interface ProgressContextValue {
   getState: (slug: string) => ProgressState
   markViewed: (slug: string) => Promise<void>
   markCompleted: (slug: string) => Promise<void>
+  loaded: boolean
 }
 
 const ProgressContext = createContext<ProgressContextValue>({
   getState: () => 'none',
   markViewed: async () => {},
   markCompleted: async () => {},
+  loaded: false,
 })
 
 export function useProgress(): ProgressContextValue {
@@ -28,6 +30,7 @@ export function useProgress(): ProgressContextValue {
 
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const [progressMap, setProgressMap] = useState<Map<string, ProgressState>>(new Map())
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     fetch('/api/progress/list', { credentials: 'include' })
@@ -40,6 +43,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         setProgressMap(map)
       })
       .catch(() => {})
+      .finally(() => setLoaded(true))
   }, [])
 
   const markViewed = useCallback(async (slug: string) => {
@@ -76,7 +80,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   }, [progressMap])
 
   return (
-    <ProgressContext.Provider value={{ getState, markViewed, markCompleted }}>
+    <ProgressContext.Provider value={{ getState, markViewed, markCompleted, loaded }}>
       {children}
     </ProgressContext.Provider>
   )

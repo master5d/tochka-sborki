@@ -27,7 +27,7 @@ export function buildQuestLog(
   const zones: ZoneVM[] = order.map((slug, i) => ({
     slug,
     order: i,
-    zoneName: pack?.zoneNames?.[slug]?.[locale] || `Zone ${i}`,
+    zoneName: pack?.zoneNames?.[slug]?.[locale] || modules[slug]?.title || slug,
     questTitle: pack?.questTitles?.[slug]?.[locale] || modules[slug]?.title || slug,
     moduleTitle: modules[slug]?.title || slug,
     durationLabel: modules[slug]?.duration || '',
