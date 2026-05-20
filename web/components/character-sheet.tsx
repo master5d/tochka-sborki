@@ -8,7 +8,7 @@ export function CharacterSheet({ locale }: { locale: Locale }) {
   useEffect(() => { fetch('/api/intake/me', { credentials: 'include' })
     .then(r => r.ok ? r.json() : null).then(setP).catch(() => {}) }, [])
   if (!p) return null
-  const scores: Record<string, number> = { INT: p.int_score, WIS: p.wis_score, CON: p.con_score, DEX: p.dex_score, CHA: p.cha_score, STR: p.str_score }
+  const scores: Record<string, number> = { INT: p.int_score ?? 0, WIS: p.wis_score ?? 0, CON: p.con_score ?? 0, DEX: p.dex_score ?? 0, CHA: p.cha_score ?? 0, STR: p.str_score ?? 0 }
   return (
     <main style={{ maxWidth: 640, margin: '0 auto', padding: '3rem 1.5rem' }}>
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.66rem', color: 'var(--text-accent)', textTransform: 'uppercase' }}>

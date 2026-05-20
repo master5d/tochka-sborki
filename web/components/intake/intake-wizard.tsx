@@ -18,14 +18,29 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
   }, [])
 
   const visible = visibleQuestions(QUESTIONS, answers)
-  const q = visible[step]
   const total = visible.length
 
-  function setAnswer(v: AnswerValue) {
-    const next = { ...answers, [q.id]: v }
-    setAnswers(next)
+  // Keep step within range if the visible set shrinks (e.g. conditional questions).
+  useEffect(() => {
+    if (step > total - 1) setStep(Math.max(0, total - 1))
+  }, [total, step])
+
+  const q = visible[Math.min(step, total - 1)]
+
+  function persist(a: Answers, s: number) {
     fetch('/api/intake/progress', { method: 'PATCH', credentials: 'include',
-      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ answers: next, currentStep: step }) }).catch(() => {})
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ answers: a, currentStep: s }) }).catch(() => {})
+  }
+
+  // Update answer locally only; progress is persisted on step changes (not per keystroke).
+  function setAnswer(v: AnswerValue) {
+    setAnswers(prev => ({ ...prev, [q.id]: v }))
+  }
+
+  function goTo(nextStep: number) {
+    const s = Math.max(0, Math.min(nextStep, total - 1))
+    setStep(s)
+    persist(answers, s)
   }
 
   async function finish() {
@@ -52,10 +67,10 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
       <h1 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '1.2rem' }}>{q.prompt[locale]}</h1>
       <QuestionRenderer question={q} locale={locale} value={answers[q.id]} onChange={setAnswer} />
       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2rem' }}>
-        <button disabled={step === 0} onClick={() => setStep(s => Math.max(0, s - 1))}>← {locale === 'en' ? 'Back' : 'Назад'}</button>
+        <button disabled={step === 0} onClick={() => goTo(step - 1)}>← {locale === 'en' ? 'Back' : 'Назад'}</button>
         {isLast
           ? <button disabled={(q.required && !answered) || submitting} onClick={finish}>{locale === 'en' ? 'Finish →' : 'Завершить →'}</button>
-          : <button disabled={q.required && !answered} onClick={() => setStep(s => s + 1)}>{locale === 'en' ? 'Next →' : 'Далее →'}</button>}
+          : <button disabled={q.required && !answered} onClick={() => goTo(step + 1)}>{locale === 'en' ? 'Next →' : 'Далее →'}</button>}
       </div>
     </main>
   )

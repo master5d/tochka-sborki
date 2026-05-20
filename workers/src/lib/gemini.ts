@@ -74,7 +74,7 @@ export async function classifyFilmSkin(
     if (!res.ok) throw new Error(String(res.status))
     const data = await res.json() as any
     const out = (data?.candidates?.[0]?.content?.parts?.[0]?.text ?? '').trim().toLowerCase()
-    return skins.includes(out) ? out : 'wanderer'
+    return skins.split('|').includes(out) ? out : 'wanderer'
   } catch {
     return 'wanderer'
   }
