@@ -1,5 +1,5 @@
 import { SCORING } from './scoring-weights'
-import type { Answers, AttributeCode } from './types'
+import type { Answers, AttributeCode, CharacterClass } from './types'
 
 const SOURCES: Record<AttributeCode, { ids: string[]; rawMax: number; range: number }> = {
   INT: { ids: ['C1', 'C3', 'C4', 'C8', 'D3', 'D7'], rawMax: 40, range: 30 },
@@ -31,4 +31,13 @@ export function computeAttributes(answers: Answers): Attributes {
     out[code.toLowerCase() as Lowercase<AttributeCode>] = Math.round((raw / rawMax) * range)
   }
   return out as Attributes
+}
+
+export function assignClass(a: Attributes): CharacterClass {
+  if (a.int >= 20 && a.str >= 15 && a.con >= 18) return 'artificer'
+  if (a.wis >= 18 && a.int >= 15 && a.cha >= 15) return 'mage'
+  if (a.wis >= 20 && a.cha >= 18 && a.con >= 20) return 'sovereign'
+  if (a.dex >= 15 && a.str >= 12 && a.int >= 10 && a.wis < 15) return 'operator'
+  if (a.cha >= 15 && a.con >= 15 && a.int < 15) return 'healer'
+  return 'wanderer'
 }

@@ -17,3 +17,17 @@ describe('computeAttributes', () => {
     expect(a.int).toBe(0)
   })
 })
+
+import { assignClass } from './scoring'
+
+describe('assignClass', () => {
+  it('Artificer when INT/STR/CON high', () => {
+    expect(assignClass({ int: 22, wis: 10, con: 19, dex: 10, cha: 10, str: 16 })).toBe('artificer')
+  })
+  it('Healer when CHA/CON high and INT low', () => {
+    expect(assignClass({ int: 8, wis: 16, con: 20, dex: 17, cha: 19, str: 12 })).toBe('healer')
+  })
+  it('Wanderer when no thresholds met', () => {
+    expect(assignClass({ int: 5, wis: 5, con: 5, dex: 5, cha: 5, str: 5 })).toBe('wanderer')
+  })
+})
