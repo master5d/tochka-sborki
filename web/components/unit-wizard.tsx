@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { UnitWizardContext } from './unit-wizard-context'
 import { useUnitProgress } from '@/lib/unit-progress'
@@ -37,13 +37,20 @@ export function UnitWizard({
   const [done, setDone] = useState(false)
   const { markCompleted } = useUnitProgress()
   const router = useRouter()
+  const topRef = useRef<HTMLDivElement>(null)
+
+  function scrollToTop() {
+    topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   function handleNext() {
     setCurrentStep(s => Math.min(s + 1, TOTAL_STEPS - 1))
+    scrollToTop()
   }
 
   function handleBack() {
     setCurrentStep(s => Math.max(s - 1, 0))
+    scrollToTop()
   }
 
   function handleComplete() {
@@ -62,7 +69,8 @@ export function UnitWizard({
   return (
     <UnitWizardContext.Provider value={{ currentStep, totalSteps: TOTAL_STEPS }}>
       {/* Module + unit breadcrumb */}
-      <div style={{
+      <div ref={topRef} style={{
+        scrollMarginTop: '4rem',
         marginBottom: '0.5rem',
         fontFamily: 'var(--font-mono)',
         fontSize: '0.7rem',
