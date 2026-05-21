@@ -38,6 +38,7 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 | **SP3 — XP / Leveling** | XP economy, 5 levels, unlocks, reward ceremony design (G10). | SP1, SP2 | ⚪ Not started |
 | **SP4 — Burnout / Calibration / Re-engagement** | Anxiety interventions, mandatory rest days, post-Boss-Battle calibration, G11-anchored re-engagement. | SP1, SP2, SP3 | ⚪ Not started |
 | **World Skin engine** (cross-cutting) | 7 skins as content data (names, tone, NPC archetypes, boss names, agent analogies): Slavic Myth, Dark Fantasy, Cyber Noir, Space Opera, Anime Quest, Soviet Heroic, Mystic Arcane + Wanderer fallback. Read by SP2–SP4. | grows with SP2+ | ⚪ Not started |
+| **Content Demand Radar** (cross-cutting) | Intake free-text (F3, F2-other) → Gemini classify vs 9-module catalog → gaps become Gemini-drafted briefs in D1 → owner-gated `/admin/content-demand` (Quest Forge). Closes SP1 intake loop back into course evolution; brief API ready for future boss-agent-as-architect. | SP1 | ✅ **Shipped 2026-05-21** → [design](./2026-05-21-content-demand-radar-design.md) · [plan](../plans/2026-05-21-content-demand-radar.md) |
 
 ## Existing platform context (integration surface)
 
@@ -88,6 +89,17 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 > preserved), structural test 9/9, committed + deployed (CI success). `/dashboard` now renders the
 > Quest Log with full World-Skin theming per learner. **SP2a fully shipped. Next: SP2b (daily quests
 > from cog budget) or SP2c (Niche Dungeons).**
+>
+> **2026-05-21 — Content Demand Radar SHIPPED** (cross-cutting, not an SP slice). Brainstorm → spec →
+> plan → subagent-driven execution (11 tasks, haiku/sonnet implementers + final SHIP review). Fire-and-
+> forget tail to `/api/intake/submit` via `ctx.waitUntil`: extracts F3/F2-other → Gemini flash classifies
+> vs 9-module catalog (covered/gap/not_feasible + value_tier) → D1 `content_demand_signals`; high-value or
+> 5+/90d gaps → Gemini pro drafts a brief in `content_demand_briefs` → owner-gated `/admin/content-demand`
+> (Quest Forge) with accept/reject. Workers 53/53 green, tsc/web build clean. Merged `rpg-content-demand-radar`
+> → main (`097f382`), CI success (45s). **OWNER_EMAIL set via wrangler.toml [vars] (mamaev.sasha@gmail.com).**
+> **PENDING (owner manual): apply migration 0004 to remote D1 via CF dashboard console** — prod token lacks
+> D1 perms (7403/10000); until done the radar is a safe no-op (errors caught in waitUntil). Pre-existing
+> tsc error in auth.ts (`user!.id` null-guard) fixed in passing. Branch retained.
 
 ## How to resume if lost
 
