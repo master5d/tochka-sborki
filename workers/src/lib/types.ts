@@ -7,6 +7,7 @@ export interface Env {
   N8N_CRM_WEBHOOK_URL: string
   N8N_CRM_SECRET: string
   GEMINI_API_KEY: string
+  OWNER_EMAIL: string
 }
 
 export interface JWTPayload {
