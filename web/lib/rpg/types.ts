@@ -2,10 +2,17 @@ import type { WorldSkin, CharacterClass, Locale } from '@/lib/intake/types'
 
 export type Bi = { ru: string; en: string }
 
+export interface UnitFraming {
+  intro: Bi        // shown at Activation (currentStep 0)
+  mentorHint: Bi   // shown at Practice (currentStep 3)
+  outro: Bi        // shown in the done state
+}
+
 export interface SkinPack {
   skin: WorldSkin
   zoneNames: Record<string, Bi>   // slug -> zone name
   questTitles: Record<string, Bi> // slug -> quest title
+  units?: Record<string, UnitFraming> // "<moduleSlug>/<unitSlug>" -> framing
 }
 
 export interface SkinMeta {
@@ -13,6 +20,7 @@ export interface SkinMeta {
   accent: string                  // hex
   glyph: string                   // emoji
   displayName: Bi
+  mentor?: { name: Bi; glyph: string } // named persona for hint box
 }
 
 export type QuestStatus = 'completed' | 'current' | 'todo'
