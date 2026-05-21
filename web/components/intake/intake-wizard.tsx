@@ -37,6 +37,12 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
     setAnswers(prev => ({ ...prev, [q.id]: v }))
   }
 
+  // Free-text companion for "other"-style options, stored under a derived key.
+  const otherKey = q ? `${q.id}__other` : ''
+  function setOther(v: string) {
+    setAnswers(prev => ({ ...prev, [otherKey]: v }))
+  }
+
   function goTo(nextStep: number) {
     const s = Math.max(0, Math.min(nextStep, total - 1))
     setStep(s)
@@ -57,20 +63,101 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
   const moduleTitle = MODULE_INTROS.find(m => m.id === q.module)?.title[locale] ?? ''
 
   return (
-    <main style={{ maxWidth: 560, margin: '0 auto', padding: '4rem 1.5rem' }}>
+    <main style={{ maxWidth: 560, margin: '0 auto', padding: '2.5rem 1.25rem 4rem' }}>
+      <style>{`
+        .intake-field {
+          width: 100%;
+          background: var(--bg-surface);
+          color: var(--text-primary);
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
+          padding: 13px 14px;
+          font-size: 16px;
+          line-height: 1.45;
+          font-family: inherit;
+          outline: none;
+        }
+        .intake-field::placeholder { color: var(--text-secondary); }
+        .intake-field:focus { border-color: var(--text-accent); }
+        textarea.intake-field { resize: vertical; }
+
+        .intake-option {
+          display: block;
+          width: 100%;
+          text-align: left;
+          background: var(--bg-surface);
+          color: var(--text-primary);
+          border: 1px solid var(--border-color);
+          border-radius: 10px;
+          padding: 14px 16px;
+          margin-bottom: 10px;
+          font-size: 15px;
+          line-height: 1.4;
+          cursor: pointer;
+          transition: border-color .12s, background .12s;
+        }
+        .intake-option:active { transform: scale(0.995); }
+        .intake-option.is-on {
+          border-color: var(--text-accent);
+          background: color-mix(in oklab, var(--text-accent) 14%, var(--bg-surface));
+          color: var(--text-primary);
+          font-weight: 600;
+        }
+
+        .intake-likert {
+          flex: 1;
+          min-height: 52px;
+          background: var(--bg-surface);
+          color: var(--text-primary);
+          border: 1px solid var(--border-color);
+          border-radius: 10px;
+          font-size: 17px;
+          cursor: pointer;
+        }
+        .intake-likert.is-on {
+          border-color: var(--text-accent);
+          background: color-mix(in oklab, var(--text-accent) 18%, var(--bg-surface));
+          font-weight: 700;
+        }
+
+        .intake-nav-btn {
+          background: var(--bg-surface);
+          color: var(--text-primary);
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
+          padding: 12px 20px;
+          font-size: 15px;
+          cursor: pointer;
+        }
+        .intake-nav-btn:disabled { opacity: .4; cursor: default; }
+        .intake-nav-btn.primary {
+          background: var(--text-accent);
+          color: #000;
+          border-color: var(--text-accent);
+          font-weight: 700;
+        }
+      `}</style>
+
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.7rem', color: 'var(--text-secondary)' }}>
         {moduleTitle} · {step + 1}/{total}
       </div>
       <div style={{ height: 4, background: 'var(--border-color)', borderRadius: 2, margin: '.5rem 0 1.5rem' }}>
         <div style={{ height: '100%', width: `${((step + 1) / total) * 100}%`, background: 'var(--text-accent)', borderRadius: 2 }} />
       </div>
-      <h1 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '1.2rem' }}>{q.prompt[locale]}</h1>
-      <QuestionRenderer question={q} locale={locale} value={answers[q.id]} onChange={setAnswer} />
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2rem' }}>
-        <button disabled={step === 0} onClick={() => goTo(step - 1)}>← {locale === 'en' ? 'Back' : 'Назад'}</button>
+      <h1 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '1.2rem', lineHeight: 1.3 }}>{q.prompt[locale]}</h1>
+      <QuestionRenderer
+        question={q}
+        locale={locale}
+        value={answers[q.id]}
+        onChange={setAnswer}
+        otherValue={answers[otherKey] as string | undefined}
+        onOtherChange={setOther}
+      />
+      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginTop: '2rem' }}>
+        <button className="intake-nav-btn" disabled={step === 0} onClick={() => goTo(step - 1)}>← {locale === 'en' ? 'Back' : 'Назад'}</button>
         {isLast
-          ? <button disabled={(q.required && !answered) || submitting} onClick={finish}>{locale === 'en' ? 'Finish →' : 'Завершить →'}</button>
-          : <button disabled={q.required && !answered} onClick={() => goTo(step + 1)}>{locale === 'en' ? 'Next →' : 'Далее →'}</button>}
+          ? <button className="intake-nav-btn primary" disabled={(q.required && !answered) || submitting} onClick={finish}>{submitting ? (locale === 'en' ? 'Saving…' : 'Сохраняю…') : (locale === 'en' ? 'Finish →' : 'Завершить →')}</button>
+          : <button className="intake-nav-btn primary" disabled={q.required && !answered} onClick={() => goTo(step + 1)}>{locale === 'en' ? 'Next →' : 'Далее →'}</button>}
       </div>
     </main>
   )

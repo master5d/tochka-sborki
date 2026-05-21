@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { ATTRIBUTES } from '@/lib/intake/attributes'
 import type { Locale } from '@/lib/intake/types'
@@ -30,6 +31,27 @@ export function CharacterSheet({ locale }: { locale: Locale }) {
       {[['backstory', p.backstory], ['first_quest', p.first_quest], ['final_boss', p.final_boss]].map(([k, v]) => (
         <div key={k as string} style={{ borderLeft: '3px solid var(--text-accent)', paddingLeft: '.9rem', margin: '1rem 0' }}>{v}</div>
       ))}
+      <Link
+        href={locale === 'en' ? '/en/dashboard/' : '/dashboard/'}
+        style={{
+          display: 'block',
+          textAlign: 'center',
+          marginTop: '2.5rem',
+          padding: '15px 20px',
+          background: 'var(--text-accent)',
+          color: '#000',
+          fontWeight: 700,
+          borderRadius: 10,
+          textDecoration: 'none',
+        }}
+      >
+        {locale === 'en' ? 'Enter your Quest Log →' : 'Войти в Квест-лог →'}
+      </Link>
+      <p style={{ textAlign: 'center', fontSize: '.78rem', color: 'var(--text-secondary)', marginTop: '.8rem' }}>
+        {locale === 'en'
+          ? 'Your character sheet stays here — you can revisit it anytime.'
+          : 'Лист персонажа останется здесь — можно вернуться в любой момент.'}
+      </p>
     </main>
   )
 }
