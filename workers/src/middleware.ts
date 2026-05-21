@@ -25,3 +25,15 @@ export async function requireAuth(
   if (!payload) return new Response(JSON.stringify({ error: 'Invalid session' }), { status: 401 })
   return payload
 }
+
+export async function requireOwner(
+  request: Request,
+  env: Env
+): Promise<JWTPayload | Response> {
+  const auth = await requireAuth(request, env)
+  if (auth instanceof Response) return auth
+  if (!env.OWNER_EMAIL || auth.email !== env.OWNER_EMAIL) {
+    return new Response(JSON.stringify({ error: 'Forbidden' }), { status: 403 })
+  }
+  return auth
+}
