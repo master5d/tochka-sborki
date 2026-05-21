@@ -64,7 +64,7 @@ export async function handleSendLink(request: Request, env: Env): Promise<Respon
 
   const token = generateToken()
   const expiresAt = Math.floor(Date.now() / 1000) + 900
-  await env.DB.prepare('INSERT INTO magic_links (token, user_id, expires_at) VALUES (?, ?, ?)').bind(token, user.id, expiresAt).run()
+  await env.DB.prepare('INSERT INTO magic_links (token, user_id, expires_at) VALUES (?, ?, ?)').bind(token, user!.id, expiresAt).run()
 
   let resendRes: Response
   try {
