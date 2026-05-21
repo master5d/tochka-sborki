@@ -3,7 +3,8 @@ import { handleFeedback } from './handlers/feedback'
 import { handleSendLink, handleVerify, handleMe, handleLogout } from './handlers/auth'
 import { handleView, handleComplete, handleList } from './handlers/progress'
 import { handleMe as handleIntakeMe, handleProgress as handleIntakeProgress, handleSubmit as handleIntakeSubmit } from './handlers/intake'
-import { requireAuth } from './middleware'
+import { runDemandRadar, listBriefs, listSignals, decideBrief } from './handlers/demand'
+import { requireAuth, requireOwner } from './middleware'
 
 const ALLOWED_ORIGINS = [
   'https://ai.mamaev.coach',
@@ -23,7 +24,7 @@ function getCorsHeaders(request: Request) {
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const corsHeaders = getCorsHeaders(request)
 
     if (request.method === 'OPTIONS') {
@@ -73,6 +74,23 @@ export default {
           let body: { answers?: any }
           try { body = await request.json() } catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }) }
           response = await handleIntakeSubmit(env.DB, auth.sub, { answers: body.answers ?? {} }, env.GEMINI_API_KEY)
+          if (response.ok) ctx.waitUntil(runDemandRadar(env, auth.sub, body.answers ?? {}))
+        }
+      } else if (path === '/api/admin/content-demand/briefs' && method === 'GET') {
+        const auth = await requireOwner(request, env)
+        response = auth instanceof Response ? auth : await listBriefs(env.DB, url.searchParams.get('status') ?? undefined)
+      } else if (path === '/api/admin/content-demand/signals' && method === 'GET') {
+        const auth = await requireOwner(request, env)
+        response = auth instanceof Response ? auth : await listSignals(env.DB, url.searchParams.get('classification') ?? undefined)
+      } else if (path.startsWith('/api/admin/content-demand/briefs/') && method === 'PATCH') {
+        const auth = await requireOwner(request, env)
+        if (auth instanceof Response) {
+          response = auth
+        } else {
+          const id = path.split('/').pop() ?? ''
+          let b: { status?: string }
+          try { b = await request.json() } catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }) }
+          response = await decideBrief(env.DB, id, b.status ?? '')
         }
       } else {
         response = new Response('Not Found', { status: 404 })
