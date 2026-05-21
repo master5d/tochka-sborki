@@ -90,6 +90,15 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 > Quest Log with full World-Skin theming per learner. **SP2a fully shipped. Next: SP2b (daily quests
 > from cog budget) or SP2c (Niche Dungeons).**
 >
+> **2026-05-21 — SP2d Themed Unit Framing SHIPPED (code).** Extends the World Skin engine: `SkinPack`
+> gains optional `units` (`<module>/<unit>` → intro/mentorHint/outro), `SkinMeta` gains a named `mentor`
+> persona. `UnitWizard` resolves the learner's skin and renders themed intro (Activation), mentor hint
+> (Practice), and outro (done) around the neutral 4-phase core; graceful no-op when framing is absent.
+> Pure `getUnitFraming` + coverage guard tested (web 74/74). `gen-skins.mjs --units` generates per-module
+> framing. Final review SHIP. **PENDING (owner): run `GEMINI_API_KEY=... node scripts/gen-skins.mjs --units`**
+> to populate the 7 themed packs, then controller spot-reviews + commits. Until then framing is neutral.
+> Branch `rpg-sp2d-unit-framing` retained.
+>
 > **2026-05-21 — Content Demand Radar SHIPPED** (cross-cutting, not an SP slice). Brainstorm → spec →
 > plan → subagent-driven execution (11 tasks, haiku/sonnet implementers + final SHIP review). Fire-and-
 > forget tail to `/api/intake/submit` via `ctx.waitUntil`: extracts F3/F2-other → Gemini flash classifies
