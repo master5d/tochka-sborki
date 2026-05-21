@@ -1,10 +1,13 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { UnitWizardContext } from './unit-wizard-context'
 import { useUnitProgress } from '@/lib/unit-progress'
 import { getDictionary, type Locale } from '@/lib/dictionaries'
+import { SKINS_META } from '@/lib/rpg/skins-meta'
+import { getUnitFraming } from '@/lib/rpg/unit-framing'
+import type { SkinPack, WorldSkin } from '@/lib/rpg/types'
 
 const PHASE_COLORS = ['#00ff88', '#00aaff', '#ff9900', '#ff44aa']
 const TOTAL_STEPS = 4
@@ -38,6 +41,26 @@ export function UnitWizard({
   const { markCompleted } = useUnitProgress()
   const router = useRouter()
   const topRef = useRef<HTMLDivElement>(null)
+
+  const [skin, setSkin] = useState<WorldSkin | null>(null)
+  const [pack, setPack] = useState<SkinPack | null>(null)
+
+  useEffect(() => {
+    fetch('/api/intake/me', { credentials: 'include' })
+      .then(r => r.ok ? r.json() : null)
+      .then(async p => {
+        if (!p?.world_skin) return
+        setSkin(p.world_skin as WorldSkin)
+        try {
+          const mod = await import(`@/lib/rpg/skins/${p.world_skin}.json`)
+          setPack(mod.default as SkinPack)
+        } catch { setPack(null) }
+      })
+      .catch(() => {})
+  }, [])
+
+  const framing = getUnitFraming(pack, moduleSlug, unitSlug)
+  const mentor = skin ? SKINS_META[skin]?.mentor : undefined
 
   function scrollToTop() {
     topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -79,6 +102,20 @@ export function UnitWizard({
         {moduleTitle} · {t.unit(unitIndex + 1, totalUnits)}
       </div>
 
+      {currentStep === 0 && framing?.intro && (
+        <div style={{
+          borderLeft: '3px solid var(--text-accent)',
+          background: 'var(--bg-surface)',
+          borderRadius: 8,
+          padding: '0.9rem 1.1rem',
+          margin: '0 0 1.5rem',
+          fontStyle: 'italic',
+          color: 'var(--text-primary)',
+        }}>
+          {framing.intro[locale]}
+        </div>
+      )}
+
       {/* Phase progress bar */}
       <div style={{ display: 'flex', gap: '6px', marginBottom: '2rem' }}>
         {PHASE_LABELS.map((label, i) => (
@@ -106,7 +143,39 @@ export function UnitWizard({
       {/* Phase content (controlled by UnitWizardContext) */}
       <div style={{ minHeight: '40vh' }}>
         {children}
+        {currentStep === 3 && framing?.mentorHint && mentor && (
+          <div style={{
+            display: 'flex',
+            gap: '0.6rem',
+            alignItems: 'flex-start',
+            marginTop: '1.5rem',
+            background: 'var(--bg-surface)',
+            border: '1px solid var(--border-color)',
+            borderRadius: 10,
+            padding: '0.9rem 1.1rem',
+          }}>
+            <span aria-hidden="true" style={{ fontSize: '1.3rem', lineHeight: 1 }}>{mentor.glyph}</span>
+            <div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-accent)' }}>{mentor.name[locale]}</div>
+              <div style={{ fontSize: '0.9rem' }}>«{framing.mentorHint[locale]}»</div>
+            </div>
+          </div>
+        )}
       </div>
+
+      {done && framing?.outro && (
+        <div style={{
+          borderLeft: '3px solid var(--text-accent)',
+          background: 'var(--bg-surface)',
+          borderRadius: 8,
+          padding: '0.9rem 1.1rem',
+          marginTop: '2rem',
+          fontStyle: 'italic',
+          color: 'var(--text-primary)',
+        }}>
+          {framing.outro[locale]}
+        </div>
+      )}
 
       {/* Actions */}
       <div style={{
