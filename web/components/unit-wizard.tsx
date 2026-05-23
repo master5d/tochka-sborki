@@ -79,6 +79,10 @@ export function UnitWizard({
 
   const framing = getUnitFraming(pack, moduleSlug, unitSlug)
   const mentor = skin ? SKINS_META[skin]?.mentor : undefined
+  const accent = skin ? (SKINS_META[skin]?.accent ?? 'var(--text-accent)') : 'var(--text-accent)'
+  const challengeTier = chosenMode ? MODE[chosenMode].challengeTier : 'task'
+  const hintVisible = chosenMode ? MODE[chosenMode].hintVisible : true
+  const appliedChallenge = getAppliedChallenge({ niche, outcome }, moduleSlug, challengeTier, locale)
 
   function scrollToTop() {
     topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -124,7 +128,7 @@ export function UnitWizard({
       {shardsReady && !done && !chosenMode && (
         <ModeSelector
           locale={locale}
-          accent={skin ? (SKINS_META[skin]?.accent ?? 'var(--text-accent)') : 'var(--text-accent)'}
+          accent={accent}
           selected={chosenMode}
           onSelect={(m) => setMode(unitKey, m)}
         />
@@ -171,47 +175,42 @@ export function UnitWizard({
       {/* Phase content (controlled by UnitWizardContext) */}
       <div style={{ minHeight: '40vh' }}>
         {children}
-        {currentStep === 3 && (() => {
-          const tier = chosenMode ? MODE[chosenMode].challengeTier : 'task'
-          const hintVisible = chosenMode ? MODE[chosenMode].hintVisible : true
-          const challenge = getAppliedChallenge({ niche, outcome }, moduleSlug, tier, locale)
-          return (
-            <>
-              {challenge && (
-                <div style={{
-                  marginTop: '1.5rem',
-                  background: 'var(--bg-surface)',
-                  border: '1px dashed var(--text-accent)',
-                  borderRadius: 10,
-                  padding: '0.9rem 1.1rem',
-                }}>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.35rem' }}>
-                    {locale === 'en' ? 'Your applied challenge' : 'Твой прикладной вызов'}
-                  </div>
-                  <div style={{ fontSize: '0.92rem' }}>{challenge}</div>
+        {currentStep === 3 && (
+          <>
+            {appliedChallenge && (
+              <div style={{
+                marginTop: '1.5rem',
+                background: 'var(--bg-surface)',
+                border: '1px dashed var(--text-accent)',
+                borderRadius: 10,
+                padding: '0.9rem 1.1rem',
+              }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.35rem' }}>
+                  {t.appliedChallenge}
                 </div>
-              )}
-              {hintVisible && framing?.mentorHint && mentor && (
-                <div style={{
-                  display: 'flex',
-                  gap: '0.6rem',
-                  alignItems: 'flex-start',
-                  marginTop: '1.5rem',
-                  background: 'var(--bg-surface)',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: 10,
-                  padding: '0.9rem 1.1rem',
-                }}>
-                  <span aria-hidden="true" style={{ fontSize: '1.3rem', lineHeight: 1 }}>{mentor.glyph}</span>
-                  <div>
-                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-accent)' }}>{mentor.name[locale]}</div>
-                    <div style={{ fontSize: '0.9rem' }}>«{framing.mentorHint[locale]}»</div>
-                  </div>
+                <div style={{ fontSize: '0.92rem' }}>{appliedChallenge}</div>
+              </div>
+            )}
+            {hintVisible && framing?.mentorHint && mentor && (
+              <div style={{
+                display: 'flex',
+                gap: '0.6rem',
+                alignItems: 'flex-start',
+                marginTop: '1.5rem',
+                background: 'var(--bg-surface)',
+                border: '1px solid var(--border-color)',
+                borderRadius: 10,
+                padding: '0.9rem 1.1rem',
+              }}>
+                <span aria-hidden="true" style={{ fontSize: '1.3rem', lineHeight: 1 }}>{mentor.glyph}</span>
+                <div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-accent)' }}>{mentor.name[locale]}</div>
+                  <div style={{ fontSize: '0.9rem' }}>«{framing.mentorHint[locale]}»</div>
                 </div>
-              )}
-            </>
-          )
-        })()}
+              </div>
+            )}
+          </>
+        )}
       </div>
 
       {done && framing?.outro && (
@@ -232,7 +231,7 @@ export function UnitWizard({
         <CycleComplete
           mode={chosenMode}
           locale={locale}
-          accent={skin ? (SKINS_META[skin]?.accent ?? 'var(--text-accent)') : 'var(--text-accent)'}
+          accent={accent}
         />
       )}
 

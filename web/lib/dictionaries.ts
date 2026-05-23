@@ -92,6 +92,7 @@ export type Dictionary = {
     nextUnit: string
     moduleComplete: string
     phases: string[]
+    appliedChallenge: string
   }
   footer: {
     tagline: string
@@ -279,6 +280,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       nextUnit: 'Следующий unit →',
       moduleComplete: 'Модуль завершён →',
       phases: ['Активация', 'Рефлексия', 'Концепция', 'Практика'],
+      appliedChallenge: 'Твой прикладной вызов',
     },
     footer: {
       tagline: 'Курс по agentic AI. От нуля до агентских систем — 9 элективных тем, твой стек на выбор.',
@@ -464,6 +466,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       nextUnit: 'Next unit →',
       moduleComplete: 'Topic complete →',
       phases: ['Activation', 'Reflection', 'Concept', 'Practice'],
+      appliedChallenge: 'Your applied challenge',
     },
     footer: {
       tagline: 'An agentic-AI course. From zero to agentic systems across 9 elective topics, pick your stack.',
