@@ -23,15 +23,12 @@ export function useShards() {
     })
   }, [])
 
-  const spend = useCallback((cost: number, unlockId: string): boolean => {
-    let ok = false
+  const spend = useCallback((cost: number, unlockId: string) => {
     setWallet(prev => {
       const res = applySpend(prev, cost, unlockId)
-      ok = res.ok
       if (res.ok) writeWallet(res.wallet)
       return res.wallet
     })
-    return ok
   }, [])
 
   const setMode = useCallback((unitKey: string, mode: Mode) => {

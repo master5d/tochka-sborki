@@ -10,6 +10,12 @@ describe('getAppliedChallenge', () => {
     expect(out).not.toContain('{niche}')
   })
 
+  it('slot-fills {niche} for the process tier', () => {
+    const out = getAppliedChallenge({ niche: 'legal', outcome: null }, M, 'process', 'en')
+    expect(out).toContain('legal')
+    expect(out).not.toContain('{niche}')
+  })
+
   it('slot-fills {outcome} for the outcome tier when F3 is present', () => {
     const out = getAppliedChallenge(
       { niche: 'legal', outcome: 'cut review time in half' }, M, 'outcome', 'en',
