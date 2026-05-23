@@ -15,6 +15,7 @@ describe('applyAward', () => {
     const twice = applyAward(once, 'm/u', 'commander')
     expect(twice.balance).toBe(175)
     expect(twice.earnedUnits.filter(k => k === 'm/u')).toHaveLength(1)
+    expect(twice.modeByUnit['m/u']).toBe('archmage')
   })
 
   it('does not mutate the input wallet', () => {

@@ -33,11 +33,11 @@ export interface ChallengeFraming {
 
 export const STORAGE_KEY = 'cs_wallet'
 
-export const DEFAULT_WALLET: Wallet = {
+export const DEFAULT_WALLET: Wallet = Object.freeze({
   balance: 0,
-  earnedUnits: [],
-  unlocks: [],
-  modeByUnit: {},
-}
+  earnedUnits: Object.freeze([]) as unknown as string[],
+  unlocks: Object.freeze([]) as unknown as string[],
+  modeByUnit: Object.freeze({}) as Record<string, Mode>,
+})
 
 export const SKIN_UNLOCK_COST = 300
