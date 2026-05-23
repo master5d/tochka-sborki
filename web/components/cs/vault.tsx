@@ -58,6 +58,7 @@ export function Vault({ activeSkin, locale }: { activeSkin: WorldSkin; locale: L
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: meta.accent }}>{UNLOCKED[locale]}</span>
               ) : (
                 <button
+                  type="button"
                   onClick={() => spend(SKIN_UNLOCK_COST, skin)}
                   disabled={!canAfford}
                   style={{
@@ -71,7 +72,7 @@ export function Vault({ activeSkin, locale }: { activeSkin: WorldSkin; locale: L
                     color: canAfford ? '#000' : 'var(--text-secondary)',
                   }}
                 >
-                  {UNLOCK[locale]} · {SKIN_UNLOCK_COST} 💎
+                  {UNLOCK[locale]} · {SKIN_UNLOCK_COST} <span aria-hidden="true">💎</span>
                 </button>
               )}
             </div>

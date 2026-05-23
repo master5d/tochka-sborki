@@ -43,6 +43,7 @@ export function ModeSelector({
           return (
             <button
               key={m}
+              type="button"
               onClick={() => onSelect(m)}
               style={{
                 textAlign: 'left',
@@ -59,7 +60,7 @@ export function ModeSelector({
                   {cfg.label[locale]}
                 </span>
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
-                  +{computeUnitCS(m)} 💎
+                  +{computeUnitCS(m)} <span aria-hidden="true">💎</span>
                 </span>
               </div>
               <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.3rem' }}>
