@@ -44,6 +44,7 @@ export function ModeSelector({
             <button
               key={m}
               type="button"
+              aria-pressed={active}
               onClick={() => onSelect(m)}
               style={{
                 textAlign: 'left',
