@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { getAppliedChallenge } from './applied-challenge'
+import { getAppliedChallenge, fillNicheSlots } from './applied-challenge'
 
 const M = '04-prompt-engineering'
 
@@ -43,5 +43,15 @@ describe('getAppliedChallenge', () => {
 
   it('returns null for an unknown module', () => {
     expect(getAppliedChallenge({ niche: 'x', outcome: 'y' }, 'no-such-module', 'task', 'ru')).toBeNull()
+  })
+})
+
+describe('fillNicheSlots', () => {
+  it('fills {niche} with the value and {outcome} with the value', () => {
+    expect(fillNicheSlots('do {niche} → {outcome}', 'legal', 'win', 'en')).toBe('do legal → win')
+  })
+  it('falls back to the locale niche word when niche is empty, and {outcome} to empty', () => {
+    expect(fillNicheSlots('for {niche}: {outcome}', '  ', null, 'en')).toBe('for your field: ')
+    expect(fillNicheSlots('для {niche}', null, null, 'ru')).toBe('для твоей сфере')
   })
 })
