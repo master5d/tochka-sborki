@@ -21,7 +21,7 @@ export interface NicheFlavor { dungeonName: Bi; bossName: Bi; intro: Bi; bossCha
 
 export interface DungeonInput {
   locale: Locale
-  skin: WorldSkin
+  skin: WorldSkin // reserved for future skin-aware dungeon chrome; not used by buildDungeon yet
   niche: string | null
   outcome: string | null
   isModuleCompleted: (moduleSlug: string) => boolean

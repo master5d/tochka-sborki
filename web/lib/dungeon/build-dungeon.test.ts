@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { buildDungeon } from './build-dungeon'
 import type { DungeonInput } from './types'
+import { FLAVOR_BANK } from './flavor-bank'
+import { NICHE_MODULE } from '@/lib/rpg/niche-map'
 
 function base(over: Partial<DungeonInput> = {}): DungeonInput {
   return {
@@ -53,5 +55,30 @@ describe('buildDungeon', () => {
 
   it('is deterministic for the same input', () => {
     expect(buildDungeon(base())).toEqual(buildDungeon(base()))
+  })
+
+  it('renders flavor names in the EN locale', () => {
+    const v = buildDungeon(base({ locale: 'en' }))
+    expect(v.dungeonName).toBe('Hall of Resonance')
+    expect(v.boss.name).toBe('The Echo of Doubt')
+  })
+
+  it('fills the outcome-tier stage body with the learner outcome', () => {
+    const v = buildDungeon(base({ niche: 'coach', outcome: 'grow my practice' }))
+    const outcomeStage = v.stages.find(s => s.tier === 'outcome')!
+    expect(outcomeStage.body).toContain('grow my practice')
+  })
+})
+
+describe('flavor-bank / niche-map consistency', () => {
+  it('every flavor-bank niche has a NICHE_MODULE mapping', () => {
+    for (const niche of Object.keys(FLAVOR_BANK)) {
+      expect(NICHE_MODULE[niche], `missing NICHE_MODULE entry for "${niche}"`).toBeTruthy()
+    }
+  })
+  it('covers the 8 expected niches', () => {
+    expect(Object.keys(FLAVOR_BANK).sort()).toEqual(
+      ['astrology', 'coach', 'content', 'ecommerce', 'massage', 'other', 'service', 'tech'],
+    )
   })
 })
