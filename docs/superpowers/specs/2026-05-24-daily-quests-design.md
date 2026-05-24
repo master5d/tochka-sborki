@@ -53,8 +53,10 @@ SP4 will address; SP2b does not build streaks or re-engagement (those are SP4).
 **Fallbacks (never throw, never empty for tier ≥ 1):**
 - `cogTier` missing/invalid → treat as 2.
 - No **reached** modules (shouldn't happen post-intake, but guard) → omit practice.
-- No **completed** modules (e.g. day 1) → the retrieval slot becomes a second practice quest if a reached
-  module exists, else it is omitted (tier 3/4 may yield 2 total on day 1).
+- No **completed** modules (e.g. day 1) → the retrieval slot is **omitted** (tier 3/4 may yield 2 total on
+  day 1). (We do not substitute a second practice quest: on day 1 the only reached module is the current
+  one, already used by the practice slot, so a substitution would have nothing distinct to draw from —
+  YAGNI. Retrieval naturally appears once the learner completes a module.)
 - **Whole course complete** (no next unit) → advance is replaced by a terminal "all zones cleared" quest
   (informational, no CS); practice/retrieval still offered per tier from completed modules.
 

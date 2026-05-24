@@ -50,7 +50,7 @@ export function useDailyQuests(params: Params) {
       if (q.kind === 'advance') return q.module && q.unit ? params.isUnitDone(q.module, q.unit) : false
       return store?.completedIds.includes(q.id) ?? false
     },
-    [store, params],
+    [store, params.isUnitDone],
   )
 
   const complete = useCallback(
