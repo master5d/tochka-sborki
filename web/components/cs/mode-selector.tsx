@@ -5,6 +5,7 @@ import type { Mode } from '@/lib/cs/types'
 import type { Locale } from '@/lib/intake/types'
 import { MODE } from '@/lib/cs/modes'
 import { computeUnitCS } from '@/lib/cs/award'
+import { HelpTip } from '@/components/help/help-tip'
 
 const ORDER: Mode[] = ['commander', 'copilot', 'archmage']
 
@@ -18,11 +19,13 @@ export function ModeSelector({
   accent,
   selected,
   onSelect,
+  helpId,
 }: {
   locale: Locale
   accent: string
   selected?: Mode
   onSelect: (mode: Mode) => void
+  helpId?: string
 }) {
   return (
     <div style={{ margin: '0 0 2rem' }}>
@@ -34,7 +37,7 @@ export function ModeSelector({
         textTransform: 'uppercase',
         letterSpacing: '0.05em',
       }}>
-        {HEADING[locale]}
+        {HEADING[locale]} {helpId && <HelpTip id={helpId} locale={locale} />}
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.6rem' }}>
         {ORDER.map(m => {

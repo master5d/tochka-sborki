@@ -4,6 +4,7 @@
 import Link from 'next/link'
 import type { Locale, WorldSkin } from '@/lib/intake/types'
 import { useDungeon } from '@/lib/dungeon/use-dungeon'
+import { HelpTip } from '@/components/help/help-tip'
 
 const ENTER: Record<Locale, string> = { ru: 'Войти', en: 'Enter' }
 const CLEARED: Record<Locale, string> = { ru: '✓ Пройдено', en: '✓ Cleared' }
@@ -18,9 +19,10 @@ interface Props {
   outcome: string | null
   moduleTitle: string
   isModuleCompleted: (moduleSlug: string) => boolean
+  helpId?: string
 }
 
-export function DungeonCard({ locale, accent, skin, niche, outcome, moduleTitle, isModuleCompleted }: Props) {
+export function DungeonCard({ locale, accent, skin, niche, outcome, moduleTitle, isModuleCompleted, helpId }: Props) {
   const { view, bossCleared, ready } = useDungeon({ locale, skin, niche, outcome, isModuleCompleted })
   if (!ready) return null
 
@@ -31,7 +33,7 @@ export function DungeonCard({ locale, accent, skin, niche, outcome, moduleTitle,
     <section style={{ border: `1px solid ${view.locked ? 'var(--border-color)' : accent}`, borderRadius: 12, padding: '1rem 1.25rem', marginBottom: '1.5rem', background: 'var(--bg-surface)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
       <div>
         <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: view.locked ? 'var(--text-secondary)' : accent }}>
-          <span aria-hidden="true">{view.locked ? '🔒' : '🗝'}</span> {view.dungeonName}
+          <span aria-hidden="true">{view.locked ? '🔒' : '🗝'}</span> {view.dungeonName} {helpId && <HelpTip id={helpId} locale={locale} />}
         </div>
         {view.locked && <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>{lockedLine(locale, moduleTitle)}</div>}
       </div>
