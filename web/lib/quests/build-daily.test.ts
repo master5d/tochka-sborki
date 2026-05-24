@@ -14,7 +14,7 @@ function base(over: Partial<DailyInput> = {}): DailyInput {
     locale: 'ru',
     skin: 'slavic-myth',
     cogTier: 3,
-    niche: 'legal',
+    niche: 'coach',
     outcome: null,
     unitsByModule: units,
     isUnitDone: () => false,
@@ -58,7 +58,7 @@ describe('buildDaily', () => {
     const practice = set.quests.find(q => q.kind === 'practice')
     expect(practice).toBeTruthy()
     expect(practice!.cs).toBe(10)
-    expect(practice!.body).toContain('legal')
+    expect(practice!.body).toContain('коучинге')
     expect(practice!.body).not.toContain('{niche}')
   })
 
@@ -93,10 +93,10 @@ describe('buildDaily', () => {
   })
 
   it('practice body is rendered in the en template for en locale', () => {
-    const set = buildDaily(base({ cogTier: 2, locale: 'en', niche: 'design' }))
+    const set = buildDaily(base({ cogTier: 2, locale: 'en', niche: 'coach' }))
     const practice = set.quests.find(q => q.kind === 'practice')
     expect(practice).toBeTruthy()
-    expect(practice!.body).toContain('design')
+    expect(practice!.body).toContain('coaching')
     expect(practice!.body).not.toContain('{niche}')
   })
 })

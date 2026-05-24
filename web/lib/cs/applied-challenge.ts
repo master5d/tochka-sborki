@@ -2,6 +2,7 @@
 import type { ChallengeTier, IntakeLite } from './types'
 import type { Locale } from '@/lib/intake/types'
 import { CHALLENGE_TEMPLATES } from './challenge-templates'
+import { NICHE_SLOT } from '@/lib/rpg/niche-map'
 
 const NICHE_FALLBACK: Record<Locale, string> = { ru: 'твоей сфере', en: 'your field' }
 
@@ -10,11 +11,13 @@ function clean(v?: string | null): string | null {
   return t ? t : null
 }
 
-// Shared {niche}/{outcome} slot-fill: {niche} → value or the locale fallback word; {outcome} → value or ''.
+// Shared {niche}/{outcome} slot-fill: {niche} → the niche's readable slot word (or the locale
+// fallback word for unknown/absent niche); {outcome} → value or ''.
 export function fillNicheSlots(text: string, niche: string | null, outcome: string | null, locale: Locale): string {
   const n = clean(niche)
   const o = clean(outcome)
-  return text.replace(/\{niche\}/g, n ?? NICHE_FALLBACK[locale]).replace(/\{outcome\}/g, o ?? '')
+  const nicheWord = (n && NICHE_SLOT[n]?.[locale]) ?? NICHE_FALLBACK[locale]
+  return text.replace(/\{niche\}/g, nicheWord).replace(/\{outcome\}/g, o ?? '')
 }
 
 export function getAppliedChallenge(
