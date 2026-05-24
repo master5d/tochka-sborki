@@ -10,6 +10,7 @@ import { NICHE_MODULE } from '@/lib/rpg/niche-map'
 import { FLAVOR_BANK } from '@/lib/dungeon/flavor-bank'
 import { useDungeon } from '@/lib/dungeon/use-dungeon'
 import { DungeonView } from '@/components/dungeon/dungeon-view'
+import { parseOutcome } from '@/lib/intake/parse-outcome'
 import type { Locale, WorldSkin } from '@/lib/intake/types'
 
 export function DungeonClient({ moduleTitles, locale }: { moduleTitles: Record<string, string>; locale: Locale }) {
@@ -34,8 +35,7 @@ export function DungeonClient({ moduleTitles, locale }: { moduleTitles: Record<s
   const skin = profile.world_skin as WorldSkin
   const accent = SKINS_META[skin]?.accent ?? 'var(--text-accent)'
   const niche: string | null = profile.niche ?? null
-  let outcome: string | null = null
-  try { const a = typeof profile.answers === 'string' ? JSON.parse(profile.answers) : profile.answers; outcome = typeof a?.F3 === 'string' ? a.F3 : null } catch { outcome = null }
+  const outcome = parseOutcome(profile)
 
   const resolvedNiche = niche && FLAVOR_BANK[niche] ? niche : 'other'
   const nicheModule = NICHE_MODULE[resolvedNiche] ?? '04-prompt-engineering'
