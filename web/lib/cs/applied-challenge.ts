@@ -40,5 +40,5 @@ export function getAppliedChallenge(
     else line = tmpl.task[locale]
   }
 
-  return fillNicheSlots(line, profile.niche, profile.outcome, locale)
+  return fillNicheSlots(line, profile.niche ?? null, profile.outcome ?? null, locale)
 }
