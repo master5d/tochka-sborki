@@ -8,6 +8,12 @@ import { getDictionary, type Locale } from '@/lib/dictionaries'
 import { SKINS_META } from '@/lib/rpg/skins-meta'
 import { getUnitFraming } from '@/lib/rpg/unit-framing'
 import type { SkinPack, WorldSkin } from '@/lib/rpg/types'
+import { useShards } from '@/lib/cs/use-shards'
+import { MODE } from '@/lib/cs/modes'
+import { getAppliedChallenge } from '@/lib/cs/applied-challenge'
+import { ModeSelector } from '@/components/cs/mode-selector'
+import { CycleComplete } from '@/components/cs/cycle-complete'
+import type { Mode } from '@/lib/cs/types'
 
 const PHASE_COLORS = ['#00ff88', '#00aaff', '#ff9900', '#ff44aa']
 const TOTAL_STEPS = 4
@@ -44,6 +50,12 @@ export function UnitWizard({
 
   const [skin, setSkin] = useState<WorldSkin | null>(null)
   const [pack, setPack] = useState<SkinPack | null>(null)
+  const [niche, setNiche] = useState<string | null>(null)
+  const [outcome, setOutcome] = useState<string | null>(null)
+
+  const unitKey = `${moduleSlug}/${unitSlug}`
+  const { award, setMode, getMode, ready: shardsReady } = useShards()
+  const chosenMode: Mode | undefined = getMode(unitKey)
 
   useEffect(() => {
     fetch('/api/intake/me', { credentials: 'include' })
@@ -51,6 +63,12 @@ export function UnitWizard({
       .then(async p => {
         if (!p?.world_skin) return
         setSkin(p.world_skin as WorldSkin)
+        setNiche(p.niche ?? null)
+        try {
+          const ans = typeof p.answers === 'string' ? JSON.parse(p.answers) : p.answers
+          const f3 = ans?.F3
+          setOutcome(typeof f3 === 'string' ? f3 : null)
+        } catch { setOutcome(null) }
         try {
           const mod = await import(`@/lib/rpg/skins/${p.world_skin}.json`)
           setPack(mod.default as SkinPack)
@@ -61,6 +79,10 @@ export function UnitWizard({
 
   const framing = getUnitFraming(pack, moduleSlug, unitSlug)
   const mentor = skin ? SKINS_META[skin]?.mentor : undefined
+  const accent = skin ? (SKINS_META[skin]?.accent ?? 'var(--text-accent)') : 'var(--text-accent)'
+  const challengeTier = chosenMode ? MODE[chosenMode].challengeTier : 'task'
+  const hintVisible = chosenMode ? MODE[chosenMode].hintVisible : true
+  const appliedChallenge = getAppliedChallenge({ niche, outcome }, moduleSlug, challengeTier, locale)
 
   function scrollToTop() {
     topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -78,6 +100,7 @@ export function UnitWizard({
 
   function handleComplete() {
     markCompleted(moduleSlug, unitSlug)
+    if (chosenMode) award(unitKey, chosenMode)
     setDone(true)
   }
 
@@ -101,6 +124,15 @@ export function UnitWizard({
       }}>
         {moduleTitle} · {t.unit(unitIndex + 1, totalUnits)}
       </div>
+
+      {shardsReady && !done && !chosenMode && (
+        <ModeSelector
+          locale={locale}
+          accent={accent}
+          selected={chosenMode}
+          onSelect={(m) => setMode(unitKey, m)}
+        />
+      )}
 
       {currentStep === 0 && framing?.intro && (
         <div style={{
@@ -143,23 +175,41 @@ export function UnitWizard({
       {/* Phase content (controlled by UnitWizardContext) */}
       <div style={{ minHeight: '40vh' }}>
         {children}
-        {currentStep === 3 && framing?.mentorHint && mentor && (
-          <div style={{
-            display: 'flex',
-            gap: '0.6rem',
-            alignItems: 'flex-start',
-            marginTop: '1.5rem',
-            background: 'var(--bg-surface)',
-            border: '1px solid var(--border-color)',
-            borderRadius: 10,
-            padding: '0.9rem 1.1rem',
-          }}>
-            <span aria-hidden="true" style={{ fontSize: '1.3rem', lineHeight: 1 }}>{mentor.glyph}</span>
-            <div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-accent)' }}>{mentor.name[locale]}</div>
-              <div style={{ fontSize: '0.9rem' }}>«{framing.mentorHint[locale]}»</div>
-            </div>
-          </div>
+        {currentStep === 3 && (
+          <>
+            {appliedChallenge && (
+              <div style={{
+                marginTop: '1.5rem',
+                background: 'var(--bg-surface)',
+                border: '1px dashed var(--text-accent)',
+                borderRadius: 10,
+                padding: '0.9rem 1.1rem',
+              }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.35rem' }}>
+                  {t.appliedChallenge}
+                </div>
+                <div style={{ fontSize: '0.92rem' }}>{appliedChallenge}</div>
+              </div>
+            )}
+            {hintVisible && framing?.mentorHint && mentor && (
+              <div style={{
+                display: 'flex',
+                gap: '0.6rem',
+                alignItems: 'flex-start',
+                marginTop: '1.5rem',
+                background: 'var(--bg-surface)',
+                border: '1px solid var(--border-color)',
+                borderRadius: 10,
+                padding: '0.9rem 1.1rem',
+              }}>
+                <span aria-hidden="true" style={{ fontSize: '1.3rem', lineHeight: 1 }}>{mentor.glyph}</span>
+                <div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-accent)' }}>{mentor.name[locale]}</div>
+                  <div style={{ fontSize: '0.9rem' }}>«{framing.mentorHint[locale]}»</div>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
 
@@ -175,6 +225,14 @@ export function UnitWizard({
         }}>
           {framing.outro[locale]}
         </div>
+      )}
+
+      {done && chosenMode && (
+        <CycleComplete
+          mode={chosenMode}
+          locale={locale}
+          accent={accent}
+        />
       )}
 
       {/* Actions */}

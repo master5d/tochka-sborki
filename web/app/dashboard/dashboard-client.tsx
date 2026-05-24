@@ -10,7 +10,9 @@ import { WorldMap } from '@/components/rpg/world-map'
 import { QuestFeed } from '@/components/rpg/quest-feed'
 import wandererPack from '@/lib/rpg/skins/wanderer.json'
 import type { SkinPack } from '@/lib/rpg/types'
-import type { Locale } from '@/lib/intake/types'
+import type { Locale, WorldSkin } from '@/lib/intake/types'
+import { ShardBalance } from '@/components/cs/shard-balance'
+import { Vault } from '@/components/cs/vault'
 
 interface Props { modules: Record<string, { title: string; duration: string }>; locale: Locale }
 
@@ -45,9 +47,13 @@ export function DashboardClient({ modules, locale }: Props) {
     <>
       <Nav locale={locale} />
       <main style={{ maxWidth: 660, margin: '0 auto', padding: '2.5rem 1.5rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.75rem' }}>
+          <ShardBalance accent={accent} />
+        </div>
         <CharacterStrip summary={vm.summary} accent={accent} locale={locale} />
         <div style={{ margin: '1.5rem 0' }}><WorldMap zones={vm.zones} accent={accent} glyph={glyph} /></div>
         <QuestFeed zones={vm.zones} accent={accent} locale={locale} />
+        <Vault activeSkin={profile.world_skin as WorldSkin} locale={locale} />
       </main>
     </>
   )
