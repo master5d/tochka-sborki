@@ -34,7 +34,7 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 | Sub-project | Scope | Depends on | Status |
 |-------------|-------|-----------|--------|
 | **SP1 — Intake → Character Sheet** | 62q/7-module questionnaire (A–G), scoring → 6 attributes (INT/WIS/CON/DEX/CHA/STR), class assignment (6 + Wanderer), World Skin assignment (G3 inference + G9 override), register/language, G11 → backstory + legendary title. Output: Character Sheet artifact. | — | ✅ **Shipped 2026-05-20** (merged to main, deployed) → [SP1 design](./2026-05-19-rpg-sp1-intake-character-sheet-design.md) · [plan](../plans/2026-05-19-rpg-sp1-intake-character-sheet.md) |
-| **SP2 — RPG Roadmap** | Quest Log, zones (mapped to modules 00–08), class-based module reordering, daily quests from COG budget, Niche Dungeons. Rendered through World Skin. | SP1 | 🟡 In progress — sliced. **SP2a** (Quest Log + World Map) ✅ **shipped 2026-05-20** (themed skin packs pending → wanderer fallback live) → [SP2a design](./2026-05-20-rpg-sp2a-quest-log-design.md) · [plan](../plans/2026-05-20-rpg-sp2a-quest-log.md). Later: SP2b daily-quests, SP2c Niche Dungeons. |
+| **SP2 — RPG Roadmap** | Quest Log, zones (mapped to modules 00–08), class-based module reordering, daily quests from COG budget, Niche Dungeons. Rendered through World Skin. | SP1 | 🟡 In progress — sliced. **SP2a** (Quest Log + World Map) ✅ **shipped 2026-05-20** (all 7 themed skin packs generated + live; **SP2d** unit framing packs generated + merged 2026-05-24) → [SP2a design](./2026-05-20-rpg-sp2a-quest-log-design.md) · [plan](../plans/2026-05-20-rpg-sp2a-quest-log.md). Later: SP2b daily-quests, SP2c Niche Dungeons. |
 | **SP3 — Cognitive Shards Economy** | Single currency **Cognitive Shards (CS)** replaces XP — score + spendable resource; per-phase base weighted to Reflection+Concept; 3 diagonal modes per unit (Commander 1.0x / Co-Pilot 1.5x / Archmage 2.5x, less help = higher multiplier, hint gated by mode); intake-personalized applied challenge at Practice; client-side localStorage wallet; sinks = alternate theme packs (300 CS, intake skin free). | SP1, SP2, SP2d | ✅ **Shipped 2026-05-23** → [design](./2026-05-22-cognitive-shards-economy-design.md) · [plan](../plans/2026-05-22-cognitive-shards-economy.md) |
 | **SP4 — Burnout / Calibration / Re-engagement** | Anxiety interventions, mandatory rest days, post-Boss-Battle calibration, G11-anchored re-engagement. | SP1, SP2, SP3 | ⚪ Not started |
 | **World Skin engine** (cross-cutting) | 7 skins as content data (names, tone, NPC archetypes, boss names, agent analogies): Slavic Myth, Dark Fantasy, Cyber Noir, Space Opera, Anime Quest, Soviet Heroic, Mystic Arcane + Wanderer fallback. Read by SP2–SP4. | grows with SP2+ | ⚪ Not started |
@@ -95,9 +95,9 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 > persona. `UnitWizard` resolves the learner's skin and renders themed intro (Activation), mentor hint
 > (Practice), and outro (done) around the neutral 4-phase core; graceful no-op when framing is absent.
 > Pure `getUnitFraming` + coverage guard tested (web 74/74). `gen-skins.mjs --units` generates per-module
-> framing. Final review SHIP. **PENDING (owner): run `GEMINI_API_KEY=... node scripts/gen-skins.mjs --units`**
-> to populate the 7 themed packs, then controller spot-reviews + commits. Until then framing is neutral.
-> Branch `rpg-sp2d-unit-framing` retained.
+> framing. Final review SHIP. **DONE 2026-05-24:** ran `gen-skins.mjs --units` (controller, user's Gemini
+> key) → all 7 themed packs populated with 38 unit keys each (intro/mentorHint/outro, RU+EN),
+> coverage test 9/9, merged via PR #2. Themed framing now live for every learner.
 >
 > **2026-05-21 — Content Demand Radar SHIPPED** (cross-cutting, not an SP slice). Brainstorm → spec →
 > plan → subagent-driven execution (11 tasks, haiku/sonnet implementers + final SHIP review). Fire-and-
@@ -106,10 +106,23 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 > 5+/90d gaps → Gemini pro drafts a brief in `content_demand_briefs` → owner-gated `/admin/content-demand`
 > (Quest Forge) with accept/reject. Workers 53/53 green, tsc/web build clean. Merged `rpg-content-demand-radar`
 > → main (`097f382`), CI success (45s). **OWNER_EMAIL set via wrangler.toml [vars] (mamaev.sasha@gmail.com).**
-> **PENDING (owner manual): apply migration 0004 to remote D1 via CF dashboard console** — prod token lacks
-> D1 perms (7403/10000); until done the radar is a safe no-op (errors caught in waitUntil). Pre-existing
-> tsc error in auth.ts (`user!.id` null-guard) fixed in passing. Branch retained.
+> **DONE 2026-05-24: migration 0004 applied to remote D1.** Root cause of the 7403 was a missing D1
+> permission on the token (DB is in the SOVERN account all along, not a separate one); applied the
+> idempotent `0004` directly via `wrangler d1 execute --remote --file` (not `migrations apply`, which would
+> re-run non-idempotent `0002` ALTER TABLEs). Tables + indexes verified; admin endpoint returns 401 (gated),
+> no longer 500. Pre-existing tsc error in auth.ts (`user!.id` null-guard) fixed in passing. Branch retained.
 
+> **2026-05-23/24 — SP3 Cognitive Shards Economy SHIPPED.** Brainstorm → spec → plan → subagent-driven
+> execution (14 tasks in batched implementer + two-stage review cycles; per-batch spec + quality review,
+> final holistic review READY TO MERGE). Replaces the placeholder XP slice: single client-side CS currency
+> (localStorage `cs_wallet`, mirrors `unit-progress`), phase-weighted award (70 base, 50 in
+> Reflection+Concept → 70/105/175 by mode), 3 diagonal modes (Commander/Co-Pilot/Archmage) gating the SP2d
+> mentor hint, intake-personalized applied challenge at Practice (9 module templates, F2 niche + F3 outcome
+> slot-fill with fallbacks), Vault sink (alt skins 300 CS, intake skin free). All client-side, no
+> server/D1. 95/95 web tests, tsc + next build clean. Merged PR #1 → main (`def20cb`), CI deploying.
+> **On the same pass:** generated SP2d unit-framing packs (PR #2) and applied D1 migration 0004 (see above).
+> Deprecated the 4 merged feature branches. **Next: SP2b (daily quests), SP2c (Niche Dungeons), or SP4.**
+>
 ## How to resume if lost
 
 1. Read this tracker top-to-bottom.
