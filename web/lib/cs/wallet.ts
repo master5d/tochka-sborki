@@ -13,6 +13,17 @@ export function applyAward(wallet: Wallet, unitKey: string, mode: Mode): Wallet 
   }
 }
 
+// Flat idempotent credit (e.g. daily-quest rewards). Reuses earnedUnits as the idempotency ledger
+// via namespaced synthetic keys like "daily:2026-05-24:p0" — no mode, unlike applyAward.
+export function applyCredit(wallet: Wallet, key: string, amount: number): Wallet {
+  if (wallet.earnedUnits.includes(key)) return wallet
+  return {
+    ...wallet,
+    balance: wallet.balance + amount,
+    earnedUnits: [...wallet.earnedUnits, key],
+  }
+}
+
 export function applySpend(
   wallet: Wallet,
   cost: number,

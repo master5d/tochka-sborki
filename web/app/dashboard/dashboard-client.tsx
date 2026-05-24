@@ -13,12 +13,19 @@ import type { SkinPack } from '@/lib/rpg/types'
 import type { Locale, WorldSkin } from '@/lib/intake/types'
 import { ShardBalance } from '@/components/cs/shard-balance'
 import { Vault } from '@/components/cs/vault'
+import { DailyPanel } from '@/components/quests/daily-panel'
+import { useUnitProgress } from '@/lib/unit-progress'
 
-interface Props { modules: Record<string, { title: string; duration: string }>; locale: Locale }
+interface Props {
+  modules: Record<string, { title: string; duration: string }>
+  unitsByModule: Record<string, { slug: string; title: string }[]>
+  locale: Locale
+}
 
-export function DashboardClient({ modules, locale }: Props) {
+export function DashboardClient({ modules, unitsByModule, locale }: Props) {
   const router = useRouter()
   const { getState, loaded } = useProgress()
+  const { isCompleted } = useUnitProgress()
   const [profile, setProfile] = useState<any>(null)
   const [pack, setPack] = useState<SkinPack | null>(null)
 
@@ -51,6 +58,17 @@ export function DashboardClient({ modules, locale }: Props) {
           <ShardBalance accent={accent} />
         </div>
         <CharacterStrip summary={vm.summary} accent={accent} locale={locale} />
+        <DailyPanel
+          locale={locale}
+          skin={profile.world_skin as WorldSkin}
+          accent={accent}
+          cogTier={typeof profile.cog_tier === 'number' ? profile.cog_tier : 2}
+          niche={profile.niche ?? null}
+          outcome={(() => { try { const a = typeof profile.answers === 'string' ? JSON.parse(profile.answers) : profile.answers; return typeof a?.F3 === 'string' ? a.F3 : null } catch { return null } })()}
+          unitsByModule={unitsByModule}
+          isUnitDone={isCompleted}
+          completedModules={completed}
+        />
         <div style={{ margin: '1.5rem 0' }}><WorldMap zones={vm.zones} accent={accent} glyph={glyph} /></div>
         <QuestFeed zones={vm.zones} accent={accent} locale={locale} />
         <Vault activeSkin={profile.world_skin as WorldSkin} locale={locale} />

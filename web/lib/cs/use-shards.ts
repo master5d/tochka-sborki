@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import type { Mode, Wallet } from './types'
-import { readWallet, writeWallet, applyAward, applySpend, setModeFor } from './wallet'
+import { readWallet, writeWallet, applyAward, applySpend, setModeFor, applyCredit } from './wallet'
 import { DEFAULT_WALLET } from './types'
 
 export function useShards() {
@@ -49,6 +49,14 @@ export function useShards() {
     [wallet],
   )
 
+  const credit = useCallback((key: string, amount: number) => {
+    setWallet(prev => {
+      const next = applyCredit(prev, key, amount)
+      writeWallet(next)
+      return next
+    })
+  }, [])
+
   return {
     balance: wallet.balance,
     award,
@@ -56,6 +64,7 @@ export function useShards() {
     setMode,
     getMode,
     unlocked,
+    credit,
     ready,
   }
 }

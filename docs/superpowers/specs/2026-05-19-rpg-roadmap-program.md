@@ -34,7 +34,7 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 | Sub-project | Scope | Depends on | Status |
 |-------------|-------|-----------|--------|
 | **SP1 — Intake → Character Sheet** | 62q/7-module questionnaire (A–G), scoring → 6 attributes (INT/WIS/CON/DEX/CHA/STR), class assignment (6 + Wanderer), World Skin assignment (G3 inference + G9 override), register/language, G11 → backstory + legendary title. Output: Character Sheet artifact. | — | ✅ **Shipped 2026-05-20** (merged to main, deployed) → [SP1 design](./2026-05-19-rpg-sp1-intake-character-sheet-design.md) · [plan](../plans/2026-05-19-rpg-sp1-intake-character-sheet.md) |
-| **SP2 — RPG Roadmap** | Quest Log, zones (mapped to modules 00–08), class-based module reordering, daily quests from COG budget, Niche Dungeons. Rendered through World Skin. | SP1 | 🟡 In progress — sliced. **SP2a** (Quest Log + World Map) ✅ **shipped 2026-05-20** (all 7 themed skin packs generated + live; **SP2d** unit framing packs generated + merged 2026-05-24) → [SP2a design](./2026-05-20-rpg-sp2a-quest-log-design.md) · [plan](../plans/2026-05-20-rpg-sp2a-quest-log.md). Later: SP2b daily-quests, SP2c Niche Dungeons. |
+| **SP2 — RPG Roadmap** | Quest Log, zones (mapped to modules 00–08), class-based module reordering, daily quests from COG budget, Niche Dungeons. Rendered through World Skin. | SP1 | 🟡 In progress — sliced. **SP2a** (Quest Log + World Map) ✅ **shipped 2026-05-20** (all 7 themed skin packs generated + live; **SP2d** unit framing packs generated + merged 2026-05-24) → [SP2a design](./2026-05-20-rpg-sp2a-quest-log-design.md) · [plan](../plans/2026-05-20-rpg-sp2a-quest-log.md). **SP2b** (Daily Quests) ✅ **shipped 2026-05-24** → [SP2b design](./2026-05-24-daily-quests-design.md) · [plan](../plans/2026-05-24-daily-quests.md). Later: SP2c Niche Dungeons. |
 | **SP3 — Cognitive Shards Economy** | Single currency **Cognitive Shards (CS)** replaces XP — score + spendable resource; per-phase base weighted to Reflection+Concept; 3 diagonal modes per unit (Commander 1.0x / Co-Pilot 1.5x / Archmage 2.5x, less help = higher multiplier, hint gated by mode); intake-personalized applied challenge at Practice; client-side localStorage wallet; sinks = alternate theme packs (300 CS, intake skin free). | SP1, SP2, SP2d | ✅ **Shipped 2026-05-23** → [design](./2026-05-22-cognitive-shards-economy-design.md) · [plan](../plans/2026-05-22-cognitive-shards-economy.md) |
 | **SP4 — Burnout / Calibration / Re-engagement** | Anxiety interventions, mandatory rest days, post-Boss-Battle calibration, G11-anchored re-engagement. | SP1, SP2, SP3 | ⚪ Not started |
 | **World Skin engine** (cross-cutting) | 7 skins as content data (names, tone, NPC archetypes, boss names, agent analogies): Slavic Myth, Dark Fantasy, Cyber Noir, Space Opera, Anime Quest, Soviet Heroic, Mystic Arcane + Wanderer fallback. Read by SP2–SP4. | grows with SP2+ | ⚪ Not started |
@@ -122,6 +122,19 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 > server/D1. 95/95 web tests, tsc + next build clean. Merged PR #1 → main (`def20cb`), CI deploying.
 > **On the same pass:** generated SP2d unit-framing packs (PR #2) and applied D1 migration 0004 (see above).
 > Deprecated the 4 merged feature branches. **Next: SP2b (daily quests), SP2c (Niche Dungeons), or SP4.**
+>
+> **2026-05-24 — SP2b Daily Quests SHIPPED.** Brainstorm → spec → plan → subagent-driven execution
+> (10 tasks, batched implementer + per-batch spec/quality review + final review). First consumer of intake
+> `cogTier`. A client-side "Today" panel on the dashboard offers 1–3 quests scaled to cogTier (1/2/3/3):
+> always 1 **advance** (next incomplete unit, derived from `unit_progress`, links into the wizard; its CS is
+> the unit's own SP3 award) + **practice** (reuses SP3 `getAppliedChallenge`, +10 CS, self-checked) +
+> **retrieval** (per-module recall bank, mentor-voiced, +10 CS) per tier, with a +15 all-done bonus.
+> Deterministic (FNV-1a seed + mulberry32, stable within a local date, clean daily slate), themed via the
+> skin accent + mentor. Reuses the SP3 wallet via a new flat `applyCredit`/`useShards.credit`. New
+> `web/lib/quests/*` (types/seed/retrieval-bank/build-daily/daily-store/use-daily-quests) + `DailyPanel`,
+> wired into RU+EN dashboards. Added `web/vitest.config.ts` (`@` alias — first test importing `@/` values).
+> 123/123 web tests, tsc + next build clean. No streaks/server/Gemini (those → SP4). **Next: SP2c Niche
+> Dungeons, or SP4.**
 >
 ## How to resume if lost
 

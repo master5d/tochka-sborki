@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { applyAward, applySpend, setModeFor } from './wallet'
+import { applyAward, applySpend, setModeFor, applyCredit } from './wallet'
 import { DEFAULT_WALLET } from './types'
 
 describe('applyAward', () => {
@@ -55,5 +55,25 @@ describe('setModeFor', () => {
     const w = setModeFor(DEFAULT_WALLET, 'm/u', 'archmage')
     expect(w.modeByUnit['m/u']).toBe('archmage')
     expect(w.balance).toBe(0)
+  })
+})
+
+describe('applyCredit', () => {
+  it('adds a flat amount once for a given key', () => {
+    const w = applyCredit(DEFAULT_WALLET, 'daily:2026-05-24:p0', 10)
+    expect(w.balance).toBe(10)
+    expect(w.earnedUnits).toContain('daily:2026-05-24:p0')
+  })
+
+  it('is idempotent for a repeated key', () => {
+    const once = applyCredit(DEFAULT_WALLET, 'daily:2026-05-24:bonus', 15)
+    const twice = applyCredit(once, 'daily:2026-05-24:bonus', 15)
+    expect(twice.balance).toBe(15)
+    expect(twice.earnedUnits.filter(k => k === 'daily:2026-05-24:bonus')).toHaveLength(1)
+  })
+
+  it('does not mutate the input wallet', () => {
+    applyCredit(DEFAULT_WALLET, 'k', 5)
+    expect(DEFAULT_WALLET.balance).toBe(0)
   })
 })
