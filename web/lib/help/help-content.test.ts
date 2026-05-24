@@ -18,6 +18,8 @@ describe('help-content', () => {
     for (const p of PAGE_IDS) {
       expect(INTRO_CARDS[p], `missing intro "${p}"`).toBeTruthy()
       expect(INTRO_CARDS[p].title.ru.length).toBeGreaterThan(0)
+      expect(INTRO_CARDS[p].title.en.length).toBeGreaterThan(0)
+      expect(INTRO_CARDS[p].body.ru.length).toBeGreaterThan(0)
       expect(INTRO_CARDS[p].body.en.length).toBeGreaterThan(0)
     }
   })

@@ -10,6 +10,7 @@ describe('markSeen / isSeen', () => {
     const base = { dashboard: true }
     const next = markSeen(base, 'dashboard')
     expect(next).toEqual({ dashboard: true })
+    expect(next).toBe(base) // same reference when already seen (no needless copy)
     expect(isSeen(base, 'unit')).toBe(false)
   })
   it('does not mutate the input', () => {
