@@ -43,7 +43,7 @@ export function DailyPanel({ locale, skin, accent, cogTier, niche, outcome, unit
   return (
     <section style={{ border: `1px solid ${accent}`, borderRadius: 12, padding: '1.1rem 1.25rem', marginBottom: '1.5rem', background: 'var(--bg-surface)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.9rem' }}>
-        <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: accent }}>☀ {HEADING[locale]}</span>
+        <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: accent }}><span aria-hidden="true">☀</span> {HEADING[locale]}</span>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
           {questsLabel(set.quests.length, locale)}{totalCs > 0 ? ` · +${totalCs} 💎` : ''}
         </span>
