@@ -10,6 +10,13 @@ function clean(v?: string | null): string | null {
   return t ? t : null
 }
 
+// Shared {niche}/{outcome} slot-fill: {niche} → value or the locale fallback word; {outcome} → value or ''.
+export function fillNicheSlots(text: string, niche: string | null, outcome: string | null, locale: Locale): string {
+  const n = clean(niche)
+  const o = clean(outcome)
+  return text.replace(/\{niche\}/g, n ?? NICHE_FALLBACK[locale]).replace(/\{outcome\}/g, o ?? '')
+}
+
 export function getAppliedChallenge(
   profile: IntakeLite,
   moduleSlug: string,
@@ -33,7 +40,5 @@ export function getAppliedChallenge(
     else line = tmpl.task[locale]
   }
 
-  return line
-    .replace(/\{niche\}/g, niche ?? NICHE_FALLBACK[locale])
-    .replace(/\{outcome\}/g, outcome ?? '')
+  return fillNicheSlots(line, profile.niche ?? null, profile.outcome ?? null, locale)
 }

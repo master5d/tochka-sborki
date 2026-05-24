@@ -15,6 +15,11 @@ import { ShardBalance } from '@/components/cs/shard-balance'
 import { Vault } from '@/components/cs/vault'
 import { DailyPanel } from '@/components/quests/daily-panel'
 import { useUnitProgress } from '@/lib/unit-progress'
+import { DungeonCard } from '@/components/dungeon/dungeon-card'
+import { useNicheDungeonCleared } from '@/lib/dungeon/use-dungeon'
+import { NICHE_MODULE } from '@/lib/rpg/niche-map'
+import { FLAVOR_BANK } from '@/lib/dungeon/flavor-bank'
+import { parseOutcome } from '@/lib/intake/parse-outcome'
 
 interface Props {
   modules: Record<string, { title: string; duration: string }>
@@ -28,6 +33,7 @@ export function DashboardClient({ modules, unitsByModule, locale }: Props) {
   const { isCompleted } = useUnitProgress()
   const [profile, setProfile] = useState<any>(null)
   const [pack, setPack] = useState<SkinPack | null>(null)
+  const nicheDungeonCleared = useNicheDungeonCleared(profile?.niche ?? null)
 
   useEffect(() => {
     fetch('/api/intake/me', { credentials: 'include' })
@@ -48,6 +54,9 @@ export function DashboardClient({ modules, unitsByModule, locale }: Props) {
   const accent = SKINS_META[profile.world_skin as keyof typeof SKINS_META]?.accent ?? 'var(--text-accent)'
   const glyph = SKINS_META[profile.world_skin as keyof typeof SKINS_META]?.glyph ?? '⬡'
   const completed = Object.keys(modules).filter(s => getState(s) === 'completed')
+  const dungeonNiche = profile.niche && FLAVOR_BANK[profile.niche] ? profile.niche : 'other'
+  const dungeonModule = NICHE_MODULE[dungeonNiche] ?? '04-prompt-engineering'
+  const outcome = parseOutcome(profile)
   const vm = buildQuestLog(profile, modules, completed, getState as any, pack, locale)
 
   return (
@@ -64,13 +73,22 @@ export function DashboardClient({ modules, unitsByModule, locale }: Props) {
           accent={accent}
           cogTier={typeof profile.cog_tier === 'number' ? profile.cog_tier : 2}
           niche={profile.niche ?? null}
-          outcome={(() => { try { const a = typeof profile.answers === 'string' ? JSON.parse(profile.answers) : profile.answers; return typeof a?.F3 === 'string' ? a.F3 : null } catch { return null } })()}
+          outcome={outcome}
           unitsByModule={unitsByModule}
           isUnitDone={isCompleted}
           completedModules={completed}
         />
-        <div style={{ margin: '1.5rem 0' }}><WorldMap zones={vm.zones} accent={accent} glyph={glyph} /></div>
+        <div style={{ margin: '1.5rem 0' }}><WorldMap zones={vm.zones} accent={accent} glyph={glyph} nicheDungeonCleared={nicheDungeonCleared} /></div>
         <QuestFeed zones={vm.zones} accent={accent} locale={locale} />
+        <DungeonCard
+          locale={locale}
+          accent={accent}
+          skin={profile.world_skin as WorldSkin}
+          niche={profile.niche ?? null}
+          outcome={outcome}
+          moduleTitle={modules[dungeonModule]?.title ?? dungeonModule}
+          isModuleCompleted={(slug) => getState(slug) === 'completed'}
+        />
         <Vault activeSkin={profile.world_skin as WorldSkin} locale={locale} />
       </main>
     </>

@@ -34,7 +34,7 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 | Sub-project | Scope | Depends on | Status |
 |-------------|-------|-----------|--------|
 | **SP1 — Intake → Character Sheet** | 62q/7-module questionnaire (A–G), scoring → 6 attributes (INT/WIS/CON/DEX/CHA/STR), class assignment (6 + Wanderer), World Skin assignment (G3 inference + G9 override), register/language, G11 → backstory + legendary title. Output: Character Sheet artifact. | — | ✅ **Shipped 2026-05-20** (merged to main, deployed) → [SP1 design](./2026-05-19-rpg-sp1-intake-character-sheet-design.md) · [plan](../plans/2026-05-19-rpg-sp1-intake-character-sheet.md) |
-| **SP2 — RPG Roadmap** | Quest Log, zones (mapped to modules 00–08), class-based module reordering, daily quests from COG budget, Niche Dungeons. Rendered through World Skin. | SP1 | 🟡 In progress — sliced. **SP2a** (Quest Log + World Map) ✅ **shipped 2026-05-20** (all 7 themed skin packs generated + live; **SP2d** unit framing packs generated + merged 2026-05-24) → [SP2a design](./2026-05-20-rpg-sp2a-quest-log-design.md) · [plan](../plans/2026-05-20-rpg-sp2a-quest-log.md). **SP2b** (Daily Quests) ✅ **shipped 2026-05-24** → [SP2b design](./2026-05-24-daily-quests-design.md) · [plan](../plans/2026-05-24-daily-quests.md). Later: SP2c Niche Dungeons. |
+| **SP2 — RPG Roadmap** | Quest Log, zones (mapped to modules 00–08), class-based module reordering, daily quests from COG budget, Niche Dungeons. Rendered through World Skin. | SP1 | 🟡 In progress — sliced. **SP2a** (Quest Log + World Map) ✅ **shipped 2026-05-20** (all 7 themed skin packs generated + live; **SP2d** unit framing packs generated + merged 2026-05-24) → [SP2a design](./2026-05-20-rpg-sp2a-quest-log-design.md) · [plan](../plans/2026-05-20-rpg-sp2a-quest-log.md). **SP2b** (Daily Quests) ✅ **shipped 2026-05-24** → [SP2b design](./2026-05-24-daily-quests-design.md) · [plan](../plans/2026-05-24-daily-quests.md). **SP2c** (Niche Dungeons) ✅ **shipped 2026-05-24** → [SP2c design](./2026-05-24-niche-dungeons-design.md) · [plan](../plans/2026-05-24-niche-dungeons.md). ✅ **SP2 COMPLETE.** |
 | **SP3 — Cognitive Shards Economy** | Single currency **Cognitive Shards (CS)** replaces XP — score + spendable resource; per-phase base weighted to Reflection+Concept; 3 diagonal modes per unit (Commander 1.0x / Co-Pilot 1.5x / Archmage 2.5x, less help = higher multiplier, hint gated by mode); intake-personalized applied challenge at Practice; client-side localStorage wallet; sinks = alternate theme packs (300 CS, intake skin free). | SP1, SP2, SP2d | ✅ **Shipped 2026-05-23** → [design](./2026-05-22-cognitive-shards-economy-design.md) · [plan](../plans/2026-05-22-cognitive-shards-economy.md) |
 | **SP4 — Burnout / Calibration / Re-engagement** | Anxiety interventions, mandatory rest days, post-Boss-Battle calibration, G11-anchored re-engagement. | SP1, SP2, SP3 | ⚪ Not started |
 | **World Skin engine** (cross-cutting) | 7 skins as content data (names, tone, NPC archetypes, boss names, agent analogies): Slavic Myth, Dark Fantasy, Cyber Noir, Space Opera, Anime Quest, Soviet Heroic, Mystic Arcane + Wanderer fallback. Read by SP2–SP4. | grows with SP2+ | ⚪ Not started |
@@ -135,6 +135,18 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 > wired into RU+EN dashboards. Added `web/vitest.config.ts` (`@` alias — first test importing `@/` values).
 > 123/123 web tests, tsc + next build clean. No streaks/server/Gemini (those → SP4). **Next: SP2c Niche
 > Dungeons, or SP4.**
+>
+> **2026-05-24 — SP2c Niche Dungeons SHIPPED → SP2 COMPLETE.** Brainstorm → spec → plan →
+> subagent-driven execution (12 tasks, batched implementer + per-batch spec/quality review + final
+> review). An opt-in `/dungeon` arc (RU+EN), gated behind the learner's niche-mapped module
+> (`NICHE_MODULE`) completion: an authored intro, 3 escalating-tier stages (`task→process→outcome` on the
+> niche module, reusing SP3 `getAppliedChallenge`, +15 CS each), and an authored boss synthesis (+50 CS),
+> per an 8-niche flavor bank (`dungeonName`/`bossName`/`intro`/`bossChallenge`). Clearing the boss flips the
+> niche zone on the World Map to a 👑 marker. Deterministic, client-side (`niche_dungeon` localStorage),
+> CS via the SP2b `applyCredit`; extracted a shared `fillNicheSlots` from applied-challenge (DRY). New
+> `web/lib/dungeon/*` + `DungeonView`/`DungeonCard` + `/dungeon` route + dashboard card + WorldMap flip.
+> 139/139 web tests, tsc + next build clean (121 pages). No XP/titles/leaderboards (out of scope). **SP2 (a/b/c/d)
+> fully shipped. Next program slice: SP4 — Burnout / Calibration / Re-engagement.**
 >
 ## How to resume if lost
 
