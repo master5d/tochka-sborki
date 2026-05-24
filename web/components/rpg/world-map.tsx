@@ -5,7 +5,7 @@ import type { ZoneVM } from '@/lib/rpg/types'
 const VB = 100
 const COLS = 3
 
-export function WorldMap({ zones, accent, glyph }: { zones: ZoneVM[]; accent: string; glyph: string }) {
+export function WorldMap({ zones, accent, glyph, nicheDungeonCleared = false }: { zones: ZoneVM[]; accent: string; glyph: string; nicheDungeonCleared?: boolean }) {
   const pts = nodePositions(zones.length, VB, VB, COLS)
   const path = snakePath(pts)
   return (
@@ -30,6 +30,9 @@ export function WorldMap({ zones, accent, glyph }: { zones: ZoneVM[]; accent: st
               <circle cx={p.x} cy={p.y} r={6} fill={fill}
                       stroke={accent} strokeWidth={cur ? 1.5 : done ? 1 : 0.6} />
               <text x={p.x} y={p.y + 2.2} textAnchor="middle" fontSize={5}>{glyph}</text>
+              {z.isNiche && nicheDungeonCleared && (
+                <text x={p.x} y={p.y - 7} textAnchor="middle" fontSize={5} aria-hidden="true">👑</text>
+              )}
             </g>
           )
         })}
