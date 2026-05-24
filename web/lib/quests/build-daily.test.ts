@@ -63,7 +63,7 @@ describe('buildDaily', () => {
   })
 
   it('tier 3 with a completed module adds a retrieval quest prefixed by the mentor name', () => {
-    const set = buildDaily(base({ cogTier: 3, isUnitDone: (m) => m === '00-kickstart', completedModules: ['00-kickstart'] }))
+    const set = buildDaily(base({ cogTier: 3, isUnitDone: (m) => m === '00-kickstart', completedModules: ['00-kickstart', '01-introduction'] }))
     const retrieval = set.quests.find(q => q.kind === 'retrieval')
     expect(retrieval).toBeTruthy()
     expect(retrieval!.cs).toBe(10)
@@ -83,5 +83,20 @@ describe('buildDaily', () => {
   it('invalid cogTier falls back to 2 (advance + practice)', () => {
     const set = buildDaily(base({ cogTier: 99 }))
     expect(set.quests).toHaveLength(2)
+  })
+
+  it('retrieval uses the EN mentor name for en locale', () => {
+    const set = buildDaily(base({ cogTier: 3, locale: 'en', isUnitDone: (m) => m === '00-kickstart', completedModules: ['00-kickstart', '01-introduction'] }))
+    const retrieval = set.quests.find(q => q.kind === 'retrieval')
+    expect(retrieval).toBeTruthy()
+    expect(retrieval!.body).toContain('House-Spirit') // slavic-myth mentor name (en)
+  })
+
+  it('practice body is rendered in the en template for en locale', () => {
+    const set = buildDaily(base({ cogTier: 2, locale: 'en', niche: 'design' }))
+    const practice = set.quests.find(q => q.kind === 'practice')
+    expect(practice).toBeTruthy()
+    expect(practice!.body).toContain('design')
+    expect(practice!.body).not.toContain('{niche}')
   })
 })

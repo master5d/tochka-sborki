@@ -15,6 +15,8 @@ const COMPLETE_BODY = {
   en: 'You have cleared the whole course. Come back for reps and recall — or start your own project.',
 }
 
+// Valid tiers are 1–4 (from intake cogTier). Tiers 3 and 4 intentionally yield the same daily set
+// (cap of 3 quests, per the SP2b spec's anti-burnout decision); invalid input falls back to 2.
 function clampTier(t: number): number {
   return Number.isInteger(t) && t >= 1 && t <= 4 ? t : 2
 }
@@ -64,36 +66,27 @@ export function buildDaily(input: DailyInput): DailySet {
   const wantRetrieval = tier >= 3 ? 1 : 0
 
   // --- practice (reuses SP3 applied-challenge templates) ---
+  // Daily reps deliberately use the 'task' tier (lowest-friction framing); per-unit mode selection
+  // (process/outcome) stays a UnitWizard concept, not a daily-quest one. See SP2b spec.
   for (let i = 0; i < wantPractice; i++) {
     const pool = reached.filter(m => !used.has(m) && getAppliedChallenge({ niche, outcome }, m, 'task', locale) !== null)
     const mod = pick(pool, dailySeed(`${skin}:p${i}`, date), 1)[0]
     if (!mod) break
+    const body = getAppliedChallenge({ niche, outcome }, mod, 'task', locale)
+    if (!body) break
     used.add(mod)
-    quests.push({
-      id: `practice:${mod}`,
-      kind: 'practice',
-      title: PRACTICE_TITLE[locale],
-      body: getAppliedChallenge({ niche, outcome }, mod, 'task', locale)!,
-      cs: 10,
-      module: mod,
-    })
+    quests.push({ id: `practice:${mod}`, kind: 'practice', title: PRACTICE_TITLE[locale], body, cs: 10, module: mod })
   }
 
-  // --- retrieval (completed modules only; otherwise omitted) ---
+  // --- retrieval (completed modules only, excluding any used by practice; otherwise omitted) ---
   for (let i = 0; i < wantRetrieval; i++) {
-    const pool = completedModules.filter(m => RETRIEVAL_BANK[m])
+    const pool = completedModules.filter(m => RETRIEVAL_BANK[m] && !used.has(m))
     const mod = pick(pool, dailySeed(`${skin}:r${i}`, date), 1)[0]
     if (!mod) continue
+    used.add(mod)
     const mentor = SKINS_META[skin]?.mentor
     const prompt = RETRIEVAL_BANK[mod][locale]
-    quests.push({
-      id: `retrieval:${mod}`,
-      kind: 'retrieval',
-      title: RETRIEVAL_TITLE[locale],
-      body: mentor ? `${mentor.name[locale]}: ${prompt}` : prompt,
-      cs: 10,
-      module: mod,
-    })
+    quests.push({ id: `retrieval:${mod}`, kind: 'retrieval', title: RETRIEVAL_TITLE[locale], body: mentor ? `${mentor.name[locale]}: ${prompt}` : prompt, cs: 10, module: mod })
   }
 
   return { date, quests }
