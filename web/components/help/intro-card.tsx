@@ -19,7 +19,7 @@ export function IntroCard({ page, locale, accent }: { page: string; locale: Loca
   const open = manual ?? !seen
 
   return (
-    <div style={{ marginBottom: '1rem' }}>
+    <div style={{ marginBottom: open ? '1rem' : '0.25rem' }}>
       {!open && (
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <button

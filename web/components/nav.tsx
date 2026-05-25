@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { getDictionary, type Locale } from '@/lib/dictionaries'
+import { detectOs, readStoredOs, storeOs } from '@/lib/os-pref'
 
 interface Props { locale?: Locale }
 
@@ -21,7 +22,9 @@ export function Nav({ locale: localeProp }: Props = {}) {
       .then(r => r.ok ? r.json() : null)
       .then(d => { if (d?.email) setEmail(d.email) })
       .catch(() => {})
-    try { setOs(localStorage.getItem('os')) } catch { /* ignore */ }
+    // Show the saved choice, or auto-detect — so the toggle appears for everyone,
+    // not only after a visit to the cheatsheet has stored a value.
+    setOs(readStoredOs() ?? detectOs())
   }, [])
 
   async function handleLogout() {
@@ -32,7 +35,7 @@ export function Nav({ locale: localeProp }: Props = {}) {
 
   function toggleOs() {
     const next = os === 'mac' ? 'windows' : 'mac'
-    try { localStorage.setItem('os', next) } catch { /* ignore */ }
+    storeOs(next)
     setOs(next)
     window.location.reload()
   }

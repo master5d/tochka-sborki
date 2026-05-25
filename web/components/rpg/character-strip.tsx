@@ -9,6 +9,7 @@ export function CharacterStrip({ summary, accent, locale }: { summary: QuestLogV
   const lvl = locale === 'en' ? 'Level' : 'Уровень'
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem',
+      flexWrap: 'wrap',
       padding: '1.1rem 1.3rem', border: '1px solid var(--border-color)', borderRadius: 12,
       background: `linear-gradient(135deg, ${accent}14, transparent)` }}>
       <div>
