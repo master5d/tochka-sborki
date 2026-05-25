@@ -14,18 +14,22 @@ const HEADING: Record<Locale, string> = {
   en: 'Choose your mode',
 }
 
+const REC: Record<Locale, string> = { ru: 'рекомендуем', en: 'recommended' }
+
 export function ModeSelector({
   locale,
   accent,
   selected,
   onSelect,
   helpId,
+  suggested,
 }: {
   locale: Locale
   accent: string
   selected?: Mode
   onSelect: (mode: Mode) => void
   helpId?: string
+  suggested?: Mode
 }) {
   return (
     <div style={{ margin: '0 0 2rem' }}>
@@ -62,6 +66,11 @@ export function ModeSelector({
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '0.5rem' }}>
                 <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: active ? accent : 'var(--text-primary)' }}>
                   {cfg.label[locale]}
+                  {suggested === m && !active && (
+                    <span style={{ marginLeft: '0.5rem', fontSize: '0.6rem', fontWeight: 400, color: accent, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                      ◆ {REC[locale]}
+                    </span>
+                  )}
                 </span>
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
                   +{computeUnitCS(m)} <span aria-hidden="true">💎</span>
