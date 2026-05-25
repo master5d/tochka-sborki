@@ -148,6 +148,22 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 > 139/139 web tests, tsc + next build clean (121 pages). No XP/titles/leaderboards (out of scope). **SP2 (a/b/c/d)
 > fully shipped. Next program slice: SP4 — Burnout / Calibration / Re-engagement.**
 >
+> **2026-05-24 — UX slice SHIPPED (niche fix + help system).** Brainstorm → spec → plan →
+> subagent-driven execution. **(1) Niche slot-word fix:** `{niche}` was rendering the raw F2 enum
+> ("задачи в **coach**"); added `NICHE_SLOT` (`web/lib/rpg/niche-map.ts`) and routed `{niche}` through it in
+> `fillNicheSlots` — known niche → readable word (coach→коучинге/coaching), `other`/unknown/null → fallback.
+> Fixes daily quests + dungeon + applied challenges at one site. **(2) Help system:** mobile-first
+> tap-popover `HelpTip` (×9: shards/character/world-map/daily/dungeon-card/vault/wizard-phases/
+> wizard-modes/dungeon-stages) + one-time re-openable `IntroCard` (×3: dashboard/unit/dungeon), content in
+> `web/lib/help/help-content.ts`, `help_seen` localStorage; no tooltip library. 145/145 tests, tsc + next
+> build clean. Spec `./2026-05-24-ui-ux-help-niche-design.md` · plan `../plans/2026-05-24-ui-ux-help-niche.md`.
+>
+> **OPEN FOLLOW-UP — `legendary_title` enum leak:** the character strip shows e.g. "Герой пути
+> «slavic-myth»" — the `legendary_title` generated at intake embedded the raw skin slug. Fix needs the
+> **Worker** intake title-generation to use the skin display name **+ a D1 backfill** of existing
+> `intake_profiles` rows. Deferred (server+data; this UX slice was client-only). Also TODO: visual pass on
+> mobile for the dashboard CharacterStrip help-tip flex wrapper spacing.
+>
 ## How to resume if lost
 
 1. Read this tracker top-to-bottom.
