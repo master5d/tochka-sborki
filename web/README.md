@@ -32,37 +32,75 @@ web/
 │   │   ├── roadmap, cheatsheet, exercises, certificate/
 │   ├── lessons/[slug]/page.tsx        — landing модуля (ModulePage)
 │   ├── lessons/[slug]/[unit]/page.tsx — unit-урок (UnitPage + UnitWizard)
+│   ├── quest-intake/              — RPG-онбординг: опросник → профиль (см. RPG-слой)
+│   ├── dashboard/                 — квест-лог (World Map, daily quests, CS, dungeon-card)
+│   ├── character/                 — лист персонажа (атрибуты из intake)
+│   ├── dungeon/                   — niche dungeon (арка под нишу студента)
 │   ├── roadmap, cheatsheet, exercises, feedback, certificate/
-│   ├── login, dashboard, onboarding, auth/verify/  — auth flow
+│   ├── login, onboarding, auth/verify/, admin/  — auth flow + админка
 │   └── globals.css
 ├── components/
 │   ├── nav.tsx                    — навигация + active-state + OS/lang switch
 │   ├── footer.tsx                 — footer (showCertificateCta опционально)
 │   ├── sidebar.tsx                — оглавление модулей/units
 │   ├── lesson-layout.tsx          — обёртка landing модуля
-│   ├── unit-page.tsx (pages/)     — обёртка unit-урока
-│   ├── unit-wizard.tsx            — пошаговый wizard фаз урока
+│   ├── unit-wizard.tsx            — пошаговый wizard фаз урока (+ режим/CS/help)
+│   ├── phase.tsx                  — фаза урока (chip + маркер «в уме» для reflection)
 │   ├── mdx-components.tsx         — регистрация всех MDX-компонентов
-│   ├── os-toggle.tsx / os-block.tsx        — Mac/Windows переключатель команд
+│   ├── os-toggle.tsx / os-block.tsx        — Mac/Windows переключатель (авто-детект ОС)
 │   ├── agent-toggle.tsx / agent-block.tsx  — выбор стека (4 варианта)
 │   ├── stack-matrix.tsx           — интерактивная матрица стеков (модуль 03)
 │   ├── mobile-gate.tsx            — desktop-gate на unit-страницах (email/QR)
 │   ├── lang-suggest-banner.tsx    — баннер смены языка по navigator.language
 │   ├── feedback-form.tsx          — форма фидбека (locale-aware)
-│   └── pages/                     — home-page, module-page, unit-page, mdx-page, certificate-page
+│   ├── pages/                     — home-page, module-page, unit-page, mdx-page, certificate-page
+│   ├── rpg/                       — character-strip, world-map, quest-feed
+│   ├── cs/                        — shard-balance, mode-selector, vault, cycle-complete
+│   ├── quests/                    — daily-panel
+│   ├── dungeon/                   — dungeon-view, dungeon-card
+│   ├── intake/                    — компоненты опросника
+│   └── help/                      — help-tip, intro-card
 ├── content/
 │   ├── ru/                        — 9 модулей × units (00-kickstart … 08-agent-engineering)
-│   │   ├── 03-stack-selection/    — НОВЫЙ: выбор стека, Behind-GFW, Hermes
+│   │   ├── 03-stack-selection/    — выбор стека, Behind-GFW, Hermes
 │   │   ├── cheatsheet.mdx, roadmap.mdx, exercises.mdx
 │   └── en/                        — полное зеркало ru/
 ├── lib/
 │   ├── content.ts                 — getAllModules, getUnitContent, навигация
 │   ├── dictionaries.ts            — RU+EN словарь всего UI-текста
+│   ├── unit-progress.ts           — прогресс юнитов (localStorage), эталон store-паттерна
+│   ├── os-pref.ts                 — детект/хранение выбранной ОС (cheatsheet)
 │   ├── themes.ts, use-pretext.ts
+│   ├── rpg/ cs/ quests/ dungeon/ intake/ help/  — RPG-слой (см. ниже)
+│   ├── content/reflection-prompts.test.ts       — drift-guard reflection-фаз
 │   └── content.test.ts            — Vitest
 ├── public/author.jpg
 └── next.config.ts
 ```
+
+## RPG / геймификация
+
+Поверх LMS построен RPG-слой. **Статичный сайт** (`output: 'export'`) — поэтому вся
+игровая логика клиентская: чистые helpers + localStorage-store + React-hook
+(эталон — `lib/unit-progress.ts`). Сервер хранит только intake-профиль и прогресс уроков (D1).
+
+| Подсистема | Где | Что делает |
+|------------|-----|-----------|
+| **Intake** | `app/quest-intake/`, `lib/intake/` | Опросник → профиль `{ niche, cog_tier, world_skin, F3-outcome }` в D1 `intake_profiles`. `scoring.ts`, `attributes.ts`, `parse-outcome.ts` |
+| **Квест-лог** | `app/dashboard/`, `lib/rpg/` | World Map (зоны = модули), QuestFeed, CharacterStrip. `quest-log.ts`, `map-layout.ts`, `niche-map.ts` |
+| **Лист персонажа** | `app/character/` | Атрибуты, выведенные из intake-ответов |
+| **Themed skins** | `lib/rpg/skins/*.json`, `skins-meta.ts`, `unit-framing.ts` | 7 миров; переформулировка юнитов под выбранный скин |
+| **Cognitive Shards** | `lib/cs/` | Единая валюта (вместо XP). Режимы commander 1.0× / copilot 1.5× / archmage 2.5×. `wallet.ts`, `award.ts`, `modes.ts`, `applied-challenge.ts` |
+| **Daily Quests** | `app` (на dashboard), `lib/quests/` | Дневные квесты, детерминированный seed (FNV-1a + mulberry32) |
+| **Niche Dungeons** | `app/dungeon/`, `lib/dungeon/` | Арка-подземелье под нишу студента, `flavor-bank.ts` (8 ниш) |
+| **Help-система** | `components/help/`, `lib/help/` | `<HelpTip>` (tap-popover) + `<IntroCard>` (авто-онбординг). Маркер «💭 в уме» на reflection-фазах |
+
+**localStorage-ключи** (изолированы, без коллизий): `cs_wallet`, `unit_progress`,
+`daily_quests`, `niche_dungeon`, `help_seen`, `os`, `stack`, `lang-preference`.
+
+**Bisociation**: фазы `activation`/`reflection` урока — бисоциативные провокации
+(мысленные, без полей ввода). `lib/content/reflection-prompts.test.ts` (drift-guard)
+запрещает «вводные» глаголы (`запиши`/`опиши`/`type`/`write down`…) в этих блоках.
 
 ## Запуск локально
 
