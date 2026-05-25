@@ -3,6 +3,8 @@
 
 import type { Locale } from '@/lib/intake/types'
 import type { DungeonView } from '@/lib/dungeon/types'
+import { HelpTip } from '@/components/help/help-tip'
+import { IntroCard } from '@/components/help/intro-card'
 
 const TIER_LABEL: Record<string, Record<Locale, string>> = {
   task: { ru: 'задача', en: 'task' },
@@ -41,8 +43,9 @@ export function DungeonView({ view, locale, accent, moduleTitle, isCleared, onCl
 
   return (
     <section>
+      <IntroCard page="dungeon" locale={locale} accent={accent} />
       <h1 style={{ fontFamily: 'var(--font-mono)', fontSize: '1.4rem', color: accent, marginBottom: '0.4rem' }}>
-        <span aria-hidden="true">🗝</span> {view.dungeonName}
+        <span aria-hidden="true">🗝</span> {view.dungeonName} <HelpTip id="dungeon-stages" locale={locale} />
       </h1>
       <p style={{ fontStyle: 'italic', color: 'var(--text-primary)', marginBottom: '1.5rem' }}>{view.intro}</p>
 

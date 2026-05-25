@@ -14,6 +14,8 @@ import { getAppliedChallenge } from '@/lib/cs/applied-challenge'
 import { ModeSelector } from '@/components/cs/mode-selector'
 import { CycleComplete } from '@/components/cs/cycle-complete'
 import type { Mode } from '@/lib/cs/types'
+import { HelpTip } from '@/components/help/help-tip'
+import { IntroCard } from '@/components/help/intro-card'
 
 const PHASE_COLORS = ['#00ff88', '#00aaff', '#ff9900', '#ff44aa']
 const TOTAL_STEPS = 4
@@ -125,12 +127,15 @@ export function UnitWizard({
         {moduleTitle} · {t.unit(unitIndex + 1, totalUnits)}
       </div>
 
+      <IntroCard page="unit" locale={locale} accent={accent} />
+
       {shardsReady && !done && !chosenMode && (
         <ModeSelector
           locale={locale}
           accent={accent}
           selected={chosenMode}
           onSelect={(m) => setMode(unitKey, m)}
+          helpId="wizard-modes"
         />
       )}
 
@@ -148,6 +153,9 @@ export function UnitWizard({
         </div>
       )}
 
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.25rem' }}>
+        <HelpTip id="wizard-phases" locale={locale} align="right" />
+      </div>
       {/* Phase progress bar */}
       <div style={{ display: 'flex', gap: '6px', marginBottom: '2rem' }}>
         {PHASE_LABELS.map((label, i) => (

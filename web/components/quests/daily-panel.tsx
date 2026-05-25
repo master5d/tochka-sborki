@@ -4,6 +4,7 @@
 import Link from 'next/link'
 import type { Locale, WorldSkin } from '@/lib/intake/types'
 import { useDailyQuests } from '@/lib/quests/use-daily-quests'
+import { HelpTip } from '@/components/help/help-tip'
 
 const HEADING: Record<Locale, string> = { ru: 'Сегодня', en: 'Today' }
 const OPEN: Record<Locale, string> = { ru: 'Открыть', en: 'Open' }
@@ -29,9 +30,10 @@ interface Props {
   unitsByModule: Record<string, { slug: string; title: string }[]>
   isUnitDone: (moduleSlug: string, unitSlug: string) => boolean
   completedModules: string[]
+  helpId?: string
 }
 
-export function DailyPanel({ locale, skin, accent, cogTier, niche, outcome, unitsByModule, isUnitDone, completedModules }: Props) {
+export function DailyPanel({ locale, skin, accent, cogTier, niche, outcome, unitsByModule, isUnitDone, completedModules, helpId }: Props) {
   const { set, isDone, complete, allDone, ready } = useDailyQuests({
     locale, skin, cogTier, niche, outcome, unitsByModule, isUnitDone, completedModules,
   })
@@ -43,7 +45,7 @@ export function DailyPanel({ locale, skin, accent, cogTier, niche, outcome, unit
   return (
     <section style={{ border: `1px solid ${accent}`, borderRadius: 12, padding: '1.1rem 1.25rem', marginBottom: '1.5rem', background: 'var(--bg-surface)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.9rem' }}>
-        <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: accent }}><span aria-hidden="true">☀</span> {HEADING[locale]}</span>
+        <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: accent }}><span aria-hidden="true">☀</span> {HEADING[locale]} {helpId && <HelpTip id={helpId} locale={locale} />}</span>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
           {questsLabel(set.quests.length, locale)}{totalCs > 0 ? ` · +${totalCs} 💎` : ''}
         </span>

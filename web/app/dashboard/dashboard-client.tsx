@@ -20,6 +20,8 @@ import { useNicheDungeonCleared } from '@/lib/dungeon/use-dungeon'
 import { NICHE_MODULE } from '@/lib/rpg/niche-map'
 import { FLAVOR_BANK } from '@/lib/dungeon/flavor-bank'
 import { parseOutcome } from '@/lib/intake/parse-outcome'
+import { HelpTip } from '@/components/help/help-tip'
+import { IntroCard } from '@/components/help/intro-card'
 
 interface Props {
   modules: Record<string, { title: string; duration: string }>
@@ -63,10 +65,15 @@ export function DashboardClient({ modules, unitsByModule, locale }: Props) {
     <>
       <Nav locale={locale} />
       <main style={{ maxWidth: 660, margin: '0 auto', padding: '2.5rem 1.5rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.75rem' }}>
+        <IntroCard page="dashboard" locale={locale} accent={accent} />
+        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '0.4rem', marginBottom: '0.75rem' }}>
           <ShardBalance accent={accent} />
+          <HelpTip id="shards" locale={locale} align="right" />
         </div>
-        <CharacterStrip summary={vm.summary} accent={accent} locale={locale} />
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.4rem' }}>
+          <div style={{ flex: 1 }}><CharacterStrip summary={vm.summary} accent={accent} locale={locale} /></div>
+          <HelpTip id="character" locale={locale} align="right" />
+        </div>
         <DailyPanel
           locale={locale}
           skin={profile.world_skin as WorldSkin}
@@ -77,8 +84,12 @@ export function DashboardClient({ modules, unitsByModule, locale }: Props) {
           unitsByModule={unitsByModule}
           isUnitDone={isCompleted}
           completedModules={completed}
+          helpId="daily"
         />
-        <div style={{ margin: '1.5rem 0' }}><WorldMap zones={vm.zones} accent={accent} glyph={glyph} nicheDungeonCleared={nicheDungeonCleared} /></div>
+        <div style={{ margin: '1.5rem 0' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.25rem' }}><HelpTip id="world-map" locale={locale} align="right" /></div>
+          <WorldMap zones={vm.zones} accent={accent} glyph={glyph} nicheDungeonCleared={nicheDungeonCleared} />
+        </div>
         <QuestFeed zones={vm.zones} accent={accent} locale={locale} />
         <DungeonCard
           locale={locale}
@@ -88,8 +99,9 @@ export function DashboardClient({ modules, unitsByModule, locale }: Props) {
           outcome={outcome}
           moduleTitle={modules[dungeonModule]?.title ?? dungeonModule}
           isModuleCompleted={(slug) => getState(slug) === 'completed'}
+          helpId="dungeon-card"
         />
-        <Vault activeSkin={profile.world_skin as WorldSkin} locale={locale} />
+        <Vault activeSkin={profile.world_skin as WorldSkin} locale={locale} helpId="vault" />
       </main>
     </>
   )

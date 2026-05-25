@@ -5,6 +5,7 @@ import type { Locale, WorldSkin } from '@/lib/intake/types'
 import { SKINS_META } from '@/lib/rpg/skins-meta'
 import { SKIN_UNLOCK_COST } from '@/lib/cs/types'
 import { useShards } from '@/lib/cs/use-shards'
+import { HelpTip } from '@/components/help/help-tip'
 
 const TITLE: Record<Locale, string> = { ru: 'Хранилище', en: 'Vault' }
 const SUBTITLE: Record<Locale, string> = {
@@ -20,13 +21,13 @@ const SELECTABLE: WorldSkin[] = [
   'anime-quest', 'soviet-heroic', 'mystic-arcane',
 ]
 
-export function Vault({ activeSkin, locale }: { activeSkin: WorldSkin; locale: Locale }) {
+export function Vault({ activeSkin, locale, helpId }: { activeSkin: WorldSkin; locale: Locale; helpId?: string }) {
   const { balance, spend, unlocked, ready } = useShards()
   if (!ready) return null
 
   return (
     <section style={{ marginTop: '2rem' }}>
-      <h2 style={{ fontFamily: 'var(--font-mono)', fontSize: '1rem', marginBottom: '0.25rem' }}>{TITLE[locale]}</h2>
+      <h2 style={{ fontFamily: 'var(--font-mono)', fontSize: '1rem', marginBottom: '0.25rem' }}>{TITLE[locale]} {helpId && <HelpTip id={helpId} locale={locale} />}</h2>
       <p style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', marginBottom: '1rem' }}>{SUBTITLE[locale]}</p>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.5rem' }}>
         {SELECTABLE.map(skin => {
