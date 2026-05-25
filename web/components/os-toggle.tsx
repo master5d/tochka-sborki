@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-
-type Os = 'mac' | 'windows'
+import { detectOs, readStoredOs, storeOs, type Os } from '@/lib/os-pref'
 
 const LABELS: Record<Os, { glyph: string; name: string }> = {
   mac: { glyph: '🍎', name: 'macOS' },
@@ -13,14 +12,14 @@ export function OsToggle({ label = 'Команды для:' }: { label?: string 
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    let stored: string | null = null
-    try { stored = localStorage.getItem('os') } catch { /* ignore */ }
-    if (stored === 'mac' || stored === 'windows') setOs(stored)
+    // Show the saved choice, or auto-detect the visitor's OS so the cheatsheet
+    // defaults to the right platform without a manual pick.
+    setOs(readStoredOs() ?? detectOs())
     setReady(true)
   }, [])
 
   function pick(next: Os) {
-    try { localStorage.setItem('os', next) } catch { /* ignore */ }
+    storeOs(next)
     setOs(next)
     window.location.reload()
   }
@@ -81,16 +80,6 @@ export function OsToggle({ label = 'Команды для:' }: { label?: string 
           </button>
         )
       })}
-      {os === null && (
-        <span style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '0.7rem',
-          color: 'var(--text-secondary)',
-          opacity: 0.7,
-        }}>
-          (показаны оба варианта)
-        </span>
-      )}
     </div>
   )
 }
