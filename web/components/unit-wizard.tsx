@@ -113,7 +113,7 @@ export function UnitWizard({
   }
 
   return (
-    <UnitWizardContext.Provider value={{ currentStep, totalSteps: TOTAL_STEPS }}>
+    <UnitWizardContext.Provider value={{ currentStep, totalSteps: TOTAL_STEPS, locale }}>
       {/* Module + unit breadcrumb */}
       <div ref={topRef} style={{
         scrollMarginTop: '4rem',
