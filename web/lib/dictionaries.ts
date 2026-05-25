@@ -108,6 +108,7 @@ export type Dictionary = {
     licenseFull: string
     rights: string
     builtWith: string
+    presentedBy: string
   }
   notFound: {
     code: string
@@ -296,6 +297,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       licenseFull: 'MIT License',
       rights: 'Открытый курс. Используй, форкай, делись.',
       builtWith: 'Собрано с Claude Code',
+      presentedBy: 'Курс представлен Mamaev Institute for AI',
     },
     notFound: {
       code: '404',
@@ -482,6 +484,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       licenseFull: 'MIT License',
       rights: 'Open course. Use it, fork it, share it.',
       builtWith: 'Built with Claude Code',
+      presentedBy: 'Presented by Mamaev Institute for AI',
     },
     notFound: {
       code: '404',

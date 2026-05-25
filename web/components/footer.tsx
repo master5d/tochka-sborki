@@ -79,6 +79,15 @@ export function Footer({ locale = 'ru', topics = [], showCertificateCta = true }
             }}>
               {t.tagline}
             </p>
+            <p style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.75rem',
+              color: 'var(--text-secondary)',
+              letterSpacing: '0.04em',
+              margin: '1rem 0 0',
+            }}>
+              <span aria-hidden="true">⬡ </span>{t.presentedBy}
+            </p>
           </div>
 
           {/* Certificate CTA — hidden on reference pages */}

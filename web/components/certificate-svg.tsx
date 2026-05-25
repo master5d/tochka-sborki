@@ -20,6 +20,7 @@ const COPY = {
     caption1: 'от одной клавиши —',
     caption2: 'к симфонии агентов',
     footer: '28 юнитов · 7 тем',
+    presentedBy: 'представлено · Mamaev Institute for AI',
     url: 'ai.mamaev.coach/certificate',
   },
   en: {
@@ -32,6 +33,7 @@ const COPY = {
     caption1: 'from a single key —',
     caption2: 'to a symphony of agents',
     footer: '28 units · 7 topics',
+    presentedBy: 'presented by · Mamaev Institute for AI',
     url: 'ai.mamaev.coach/certificate',
   },
 }
@@ -174,6 +176,11 @@ export const CertificateSVG = forwardRef<SVGSVGElement, Props>(
         {/* Date + meta */}
         <text x={W / 2} y="875" textAnchor="middle" className="mono" fontSize="12" fill={MUTED} letterSpacing="2">
           {date} · {t.footer}
+        </text>
+
+        {/* Presented by */}
+        <text x={W / 2} y={H - 82} textAnchor="middle" className="mono-b" fontSize="10" fill={ACCENT} letterSpacing="1.5">
+          {t.presentedBy}
         </text>
 
         {/* Footer URL */}

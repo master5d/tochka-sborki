@@ -16,7 +16,9 @@ const unbounded = Unbounded({
 
 export const metadata: Metadata = {
   title: 'Точка Сборки — курс по vibe-кодингу',
-  description: 'Открытый курс по AI-разработке и агентному программированию',
+  description: 'Открытый курс по AI-разработке и агентному программированию. Presented by Mamaev Institute for AI.',
+  publisher: 'Mamaev Institute for AI',
+  authors: [{ name: 'Alexander Mamaev' }],
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
