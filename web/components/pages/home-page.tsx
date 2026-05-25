@@ -72,9 +72,19 @@ export function HomePage({ locale }: Props) {
           color: 'var(--text-secondary)',
           maxWidth: '560px',
           lineHeight: 1.7,
-          marginBottom: '2.5rem',
+          marginBottom: '1.25rem',
         }}>
           {t.hero.subtitle}
+        </p>
+
+        <p style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.8rem',
+          color: 'var(--text-secondary)',
+          letterSpacing: '0.04em',
+          marginBottom: '2.5rem',
+        }}>
+          <span aria-hidden="true">⬡ </span>{t.footer.presentedBy}
         </p>
 
         <div style={{
