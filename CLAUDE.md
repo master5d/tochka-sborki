@@ -31,12 +31,15 @@ my-templates/           — Шаблоны для работы
 course-feedback/        — Author layer feedback-петли (submissions/, digests/, README)
 docs/superpowers/       — Spec'ы и планы (brainstorming, writing-plans)
 web/                    — Next.js 16 LMS сайт (ai.mamaev.coach), см. web/README.md
-  web/app/              — App Router; RU `/` + EN `/en/` зеркало
+  web/app/              — App Router; RU `/` + EN `/en/` зеркало. Маршруты: lessons,
+                          quest-intake, dashboard, character, dungeon, roadmap,
+                          cheatsheet, exercises, feedback, certificate, login, admin
   web/content/{ru,en}/  — MDX-версии уроков (9 модулей) с frontmatter
-  web/components/       — Nav, Sidebar, LessonLayout/UnitWizard, MDX-компоненты,
-                          OsToggle/OsBlock, AgentToggle/AgentBlock/StackMatrix,
-                          MobileGate, LangSuggestBanner
-  web/lib/              — content.ts, dictionaries.ts (RU+EN), тесты
+  web/components/       — Nav, Sidebar, UnitWizard, MDX-компоненты, OsToggle/OsBlock,
+                          AgentToggle/AgentBlock/StackMatrix, MobileGate, LangSuggestBanner;
+                          rpg/ cs/ quests/ dungeon/ intake/ help/ — RPG-слой (см. ниже)
+  web/lib/              — content.ts, dictionaries.ts (RU+EN), os-pref.ts, тесты;
+                          rpg/ cs/ quests/ dungeon/ intake/ help/ — логика RPG-слоя
 hub/                    — лендинг mamaev.coach (Next.js, bilingual)
 mentor/                 — B2B mentor.mamaev.coach (Next.js, bilingual)
 workers/                — CF Worker (Hono-less router): auth/progress/feedback/CRM
@@ -67,8 +70,21 @@ workers/                — CF Worker (Hono-less router): auth/progress/feedback
   `N8N_CRM_SECRET` должен совпадать с IF-нодой «Check Secret» в n8n.
 - D1 база `tochka-sborki-db`; секреты через `wrangler secret put` (не в коде).
 
+## RPG / геймификация (web/)
+Поверх LMS построен RPG-слой. Все статичные данные — клиентские (localStorage); сервер хранит только intake-профиль и прогресс уроков.
+- **Intake** (`/quest-intake`, `lib/intake/`): опросник → профиль `{ niche, cog_tier, world_skin, F3-outcome }` в D1 `intake_profiles`. `scoring.ts`, `attributes.ts`, `parse-outcome.ts`.
+- **Квест-лог** (`/dashboard`) + **лист персонажа** (`/character`): World Map (зоны = модули), QuestFeed, CharacterStrip. `lib/rpg/` — `quest-log.ts`, `map-layout.ts`, `niche-map.ts`, `unit-framing.ts`.
+- **Themed skins**: `lib/rpg/skins/*.json` (7 скинов) + `skins-meta.ts` — переосмысление формулировок юнитов под выбранный мир.
+- **Cognitive Shards (CS)** — единая валюта вместо XP. 3 режима прохождения (commander 1.0× / copilot 1.5× / archmage 2.5×). `lib/cs/`: `wallet.ts`, `award.ts`, `modes.ts`, `applied-challenge.ts` (персонализация под niche/outcome).
+- **Daily Quests** (`lib/quests/`) и **Niche Dungeons** (`/dungeon`, `lib/dungeon/`) — детерминированная генерация (FNV-1a seed + mulberry32).
+- **Help-система** (`lib/help/`, `components/help/`): `<HelpTip>` (tap-popover) + `<IntroCard>` (авто-онбординг). Маркер «💭 в уме» на reflection-фазах.
+- **Bisociation**: фазы `activation`/`reflection` урока — бисоциативные провокации (мысленные, без полей ввода). Drift-guard тест `web/lib/content/reflection-prompts.test.ts` запрещает «вводные» глаголы в этих блоках.
+- **localStorage-ключи** (изолированы): `cs_wallet`, `unit_progress`, `daily_quests`, `niche_dungeon`, `help_seen`, `os`, `stack`, `lang-preference`.
+
 ## Инструкции для Claude Code
 - Контент пишется на **русском** (основной), затем зеркалится в **EN** (`content/en/`, `/en/` маршруты)
+- Новые клиентские фичи: паттерн **pure helpers + localStorage-store + React-hook** (эталоны: `lib/unit-progress.ts`, `lib/cs/wallet.ts` + `use-shards.ts`)
+- Reflection-фазы (`activation`/`reflection`) — бисоциативные, мысленные; не добавлять «запиши/опиши/type/write» (drift-guard тест следит)
 - Формат файлов — Markdown с emoji-заголовками
 - Нумерация файлов: `XX-topic.md` (01, 02, 03...)
 - Студенческие файлы → `my-experiments/`; шаблоны → `my-templates/`
