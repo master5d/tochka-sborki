@@ -22,6 +22,8 @@ import { FLAVOR_BANK } from '@/lib/dungeon/flavor-bank'
 import { parseOutcome } from '@/lib/intake/parse-outcome'
 import { HelpTip } from '@/components/help/help-tip'
 import { IntroCard } from '@/components/help/intro-card'
+import { WellbeingPanel } from '@/components/wellbeing/wellbeing-panel'
+import { parseAspiration } from '@/lib/intake/parse-aspiration'
 
 interface Props {
   modules: Record<string, { title: string; duration: string }>
@@ -59,6 +61,15 @@ export function DashboardClient({ modules, unitsByModule, locale }: Props) {
   const dungeonNiche = profile.niche && FLAVOR_BANK[profile.niche] ? profile.niche : 'other'
   const dungeonModule = NICHE_MODULE[dungeonNiche] ?? '04-prompt-engineering'
   const outcome = parseOutcome(profile)
+  const aspiration = parseAspiration(profile)
+  const moduleTitles = Object.fromEntries(Object.entries(modules).map(([slug, m]) => [slug, m.title]))
+  const wbPrefix = locale === 'en' ? '/en' : ''
+  const firstIncomplete = (() => {
+    for (const [slug, units] of Object.entries(unitsByModule)) {
+      for (const u of units) if (!isCompleted(slug, u.slug)) return `${wbPrefix}/lessons/${slug}/${u.slug}/`
+    }
+    return `${wbPrefix}/dashboard/`
+  })()
   const vm = buildQuestLog(profile, modules, completed, getState as any, pack, locale)
 
   return (
@@ -66,6 +77,16 @@ export function DashboardClient({ modules, unitsByModule, locale }: Props) {
       <Nav locale={locale} />
       <main style={{ maxWidth: 660, margin: '0 auto', padding: '2.5rem 1.5rem' }}>
         <IntroCard page="dashboard" locale={locale} accent={accent} />
+        <WellbeingPanel
+          locale={locale}
+          accent={accent}
+          g11={aspiration}
+          outcome={outcome}
+          unitsByModule={unitsByModule}
+          moduleTitles={moduleTitles}
+          isUnitDone={isCompleted}
+          resumeHref={firstIncomplete}
+        />
         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '0.4rem', marginBottom: '0.75rem' }}>
           <ShardBalance accent={accent} />
           <HelpTip id="shards" locale={locale} align="right" />
