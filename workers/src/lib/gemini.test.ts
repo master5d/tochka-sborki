@@ -9,6 +9,19 @@ describe('fallbackProse', () => {
     expect(p.firstQuest).toBeTruthy()
     expect(p.finalBoss).toBeTruthy()
   })
+  it('uses the readable skin name, never the raw enum slug', () => {
+    const ru = fallbackProse({ charClass: 'healer', worldSkin: 'slavic-myth', language: 'ru' } as any)
+    expect(ru.legendaryTitle).not.toContain('slavic-myth')
+    expect(ru.legendaryTitle).toContain('Славянский Миф')
+    const en = fallbackProse({ charClass: 'healer', worldSkin: 'cyber-noir', language: 'en' } as any)
+    expect(en.legendaryTitle).not.toContain('cyber-noir')
+    expect(en.legendaryTitle).toContain('Cyber Noir')
+  })
+  it('does not crash on an unknown skin', () => {
+    const p = fallbackProse({ charClass: 'healer', worldSkin: 'not-a-skin', language: 'en' } as any)
+    expect(p.legendaryTitle).not.toContain('not-a-skin')
+    expect(p.legendaryTitle).toBeTruthy()
+  })
 })
 
 describe('generateSheetProse', () => {
