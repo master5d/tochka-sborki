@@ -9,13 +9,9 @@ duration: "15 min"
 
 Well-known fact: Claude/GPT can refactor 100,000 lines of code — and **miscount the number of "r"s in "strawberry"**.
 
-This isn't a bug. It's a fundamental property of modern LLMs called **Jagged Intelligence** — uneven, jagged intelligence.
+Don't picture this as "AI with bugs" — picture it as a **savant**: someone who is uncannily brilliant in one dimension and utterly helpless at something a child handles in a second.
 
-Think and write down:
-- Where has AI surprised you with its power?
-- Where has AI surprised you with its stupidity?
-
-Those two lists are your personal map of jagged intelligence for your tasks.
+Run two moments in your head: one when AI floored you with its capability — and one when AI floored you with its cluelessness. Both moments are about the same system. What could possibly make both true at once?
 
 </Phase>
 
@@ -39,10 +35,14 @@ What AI does poorly:
 
 This isn't a temporary issue. It's an **architectural** property of transformers.
 
-**Takeaway for agent engineering:** you don't "delegate a task to AI." You **break the task into pieces**:
-- The pieces AI nails → hand them over
-- The pieces AI fumbles → give it a **tool** (calculator, DB, search)
-- The pieces that are critical → **verify** with a second model or a human
+Don't picture this as "uneven AI" — picture it as a **circus juggler** keeping balls, rings, and clubs airborne at once. Each object has its own rhythm and release angle. The juggler doesn't "catch everything the same way" — they **know which object needs which treatment**.
+
+**Takeaway for agent engineering:** you don't "delegate a task to AI." You **break the task into objects**:
+- The ones AI keeps airborne easily → hand them over
+- The ones AI drops → give it a **tool** (calculator, DB, search)
+- The ones that are critical → **verify** with a second model or a human
+
+Notice: in your task — which object does the juggler carry confidently, and which one is dangerous to toss their way?
 
 </Phase>
 

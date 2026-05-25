@@ -7,31 +7,27 @@ duration: "15 min"
 
 <Phase type="activation">
 
-Hermes is the **boss agent** from SOVERN v3.3. Not yet another AI-IDE or an alternative to Claude Code, but an **orchestrator** that:
+Think of a moment when one tool tried to do everything at once — and broke down halfway through.
 
-- holds the plan and cron tasks
-- delegates code work to specialists (Aider, Cline, Claude Code)
-- doesn't do trivial work itself — frees up context for strategy
+Don't picture it as a "context window problem." Picture it as **your own vegetable garden versus the market** 🌱: the gardener planted it, watered it, harvested it — and knows every plant. The market buyer gets ready produce fast, no fuss. Hermes is the gardener who **keeps the plan at home** and sends workers out for specific results, rather than trusting the whole harvest to a single stall.
 
-A different mental model. Claude Code is a "universal coder", Hermes is the "manager who hires the coder".
-
-Before reading on: which part of your workflow suffers because the AI **does everything itself** and forgets the plan mid-task?
+Notice in your head: which part of your AI-workflow suffers most because the agent **does everything in sequence** and loses the thread mid-task?
 
 </Phase>
 
 <Phase type="reflection">
 
-The pain Hermes solves:
+Picture a theatre director 🎭 at rehearsal. They don't play every part in turn — they hold **the whole production in their head** and give each actor exactly enough to play their scene. The actors don't need to know the ending — the director does.
+
+Catch that same logic here:
 
 > "I asked Claude Code to refactor the auth module. By the 5th file it started applying the backend style to the frontend, forgot my original plan, and burned 200K tokens to recover."
 
-This is the **context-saturation** pattern. One agent shouldn't both remember the plan AND write the code. That violates separation of concerns at the AI level.
-
-Hermes holds **only the plan and state**. When code is needed, it:
+That's **context-saturation**: the actor tried to play every role. Hermes holds **only the plan and state** — the director's role:
 1. Frames the subtask
-2. Launches a sub-agent (Aider in a worktree, or Claude Code)
+2. Launches a sub-agent (Aider in a worktree, or Claude Code) — "actor enters the scene"
 3. Receives the result, verifies
-4. Updates the plan, moves on
+4. Updates the plan, next entrance
 
 Hermes's context isn't eaten by implementation. Worker contexts are atomic and tightly scoped.
 

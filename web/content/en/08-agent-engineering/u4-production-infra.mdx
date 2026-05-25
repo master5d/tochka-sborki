@@ -9,22 +9,9 @@ duration: "20 min"
 
 A prototype agent that runs on your laptop is **20% of the work**.
 
-To make that same agent run when:
-- You're asleep
-- The laptop's closed
-- Your ISP flickers
-- The LLM provider drops the endpoint
-- One of the steps suddenly costs $0.10 instead of $0.001
-- Someone sends an email with an emoji that breaks the parser
+Don't picture this as "code you still need to write" — picture it as **the city's grid under the asphalt**: the substation, the cables, the mains, the valves. A passerby sees only the sidewalk. But the lights in your apartment stay on because the invisible infrastructure beneath is doing its job — and it's precisely what keeps them from going dark while you sleep.
 
-— you need the other 80%.
-
-Write down: what happens to your task from unit 1 if **at execution time**:
-- The LLM provider returns 500 for 30 seconds?
-- One of the steps takes 5 minutes instead of 5 seconds?
-- You're away from the computer and won't see the error?
-
-These are the questions that **separate prototype from production**.
+Run it in your head: what in your agent keeps the lights on when you're not around — and what's the first thing that trips when the voltage dips?
 
 </Phase>
 
@@ -40,7 +27,9 @@ Production infrastructure for agent systems has 5 building blocks:
 
 The vibe coder usually thinks only about (1). The agent engineer thinks about all five.
 
-Each block is **accumulated lessons from other people's screw-ups**. Below — real rakes from my own SOVERN infra (Hetzner CX22 + Cloudflare + Docker), which runs ENERV.
+Don't picture this as "a list of settings" — picture it as a **hydroelectric dam**: all you see is the wall, but the real work lives in the floodgates, the water-level sensors, the emergency spillways nobody notices until a flood comes. Those are what keep the city dry.
+
+Each of the five blocks is one such gate. While everything is calm — it's invisible. What happens when the first gate on your agent fails?
 
 </Phase>
 

@@ -1,16 +1,9 @@
 'use client'
 
 import { useUnitWizard } from './unit-wizard-context'
+import { PHASE_META, phaseLabel, phaseMarker, type PhaseType } from './phase-chrome'
 
-const PHASE_ORDER = ['activation', 'reflection', 'concept', 'practice'] as const
-type PhaseType = (typeof PHASE_ORDER)[number]
-
-const PHASE_META: Record<PhaseType, { label: string; icon: string; color: string }> = {
-  activation: { label: 'Активация', icon: '⚡', color: '#00ff88' },
-  reflection: { label: 'Рефлексия', icon: '👁', color: '#00aaff' },
-  concept: { label: 'Концепция', icon: '💡', color: '#ff9900' },
-  practice: { label: 'Практика', icon: '🛠', color: '#ff44aa' },
-}
+const PHASE_ORDER: PhaseType[] = ['activation', 'reflection', 'concept', 'practice']
 
 interface Props {
   type: PhaseType
@@ -18,12 +11,14 @@ interface Props {
 }
 
 export function Phase({ type, children }: Props) {
-  const { currentStep } = useUnitWizard()
+  const { currentStep, locale } = useUnitWizard()
   const stepIndex = PHASE_ORDER.indexOf(type)
 
   if (stepIndex !== currentStep) return null
 
-  const { label, icon, color } = PHASE_META[type]
+  const { icon, color } = PHASE_META[type]
+  const label = phaseLabel(type, locale)
+  const marker = phaseMarker(type, locale)
 
   return (
     <div>
@@ -35,7 +30,7 @@ export function Phase({ type, children }: Props) {
         borderLeft: `3px solid ${color}`,
         padding: '4px 14px',
         borderRadius: '0 4px 4px 0',
-        marginBottom: '1.5rem',
+        marginBottom: marker ? '0.5rem' : '1.5rem',
         fontFamily: 'var(--font-mono)',
         fontSize: '0.65rem',
         color,
@@ -44,6 +39,16 @@ export function Phase({ type, children }: Props) {
       }}>
         {icon} {label}
       </div>
+      {marker && (
+        <div style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.6rem',
+          color: 'var(--text-secondary)',
+          marginBottom: '1.5rem',
+        }}>
+          {marker}
+        </div>
+      )}
       <div>{children}</div>
     </div>
   )
