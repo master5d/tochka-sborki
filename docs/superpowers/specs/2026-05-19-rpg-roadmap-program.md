@@ -36,8 +36,8 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 | **SP1 — Intake → Character Sheet** | 62q/7-module questionnaire (A–G), scoring → 6 attributes (INT/WIS/CON/DEX/CHA/STR), class assignment (6 + Wanderer), World Skin assignment (G3 inference + G9 override), register/language, G11 → backstory + legendary title. Output: Character Sheet artifact. | — | ✅ **Shipped 2026-05-20** (merged to main, deployed) → [SP1 design](./2026-05-19-rpg-sp1-intake-character-sheet-design.md) · [plan](../plans/2026-05-19-rpg-sp1-intake-character-sheet.md) |
 | **SP2 — RPG Roadmap** | Quest Log, zones (mapped to modules 00–08), class-based module reordering, daily quests from COG budget, Niche Dungeons. Rendered through World Skin. | SP1 | 🟡 In progress — sliced. **SP2a** (Quest Log + World Map) ✅ **shipped 2026-05-20** (all 7 themed skin packs generated + live; **SP2d** unit framing packs generated + merged 2026-05-24) → [SP2a design](./2026-05-20-rpg-sp2a-quest-log-design.md) · [plan](../plans/2026-05-20-rpg-sp2a-quest-log.md). **SP2b** (Daily Quests) ✅ **shipped 2026-05-24** → [SP2b design](./2026-05-24-daily-quests-design.md) · [plan](../plans/2026-05-24-daily-quests.md). **SP2c** (Niche Dungeons) ✅ **shipped 2026-05-24** → [SP2c design](./2026-05-24-niche-dungeons-design.md) · [plan](../plans/2026-05-24-niche-dungeons.md). ✅ **SP2 COMPLETE.** |
 | **SP3 — Cognitive Shards Economy** | Single currency **Cognitive Shards (CS)** replaces XP — score + spendable resource; per-phase base weighted to Reflection+Concept; 3 diagonal modes per unit (Commander 1.0x / Co-Pilot 1.5x / Archmage 2.5x, less help = higher multiplier, hint gated by mode); intake-personalized applied challenge at Practice; client-side localStorage wallet; sinks = alternate theme packs (300 CS, intake skin free). | SP1, SP2, SP2d | ✅ **Shipped 2026-05-23** → [design](./2026-05-22-cognitive-shards-economy-design.md) · [plan](../plans/2026-05-22-cognitive-shards-economy.md) |
-| **SP4 — Burnout / Calibration / Re-engagement** | Anxiety interventions, mandatory rest days, post-Boss-Battle calibration, G11-anchored re-engagement. | SP1, SP2, SP3 | ⚪ Not started |
-| **World Skin engine** (cross-cutting) | 7 skins as content data (names, tone, NPC archetypes, boss names, agent analogies): Slavic Myth, Dark Fantasy, Cyber Noir, Space Opera, Anime Quest, Soviet Heroic, Mystic Arcane + Wanderer fallback. Read by SP2–SP4. | grows with SP2+ | ⚪ Not started |
+| **SP4 — Burnout / Calibration / Re-engagement** | Pacing/wellbeing layer: rest-day nudge, G11-anchored re-engagement, post-Boss calibration → suggest-only mode badge, anxiety check-in (hybrid). Gentle dismissible nudges (mandatory rest softened to a nudge), one-slot priority picker, client-side `pacing` store. | SP1, SP2, SP3 | ✅ **Shipped 2026-05-25** → [design](./2026-05-25-sp4-pacing-wellbeing-design.md) · [plan](../plans/2026-05-25-sp4-pacing-wellbeing.md) |
+| **World Skin engine** (cross-cutting) | 7 skins as content data (names, tone, NPC archetypes, boss names, agent analogies): Slavic Myth, Dark Fantasy, Cyber Noir, Space Opera, Anime Quest, Soviet Heroic, Mystic Arcane + Wanderer fallback. Read by SP2–SP4. | grows with SP2+ | ✅ **Shipped** (delivered incrementally via SP2a + SP2d: `web/lib/rpg/skins/*.json`, `skins-meta.ts`, `unit-framing.ts`) |
 | **Content Demand Radar** (cross-cutting) | Intake free-text (F3, F2-other) → Gemini classify vs 9-module catalog → gaps become Gemini-drafted briefs in D1 → owner-gated `/admin/content-demand` (Quest Forge). Closes SP1 intake loop back into course evolution; brief API ready for future boss-agent-as-architect. | SP1 | ✅ **Shipped 2026-05-21** → [design](./2026-05-21-content-demand-radar-design.md) · [plan](../plans/2026-05-21-content-demand-radar.md) |
 
 ## Existing platform context (integration surface)
@@ -158,11 +158,23 @@ it tracks decomposition, locked decisions, and where we are. Each sub-project ge
 > `web/lib/help/help-content.ts`, `help_seen` localStorage; no tooltip library. 145/145 tests, tsc + next
 > build clean. Spec `./2026-05-24-ui-ux-help-niche-design.md` · plan `../plans/2026-05-24-ui-ux-help-niche.md`.
 >
-> **OPEN FOLLOW-UP — `legendary_title` enum leak:** the character strip shows e.g. "Герой пути
-> «slavic-myth»" — the `legendary_title` generated at intake embedded the raw skin slug. Fix needs the
-> **Worker** intake title-generation to use the skin display name **+ a D1 backfill** of existing
-> `intake_profiles` rows. Deferred (server+data; this UX slice was client-only). Also TODO: visual pass on
-> mobile for the dashboard CharacterStrip help-tip flex wrapper spacing.
+> **2026-05-25 — `legendary_title` enum leak RESOLVED (PR #10).** `fallbackProse` (Worker) now maps the
+> skin slug → `SKINS_META.displayName` (localized); guard tests added. D1 backfill (migration
+> `0005_backfill_legendary_title.sql`) applied to prod (`--remote --file`), verified `leaked: 0`.
+>
+> **2026-05-25 — Mobile/nav polish SHIPPED (PR #11).** nav OS-toggle on `os-pref` auto-detect (shows for
+> fresh visitors); `CharacterStrip` flexWrap; `IntroCard` collapsed-spacing. Plus cheatsheet OS auto-detect
+> + Cmd+V fix (PR #7), course attribution "Mamaev Institute for AI" across footer/hero/cert/metadata
+> (PR #8), and RPG-layer documentation in CLAUDE.md + web/README (PR #9).
+>
+> **2026-05-25 — SP4 Pacing & Wellbeing SHIPPED → PROGRAM COMPLETE (PR #12).** Brainstorm → spec → plan →
+> subagent-driven (8 tasks, per-batch spec/quality review + final holistic review). New `web/lib/pacing/*`
+> (store/derive/thresholds/use-pacing/suggest-mode), `web/lib/wellbeing/*` (content/select-nudge),
+> `parse-aspiration` (G11), `<WellbeingPanel>` on dashboard, `suggested` badge in `ModeSelector`. One
+> `pacing` localStorage key; completions logged in the wizard alongside `markCompleted`/`award`. Gentle
+> dismissible nudges, one-slot priority (reengage > checkin > rest > calibrate). 264/264 web tests, build
+> clean. **All sub-projects (SP1–SP4) + cross-cutting (World Skin engine, Content Demand Radar) shipped.
+> RPG roadmap program COMPLETE.**
 >
 ## How to resume if lost
 
