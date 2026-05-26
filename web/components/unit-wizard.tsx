@@ -9,6 +9,8 @@ import { SKINS_META } from '@/lib/rpg/skins-meta'
 import { getUnitFraming } from '@/lib/rpg/unit-framing'
 import type { SkinPack, WorldSkin } from '@/lib/rpg/types'
 import { useShards } from '@/lib/cs/use-shards'
+import { usePacing } from '@/lib/pacing/use-pacing'
+import { suggestModeFromCalibration } from '@/lib/pacing/suggest-mode'
 import { MODE } from '@/lib/cs/modes'
 import { getAppliedChallenge } from '@/lib/cs/applied-challenge'
 import { ModeSelector } from '@/components/cs/mode-selector'
@@ -58,6 +60,7 @@ export function UnitWizard({
   const unitKey = `${moduleSlug}/${unitSlug}`
   const { award, setMode, getMode, ready: shardsReady } = useShards()
   const chosenMode: Mode | undefined = getMode(unitKey)
+  const { state: pacingState, logCompletion: logPacing } = usePacing()
 
   useEffect(() => {
     fetch('/api/intake/me', { credentials: 'include' })
@@ -82,6 +85,7 @@ export function UnitWizard({
   const framing = getUnitFraming(pack, moduleSlug, unitSlug)
   const mentor = skin ? SKINS_META[skin]?.mentor : undefined
   const accent = skin ? (SKINS_META[skin]?.accent ?? 'var(--text-accent)') : 'var(--text-accent)'
+  const suggestedMode = suggestModeFromCalibration(pacingState.lastCalibration?.rating) ?? undefined
   const challengeTier = chosenMode ? MODE[chosenMode].challengeTier : 'task'
   const hintVisible = chosenMode ? MODE[chosenMode].hintVisible : true
   const appliedChallenge = getAppliedChallenge({ niche, outcome }, moduleSlug, challengeTier, locale)
@@ -103,6 +107,7 @@ export function UnitWizard({
   function handleComplete() {
     markCompleted(moduleSlug, unitSlug)
     if (chosenMode) award(unitKey, chosenMode)
+    logPacing(unitKey, chosenMode ?? 'commander')
     setDone(true)
   }
 
@@ -136,6 +141,7 @@ export function UnitWizard({
           selected={chosenMode}
           onSelect={(m) => setMode(unitKey, m)}
           helpId="wizard-modes"
+          suggested={suggestedMode}
         />
       )}
 
