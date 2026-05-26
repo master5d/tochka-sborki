@@ -59,7 +59,8 @@ web/
 │   ├── quests/                    — daily-panel
 │   ├── dungeon/                   — dungeon-view, dungeon-card
 │   ├── intake/                    — компоненты опросника
-│   └── help/                      — help-tip, intro-card
+│   ├── help/                      — help-tip, intro-card
+│   └── wellbeing/                 — wellbeing-panel (SP4 nudges)
 ├── content/
 │   ├── ru/                        — 9 модулей × units (00-kickstart … 08-agent-engineering)
 │   │   ├── 03-stack-selection/    — выбор стека, Behind-GFW, Hermes
@@ -71,7 +72,7 @@ web/
 │   ├── unit-progress.ts           — прогресс юнитов (localStorage), эталон store-паттерна
 │   ├── os-pref.ts                 — детект/хранение выбранной ОС (cheatsheet)
 │   ├── themes.ts, use-pretext.ts
-│   ├── rpg/ cs/ quests/ dungeon/ intake/ help/  — RPG-слой (см. ниже)
+│   ├── rpg/ cs/ quests/ dungeon/ intake/ help/ pacing/ wellbeing/  — RPG-слой (см. ниже)
 │   ├── content/reflection-prompts.test.ts       — drift-guard reflection-фаз
 │   └── content.test.ts            — Vitest
 ├── public/author.jpg
@@ -94,9 +95,10 @@ web/
 | **Daily Quests** | `app` (на dashboard), `lib/quests/` | Дневные квесты, детерминированный seed (FNV-1a + mulberry32) |
 | **Niche Dungeons** | `app/dungeon/`, `lib/dungeon/` | Арка-подземелье под нишу студента, `flavor-bank.ts` (8 ниш) |
 | **Help-система** | `components/help/`, `lib/help/` | `<HelpTip>` (tap-popover) + `<IntroCard>` (авто-онбординг). Маркер «💭 в уме» на reflection-фазах |
+| **Pacing & Wellbeing** (SP4) | `lib/pacing/`, `lib/wellbeing/`, `components/wellbeing/` | `pacing`-store (таймстемпы завершений/режимы/калибровки). `<WellbeingPanel>` — один мягкий nudge по приоритету: re-engage (якорь G11) > anxiety check-in > rest-day > post-Boss калибровка → suggest-only бейдж режима |
 
 **localStorage-ключи** (изолированы, без коллизий): `cs_wallet`, `unit_progress`,
-`daily_quests`, `niche_dungeon`, `help_seen`, `os`, `stack`, `lang-preference`.
+`daily_quests`, `niche_dungeon`, `help_seen`, `pacing`, `os`, `stack`, `lang-preference`.
 
 **Bisociation**: фазы `activation`/`reflection` урока — бисоциативные провокации
 (мысленные, без полей ввода). `lib/content/reflection-prompts.test.ts` (drift-guard)
