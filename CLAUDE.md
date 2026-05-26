@@ -37,9 +37,9 @@ web/                    — Next.js 16 LMS сайт (ai.mamaev.coach), см. web
   web/content/{ru,en}/  — MDX-версии уроков (9 модулей) с frontmatter
   web/components/       — Nav, Sidebar, UnitWizard, MDX-компоненты, OsToggle/OsBlock,
                           AgentToggle/AgentBlock/StackMatrix, MobileGate, LangSuggestBanner;
-                          rpg/ cs/ quests/ dungeon/ intake/ help/ — RPG-слой (см. ниже)
+                          rpg/ cs/ quests/ dungeon/ intake/ help/ wellbeing/ — RPG-слой (см. ниже)
   web/lib/              — content.ts, dictionaries.ts (RU+EN), os-pref.ts, тесты;
-                          rpg/ cs/ quests/ dungeon/ intake/ help/ — логика RPG-слоя
+                          rpg/ cs/ quests/ dungeon/ intake/ help/ pacing/ wellbeing/ — логика RPG-слоя
 hub/                    — лендинг mamaev.coach (Next.js, bilingual)
 mentor/                 — B2B mentor.mamaev.coach (Next.js, bilingual)
 workers/                — CF Worker (Hono-less router): auth/progress/feedback/CRM
@@ -79,7 +79,8 @@ workers/                — CF Worker (Hono-less router): auth/progress/feedback
 - **Daily Quests** (`lib/quests/`) и **Niche Dungeons** (`/dungeon`, `lib/dungeon/`) — детерминированная генерация (FNV-1a seed + mulberry32).
 - **Help-система** (`lib/help/`, `components/help/`): `<HelpTip>` (tap-popover) + `<IntroCard>` (авто-онбординг). Маркер «💭 в уме» на reflection-фазах.
 - **Bisociation**: фазы `activation`/`reflection` урока — бисоциативные провокации (мысленные, без полей ввода). Drift-guard тест `web/lib/content/reflection-prompts.test.ts` запрещает «вводные» глаголы в этих блоках.
-- **localStorage-ключи** (изолированы): `cs_wallet`, `unit_progress`, `daily_quests`, `niche_dungeon`, `help_seen`, `os`, `stack`, `lang-preference`.
+- **Pacing & Wellbeing (SP4)** (`lib/pacing/`, `lib/wellbeing/`, `components/wellbeing/`): `pacing`-store логирует таймстемпы завершений + режимы + калибровки. `<WellbeingPanel>` на dashboard показывает ОДИН мягкий dismissible-nudge по приоритету (re-engage на якоре G11 > anxiety check-in > rest-day > post-Boss калибровка). Калибровка → suggest-only бейдж режима в `ModeSelector`. Всё клиентское.
+- **localStorage-ключи** (изолированы): `cs_wallet`, `unit_progress`, `daily_quests`, `niche_dungeon`, `help_seen`, `pacing`, `os`, `stack`, `lang-preference`.
 
 ## Инструкции для Claude Code
 - Контент пишется на **русском** (основной), затем зеркалится в **EN** (`content/en/`, `/en/` маршруты)
