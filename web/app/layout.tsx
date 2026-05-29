@@ -17,9 +17,10 @@ const unbounded = Unbounded({
 // Keep the 'theme-pref' key + 'system' default in sync with lib/theme-pref.ts.
 // This runs before paint so the resolved theme is applied with no flash (FOUC).
 const themeScript = `(function(){try{` +
-  `var p=localStorage.getItem('theme-pref')||'system';` +
+  `var p=localStorage.getItem('theme-pref');` +
   `var sys=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';` +
-  `document.documentElement.setAttribute('data-theme',p==='system'?sys:p);` +
+  // Only an explicit light/dark wins; 'system' and any junk value fall back to sys.
+  `document.documentElement.setAttribute('data-theme',(p==='light'||p==='dark')?p:sys);` +
   `}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`
 
 export const metadata: Metadata = {
