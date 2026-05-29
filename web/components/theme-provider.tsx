@@ -29,7 +29,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setResolved(resolveTheme(p, detectSystem()))
   }, [])
 
-  // Follow the OS live while pref is "system".
+  // Follow the OS live while pref is "system". Keyed on `pref`: the mount effect
+  // above may settle `pref` to a stored 'light'/'dark', which re-runs this effect
+  // and tears the listener down via the early return — so it only stays attached
+  // while we're actually following the system.
   useEffect(() => {
     if (pref !== 'system') return
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
