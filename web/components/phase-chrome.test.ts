@@ -16,6 +16,6 @@ describe('phase-chrome', () => {
   })
   it('keeps the existing icons and colors', () => {
     expect(PHASE_META.activation.icon).toBe('⚡')
-    expect(PHASE_META.activation.color).toBe('#00ff88')
+    expect(PHASE_META.activation.color).toBe('var(--phase-1)')
   })
 })

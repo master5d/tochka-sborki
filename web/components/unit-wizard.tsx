@@ -19,7 +19,7 @@ import type { Mode } from '@/lib/cs/types'
 import { HelpTip } from '@/components/help/help-tip'
 import { IntroCard } from '@/components/help/intro-card'
 
-const PHASE_COLORS = ['#00ff88', '#00aaff', '#ff9900', '#ff44aa']
+const PHASE_COLORS = ['var(--phase-1)', 'var(--phase-2)', 'var(--phase-3)', 'var(--phase-4)']
 const TOTAL_STEPS = 4
 
 interface Props {
@@ -309,7 +309,7 @@ export function UnitWizard({
             style={{
               padding: '0.75rem 1.5rem',
               background: PHASE_COLORS[currentStep],
-              color: '#000',
+              color: 'var(--text-on-accent)',
               fontWeight: 700,
               fontFamily: 'var(--font-mono)',
               fontSize: '0.8rem',

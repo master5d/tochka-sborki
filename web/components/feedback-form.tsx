@@ -176,7 +176,7 @@ export function FeedbackForm({ locale = 'ru', modules }: FeedbackFormProps) {
       </div>
 
       {status === 'error' && (
-        <p style={{ color: '#ff4444', marginBottom: '1rem', fontSize: '0.875rem' }}>
+        <p style={{ color: 'var(--crit)', marginBottom: '1rem', fontSize: '0.875rem' }}>
           {t.errorMessage}
         </p>
       )}

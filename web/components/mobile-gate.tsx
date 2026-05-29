@@ -194,7 +194,7 @@ export function MobileGate({ locale = 'ru', children }: Props) {
           <div style={{
             fontFamily: 'var(--font-mono)',
             fontSize: '0.75rem',
-            color: 'var(--crit, #ff6b5b)',
+            color: 'var(--crit)',
             padding: '0.25rem 0.5rem',
           }}>
             {t.emailFailed}

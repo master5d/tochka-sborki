@@ -115,7 +115,7 @@ export function LoginForm({ locale }: Props) {
               style={{ ...inputStyle, borderStyle: 'dashed' }}
             />
             {status === 'error' && (
-              <p style={{ color: '#ff4444', fontSize: '0.875rem' }}>{errorMsg}</p>
+              <p style={{ color: 'var(--crit)', fontSize: '0.875rem' }}>{errorMsg}</p>
             )}
             <button
               type="submit"
