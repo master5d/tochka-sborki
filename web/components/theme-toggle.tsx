@@ -20,6 +20,7 @@ export function ThemeToggle({ locale }: { locale: Locale }) {
   useEffect(() => setMounted(true), [])
   if (!mounted) return null
 
+  // Arrow-key nav omitted intentionally — matches the OS-toggle pill convention in this nav.
   return (
     <div
       role="radiogroup"
