@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { getDictionary, type Locale } from '@/lib/dictionaries'
 import { detectOs, readStoredOs, storeOs } from '@/lib/os-pref'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 interface Props { locale?: Locale }
 
@@ -108,6 +109,8 @@ export function Nav({ locale: localeProp }: Props = {}) {
         >
           {otherLocale === 'en' ? 'EN' : 'RU'}
         </Link>
+
+        <ThemeToggle locale={locale} />
 
         {os && (
           <button
