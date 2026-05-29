@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Prologue } from '@/components/prologue/Prologue'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://mamaev.coach'),
   title: 'Точка Сборки. Пролог',
   description:
     'Это не курс программирования. Это курс собирания себя в эпоху расщепления — через инструмент, который раньше казался врагом.',
