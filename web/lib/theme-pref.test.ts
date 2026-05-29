@@ -14,6 +14,7 @@ function makeStorage(): Storage {
 }
 
 function setMatchMedia(dark: boolean) {
+  // detectSystem reads window.matchMedia, so re-stub window too (not just the global).
   vi.stubGlobal('matchMedia', (q: string) => ({ matches: dark, media: q }))
   vi.stubGlobal('window', { matchMedia: (globalThis as { matchMedia: unknown }).matchMedia })
 }
@@ -50,6 +51,11 @@ describe('theme-pref', () => {
   it('readStoredPref round-trips a valid value', () => {
     storePref('light')
     expect(readStoredPref()).toBe('light')
+  })
+
+  it('readStoredPref round-trips the system value', () => {
+    storePref('system')
+    expect(readStoredPref()).toBe('system')
   })
 
   it('resolveTheme returns the system arg when pref is system', () => {
