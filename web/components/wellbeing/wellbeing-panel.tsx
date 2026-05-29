@@ -81,7 +81,7 @@ export function WellbeingPanel({ locale, accent, g11, outcome, unitsByModule, mo
           {WB.reengage.body(g11, outcome, ctx.questsLeft, locale)}
         </p>
         <div style={row}>
-          <button style={{ ...btn, background: accent, color: 'var(--text-on-accent)' }} onClick={() => router.push(resumeHref)}>
+          <button style={{ ...btn, background: accent, color: '#000' }} onClick={() => router.push(resumeHref)}>
             {WB.reengage.cta[locale]}
           </button>
           <button style={btn} onClick={() => dismissNudge('reengage')} aria-label="dismiss">×</button>

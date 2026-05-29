@@ -70,7 +70,7 @@ export function Vault({ activeSkin, locale, helpId }: { activeSkin: WorldSkin; l
                     border: 'none',
                     cursor: canAfford ? 'pointer' : 'not-allowed',
                     background: canAfford ? meta.accent : 'var(--border-color)',
-                    color: canAfford ? 'var(--text-on-accent)' : 'var(--text-secondary)',
+                    color: canAfford ? '#000' : 'var(--text-secondary)',
                   }}
                 >
                   {UNLOCK[locale]} · {SKIN_UNLOCK_COST} <span aria-hidden="true">💎</span>

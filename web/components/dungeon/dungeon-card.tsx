@@ -41,7 +41,7 @@ export function DungeonCard({ locale, accent, skin, niche, outcome, moduleTitle,
         ? null
         : cleared
           ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', color: accent }}>{CLEARED[locale]}</span>
-          : <Link href={`${prefix}/dungeon/`} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', padding: '0.45rem 0.9rem', borderRadius: 6, background: accent, color: 'var(--text-on-accent)', fontWeight: 700, textDecoration: 'none' }}>{ENTER[locale]} →</Link>}
+          : <Link href={`${prefix}/dungeon/`} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', padding: '0.45rem 0.9rem', borderRadius: 6, background: accent, color: '#000', fontWeight: 700, textDecoration: 'none' }}>{ENTER[locale]} →</Link>}
     </section>
   )
 }

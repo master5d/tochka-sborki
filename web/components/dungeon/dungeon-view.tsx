@@ -72,7 +72,7 @@ export function DungeonView({ view, locale, accent, moduleTitle, isCleared, onCl
           <div style={{ fontSize: '0.98rem', margin: '0.4rem 0 0.7rem' }}>{view.boss.body}</div>
           {bossDone
             ? <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: accent }}>{CLEARED_BANNER[locale]}</div>
-            : <button type="button" onClick={() => onClear(view.boss.id, view.boss.cs)} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', padding: '0.5rem 1rem', borderRadius: 6, border: 'none', background: accent, color: 'var(--text-on-accent)', fontWeight: 700, cursor: 'pointer' }}>{MARK_DONE[locale]}</button>}
+            : <button type="button" onClick={() => onClear(view.boss.id, view.boss.cs)} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', padding: '0.5rem 1rem', borderRadius: 6, border: 'none', background: accent, color: '#000', fontWeight: 700, cursor: 'pointer' }}>{MARK_DONE[locale]}</button>}
         </div>
       </div>
     </section>
