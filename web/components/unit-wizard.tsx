@@ -291,7 +291,7 @@ export function UnitWizard({
               style={{
                 padding: '0.75rem 1.5rem',
                 background: 'var(--text-accent)',
-                color: '#000',
+                color: 'var(--text-on-accent)',
                 fontWeight: 700,
                 fontFamily: 'var(--font-mono)',
                 fontSize: '0.8rem',

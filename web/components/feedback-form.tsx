@@ -187,7 +187,7 @@ export function FeedbackForm({ locale = 'ru', modules }: FeedbackFormProps) {
         style={{
           padding: '0.875rem 2rem',
           background: 'var(--text-accent)',
-          color: '#000',
+          color: 'var(--text-on-accent)',
           fontWeight: 900,
           fontFamily: 'var(--font-mono)',
           fontSize: '0.875rem',

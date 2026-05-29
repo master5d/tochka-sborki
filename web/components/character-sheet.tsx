@@ -39,7 +39,7 @@ export function CharacterSheet({ locale }: { locale: Locale }) {
           marginTop: '2.5rem',
           padding: '15px 20px',
           background: 'var(--text-accent)',
-          color: '#000',
+          color: 'var(--text-on-accent)',
           fontWeight: 700,
           borderRadius: 10,
           textDecoration: 'none',

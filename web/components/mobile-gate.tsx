@@ -175,7 +175,7 @@ export function MobileGate({ locale = 'ru', children }: Props) {
           style={{
             padding: '0.95rem 1.25rem',
             background: emailStatus === 'sent' ? 'var(--bg-surface)' : 'var(--text-accent)',
-            color: emailStatus === 'sent' ? 'var(--text-accent)' : '#000',
+            color: emailStatus === 'sent' ? 'var(--text-accent)' : 'var(--text-on-accent)',
             border: '1px solid var(--text-accent)',
             borderRadius: 'var(--radius)',
             fontFamily: 'var(--font-mono)',

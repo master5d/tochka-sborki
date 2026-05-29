@@ -193,7 +193,7 @@ export function CertificatePage({ locale }: Props) {
               style={{
                 padding: '0.875rem 1.5rem',
                 background: 'var(--text-accent)',
-                color: '#000',
+                color: 'var(--text-on-accent)',
                 border: 'none',
                 borderRadius: 'var(--radius)',
                 fontFamily: 'var(--font-mono)',

@@ -132,7 +132,7 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
         .intake-nav-btn:disabled { opacity: .4; cursor: default; }
         .intake-nav-btn.primary {
           background: var(--text-accent);
-          color: #000;
+          color: var(--text-on-accent);
           border-color: var(--text-accent);
           font-weight: 700;
         }

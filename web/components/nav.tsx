@@ -132,13 +132,13 @@ export function Nav({ locale: localeProp }: Props = {}) {
             <span style={{
               padding: '3px 8px',
               background: os === 'mac' ? 'var(--text-accent)' : 'transparent',
-              color: os === 'mac' ? '#000' : 'var(--text-secondary)',
+              color: os === 'mac' ? 'var(--text-on-accent)' : 'var(--text-secondary)',
               fontWeight: os === 'mac' ? 700 : 400,
             }}>🍎</span>
             <span style={{
               padding: '3px 8px',
               background: os === 'windows' ? 'var(--text-accent)' : 'transparent',
-              color: os === 'windows' ? '#000' : 'var(--text-secondary)',
+              color: os === 'windows' ? 'var(--text-on-accent)' : 'var(--text-secondary)',
               fontWeight: os === 'windows' ? 700 : 400,
             }}>🪟</span>
           </button>
