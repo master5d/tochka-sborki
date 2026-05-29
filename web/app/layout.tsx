@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { Unbounded } from 'next/font/google'
-import { defaultTheme } from '@/lib/themes'
 import { ProgressProvider } from '@/components/progress-provider'
 import { LangSuggestBanner } from '@/components/lang-suggest-banner'
 import './globals.css'
@@ -25,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="ru"
-      data-theme={defaultTheme}
+      data-theme="dark"
       className={`${GeistSans.variable} ${GeistMono.variable} ${unbounded.variable}`}
     >
       <body>
