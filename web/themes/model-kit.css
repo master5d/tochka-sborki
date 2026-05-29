@@ -34,13 +34,13 @@
   --bg-surface: #fbf9f4;
   --text-primary: #15151a;
   --text-secondary: #5a5a6a;
-  --text-accent: #0c8f4d;
+  --text-accent: #0b7a3a;       /* darkened so white-on-accent + link-on-paper clear WCAG AA (4.5:1) */
   --border-color: #d8d2c6;
-  --border-accent: #0c8f4d40;
+  --border-accent: #0b7a3a40;
   --text-on-accent: #ffffff;
-  --crit: #d92d20;
-  --phase-1: #0c8f4d;
+  --crit: #c42619;              /* darkened to clear AA for error text on paper */
+  --phase-1: #0b7a3a;
   --phase-2: #0061a8;
-  --phase-3: #b06600;
+  --phase-3: #8f5400;           /* amber darkened for AA on paper */
   --phase-4: #b51d6e;
 }
