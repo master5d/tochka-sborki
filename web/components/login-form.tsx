@@ -115,7 +115,7 @@ export function LoginForm({ locale }: Props) {
               style={{ ...inputStyle, borderStyle: 'dashed' }}
             />
             {status === 'error' && (
-              <p style={{ color: '#ff4444', fontSize: '0.875rem' }}>{errorMsg}</p>
+              <p style={{ color: 'var(--crit)', fontSize: '0.875rem' }}>{errorMsg}</p>
             )}
             <button
               type="submit"
@@ -123,7 +123,7 @@ export function LoginForm({ locale }: Props) {
               style={{
                 padding: '0.875rem 2rem',
                 background: 'var(--text-accent)',
-                color: '#000',
+                color: 'var(--text-on-accent)',
                 fontWeight: 900,
                 fontFamily: 'var(--font-mono)',
                 fontSize: '0.875rem',

@@ -77,7 +77,7 @@ export function ContentDemandClient() {
             </ul>
           ) : null}
           <div style={{ display: 'flex', gap: 10, marginTop: '.8rem' }}>
-            <button onClick={() => decide(b.id, 'accepted')} style={{ background: 'var(--text-accent)', color: '#000', border: 'none', borderRadius: 8, padding: '10px 18px', fontWeight: 700, cursor: 'pointer' }}>Принять</button>
+            <button onClick={() => decide(b.id, 'accepted')} style={{ background: 'var(--text-accent)', color: 'var(--text-on-accent)', border: 'none', borderRadius: 8, padding: '10px 18px', fontWeight: 700, cursor: 'pointer' }}>Принять</button>
             <button onClick={() => decide(b.id, 'rejected')} style={{ background: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border-color)', borderRadius: 8, padding: '10px 18px', cursor: 'pointer' }}>Отклонить</button>
           </div>
         </div>

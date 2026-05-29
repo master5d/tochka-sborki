@@ -3,10 +3,10 @@ import type { Locale } from '@/lib/dictionaries'
 export type PhaseType = 'activation' | 'reflection' | 'concept' | 'practice'
 
 export const PHASE_META: Record<PhaseType, { label: Record<Locale, string>; icon: string; color: string }> = {
-  activation: { label: { ru: 'Активация', en: 'Activation' }, icon: '⚡', color: '#00ff88' },
-  reflection: { label: { ru: 'Рефлексия', en: 'Reflection' }, icon: '👁', color: '#00aaff' },
-  concept:    { label: { ru: 'Концепция', en: 'Concept' },    icon: '💡', color: '#ff9900' },
-  practice:   { label: { ru: 'Практика', en: 'Practice' },    icon: '🛠', color: '#ff44aa' },
+  activation: { label: { ru: 'Активация', en: 'Activation' }, icon: '⚡', color: 'var(--phase-1)' },
+  reflection: { label: { ru: 'Рефлексия', en: 'Reflection' }, icon: '👁', color: 'var(--phase-2)' },
+  concept:    { label: { ru: 'Концепция', en: 'Concept' },    icon: '💡', color: 'var(--phase-3)' },
+  practice:   { label: { ru: 'Практика', en: 'Practice' },    icon: '🛠', color: 'var(--phase-4)' },
 }
 
 const MENTAL_MARKER: Record<Locale, string> = {

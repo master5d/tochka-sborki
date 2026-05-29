@@ -1,5 +1,16 @@
-[data-theme="model-kit"] {
-  /* Core palette */
+:root {
+  /* Theme-agnostic: layout, type scale, radius, fonts — identical in both themes */
+  --font-mono: 'Geist Mono', monospace;
+  --radius: 4px;
+  --display-size: clamp(2.8rem, 7vw, 6.5rem);
+  --section-label-size: 0.7rem;
+  --number-size: clamp(5rem, 14vw, 11rem);
+  --section-gap: 5rem;
+  --accent-line: 3px solid var(--text-accent);
+  --content-max: 1100px;
+}
+
+[data-theme="dark"] {
   --bg-primary: #0a0a0f;
   --bg-secondary: #111118;
   --bg-surface: #16161f;
@@ -8,14 +19,28 @@
   --text-accent: #00ff88;
   --border-color: #2a2a3a;
   --border-accent: #00ff8840;
-  --font-mono: 'Geist Mono', monospace;
-  --radius: 4px;
+  --text-on-accent: #000000;
+  --crit: #ff6b5b;
+  --phase-1: #00ff88;
+  --phase-2: #00aaff;
+  --phase-3: #ff9900;
+  --phase-4: #ff44aa;
+}
 
-  /* ТОЧКА СБОРКИ: editorial layout tokens */
-  --display-size: clamp(2.8rem, 7vw, 6.5rem);
-  --section-label-size: 0.7rem;
-  --number-size: clamp(5rem, 14vw, 11rem);
-  --section-gap: 5rem;
-  --accent-line: 3px solid var(--text-accent);
-  --content-max: 1100px;
+[data-theme="light"] {
+  /* Warm "model kit" paper — constructivist blueprint feel */
+  --bg-primary: #f4f1ea;
+  --bg-secondary: #eae6dc;
+  --bg-surface: #fbf9f4;
+  --text-primary: #15151a;
+  --text-secondary: #5a5a6a;
+  --text-accent: #0b7a3a;       /* darkened so white-on-accent + link-on-paper clear WCAG AA (4.5:1) */
+  --border-color: #d8d2c6;
+  --border-accent: #0b7a3a40;
+  --text-on-accent: #ffffff;
+  --crit: #c42619;              /* darkened to clear AA for error text on paper */
+  --phase-1: #0b7a3a;
+  --phase-2: #0061a8;
+  --phase-3: #8f5400;           /* amber darkened for AA on paper */
+  --phase-4: #b51d6e;
 }

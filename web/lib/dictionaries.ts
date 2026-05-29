@@ -12,6 +12,7 @@ export type Dictionary = {
     logout: string
     osTitle: string
     osCurrent: (os: string) => string
+    theme: { title: string; light: string; dark: string; system: string }
   }
   hero: {
     tagline: string
@@ -154,6 +155,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       logout: 'Выйти',
       osTitle: 'Сменить OS',
       osCurrent: (os: string) => `Текущая OS: ${os === 'mac' ? 'macOS' : 'Windows'}. Нажми для смены.`,
+      theme: { title: 'Тема', light: 'Светлая', dark: 'Тёмная', system: 'Системная' },
     },
     hero: {
       tagline: '⬡ Открытый курс · Бесплатно',
@@ -341,6 +343,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       logout: 'Sign out',
       osTitle: 'Switch OS',
       osCurrent: (os: string) => `Current OS: ${os === 'mac' ? 'macOS' : 'Windows'}. Click to switch.`,
+      theme: { title: 'Theme', light: 'Light', dark: 'Dark', system: 'System' },
     },
     hero: {
       tagline: '⬡ Open course · Free',

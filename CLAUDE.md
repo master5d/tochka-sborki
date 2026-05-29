@@ -57,7 +57,7 @@ workers/                — CF Worker (Hono-less router): auth/progress/feedback
 - Next.js 16 App Router, `output: 'export'` (статичный сайт), `trailingSlash: true`
 - MDX (`next-mdx-remote`) — контент из `web/content/{ru,en}/**`
 - Локализация: `lib/dictionaries.ts` (RU+EN), компоненты принимают `locale`
-- CSS Custom Properties + Tailwind 4 — темы через `data-theme` атрибут
+- CSS Custom Properties + Tailwind 4 — light/dark темы через `data-theme` (`light`/`dark`), дефолт = система (prefers-color-scheme), выбор в nav (`lib/theme-pref.ts` + `ThemeProvider` + 3-сегментный `ThemeToggle`); FOUC-guard inline-скрипт в `layout`
 - Cloudflare Pages хостинг + CF Worker для API (`workers/`)
 - GitHub Actions — CI/CD (`.github/workflows/deploy.yml`)
 - Vitest — тесты (`web/lib/content.test.ts`)
@@ -80,7 +80,7 @@ workers/                — CF Worker (Hono-less router): auth/progress/feedback
 - **Help-система** (`lib/help/`, `components/help/`): `<HelpTip>` (tap-popover) + `<IntroCard>` (авто-онбординг). Маркер «💭 в уме» на reflection-фазах.
 - **Bisociation**: фазы `activation`/`reflection` урока — бисоциативные провокации (мысленные, без полей ввода). Drift-guard тест `web/lib/content/reflection-prompts.test.ts` запрещает «вводные» глаголы в этих блоках.
 - **Pacing & Wellbeing (SP4)** (`lib/pacing/`, `lib/wellbeing/`, `components/wellbeing/`): `pacing`-store логирует таймстемпы завершений + режимы + калибровки. `<WellbeingPanel>` на dashboard показывает ОДИН мягкий dismissible-nudge по приоритету (re-engage на якоре G11 > anxiety check-in > rest-day > post-Boss калибровка). Калибровка → suggest-only бейдж режима в `ModeSelector`. Всё клиентское.
-- **localStorage-ключи** (изолированы): `cs_wallet`, `unit_progress`, `daily_quests`, `niche_dungeon`, `help_seen`, `pacing`, `os`, `stack`, `lang-preference`.
+- **localStorage-ключи** (изолированы): `cs_wallet`, `unit_progress`, `daily_quests`, `niche_dungeon`, `help_seen`, `pacing`, `os`, `theme-pref`, `stack`, `lang-preference`.
 
 ## Инструкции для Claude Code
 - Контент пишется на **русском** (основной), затем зеркалится в **EN** (`content/en/`, `/en/` маршруты)

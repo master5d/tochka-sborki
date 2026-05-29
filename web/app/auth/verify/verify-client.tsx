@@ -42,6 +42,6 @@ export function VerifyClient() {
     <p style={{ color: 'var(--text-accent)', fontFamily: 'var(--font-mono)' }}>✓ Вход выполнен. Перенаправляем...</p>
   )
   return (
-    <p style={{ color: '#ff4444', fontFamily: 'var(--font-mono)' }}>Ссылка недействительна или истекла. <a href="/login" style={{ color: 'var(--text-accent)' }}>Запросить новую →</a></p>
+    <p style={{ color: 'var(--crit)', fontFamily: 'var(--font-mono)' }}>Ссылка недействительна или истекла. <a href="/login" style={{ color: 'var(--text-accent)' }}>Запросить новую →</a></p>
   )
 }

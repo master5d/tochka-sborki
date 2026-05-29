@@ -175,7 +175,7 @@ export function MobileGate({ locale = 'ru', children }: Props) {
           style={{
             padding: '0.95rem 1.25rem',
             background: emailStatus === 'sent' ? 'var(--bg-surface)' : 'var(--text-accent)',
-            color: emailStatus === 'sent' ? 'var(--text-accent)' : '#000',
+            color: emailStatus === 'sent' ? 'var(--text-accent)' : 'var(--text-on-accent)',
             border: '1px solid var(--text-accent)',
             borderRadius: 'var(--radius)',
             fontFamily: 'var(--font-mono)',
@@ -194,7 +194,7 @@ export function MobileGate({ locale = 'ru', children }: Props) {
           <div style={{
             fontFamily: 'var(--font-mono)',
             fontSize: '0.75rem',
-            color: 'var(--crit, #ff6b5b)',
+            color: 'var(--crit)',
             padding: '0.25rem 0.5rem',
           }}>
             {t.emailFailed}

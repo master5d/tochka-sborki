@@ -76,7 +76,7 @@ export function AgentToggle({ label = 'Стек:', compact = false }: Props) {
               fontSize: compact ? '0.75rem' : '0.85rem',
               cursor: 'pointer',
               background: active ? 'var(--text-accent)' : 'transparent',
-              color: active ? '#000' : 'var(--text-secondary)',
+              color: active ? 'var(--text-on-accent)' : 'var(--text-secondary)',
               border: '1px solid ' + (active ? 'var(--text-accent)' : 'var(--border-color)'),
               borderRadius: '3px',
               fontWeight: active ? 700 : 500,
