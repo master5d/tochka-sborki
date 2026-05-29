@@ -1,0 +1,179 @@
+/* ── Prologue long-read styles ───────────────────────────────────── */
+
+.article {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--text-primary);
+}
+
+/* ── Opening ─────────────────────────────────────────────────────── */
+
+.opening {
+  margin-bottom: 3.5rem;
+}
+
+.opening p {
+  margin-bottom: 1.25rem;
+}
+
+.lead {
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+/* ── Section ─────────────────────────────────────────────────────── */
+
+.section {
+  margin-bottom: 3.5rem;
+}
+
+.sectionHeading {
+  font-family: var(--font-display, system-ui), system-ui, sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.section p {
+  margin-bottom: 1.25rem;
+}
+
+/* ── Blockquote ──────────────────────────────────────────────────── */
+
+.blockquote {
+  margin: 2rem 0;
+  padding: 1rem 1.5rem;
+  border-left: 3px solid var(--text-accent);
+  background: var(--bg-secondary);
+}
+
+.blockquote em {
+  font-style: italic;
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.blockquoteAttrib {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: normal;
+  letter-spacing: 0.04em;
+}
+
+/* ── Figures ─────────────────────────────────────────────────────── */
+
+.figure {
+  margin: 2rem 0;
+}
+
+.figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius);
+}
+
+/* ── Assembly ────────────────────────────────────────────────────── */
+
+.assembly {
+  margin-bottom: 3.5rem;
+}
+
+.assembly p {
+  margin-bottom: 1.25rem;
+}
+
+/* ── DoubleDoor ──────────────────────────────────────────────────── */
+
+.doubleDoor {
+  margin-top: 3.5rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 2.5rem;
+}
+
+.doubleDoorHeading {
+  font-family: var(--font-display, system-ui), system-ui, sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.doorsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 600px) {
+  .doorsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.doorCard {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background: var(--bg-secondary);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.doorCard:hover {
+  border-color: var(--text-accent);
+}
+
+.doorLabel {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.7rem;
+  color: var(--text-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.75rem;
+}
+
+.doorTitle {
+  font-family: var(--font-display, system-ui), system-ui, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.doorBody {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  flex-grow: 1;
+}
+
+/* ── Mobile padding ──────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .article {
+    padding-left: 1.125rem;
+    padding-right: 1.125rem;
+  }
+
+  .sectionHeading {
+    font-size: 1.45rem;
+  }
+}
