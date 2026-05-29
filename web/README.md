@@ -11,7 +11,7 @@
 | Framework | Next.js 16 App Router, `output: 'export'`, `trailingSlash: true` |
 | Контент | MDX (`next-mdx-remote` + `gray-matter`) |
 | Локализация | `lib/dictionaries.ts` (RU+EN), компоненты принимают `locale` prop |
-| Стилизация | CSS Custom Properties + Tailwind 4 (`data-theme="model-kit"`) |
+| Стилизация | CSS Custom Properties + Tailwind 4 (`data-theme="light\|dark"`, дефолт = система) |
 | Шрифты | Geist / Geist Mono / Unbounded (display) |
 | Backend | CF Worker `workers/` на `ai.mamaev.coach/api/*` (auth, progress, feedback, CRM) |
 | Хостинг | Cloudflare Pages (проект `tochka-sborki`) |
@@ -40,7 +40,9 @@ web/
 │   ├── login, onboarding, auth/verify/, admin/  — auth flow + админка
 │   └── globals.css
 ├── components/
-│   ├── nav.tsx                    — навигация + active-state + OS/lang switch
+│   ├── nav.tsx                    — навигация + active-state + theme/OS/lang switch
+│   ├── theme-provider.tsx         — ThemeProvider + useTheme (live system follow)
+│   ├── theme-toggle.tsx           — 3-сегментный переключатель темы (light/dark/system)
 │   ├── footer.tsx                 — footer (showCertificateCta опционально)
 │   ├── sidebar.tsx                — оглавление модулей/units
 │   ├── lesson-layout.tsx          — обёртка landing модуля
@@ -71,7 +73,8 @@ web/
 │   ├── dictionaries.ts            — RU+EN словарь всего UI-текста
 │   ├── unit-progress.ts           — прогресс юнитов (localStorage), эталон store-паттерна
 │   ├── os-pref.ts                 — детект/хранение выбранной ОС (cheatsheet)
-│   ├── themes.ts, use-pretext.ts
+│   ├── theme-pref.ts              — детект/хранение темы (light/dark/system)
+│   ├── use-pretext.ts
 │   ├── rpg/ cs/ quests/ dungeon/ intake/ help/ pacing/ wellbeing/  — RPG-слой (см. ниже)
 │   ├── content/reflection-prompts.test.ts       — drift-guard reflection-фаз
 │   └── content.test.ts            — Vitest
@@ -98,7 +101,7 @@ web/
 | **Pacing & Wellbeing** (SP4) | `lib/pacing/`, `lib/wellbeing/`, `components/wellbeing/` | `pacing`-store (таймстемпы завершений/режимы/калибровки). `<WellbeingPanel>` — один мягкий nudge по приоритету: re-engage (якорь G11) > anxiety check-in > rest-day > post-Boss калибровка → suggest-only бейдж режима |
 
 **localStorage-ключи** (изолированы, без коллизий): `cs_wallet`, `unit_progress`,
-`daily_quests`, `niche_dungeon`, `help_seen`, `pacing`, `os`, `stack`, `lang-preference`.
+`daily_quests`, `niche_dungeon`, `help_seen`, `pacing`, `os`, `theme-pref`, `stack`, `lang-preference`.
 
 **Bisociation**: фазы `activation`/`reflection` урока — бисоциативные провокации
 (мысленные, без полей ввода). `lib/content/reflection-prompts.test.ts` (drift-guard)
