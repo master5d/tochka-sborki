@@ -12,9 +12,10 @@ export function TwoCurves() {
       viewBox="0 0 800 420"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
-      aria-label="Двойной осциллоскоп — централизованный AI и стоимость локального узла, точка пересечения"
+      aria-labelledby="two-curves-title"
       className={styles.svg}
     >
+      <title id="two-curves-title">Две S-кривые: централизованный AI выходит на плато, сеть личных узлов растёт</title>
       {/* outer chassis */}
       <rect x="20" y="20" width="760" height="380" rx="6" fill="none" stroke="currentColor" strokeWidth="0.75" opacity="0.3" />
 

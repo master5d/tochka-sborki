@@ -8,8 +8,8 @@ export const contentType = 'image/png'
 export const dynamic = 'force-static'
 
 export default async function Image() {
-  const bold = readFileSync(join(process.cwd(), 'app/prologue/pt-serif-700.woff'))
-  const regular = readFileSync(join(process.cwd(), 'app/prologue/pt-serif-400.woff'))
+  const bold = readFileSync(join(process.cwd(), 'app/blog/prologue/pt-serif-700.woff'))
+  const regular = readFileSync(join(process.cwd(), 'app/blog/prologue/pt-serif-400.woff'))
 
   return new ImageResponse(
     (
@@ -102,7 +102,7 @@ export default async function Image() {
               letterSpacing: 0.5,
             }}
           >
-            mamaev.coach/prologue
+            mamaev.coach/blog/prologue
           </div>
         </div>
       </div>

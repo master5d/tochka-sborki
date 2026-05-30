@@ -12,9 +12,10 @@ export function TornAxes() {
       viewBox="0 0 800 380"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
-      aria-label="Расколотый горизонт — перспективная сетка, разломанная по трём осям"
+      aria-labelledby="torn-axes-title"
       className={styles.svg}
     >
+      <title id="torn-axes-title">Порванная карта смысла: оси старых институтов расходятся</title>
       {/* outer frame — technical-drawing border */}
       <rect x="20" y="20" width="760" height="340" fill="none" stroke="currentColor" strokeWidth="0.75" opacity="0.25" />
 

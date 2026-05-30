@@ -5,7 +5,7 @@
 
 ## Три сайта (один репо, три CF Pages проекта)
 - **`web/`** → `ai.mamaev.coach` — LMS курса (проект `tochka-sborki`)
-- **`hub/`** → `mamaev.coach` — личный лендинг (проект `mamaev-coach-hub`)
+- **`hub/`** → `mamaev.coach` — личный лендинг + **блог** (`/blog`, реестр `hub/lib/posts.ts`); agent-ready слои: llms.txt, /.well-known/agent-description.md, sitemap.xml, robots.txt, /blog/rss.xml, JSON-LD (проект `mamaev-coach-hub`)
 - **`mentor/`** → `mentor.mamaev.coach` — B2B agent-engineering (проект `mamaev-coach-mentor`)
 - **`workers/`** → `ai.mamaev.coach/api/*` — CF Worker (auth magic-link, progress, feedback, CRM). Все три сайта bilingual (RU `/`, EN `/en/`).
 

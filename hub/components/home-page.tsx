@@ -61,6 +61,17 @@ export function HomePage({ locale }: Props) {
         }}>
           {t.bio}
         </p>
+        <p style={{ marginTop: '2rem' }}>
+          <a href="/blog/" style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.9rem',
+            color: 'var(--text-accent)',
+            textDecoration: 'none',
+            letterSpacing: '0.04em',
+          }}>
+            → Блог
+          </a>
+        </p>
       </section>
 
       {/* ── PROJECTS ───────────────────────────────────────────── */}
