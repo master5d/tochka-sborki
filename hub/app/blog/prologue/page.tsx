@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Prologue } from '@/components/prologue/Prologue'
+import { PostLayout } from '@/components/blog/post-layout'
+import { getPost } from '@/lib/posts'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://mamaev.coach'),
@@ -10,7 +12,7 @@ export const metadata: Metadata = {
     title: 'Точка Сборки. Пролог',
     description:
       'Великий переход, децентрализованный AI, liberation — и почему всё это об одном.',
-    url: 'https://mamaev.coach/prologue',
+    url: 'https://mamaev.coach/blog/prologue/',
     type: 'article',
     locale: 'ru_RU',
   },
@@ -23,5 +25,9 @@ export const metadata: Metadata = {
 }
 
 export default function ProloguePage() {
-  return <Prologue locale="ru" />
+  return (
+    <PostLayout post={getPost('prologue')!}>
+      <Prologue locale="ru" />
+    </PostLayout>
+  )
 }

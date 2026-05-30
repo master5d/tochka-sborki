@@ -8,6 +8,6 @@
 
 Третий — про точку сборки внутри, без которой любой инструмент усиливает расщепление, а не голос.
 
-https://mamaev.coach/prologue
+https://mamaev.coach/blog/prologue
 
 PS: Курс «Точка Сборки» — бесплатный и открытый: ai.mamaev.coach
