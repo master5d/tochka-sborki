@@ -1,4 +1,5 @@
 import styles from '../Prologue.module.css'
+import { AssemblyPoint } from '../diagrams/AssemblyPoint'
 
 type Props = { locale: 'ru' | 'en' }
 
@@ -10,7 +11,7 @@ export function ActThree({ locale }: Props) {
       <h2 className={styles.sectionHeading}>Акт III. Liberationist</h2>
 
       <figure className={styles.figure}>
-        <img src="/prologue/anchor-3.jpg" alt="Точка сборки — собранность как навык" />
+        <AssemblyPoint />
       </figure>
 
       <p>

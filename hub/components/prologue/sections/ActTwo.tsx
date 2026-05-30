@@ -1,4 +1,5 @@
 import styles from '../Prologue.module.css'
+import { TwoCurves } from '../diagrams/TwoCurves'
 
 type Props = { locale: 'ru' | 'en' }
 
@@ -10,7 +11,7 @@ export function ActTwo({ locale }: Props) {
       <h2 className={styles.sectionHeading}>Акт II. Монолит проиграет</h2>
 
       <figure className={styles.figure}>
-        <img src="/prologue/anchor-2.jpg" alt="Сеть личных узлов против монолитного AI" />
+        <TwoCurves />
       </figure>
 
       <p>

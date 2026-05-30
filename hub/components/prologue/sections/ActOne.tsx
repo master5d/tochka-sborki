@@ -1,4 +1,5 @@
 import styles from '../Prologue.module.css'
+import { TornAxes } from '../diagrams/TornAxes'
 
 type Props = { locale: 'ru' | 'en' }
 
@@ -10,7 +11,7 @@ export function ActOne({ locale }: Props) {
       <h2 className={styles.sectionHeading}>Акт I. Великий переход</h2>
 
       <figure className={styles.figure}>
-        <img src="/prologue/anchor-1.jpg" alt="Великий переход — смена фазы цивилизации" />
+        <TornAxes />
       </figure>
 
       <p>
