@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { getAllPosts, getPost, formatDate, postUrl, posts } from './posts'
+import { getAllPosts, getPost, formatDate, postUrl, posts, type Post } from './posts'
 
 describe('posts registry', () => {
   it('getAllPosts excludes drafts', () => {
@@ -23,6 +23,15 @@ describe('posts registry', () => {
 
   it('getPost returns drafts too (preview), unlike getAllPosts', () => {
     expect(typeof getPost('prologue')).toBe('object')
+  })
+
+  it('getAllPosts removes drafts and sorts desc, given a fixture set', () => {
+    const f = (slug: string, date: string, draft?: boolean): Post => ({
+      slug, title: slug.toUpperCase(), description: 'x', date,
+      author: 'X', readingTime: '1', tags: [], related: [], draft,
+    })
+    const out = getAllPosts([f('a', '2026-01-01'), f('b', '2026-03-01', true), f('c', '2026-02-01')])
+    expect(out.map(p => p.slug)).toEqual(['c', 'a']) // draft 'b' dropped, rest newest-first
   })
 
   it('formatDate renders an ISO date in Russian', () => {

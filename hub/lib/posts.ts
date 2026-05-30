@@ -41,11 +41,15 @@ export const posts: Post[] = [
   },
 ]
 
-/** Published posts, newest-first. Drafts are excluded. */
-export function getAllPosts(): Post[] {
-  return posts
+/**
+ * Published posts, newest-first. Drafts are excluded.
+ * `source` defaults to the registry; the param exists so the draft-filter +
+ * sort logic can be tested against fixtures without polluting the real registry.
+ * `filter` returns a fresh array, so the subsequent `sort` never mutates `source`.
+ */
+export function getAllPosts(source: Post[] = posts): Post[] {
+  return source
     .filter(p => !p.draft)
-    .slice()
     .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
 }
 
