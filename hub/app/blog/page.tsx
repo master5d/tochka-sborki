@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Блог · Александр Мамаев',
     description: 'Эссе и лонгриды об AI, практике и агентском инжиниринге.',
-    url: 'https://mamaev.coach/blog',
+    url: 'https://mamaev.coach/blog/',
     type: 'website',
     locale: 'ru_RU',
   },
