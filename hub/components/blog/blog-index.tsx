@@ -24,6 +24,10 @@ export function BlogIndex() {
         Блог
       </h1>
 
+      {posts.length === 0 && (
+        <p style={{ color: 'var(--text-secondary)' }}>Пока нет публикаций.</p>
+      )}
+
       <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
         {posts.map(post => (
           <li key={post.slug}>

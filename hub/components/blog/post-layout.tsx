@@ -14,7 +14,7 @@ export function PostLayout({ post, children }: { post: Post; children: React.Rea
   const related = post.related.map(getPost).filter((p): p is Post => Boolean(p))
 
   return (
-    <main style={{ maxWidth: '720px', margin: '0 auto', padding: '2.5rem 1.5rem 4rem' }}>
+    <main style={{ maxWidth: '720px' /* prose reading column */, margin: '0 auto', padding: '2.5rem 1.5rem 4rem' }}>
       <BlogPostingLd post={post} />
 
       <Link href="/blog/" style={backLinkStyle}>← Блог</Link>

@@ -1,10 +1,13 @@
 import { SITE, postUrl, type Post } from '@/lib/posts'
 
 function Ld({ data }: { data: object }) {
+  // Escape `<` so a value containing `</script>` can't break out of the tag.
+  // Author-controlled today, but agent-written metadata may not be tomorrow.
+  const json = JSON.stringify(data).replace(/</g, '\\u003c')
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: json }}
     />
   )
 }
