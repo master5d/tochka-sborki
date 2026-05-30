@@ -11,9 +11,10 @@ export function AssemblyPoint() {
       viewBox="0 0 800 380"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
-      aria-label="Радар-санберст — точка сборки в центре концентрических колец и расходящихся лучей"
+      aria-labelledby="assembly-point-title"
       className={styles.svg}
     >
+      <title id="assembly-point-title">Точка сборки: расщеплённые части сходятся в одну собранную точку</title>
       <g transform="translate(400 190)">
         {/* outer technical frame ring */}
         <circle cx="0" cy="0" r="178" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
