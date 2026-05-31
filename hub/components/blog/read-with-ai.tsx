@@ -1,19 +1,17 @@
 'use client'
 import { useState } from 'react'
+import { fullArticlePrompt, agentUrl } from '@/lib/ai-prompt'
 
 /** Human-facing twin of llms.txt: hand the post to the reader's own agent in one click. */
 export function ReadWithAI({ url, title }: { url: string; title: string }) {
   const [copied, setCopied] = useState(false)
 
-  const prompt =
-    `Прочитай статью: ${url} («${title}»). Разбери её, вытащи ключевые принципы и ` +
-    `помоги применить их к моей задаче. Сначала спроси, над чем я сейчас работаю.`
-  const q = encodeURIComponent(prompt)
+  const prompt = fullArticlePrompt(url, title)
 
   const track = (agent: 'copy' | 'chatgpt' | 'claude') => {
     if (typeof window === 'undefined') return
     // @ts-expect-error analytics global is optional
-    window.plausible?.('read_with_ai_clicked', { props: { agent } })
+    window.plausible?.('read_with_ai_clicked', { props: { agent, mode: 'full' } })
   }
 
   const copy = async () => {
@@ -71,22 +69,10 @@ export function ReadWithAI({ url, title }: { url: string; title: string }) {
         <button type="button" onClick={copy} style={ghost}>
           {copied ? 'Скопировано ✓' : 'Скопировать промпт'}
         </button>
-        <a
-          href={`https://chatgpt.com/?q=${q}`}
-          target="_blank"
-          rel="noopener"
-          onClick={() => track('chatgpt')}
-          style={btn}
-        >
+        <a href={agentUrl('chatgpt', prompt)} target="_blank" rel="noopener" onClick={() => track('chatgpt')} style={btn}>
           ChatGPT →
         </a>
-        <a
-          href={`https://claude.ai/new?q=${q}`}
-          target="_blank"
-          rel="noopener"
-          onClick={() => track('claude')}
-          style={btn}
-        >
+        <a href={agentUrl('claude', prompt)} target="_blank" rel="noopener" onClick={() => track('claude')} style={btn}>
           Claude →
         </a>
       </div>

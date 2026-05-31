@@ -3,6 +3,8 @@ import { type Post, getPost, formatDate, postUrl } from '@/lib/posts'
 import { BlogPostingLd } from './json-ld'
 import { BlogFooter } from './blog-footer'
 import { ReadWithAI } from './read-with-ai'
+import { ReadWithAIDock } from './read-with-ai-dock'
+import { SelectionAsk } from './selection-ask'
 
 const backLinkStyle: React.CSSProperties = {
   fontFamily: 'var(--font-mono)',
@@ -76,6 +78,9 @@ export function PostLayout({ post, children }: { post: Post; children: React.Rea
       </div>
 
       <BlogFooter />
+
+      <ReadWithAIDock url={postUrl(post.slug)} title={post.title} />
+      <SelectionAsk url={postUrl(post.slug)} />
     </main>
   )
 }
