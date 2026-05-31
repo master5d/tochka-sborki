@@ -60,7 +60,12 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
   if (!q) return null
   const isLast = step === total - 1
   const answered = answers[q.id] != null && answers[q.id] !== '' && !(Array.isArray(answers[q.id]) && (answers[q.id] as string[]).length === 0)
-  const moduleTitle = MODULE_INTROS.find(m => m.id === q.module)?.title[locale] ?? ''
+  const moduleMeta = MODULE_INTROS.find(m => m.id === q.module)
+  const moduleTitle = moduleMeta?.title[locale] ?? ''
+  // Show the (authored) module intro on the first visible question of each module —
+  // gives the magic-link → quest jump context, and sets expectations of length.
+  const isModuleStart = visible.findIndex(v => v.module === q.module) === Math.min(step, total - 1)
+  const optionalSkip = !q.required && !answered
 
   return (
     <main style={{ maxWidth: 560, margin: '0 auto', padding: '2.5rem 1.25rem 4rem' }}>
@@ -144,6 +149,11 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
       <div style={{ height: 4, background: 'var(--border-color)', borderRadius: 2, margin: '.5rem 0 1.5rem' }}>
         <div style={{ height: '100%', width: `${((step + 1) / total) * 100}%`, background: 'var(--text-accent)', borderRadius: 2 }} />
       </div>
+      {isModuleStart && moduleMeta?.intro[locale] && (
+        <p style={{ color: 'var(--text-secondary)', fontSize: '.95rem', lineHeight: 1.5, marginBottom: '1.4rem' }}>
+          {moduleMeta.intro[locale]}
+        </p>
+      )}
       <h1 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '1.2rem', lineHeight: 1.3 }}>{q.prompt[locale]}</h1>
       <QuestionRenderer
         question={q}
@@ -157,7 +167,7 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
         <button className="intake-nav-btn" disabled={step === 0} onClick={() => goTo(step - 1)}>← {locale === 'en' ? 'Back' : 'Назад'}</button>
         {isLast
           ? <button className="intake-nav-btn primary" disabled={(q.required && !answered) || submitting} onClick={finish}>{submitting ? (locale === 'en' ? 'Saving…' : 'Сохраняю…') : (locale === 'en' ? 'Finish →' : 'Завершить →')}</button>
-          : <button className="intake-nav-btn primary" disabled={q.required && !answered} onClick={() => goTo(step + 1)}>{locale === 'en' ? 'Next →' : 'Далее →'}</button>}
+          : <button className="intake-nav-btn primary" disabled={q.required && !answered} onClick={() => goTo(step + 1)}>{optionalSkip ? (locale === 'en' ? 'Skip →' : 'Пропустить →') : (locale === 'en' ? 'Next →' : 'Далее →')}</button>}
       </div>
     </main>
   )

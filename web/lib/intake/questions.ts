@@ -13,8 +13,8 @@ export const MODULE_INTROS: ModuleIntro[] = [
       en: 'Your Quest',
     },
     intro: {
-      ru: 'Начнём с того, чего вы на самом деле хотите достичь — не с того, что обещает курс, а с того, что нужно именно вам прямо сейчас. Здесь нет неправильных ответов. Чем конкретнее вы будете, тем точнее получится ваш персональный маршрут.',
-      en: "Let's start with what you actually want to achieve — not what the course promises, but what you need right now. There are no wrong answers. The more specific you are, the better your personalized roadmap will be.",
+      ru: 'Это короткая настройка под вас, а не экзамен: несколько небольших блоков, и почти любой вопрос можно пропустить, если он не откликается. Начнём с того, чего вы на самом деле хотите, — не с того, что обещает курс, а с того, что нужно именно вам прямо сейчас. Правильных ответов нет: чем конкретнее, тем точнее получится ваш персональный маршрут.',
+      en: "This is a short setup for you, not a test: a few small sections, and you can skip almost any question that doesn't resonate. Let's start with what you actually want — not what the course promises, but what you need right now. There are no wrong answers: the more specific you are, the better your personalized roadmap.",
     },
   },
   {
@@ -155,6 +155,7 @@ export const QUESTIONS: Question[] = [
       { value: 'no_time', label: { ru: 'Не хватает времени', en: "I don't have enough time" } },
       { value: 'too_technical', label: { ru: 'Боюсь, что это слишком технически сложно для меня', en: "I'm worried it's too technical for me" } },
       { value: 'niche', label: { ru: 'Боюсь, что ИИ не поймёт мою специфическую нишу', en: "I'm worried AI won't understand my specific niche" } },
+      { value: 'already_using', label: { ru: 'Я уже пользуюсь ИИ — просто не знаю, что ещё с ним возможно', en: "I already use AI — I just don't know what else is possible with it" } },
       { value: 'other', label: { ru: 'Другое', en: 'Other' } },
     ],
   },
@@ -198,8 +199,8 @@ export const QUESTIONS: Question[] = [
   {
     id: 'B3', module: 'B', format: 'text', required: false,
     prompt: {
-      ru: 'Какой конкретный результат или обещание этого курса заставило вас подумать «это для меня»?',
-      en: 'What specific result or promise from this course made you think "this is for me"?',
+      ru: 'Что в этом курсе зацепило настолько, что вы решили попробовать?',
+      en: 'What about this course made you want to give it a try?',
     },
   },
   {
@@ -220,8 +221,8 @@ export const QUESTIONS: Question[] = [
   {
     id: 'B5', module: 'B', format: 'text', required: false,
     prompt: {
-      ru: 'Есть ли что-то, что вы по-прежнему делаете «по старинке» и неохотно меняете?',
-      en: 'Is there anything you\'re still doing the "old way" that you feel reluctant to change?',
+      ru: 'Есть ли в вашей работе что-то, что вы делаете вручную или «по старинке» и пока не готовы доверить ИИ? (Например: пишете тексты сами, ведёте записи на бумаге.)',
+      en: 'Is there anything in your work you still do by hand or "the old way" and aren\'t ready to hand to AI yet? (For example: writing your own copy, keeping notes on paper.)',
     },
   },
   {
@@ -344,6 +345,7 @@ export const QUESTIONS: Question[] = [
       { value: 'rephrase', label: { ru: 'Пробую переформулировать свой вопрос', en: 'Try to rephrase my question' } },
       { value: 'better_prompts', label: { ru: 'Умею писать более точные промпты, чтобы это исправить', en: 'I know how to write better prompts to fix it' } },
       { value: 'engineer', label: { ru: 'Понимаю, почему не сработало, и могу обойти это инженерно', en: 'I understand why it failed and can engineer around it' } },
+      { value: 'confront', label: { ru: 'Спорю с ним, поправляю логикой и заставляю исправиться', en: 'I push back, correct it with logic, and make it fix the answer' } },
     ],
   },
   {
