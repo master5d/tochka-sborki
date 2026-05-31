@@ -37,7 +37,7 @@ export const posts: Post[] = [
     author: 'Александр Мамаев',
     readingTime: '~12 мин',
     tags: ['AI', 'спиритуальность', 'Точка Сборки', 'агентский инжиниринг'],
-    related: ['horizons'],
+    related: ['horizons', 'charter'],
   },
   {
     slug: 'horizons',
@@ -48,7 +48,18 @@ export const posts: Post[] = [
     author: 'Александр Мамаев',
     readingTime: '~7 мин',
     tags: ['AI', 'кейсы', 'нетехнари', 'Точка Сборки'],
-    related: ['prologue'],
+    related: ['charter', 'prologue'],
+  },
+  {
+    slug: 'charter',
+    title: 'Твой AI знакомится с тобой заново каждое утро',
+    description:
+      'Каждый раз объяснять AI, кто ты, — выматывает. Один лист на семь блоков превращает разовый инструмент в напарника, который помнит твой метод, голос и красные линии.',
+    date: '2026-06-01',
+    author: 'Александр Мамаев',
+    readingTime: '~6 мин',
+    tags: ['AI', 'кейсы', 'агенты', 'устав', 'Точка Сборки'],
+    related: ['horizons', 'prologue'],
   },
 ]
 

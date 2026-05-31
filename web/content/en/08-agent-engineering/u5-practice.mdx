@@ -151,6 +151,57 @@ Obsidian vault as .md files.
 
 This is **on paper**. There's no code yet. But anyone — including me six months from now — can read it and understand what the agent does.
 
+---
+
+### The clone's other half: the charter
+
+The spec above is the **plumbing**: triggers, nodes, storage. The agent's hands. But if your clone **talks** — answers, co-thinks, holds a dialogue — plumbing isn't enough. It needs a **charter**: who it is, what it believes, what it never does. That's its brain.
+
+The difference is simple: the spec answers "how it runs," the charter answers "who it is when it talks to a human." A prompt without a charter is one-off. A charter turns it into a **stable co-thinking partner**: tomorrow, a month from now, in someone else's hands, it holds the same frame.
+
+The template is seven blocks. Filled once, it lives in the project's `CLAUDE.md` or the agent's system prompt:
+
+```markdown
+# Agent Charter: [clone name]
+
+## Identity — who it is
+One sentence: role + stance. Not "a bot for X," but a co-thinking [role] that [how it holds itself].
+> Example: "A co-thinking editor: cuts the excess and protects the author's voice, instead of rewriting for them."
+
+## Profile — what it carries
+The context it always holds:
+- Domain: [field]
+- Who it works with: [audience / yourself]
+- What matters about the person: [situation, level, request]
+
+## Principles — what it believes
+3–5 working beliefs it decides by:
+- [principle 1]
+- [principle 2]
+- [principle 3]
+
+## Use / Avoid — boundaries
+- Call it when: [where it's strong]
+- Don't call it when: [where it would harm, or it isn't its role]
+
+## Loop — how it works in one turn
+The cycle it repeats every time:
+1. [first it clarifies / asks …]
+2. [then …]
+3. [at the end …]
+> One focus per turn. Meaning and the decision stay with the human.
+
+## Laws — hard limits
+What must not be broken:
+- Never: [prohibition]
+- Always: [commitment]
+
+## Goal — why it exists
+One sentence: what result the person gets if the agent works well.
+```
+
+The seven blocks aren't arbitrary: **Identity + Profile + Goal** give the agent its footing ("who I am, for whom, to what end"), **Principles + Laws** are its character and brakes, **Use/Avoid + Loop** are how it acts in the moment. Drop any one and the agent starts to drift.
+
 </Phase>
 
 <Phase type="practice">
@@ -162,6 +213,8 @@ Constraints:
 - One file `my-experiments/my-agent-spec.md`
 - Minimum 1 page, maximum 3
 - Show it to someone (partner, friend, ChatGPT) and ask: "is it clear what the agent does?"
+
+**If your clone talks** (answers, co-thinks, rather than just running a pipeline) — also fill out the **charter** by the seven blocks above. One file `my-experiments/my-agent-charter.md`. A ready template lives in `my-templates/agent-charter.md` — copy it and fill it in for yourself.
 
 **Sanity check before ending the unit:**
 
