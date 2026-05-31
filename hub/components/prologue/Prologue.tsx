@@ -4,7 +4,6 @@ import { ActOne } from './sections/ActOne'
 import { ActTwo } from './sections/ActTwo'
 import { ActThree } from './sections/ActThree'
 import { Assembly } from './sections/Assembly'
-import { DoubleDoor } from './sections/DoubleDoor'
 
 type Locale = 'ru' | 'en'
 
@@ -16,7 +15,6 @@ export function Prologue({ locale }: { locale: Locale }) {
       <ActTwo locale={locale} />
       <ActThree locale={locale} />
       <Assembly locale={locale} />
-      <DoubleDoor locale={locale} />
     </article>
   )
 }

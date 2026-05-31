@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { type Post, getPost, formatDate } from '@/lib/posts'
 import { BlogPostingLd } from './json-ld'
+import { BlogFooter } from './blog-footer'
 
 const backLinkStyle: React.CSSProperties = {
   fontFamily: 'var(--font-mono)',
@@ -70,6 +71,8 @@ export function PostLayout({ post, children }: { post: Post; children: React.Rea
       <div style={{ marginTop: '3rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)' }}>
         <Link href="/blog/" style={backLinkStyle}>← Блог</Link>
       </div>
+
+      <BlogFooter />
     </main>
   )
 }

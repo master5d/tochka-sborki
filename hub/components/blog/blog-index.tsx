@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getAllPosts, formatDate } from '@/lib/posts'
 import { BlogLd } from './json-ld'
+import { BlogFooter } from './blog-footer'
 
 export function BlogIndex() {
   const posts = getAllPosts()
@@ -62,6 +63,8 @@ export function BlogIndex() {
           </li>
         ))}
       </ul>
+
+      <BlogFooter />
     </main>
   )
 }
