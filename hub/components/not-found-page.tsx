@@ -89,7 +89,7 @@ export function NotFoundPage() {
           alignSelf: 'flex-start',
           padding: '0.875rem 2.5rem',
           background: 'var(--text-accent)',
-          color: '#000',
+          color: 'var(--text-on-accent)',
           fontWeight: 900,
           fontFamily: 'var(--font-mono)',
           fontSize: '0.875rem',

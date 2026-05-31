@@ -1,17 +1,38 @@
-[data-theme="model-kit"] {
-  --bg-primary: #0a0a0f;
-  --bg-secondary: #111118;
-  --bg-surface: #16161f;
-  --text-primary: #e8e8f0;
-  --text-secondary: #9090a8;
-  --text-accent: #00aaff;       /* Blue accent — differentiates B2B from course green */
-  --text-accent-warm: #00ff88;
-  --border-color: #2a2a3a;
-  --border-accent: #00aaff40;
+:root {
+  /* Theme-agnostic: layout, type scale, radius, fonts — identical in both themes */
   --font-mono: 'Geist Mono', monospace;
   --radius: 4px;
   --display-size: clamp(2.8rem, 7vw, 6.5rem);
   --section-label-size: 0.7rem;
   --section-gap: 5rem;
   --content-max: 1100px;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #111118;
+  --bg-surface: #16161f;
+  --text-primary: #e8e8f0;
+  --text-secondary: #9090a8;
+  --text-accent: #00aaff;          /* Blue accent — differentiates B2B from course green */
+  --text-accent-warm: #00ff88;
+  --border-color: #2a2a3a;
+  --border-accent: #00aaff40;
+  --text-on-accent: #000000;
+  --crit: #ff6b5b;
+}
+
+[data-theme="light"] {
+  /* Warm "model kit" paper — constructivist blueprint feel; B2B blue preserved */
+  --bg-primary: #f4f1ea;
+  --bg-secondary: #eae6dc;
+  --bg-surface: #fbf9f4;
+  --text-primary: #15151a;
+  --text-secondary: #5a5a6a;
+  --text-accent: #0061a8;          /* darkened blue so white-on-accent + link-on-paper clear WCAG AA */
+  --text-accent-warm: #0b7a3a;     /* green darkened for AA on paper */
+  --border-color: #d8d2c6;
+  --border-accent: #0061a840;
+  --text-on-accent: #ffffff;
+  --crit: #c42619;
 }

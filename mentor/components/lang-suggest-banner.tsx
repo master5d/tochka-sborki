@@ -88,7 +88,7 @@ export function LangSuggestBanner() {
         style={{
           padding: '0.4rem 0.85rem',
           background: 'var(--text-accent)',
-          color: '#000',
+          color: 'var(--text-on-accent)',
           border: '1px solid var(--text-accent)',
           borderRadius: '3px',
           fontFamily: 'var(--font-mono)',
