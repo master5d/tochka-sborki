@@ -1,0 +1,91 @@
+/* ── Blog long-read prose ────────────────────────────────────────────
+   Brand model-kit (dark, neon-on-black). Reusable base for text posts:
+   Geist body, Unbounded headings, neon emphasis. Mirrors the prologue's
+   typographic system as a standalone module (prologue keeps its own). */
+
+.prose {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 1.1875rem;
+  line-height: 1.72;
+  color: var(--text-primary);
+  text-rendering: optimizeLegibility;
+}
+
+.prose p {
+  margin: 0 0 1.35rem;
+  text-wrap: pretty;
+}
+
+/* Inline emphasis — neon accent beats woven through the read. */
+.prose strong {
+  color: var(--text-accent);
+  font-weight: 650;
+}
+
+/* Oversized cold-open line. */
+.prose .lead {
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  text-wrap: balance;
+  margin: 0 0 2rem;
+}
+
+/* Section headings as constructivist plates: hairline rule + big Unbounded. */
+.prose h2 {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 900;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  color: var(--text-primary);
+  margin: clamp(3rem, 7vw, 4rem) 0 1.4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Per-horizon boundary line: what AI takes vs what stays yours. */
+.boundary {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+  padding-top: 0.9rem;
+  margin: 0.25rem 0 1.5rem;
+}
+
+.boundary b {
+  color: var(--text-accent);
+  font-weight: 650;
+}
+
+/* Standalone <strong> paragraph = a spine beat → big Unbounded pull-line. */
+.prose p:has(> strong:only-child) {
+  margin: 2.5rem 0;
+}
+
+.prose p:has(> strong:only-child) strong {
+  display: block;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.3rem, 3.4vw, 1.9rem);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+
+.prose a {
+  color: var(--text-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+@media (max-width: 480px) {
+  .prose { font-size: 1.125rem; }
+}
