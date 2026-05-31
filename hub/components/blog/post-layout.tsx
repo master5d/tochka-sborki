@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import { type Post, getPost, formatDate } from '@/lib/posts'
+import { type Post, getPost, formatDate, postUrl } from '@/lib/posts'
 import { BlogPostingLd } from './json-ld'
 import { BlogFooter } from './blog-footer'
+import { ReadWithAI } from './read-with-ai'
 
 const backLinkStyle: React.CSSProperties = {
   fontFamily: 'var(--font-mono)',
@@ -43,6 +44,8 @@ export function PostLayout({ post, children }: { post: Post; children: React.Rea
       </header>
 
       {children}
+
+      <ReadWithAI url={postUrl(post.slug)} title={post.title} />
 
       {related.length > 0 && (
         <section style={{ marginTop: '3rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)' }}>
