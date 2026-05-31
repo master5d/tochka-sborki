@@ -13,6 +13,8 @@ import { usePacing } from '@/lib/pacing/use-pacing'
 import { suggestModeFromCalibration } from '@/lib/pacing/suggest-mode'
 import { MODE } from '@/lib/cs/modes'
 import { getAppliedChallenge } from '@/lib/cs/applied-challenge'
+import { buildLearnPrompt } from '@/lib/learn-prompt'
+import { LearnWithAI } from '@/components/learn-with-ai'
 import { ModeSelector } from '@/components/cs/mode-selector'
 import { CycleComplete } from '@/components/cs/cycle-complete'
 import type { Mode } from '@/lib/cs/types'
@@ -89,6 +91,20 @@ export function UnitWizard({
   const challengeTier = chosenMode ? MODE[chosenMode].challengeTier : 'task'
   const hintVisible = chosenMode ? MODE[chosenMode].hintVisible : true
   const appliedChallenge = getAppliedChallenge({ niche, outcome }, moduleSlug, challengeTier, locale)
+
+  const skinMeta = skin ? SKINS_META[skin] : undefined
+  const learnPrompt = buildLearnPrompt({
+    locale,
+    moduleTitle,
+    unitIndex,
+    totalUnits,
+    skinName: skinMeta?.displayName[locale] ?? null,
+    mentorName: skinMeta?.mentor?.name[locale] ?? null,
+    niche,
+    outcome,
+    mode: chosenMode ?? null,
+    appliedChallenge: appliedChallenge ?? null,
+  })
 
   function scrollToTop() {
     topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -339,6 +355,8 @@ export function UnitWizard({
         )}
         </div>
       </div>
+
+      <LearnWithAI prompt={learnPrompt} locale={locale} />
     </UnitWizardContext.Provider>
   )
 }
