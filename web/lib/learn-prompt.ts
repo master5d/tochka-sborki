@@ -5,6 +5,7 @@
 // roadmap stage + applied challenge. Frameworks: Kolb, Koestler bisociation, Learning Loop.
 import type { Mode } from './cs/types'
 import type { Locale } from './dictionaries'
+import type { RelationalStyle } from './intake/types'
 
 export interface LearnPromptInput {
   locale: Locale
@@ -17,6 +18,8 @@ export interface LearnPromptInput {
   outcome?: string | null    // F3 free text
   mode?: Mode | null
   appliedChallenge?: string | null
+  mbti?: string | null
+  relational?: RelationalStyle | null
 }
 
 const NICHE: Record<string, { ru: string; en: string }> = {
@@ -49,6 +52,25 @@ const MODE_FALLBACK = {
   en: 'Match my level: start with scaffolding and fade it as I get it.',
 }
 
+function bondingLine(i: LearnPromptInput, ru: boolean): string {
+  if (!i.mbti && !i.relational) return ''
+  const r = i.relational
+  const errMap = {
+    ru: { soft_feedback: 'правь мягко', lose_motivation: 'береги мотивацию, хвали за попытку', calm: 'правь прямо, без смягчения', fix_immediately: 'давай сразу точную правку' },
+    en: { soft_feedback: 'correct gently', lose_motivation: 'protect motivation, praise the attempt', calm: 'correct directly', fix_immediately: 'give the exact fix immediately' },
+  }
+  const attnMap = {
+    ru: { short: 'короткими ходами по 3–5 минут', mid: 'блоками по 10–15 минут', long: 'можно длинными заходами' },
+    en: { short: 'in short 3–5 minute turns', mid: 'in 10–15 minute blocks', long: 'longer stretches are fine' },
+  }
+  const parts: string[] = []
+  if (i.mbti) parts.push(ru ? `мой психотип — ${i.mbti} (учитывай его в тоне и подаче)` : `my MBTI is ${i.mbti} (factor it into tone and delivery)`)
+  if (r?.errorStyle) parts.push((ru ? errMap.ru : errMap.en)[r.errorStyle])
+  if (r?.attention) parts.push((ru ? attnMap.ru : attnMap.en)[r.attention])
+  if (!parts.length) return ''
+  return (ru ? 'Под привязку: ' : 'For bonding: ') + parts.join('; ') + '.'
+}
+
 export function buildLearnPrompt(i: LearnPromptInput): string {
   const ru = i.locale !== 'en'
   const niche = i.niche ? NICHE[i.niche]?.[ru ? 'ru' : 'en'] : null
@@ -65,6 +87,7 @@ export function buildLearnPrompt(i: LearnPromptInput): string {
         (i.outcome ? ` Мой запрос: «${i.outcome}».` : ''),
       '',
       `Сейчас я на материале: модуль «${i.moduleTitle}», юнит ${unitNo} из ${i.totalUnits}. ${modeLine}`,
+      bondingLine(i, true),
       '',
       'Веди меня по циклу Колба: дай прожить опыт → помоги отрефлексировать → собери концепт → подтолкни применить. Где уместно — используй бисоциацию: столкни мою привычную рамку с чужеродной, чтобы родился неожиданный угол.',
       '',
@@ -87,6 +110,7 @@ export function buildLearnPrompt(i: LearnPromptInput): string {
       (i.outcome ? ` My goal: "${i.outcome}".` : ''),
     '',
     `I'm currently on: module "${i.moduleTitle}", unit ${unitNo} of ${i.totalUnits}. ${modeLine}`,
+    bondingLine(i, false),
     '',
     'Guide me through Kolb\'s cycle: let me have the experience → help me reflect → build the concept → push me to apply it. Where useful, use bisociation: collide my habitual frame with a foreign one so an unexpected angle appears.',
     '',
@@ -97,5 +121,5 @@ export function buildLearnPrompt(i: LearnPromptInput): string {
     '',
     'Start with one question: what I already understood from the material and where I\'m stuck. Don\'t dump everything — one focus per turn, briefly.',
   ]
-  return lines.join('\n').replace(/\n{3,}/g, '\n\n').trim()
+  return lines.filter(l => l !== '' || true).join('\n').replace(/\n{3,}/g, '\n\n').trim()
 }

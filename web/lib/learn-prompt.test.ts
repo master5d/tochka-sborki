@@ -48,4 +48,16 @@ describe('buildLearnPrompt', () => {
     expect(p).toContain('Kolb')
     expect(p).toMatch(/unit 2 of 3/)
   })
+
+  it('adds a bonding directive from MBTI + relational style', () => {
+    const p = buildLearnPrompt({ ...base, mbti: 'INFP', relational: { rhythm: 'suave', errorStyle: 'soft_feedback', anchor: 'support', attention: 'short' } })
+    expect(p).toContain('INFP')
+    expect(p).toMatch(/мягк/i)        // soft feedback → gentle correction
+    expect(p).toMatch(/корот|3–5|мелк/) // short attention → short turns
+  })
+
+  it('omits the bonding block entirely when absent', () => {
+    const p = buildLearnPrompt(base)
+    expect(p).not.toContain('MBTI')
+  })
 })

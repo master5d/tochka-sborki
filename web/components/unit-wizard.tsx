@@ -58,6 +58,8 @@ export function UnitWizard({
   const [pack, setPack] = useState<SkinPack | null>(null)
   const [niche, setNiche] = useState<string | null>(null)
   const [outcome, setOutcome] = useState<string | null>(null)
+  const [mbti, setMbti] = useState<string | null>(null)
+  const [relational, setRelational] = useState<any | null>(null)
 
   const unitKey = `${moduleSlug}/${unitSlug}`
   const { award, setMode, getMode, ready: shardsReady } = useShards()
@@ -71,6 +73,8 @@ export function UnitWizard({
         if (!p?.world_skin) return
         setSkin(p.world_skin as WorldSkin)
         setNiche(p.niche ?? null)
+        setMbti(p.mbti ?? null)
+        try { setRelational(p.relational_style ? JSON.parse(p.relational_style) : null) } catch { setRelational(null) }
         try {
           const ans = typeof p.answers === 'string' ? JSON.parse(p.answers) : p.answers
           const f3 = ans?.F3
@@ -104,6 +108,8 @@ export function UnitWizard({
     outcome,
     mode: chosenMode ?? null,
     appliedChallenge: appliedChallenge ?? null,
+    mbti,
+    relational,
   })
 
   function scrollToTop() {
