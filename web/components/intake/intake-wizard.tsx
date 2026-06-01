@@ -1,21 +1,29 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { QUESTIONS, MODULE_INTROS } from '@/lib/intake/questions'
+import { getQuestions, getModuleIntros } from '@/lib/intake/instrument'
 import { visibleQuestions } from '@/lib/intake/visible'
 import { QuestionRenderer } from './question-renderer'
-import type { Answers, AnswerValue, Locale } from '@/lib/intake/types'
+import type { Answers, AnswerValue, InstrumentVersion, Locale } from '@/lib/intake/types'
 
 export function IntakeWizard({ locale }: { locale: Locale }) {
   const [answers, setAnswers] = useState<Answers>({})
   const [step, setStep] = useState(0)
   const [submitting, setSubmitting] = useState(false)
+  const [version, setVersion] = useState<InstrumentVersion>(2) // new students default to v2
 
   useEffect(() => {
     fetch('/api/intake/me', { credentials: 'include' })
       .then(r => r.ok ? r.json() : null)
-      .then(d => { if (d?.answers) { setAnswers(JSON.parse(d.answers)); setStep(d.current_step ?? 0) } })
+      .then(d => {
+        if (!d) return
+        if (d.instrument_version === 1) setVersion(1) // returning v1 student stays on v1
+        if (d.answers) { setAnswers(JSON.parse(d.answers)); setStep(d.current_step ?? 0) }
+      })
       .catch(() => {})
   }, [])
+
+  const QUESTIONS = getQuestions(version)
+  const MODULE_INTROS = getModuleIntros(version)
 
   const visible = visibleQuestions(QUESTIONS, answers)
   const total = visible.length
@@ -29,7 +37,8 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
 
   function persist(a: Answers, s: number) {
     fetch('/api/intake/progress', { method: 'PATCH', credentials: 'include',
-      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ answers: a, currentStep: s }) }).catch(() => {})
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ answers: a, currentStep: s, instrumentVersion: version }) }).catch(() => {})
   }
 
   // Update answer locally only; progress is persisted on step changes (not per keystroke).
@@ -52,7 +61,7 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
   async function finish() {
     setSubmitting(true)
     const res = await fetch('/api/intake/submit', { method: 'POST', credentials: 'include',
-      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ answers }) })
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ answers, locale }) })
     if (res.ok) { const { redirect } = await res.json(); window.location.replace(locale === 'en' ? '/en' + redirect : redirect) }
     else setSubmitting(false)
   }
