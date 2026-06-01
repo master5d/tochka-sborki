@@ -13,6 +13,13 @@ describe('extractSignals', () => {
     expect(extractSignals({ F3: '   ', F1: 'solo' })).toEqual([])
     expect(extractSignals({})).toEqual([])
   })
+  it('picks the v2 equivalents (V_OUTCOME ↔ F3, V_NICHE__other ↔ F2_other)', () => {
+    const s = extractSignals({ V_OUTCOME: '  ship my course ', V_NICHE: 'other', V_NICHE__other: 'tarot reader' })
+    expect(s).toEqual([
+      { source: 'F3', text: 'ship my course' },
+      { source: 'F2_other', text: 'tarot reader' },
+    ])
+  })
 })
 
 describe('valueTier', () => {
