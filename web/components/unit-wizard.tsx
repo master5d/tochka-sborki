@@ -18,6 +18,7 @@ import { LearnWithAI } from '@/components/learn-with-ai'
 import { ModeSelector } from '@/components/cs/mode-selector'
 import { CycleComplete } from '@/components/cs/cycle-complete'
 import type { Mode } from '@/lib/cs/types'
+import type { RelationalStyle } from '@/lib/intake/types'
 import { HelpTip } from '@/components/help/help-tip'
 import { IntroCard } from '@/components/help/intro-card'
 
@@ -59,7 +60,7 @@ export function UnitWizard({
   const [niche, setNiche] = useState<string | null>(null)
   const [outcome, setOutcome] = useState<string | null>(null)
   const [mbti, setMbti] = useState<string | null>(null)
-  const [relational, setRelational] = useState<any | null>(null)
+  const [relational, setRelational] = useState<RelationalStyle | null>(null)
 
   const unitKey = `${moduleSlug}/${unitSlug}`
   const { award, setMode, getMode, ready: shardsReady } = useShards()

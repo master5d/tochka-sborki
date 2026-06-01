@@ -8,6 +8,7 @@ import { CharterReveal } from './charter-reveal'
 import { buildCompanionCharter } from '@/lib/intake/charter'
 import { deriveMbti } from '@/lib/intake/mbti'
 import { SKINS_META } from '@/lib/rpg/skins-meta'
+import type { WorldSkin } from '@/lib/rpg/types'
 
 export function IntakeWizard({ locale }: { locale: Locale }) {
   const [answers, setAnswers] = useState<Answers>({})
@@ -15,6 +16,7 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
   const [submitting, setSubmitting] = useState(false)
   const [version, setVersion] = useState<InstrumentVersion>(2) // new students default to v2
   const [charter, setCharter] = useState<string | null>(null)
+  const [pendingHref, setPendingHref] = useState<string | null>(null)
 
   useEffect(() => {
     fetch('/api/intake/me', { credentials: 'include' })
@@ -69,22 +71,25 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
       headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ answers, locale }) })
     if (res.ok) {
       const { redirect } = await res.json()
-      const go = () => window.location.replace(locale === 'en' ? '/en' + redirect : redirect)
+      const href = locale === 'en' ? '/en' + redirect : redirect
       if (version === 2) {
+        const skinKey = answers['V_SKIN'] as WorldSkin | undefined
+        const meta = skinKey ? SKINS_META[skinKey] : undefined
         setCharter(buildCompanionCharter({
           locale,
+          skinName: meta?.displayName[locale] ?? null,
+          mentorName: meta?.mentor?.name[locale] ?? null,
           niche: answers['V_NICHE'] as string | undefined,
           outcome: answers['V_OUTCOME'] as string | undefined,
           mbti: deriveMbti(answers),
           relational: { rhythm: (answers['V_RHYTHM'] as any) ?? null, errorStyle: (answers['V_ERR'] as any) ?? null, anchor: (answers['V_ANCHOR'] as any) ?? null, attention: (answers['V_ATTN'] as any) ?? null },
         }))
-        // hold redirect; CharterReveal's onContinue calls go()
-        ;(window as any).__intakeGo = go
-      } else go()
+        setPendingHref(href)
+      } else window.location.replace(href)
     } else setSubmitting(false)
   }
 
-  if (charter) return <CharterReveal charter={charter} locale={locale} onContinue={() => (window as any).__intakeGo?.()} />
+  if (charter) return <CharterReveal charter={charter} locale={locale} onContinue={() => { if (pendingHref) window.location.replace(pendingHref) }} />
   if (!q) return null
   const isLast = step === total - 1
   const answered = answers[q.id] != null && answers[q.id] !== '' && !(Array.isArray(answers[q.id]) && (answers[q.id] as string[]).length === 0)
