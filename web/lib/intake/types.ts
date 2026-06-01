@@ -2,7 +2,19 @@
 export type Locale = 'ru' | 'en'
 export type QuestionFormat = 'number' | 'single' | 'multi' | 'likert' | 'text'
 export type AttributeCode = 'INT' | 'WIS' | 'CON' | 'DEX' | 'CHA' | 'STR'
-export type ModuleId = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G'
+export type ModuleId = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'V' | 'VD'
+
+export type InstrumentVersion = 1 | 2
+
+export type MbtiAxis = 'E' | 'I' | 'S' | 'N' | 'T' | 'F' | 'J' | 'P'
+export type MbtiType = string // 4-letter, e.g. 'INTJ'
+
+export interface RelationalStyle {
+  rhythm: 'suave' | 'fuego' | 'libre' | 'ritual' | null
+  errorStyle: 'calm' | 'lose_motivation' | 'soft_feedback' | 'fix_immediately' | null
+  anchor: 'support' | 'topics' | 'quick_wins' | 'structure' | 'freedom' | null
+  attention: 'short' | 'mid' | 'long' | null
+}
 
 export type CharacterClass =
   | 'artificer' | 'mage' | 'operator' | 'healer' | 'sovereign' | 'wanderer'
@@ -40,11 +52,13 @@ export interface ScoreResult {
   charClass: CharacterClass
   charLevel: number
   worldSkin: WorldSkin
-  worldSkinSource: 'g9' | 'g3' | 'wanderer-fallback'
+  worldSkinSource: 'g9' | 'g3' | 'wanderer-fallback' | 'v2'
   cogTier: number
   register: string
   sheetLanguage: string
   niche: string | null
   os: string | null
   strLowConfidence: boolean
+  mbti: MbtiType | null
+  relationalStyle: RelationalStyle | null
 }
