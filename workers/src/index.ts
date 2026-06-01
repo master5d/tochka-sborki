@@ -62,18 +62,18 @@ export default {
         if (auth instanceof Response) {
           response = auth
         } else {
-          let body: { answers?: any; currentStep?: number }
+          let body: { answers?: any; currentStep?: number; instrumentVersion?: number }
           try { body = await request.json() } catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }) }
-          response = await handleIntakeProgress(env.DB, auth.sub, { answers: body.answers ?? {}, currentStep: body.currentStep ?? 0 })
+          response = await handleIntakeProgress(env.DB, auth.sub, { answers: body.answers ?? {}, currentStep: body.currentStep ?? 0, instrumentVersion: body.instrumentVersion === 2 ? 2 : 1 })
         }
       } else if (path === '/api/intake/submit' && method === 'POST') {
         const auth = await requireAuth(request, env)
         if (auth instanceof Response) {
           response = auth
         } else {
-          let body: { answers?: any }
+          let body: { answers?: any; locale?: 'ru' | 'en' }
           try { body = await request.json() } catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }) }
-          response = await handleIntakeSubmit(env.DB, auth.sub, { answers: body.answers ?? {} }, env.GEMINI_API_KEY)
+          response = await handleIntakeSubmit(env.DB, auth.sub, { answers: body.answers ?? {}, locale: body.locale }, env.GEMINI_API_KEY)
           if (response.ok) ctx.waitUntil(runDemandRadar(env, auth.sub, body.answers ?? {}))
         }
       } else if (path === '/api/admin/content-demand/briefs' && method === 'GET') {
