@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { getAllPosts, getPost, formatDate, postUrl, posts, type Post } from './posts'
+import { getAllPosts, getPost, formatDate, postUrl, localizedPost, posts, type Post, type Locale } from './posts'
 
 describe('posts registry', () => {
   it('getAllPosts excludes drafts', () => {
@@ -30,7 +30,7 @@ describe('posts registry', () => {
       slug, title: slug.toUpperCase(), description: 'x', date,
       author: 'X', readingTime: '1', tags: [], related: [], draft,
     })
-    const out = getAllPosts([f('a', '2026-01-01'), f('b', '2026-03-01', true), f('c', '2026-02-01')])
+    const out = getAllPosts('ru', [f('a', '2026-01-01'), f('b', '2026-03-01', true), f('c', '2026-02-01')])
     expect(out.map(p => p.slug)).toEqual(['c', 'a']) // draft 'b' dropped, rest newest-first
   })
 
@@ -50,5 +50,51 @@ describe('posts registry', () => {
     expect(p.author).toBe('Александр Мамаев')
     expect(Array.isArray(p.tags)).toBe(true)
     expect(Array.isArray(p.related)).toBe(true)
+  })
+
+  it('getAllPosts("en") returns only posts with an en block', () => {
+    const f = (slug: string, date: string, en?: { title: string; description: string; readingTime: string }): Post => ({
+      slug, title: slug.toUpperCase(), description: 'x', date,
+      author: 'X', readingTime: '1', tags: [], related: [], en,
+    })
+    const set = [
+      f('a', '2026-01-01', { title: 'A', description: 'da', readingTime: '~1 min' }),
+      f('b', '2026-02-01'), // no en → hidden from EN
+    ]
+    expect(getAllPosts('en', set).map(p => p.slug)).toEqual(['a'])
+    expect(getAllPosts('ru', set).map(p => p.slug)).toEqual(['b', 'a']) // ru shows all, newest-first
+  })
+
+  it('postUrl is locale-aware', () => {
+    expect(postUrl('prologue')).toBe('https://mamaev.coach/blog/prologue/')
+    expect(postUrl('prologue', 'ru')).toBe('https://mamaev.coach/blog/prologue/')
+    expect(postUrl('prologue', 'en')).toBe('https://mamaev.coach/en/blog/prologue/')
+  })
+
+  it('formatDate renders English dates with locale "en"', () => {
+    expect(formatDate('2026-06-02', 'en')).toBe('2 June 2026')
+    expect(formatDate('2026-01-01', 'en')).toBe('1 January 2026')
+    expect(formatDate('2026-05-30')).toBe('30 мая 2026') // ru default unchanged
+  })
+
+  it('localizedPost resolves ru canon and en mirror', () => {
+    const p: Post = {
+      slug: 's', title: 'РУ', description: 'ру-описание', date: '2026-06-02',
+      author: 'X', readingTime: '~5 мин', tags: [], related: [],
+      en: { title: 'EN', description: 'en-desc', readingTime: '~5 min' },
+    }
+    const ru = localizedPost(p, 'ru')
+    expect([ru.title, ru.url, ru.langTag]).toEqual(['РУ', 'https://mamaev.coach/blog/s/', 'ru-RU'])
+    const en = localizedPost(p, 'en')
+    expect([en.title, en.description, en.readingTime, en.url, en.langTag])
+      .toEqual(['EN', 'en-desc', '~5 min', 'https://mamaev.coach/en/blog/s/', 'en-US'])
+  })
+
+  it('localizedPost falls back to ru canon when en is absent', () => {
+    const p: Post = {
+      slug: 's', title: 'РУ', description: 'd', date: '2026-06-02',
+      author: 'X', readingTime: '~5 мин', tags: [], related: [],
+    }
+    expect(localizedPost(p, 'en').title).toBe('РУ') // graceful: never throws on missing en
   })
 })
