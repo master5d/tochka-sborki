@@ -20,6 +20,7 @@ ${posts.map(p => `- [${p.title}](${postUrl(p.slug)}) — ${p.description}`).join
 - ${SITE.url}/sitemap.xml
 - ${SITE.url}/blog/rss.xml
 - ${SITE.url}/.well-known/agent-description.md
+- ${SITE.url}/en/llms.txt (English)
 `
   return new Response(body, {
     headers: { 'content-type': 'text/plain; charset=utf-8' },
