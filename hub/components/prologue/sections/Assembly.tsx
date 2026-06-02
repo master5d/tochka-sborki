@@ -1,4 +1,5 @@
 import styles from '../Prologue.module.css'
+import { SovereigntyFormula } from '../PrologueDiagrams'
 
 type Props = { locale: 'ru' | 'en' }
 
@@ -8,6 +9,8 @@ export function Assembly({ locale }: Props) {
   return (
     <section className={styles.assembly}>
       <h2 className={styles.sectionHeading}>Сборка</h2>
+
+      <SovereigntyFormula />
 
       <p>
         {'Три вещи верны одновременно. Первая: снаружи земля меняет агрегатное состояние, и старые карты больше не ведут.'}

@@ -1,4 +1,5 @@
 import styles from '../Prologue.module.css'
+import { PhaseShiftDiagram } from '../PrologueDiagrams'
 
 type Props = { locale: 'ru' | 'en' }
 
@@ -8,6 +9,8 @@ export function ActOne({ locale }: Props) {
   return (
     <section className={styles.section}>
       <h2 className={styles.sectionHeading}>Акт I. Великий переход</h2>
+
+      <PhaseShiftDiagram />
 
       <p>
         {'Есть человек по имени Джордан Холл. Он пишет про civilizational phase shift — смену фазы'}

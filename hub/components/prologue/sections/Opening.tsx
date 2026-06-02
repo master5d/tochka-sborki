@@ -1,4 +1,5 @@
 import styles from '../Prologue.module.css'
+import { MirrorParadox } from '../PrologueDiagrams'
 
 type Props = { locale: 'ru' | 'en' }
 
@@ -10,6 +11,8 @@ export function Opening({ locale }: Props) {
       <p className={styles.lead}>
         {'Ты открываешь ChatGPT по двадцать раз на дню. А себя — ни разу.'}
       </p>
+
+      <MirrorParadox />
 
       <p>
         {'Давай честно, наедине, никто не слышит. Последние пару лет в груди стоит тихий гул.'}

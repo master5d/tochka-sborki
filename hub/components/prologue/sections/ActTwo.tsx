@@ -1,4 +1,5 @@
 import styles from '../Prologue.module.css'
+import { IntelligenceCurves } from '../PrologueDiagrams'
 
 type Props = { locale: 'ru' | 'en' }
 
@@ -8,6 +9,8 @@ export function ActTwo({ locale }: Props) {
   return (
     <section className={styles.section}>
       <h2 className={styles.sectionHeading}>Акт II. Монолит проиграет</h2>
+
+      <IntelligenceCurves />
 
       <p>
         {'Когда звучит слово «AI», у тебя в голове, скорее всего, всплывает одна и та же картинка.'}
