@@ -87,7 +87,10 @@ export const posts: Post[] = [
 
 /**
  * Published posts, newest-first. Drafts excluded.
- * For 'en', additionally restricts to posts that have an `en` block.
+ * Locale defaults to 'ru' (the site canon): `getAllPosts()` returns every
+ * non-draft post. For 'en' it additionally restricts to posts that carry an
+ * `en` block — so it is NOT locale-neutral; pass 'ru' explicitly when you mean
+ * "all posts regardless of translation status".
  * `source` defaults to the registry; the param exists so the draft-filter +
  * sort logic can be tested against fixtures without polluting the real registry.
  */
