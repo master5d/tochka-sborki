@@ -118,6 +118,16 @@ export function postUrl(slug: string, locale: Locale = 'ru'): string {
   return `${SITE.url}${prefix}${slug}/`
 }
 
+/** Strip the site origin from an absolute URL → root-relative path. */
+export function stripOrigin(url: string): string {
+  return url.startsWith(SITE.url) ? url.slice(SITE.url.length) : url
+}
+
+/** BCP-47 language tag for a locale. */
+export function langTag(locale: Locale): string {
+  return locale === 'en' ? 'en-US' : 'ru-RU'
+}
+
 export type ResolvedPost = {
   title: string
   description: string
@@ -136,7 +146,7 @@ export function localizedPost(post: Post, locale: Locale): ResolvedPost {
     description: loc.description,
     readingTime: loc.readingTime,
     url: postUrl(post.slug, locale),
-    langTag: locale === 'en' ? 'en-US' : 'ru-RU',
+    langTag: langTag(locale),
     date: post.date,
     formattedDate: formatDate(post.date, locale),
   }

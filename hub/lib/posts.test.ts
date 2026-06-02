@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { getAllPosts, getPost, formatDate, postUrl, localizedPost, posts, type Post, type Locale } from './posts'
+import { getAllPosts, getPost, formatDate, postUrl, localizedPost, stripOrigin, langTag, posts, type Post, type Locale } from './posts'
 
 describe('posts registry', () => {
   it('getAllPosts excludes drafts', () => {
@@ -96,5 +96,16 @@ describe('posts registry', () => {
       author: 'X', readingTime: '~5 мин', tags: [], related: [],
     }
     expect(localizedPost(p, 'en').title).toBe('РУ') // graceful: never throws on missing en
+  })
+
+  it('stripOrigin makes an absolute site URL root-relative', () => {
+    expect(stripOrigin('https://mamaev.coach/en/blog/x/')).toBe('/en/blog/x/')
+    expect(stripOrigin('https://mamaev.coach/blog/x/')).toBe('/blog/x/')
+    expect(stripOrigin('/already/relative/')).toBe('/already/relative/') // leaves non-origin paths alone
+  })
+
+  it('langTag maps locale to a BCP-47 tag', () => {
+    expect(langTag('en')).toBe('en-US')
+    expect(langTag('ru')).toBe('ru-RU')
   })
 })

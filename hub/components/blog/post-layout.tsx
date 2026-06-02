@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { type Post, getPost, localizedPost, type Locale } from '@/lib/posts'
+import { type Post, getPost, localizedPost, stripOrigin, type Locale } from '@/lib/posts'
 import { getDictionary } from '@/lib/dictionaries'
 import { BlogPostingLd } from './json-ld'
 import { BlogFooter } from './blog-footer'
@@ -20,7 +20,6 @@ const backLinkStyle: React.CSSProperties = {
 export function PostLayout({ post, locale, children }: { post: Post; locale: Locale; children: React.ReactNode }) {
   const d = getDictionary(locale)
   const r = localizedPost(post, locale)
-  const path = (u: string) => u.replace('https://mamaev.coach', '')
   const related = post.related.map(getPost).filter((p): p is Post => Boolean(p))
 
   return (
@@ -98,7 +97,7 @@ export function PostLayout({ post, locale, children }: { post: Post; locale: Loc
               const rr = localizedPost(rp, locale)
               return (
                 <li key={rp.slug}>
-                  <Link href={path(rr.url)} style={{ color: 'var(--text-accent)', textDecoration: 'none', fontSize: '0.9rem' }}>
+                  <Link href={stripOrigin(rr.url)} style={{ color: 'var(--text-accent)', textDecoration: 'none', fontSize: '0.9rem' }}>
                     {rr.title}
                   </Link>
                 </li>

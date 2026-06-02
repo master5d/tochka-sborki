@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getAllPosts, localizedPost, type Locale } from '@/lib/posts'
+import { getAllPosts, localizedPost, stripOrigin, type Locale } from '@/lib/posts'
 import { getDictionary } from '@/lib/dictionaries'
 import { BlogLd } from './json-ld'
 import { BlogFooter } from './blog-footer'
@@ -7,7 +7,6 @@ import { BlogFooter } from './blog-footer'
 export function BlogIndex({ locale }: { locale: Locale }) {
   const d = getDictionary(locale)
   const posts = getAllPosts(locale)
-  const path = (u: string) => u.replace('https://mamaev.coach', '')
   return (
     <main style={{ maxWidth: 'var(--content-max)', margin: '0 auto', padding: '3rem 1.5rem 4rem' }}>
       <BlogLd posts={posts} locale={locale} />
@@ -37,7 +36,7 @@ export function BlogIndex({ locale }: { locale: Locale }) {
           const r = localizedPost(post, locale)
           return (
             <li key={post.slug} style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem' }}>
-              <Link href={path(r.url)} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+              <Link href={stripOrigin(r.url)} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
                 <div style={{
                   fontFamily: 'var(--font-mono)',
                   fontSize: '0.7rem',

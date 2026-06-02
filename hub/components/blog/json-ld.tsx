@@ -1,4 +1,4 @@
-import { SITE, localizedPost, type Post, type Locale } from '@/lib/posts'
+import { SITE, localizedPost, langTag, type Post, type Locale } from '@/lib/posts'
 
 function Ld({ data }: { data: object }) {
   const json = JSON.stringify(data).replace(/</g, '\\u003c')
@@ -31,7 +31,7 @@ export function BlogLd({ posts, locale }: { posts: Post[]; locale: Locale }) {
     '@type': 'Blog',
     name,
     url: locale === 'en' ? `${SITE.url}/en/blog/` : `${SITE.url}/blog/`,
-    inLanguage: locale === 'en' ? 'en-US' : 'ru-RU',
+    inLanguage: langTag(locale),
     blogPost: posts.map(p => {
       const r = localizedPost(p, locale)
       return { '@type': 'BlogPosting', headline: r.title, url: r.url, datePublished: p.date }
