@@ -49,6 +49,7 @@ export const posts: Post[] = [
     readingTime: '~12 мин',
     tags: ['AI', 'спиритуальность', 'Точка Сборки', 'агентский инжиниринг'],
     related: ['horizons', 'charter'],
+    en: { title: 'Tochka Sborki. Prologue', description: "This isn't a programming course. It's a course in reassembling yourself in an age of fragmentation — through the very tool that once felt like the enemy.", readingTime: '~12 min' },
   },
   {
     slug: 'horizons',
@@ -60,6 +61,7 @@ export const posts: Post[] = [
     readingTime: '~7 мин',
     tags: ['AI', 'кейсы', 'нетехнари', 'Точка Сборки'],
     related: ['charter', 'prologue'],
+    en: { title: "Horizons: what you can actually do with AI if you're not a techie", description: "You use AI every day and still don't know what it's capable of. Four doors into a room you've never looked into — without a single line of code.", readingTime: '~7 min' },
   },
   {
     slug: 'charter',
@@ -71,6 +73,7 @@ export const posts: Post[] = [
     readingTime: '~6 мин',
     tags: ['AI', 'кейсы', 'агенты', 'устав', 'Точка Сборки'],
     related: ['horizons', 'prologue'],
+    en: { title: 'Your AI meets you from scratch every morning', description: "Re-explaining who you are to an AI every time is exhausting. One seven-block sheet turns a throwaway tool into a partner that remembers your method, your voice, and your red lines.", readingTime: '~6 min' },
   },
   {
     slug: 'desops-hub',
@@ -82,6 +85,7 @@ export const posts: Post[] = [
     readingTime: '~8 мин',
     tags: ['DesOps', 'дизайн', 'агенты', 'инжиниринг', 'SHA'],
     related: ['charter', 'prologue'],
+    en: { title: 'Design without drawing: how to install "taste" into AI agents', description: 'Design has always been the bottleneck for engineers. My report on turning design from "creative agony" into an executable engineering spec through the DesOps Hub.', readingTime: '~8 min' },
   },
 ]
 

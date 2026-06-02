@@ -3,7 +3,104 @@ import styles from '../blog-prose.module.css'
 type Props = { locale: 'ru' | 'en' }
 
 export function Horizons({ locale }: Props) {
-  if (locale === 'en') throw new Error('EN translation pending')
+  if (locale === 'en') {
+    return (
+      <div className={styles.prose}>
+        <p className={styles.lead}>
+          {'You already ask ChatGPT about recipes, horoscopes, and copy — and quietly decided that this is AI. That\'s like buying a grand piano and pressing one key.'}
+        </p>
+
+        <p>
+          {'Let\'s be honest: you use AI every day and still don\'t know what you can actually do with it.'}
+          {' Not because you\'re slow — because nobody showed you the menu. You\'ve seen one corner:'}
+          {' "ask — get an answer." But behind that corner there\'s a whole room you\'ve never'}
+          {' looked into.'}
+        </p>
+
+        <p>
+          {'Here are four doors into that room. Not "the revolution" and not "the future is now" —'}
+          {' calm, concrete things that people without a single line of code are doing right now.'}
+          {' And for each one I\'ll mark separately what the machine takes on, and what stays yours'}
+          {' alone. Because that\'s the whole point.'}
+        </p>
+
+        <h2>Talking to the tool instead of fighting it</h2>
+        <p>
+          {'The most maddening thing about any complex software isn\'t the idea — it\'s the two'}
+          {' thousand buttons between you and the idea. You catch the mood, you sit down — and you'}
+          {' spend two hours hunting for the right button so it records the way you want. AI closes'}
+          {' that gap: you describe in words what you\'re after — "a deep rumble, like from underwater,"'}
+          {' "light like a room at four in the morning" — and it assembles a draft you then finish'}
+          {' by hand. You don\'t adapt to the program. The program learns your language.'}
+        </p>
+        <div className={styles.boundary}>
+          <b>AI takes:</b> translating your words into the tool\'s actions, the rough assembly.<br />
+          <b>Stays yours:</b> what exactly you want to say, and when "enough" is enough.
+        </div>
+
+        <h2>Attracting clients without becoming a content factory</h2>
+        <p>
+          {'The first year in a new profession always comes with the question "where will the people'}
+          {' come from." The usual answer — "post every day, run a blog, push the stories" — and'}
+          {' you burn out before the first client arrives. AI takes the factory part off your hands:'}
+          {' it finds who you can be useful to, prepares draft letters and pitches for your edits,'}
+          {' keeps the threads of conversations so no one falls through the cracks. You don\'t turn'}
+          {' into a broadcast machine. You free your hands for the reason you got into this'}
+          {' profession in the first place.'}
+        </p>
+        <div className={styles.boundary}>
+          <b>AI takes:</b> research, drafts, follow-up, the grind of follow-through.<br />
+          <b>Stays yours:</b> who you want to work with and what voice you use with them.
+        </div>
+
+        <h2>Putting routine on an agent</h2>
+        <p>
+          {'There is work that\'s a shame to give your attention to: scheduling, sorting email, the'}
+          {' tedious admin of a project or nonprofit you care about. That\'s not creativity — it\'s'}
+          {' a tax on creativity. This is where an agent steps in: not a one-off chat reply but a'}
+          {' small helper that handles the repeatable on its own, by your rules, and calls you only'}
+          {' when a live decision is genuinely needed. You stop being the secretary of your own'}
+          {' operation.'}
+        </p>
+        <div className={styles.boundary}>
+          <b>AI takes:</b> the repeatable and the predictable.<br />
+          <b>Stays yours:</b> the rules, the exceptions, and everything that needs a real choice.
+        </div>
+
+        <h2>Amplifying the craft without replacing the voice</h2>
+        <p>
+          {'And here is the boundary worth naming out loud, because it\'s the one people fear most.'}
+          {' AI doesn\'t have to write for you. If your work is your voice — text, music, the way'}
+          {' you hold someone in a session — handing that voice to the machine means stopping being'}
+          {' yourself. But amplifying it is something else entirely. Unfolding a thought without'}
+          {' losing the thread. Remembering what you yourself said three years ago. Getting the clay'}
+          {' you then shape. The tool extends the reach of the craft; it doesn\'t replace the hand.'}
+        </p>
+        <div className={styles.boundary}>
+          <b>AI takes:</b> structure, memory, the raw clay.<br />
+          <b>Stays yours:</b> the voice, the taste, the final word — always.
+        </div>
+
+        <h2>What all four doors have in common</h2>
+        <p>
+          {'In none of them does the machine step into your place. It steps alongside you and takes'}
+          {' what was eating your time and your nerves — so there\'s more of you, not less.'}
+        </p>
+
+        <p>
+          <strong>{'A good AI doesn\'t make you someone else. It gives you the space to be yourself at greater scale.'}</strong>
+        </p>
+
+        <p>
+          {'And yes — you weren\'t supposed to know all this in advance. If you just read this list'}
+          {' and thought "wait, that was an option?" — that\'s not a gap in you. That\'s exactly the'}
+          {' point everyone starts from. Where all of this comes from, and why the tool started'}
+          {' feeling like the enemy — I worked through that in the '}
+          <a href="/en/blog/prologue/">prologue</a>{'. Next step: pick one door and push it open.'}
+        </p>
+      </div>
+    )
+  }
 
   return (
     <div className={styles.prose}>

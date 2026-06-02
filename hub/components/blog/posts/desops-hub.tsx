@@ -4,7 +4,209 @@ import { DesOpsEngineDiagram, DesOpsFactoryDiagram, DesOpsConstellation } from '
 type Props = { locale: 'ru' | 'en' }
 
 export function DesOpsHub({ locale }: Props) {
-  if (locale === 'en') throw new Error('EN translation pending')
+  if (locale === 'en') {
+    return (
+      <div className={styles.prose}>
+        <div style={{
+          padding: '2rem',
+          borderLeft: '4px solid var(--text-accent)',
+          background: 'var(--bg-secondary)',
+          marginBottom: '2.5rem',
+          fontSize: '1rem',
+          fontFamily: 'var(--font-mono)',
+          lineHeight: 1.6
+        }}>
+          <b>Rationale:</b> For an engineer, design isn't decoration — it's the interface for managing complexity. In this article I unpack the architecture of DesOps Hub, which became the foundation of NAUTILUS. This is the journey from "drawing buttons" to programming visual meaning on top of <b>Google-grade Agentic Design Patterns</b>.
+        </div>
+
+        <h2>DesOps Hub Master Map</h2>
+        <p>Below are three architectural visualizations of our hub, built to <b>PaperBanana</b> standards. These aren't just diagrams — they're executable blueprints of the system.</p>
+
+        <DesOpsEngineDiagram />
+        <DesOpsFactoryDiagram />
+        <DesOpsConstellation />
+
+        <p className={styles.lead}>
+          {'Design has always been the bottleneck for engineers. You can build the most sophisticated backend, but if your interface looks like it\'s from 2012, user trust evaporates before the first data chunk even loads.'}
+        </p>
+
+        <p>
+          {'Over the past months I\'ve been building DesOps Hub — a system that turns design from "creative agony" into an executable engineering specification. This is my report on how to stop pushing pixels and start conducting them.'}
+        </p>
+
+        <h2>1. DesOps Architecture: Order vs. Chaos</h2>
+        <p>
+          {'The main mistake when building a design system is mixing global rules with project working files. In NAUTILUS we introduced a hybrid model:'}
+        </p>
+        <ul>
+          <li><b>Centralized Governance:</b> All tokens (colors, grids, fonts) live in the system core (<code>GLOBAL_DESIGN.md</code>).</li>
+          <li><b>Decentralized Execution:</b> Each project (e.g. Echo) keeps its own mockups, logs, and specific styles locally. This prevents the system from becoming a dumping ground.</li>
+        </ul>
+
+        <h2>2. The Design Harness</h2>
+        <p>
+          {'Following Nithan U\'s model, we don\'t try to "become designers." We install a "harness" that delivers expert-level results with a single engineer.'}
+        </p>
+
+        <div className={styles.boundary} style={{ margin: '2rem 0' }}>
+          <h3>Layer 1: Skills (Expertise as Code)</h3>
+          <p>We "hardwire" the taste of top designers into AI agents. Commands like <code>/polish</code> force the AI to audit layouts for anti-patterns:</p>
+          <ul style={{ fontSize: '0.9rem', opacity: 0.9 }}>
+            <li>❌ <b>No Pure Blacks:</b> <code>#000000</code> is banned. Use deep system-tinted darks.</li>
+            <li>❌ <b>Contrast Check:</b> Automatic linting against WCAG compliance.</li>
+            <li>❌ <b>Nested Cards:</b> Fighting excessive nesting that telegraphs "cheap AI design."</li>
+          </ul>
+
+          <h3>Layer 2: Canvas (Agentic Surfaces)</h3>
+          <p>Design happens where AI is the kernel. We use <b>Paper</b> for live HTML/CSS code and <b>Pencil</b> for JSON-based vector precision. No handoffs — design and code are one.</p>
+
+          <h3>Layer 3: The Eye (Visual DNA)</h3>
+          <p>We train the system's visual intelligence by extracting rhythm and information density from the world's best products. This is the process of <b>Visual DNA Extraction</b>.</p>
+        </div>
+
+        <h2>3. Meta-Design: Systems Architecture</h2>
+        <p>
+          {'The highest stage of DesOps evolution is the shift to the role of <b>Meta-Designer</b>. We no longer design things; we design systems that design things.'}
+        </p>
+        <p>
+          {'The Meta-Designer in NAUTILUS is responsible for creating the processes, values, and tools that guide AI agents. This is the Chief Design Officer level, where design becomes a strategic instrument for managing both business and complexity.'}
+        </p>
+
+        <h2>4. Design as a Skill (Agentic Design)</h2>
+        <p>
+          {'We are witnessing a fundamental shift: design is ceasing to be a separate profession and turning into a <b>loadable skill</b> for your code agent. Projects like <b>open-design</b> let you load 70+ top brand systems in a single click.'}
+        </p>
+
+        <h2>5. Terminal as Design Studio: Zero-GUI</h2>
+        <p>
+          {'The key insight of recent months is using <b>Design Protocols</b> — for instance, the <b>huashu-design</b> methodology from Chinese developer Huasheng. We no longer open a browser to "push pixels." The graphical interface layer disappears entirely.'}
+        </p>
+        <ul>
+          <li><b>Core Asset Protocol:</b> The agent must gather 6 types of assets (logo, product photos, palette, fonts) via official search before drawing a single pixel. No hallucinated brand memory.</li>
+          <li><b>Rule Zero (Fact Verification):</b> The agent's first action is verifying facts and specs on the web. Ten seconds of search saves hours of rework.</li>
+          <li><b>Junior Designer Workflow:</b> We implemented staged delivery: Sketch → Real content → Variations. Catching errors at the draft stage is a hundred times cheaper.</li>
+          <li><b>Anti AI-slop:</b> Hard ban on purple gradients, emoji icons, and ubiquitous Inter. Design should be captivating, not a "generic template from 2019."</li>
+        </ul>
+
+        <h2>6. Cognitive Visualization and DataViz Intelligence</h2>
+        <p>
+          {'Diagrams and mindmaps are not decoration — they\'re interfaces for perceiving complexity. We integrated Google <b>PaperBanana</b> principles for generating flawless academic diagrams from raw text.'}
+        </p>
+        <p>
+          {'Our <b>DataViz Intelligence</b> layer draws on the work of Edward Tufte, Ward Shelley, and RAWGraphs. This is a shift from "just charts" to Visual Narratives. The system selects the chart type itself (via DataViz Project) and renders it as high-precision SVG/HTML.'}
+        </p>
+
+        <h2>7. Data Density and Model Sovereignty</h2>
+        <p>
+          {'Design is not only grids — it\'s also data. With tools like <b>diagram-design</b> we moved to generating publication-quality charts directly in HTML+SVG. This turns landing pages into analytical dashboards with perfect typography.'}
+        </p>
+        <p>
+          {'We maintain <b>Model Sovereignty</b> throughout. With the <b>open-codesign</b> protocol we\'re not locked into one model. We use multimodality and our own keys (BYOK) — Claude, GPT, Gemini, or local Ollama work in a single workflow.'}
+        </p>
+
+        <h2>8. Personality Injection: Awesome Design</h2>
+        <p>
+          {'Libraries like <b>Awesome Claude Design</b> provide 60+ ready-made <code>DESIGN.md</code> files for top brands (Vercel, Stripe, Linear). One file in the project root — and your agent delivers Apple- or Spotify-level output, fully consistent with their visual language.'}
+        </p>
+
+        <h2>9. Design System Automation: UI UX Pro Max</h2>
+        <p>
+          {'What agencies used to charge $5,000+ for is now automated. With <b>UI UX Pro Max</b>, creating a custom design system takes seconds.'}
+        </p>
+        <ul>
+          <li><b>Industry-Specific Intelligence:</b> The system runs 5 parallel searches across 161+ industry design rules. Whether it\'s a "SaaS dashboard" or a "crypto exchange" — the agent knows the context immediately.</li>
+          <li><b>Library of Archetypes:</b> 67+ styles (Glassmorphism, Brutalism), 161+ color palettes, and 57+ curated font pairs available instantly.</li>
+        </ul>
+
+        <h2>10. Architectural Elitism: Pretext and OpenPencil</h2>
+        <p>
+          {'We abandoned the constraints of the standard DOM. Using the <b>Pretext</b> algorithm, we moved to measuring text in userland. And with <b>OpenPencil</b>, design became a first-class Git object.'}
+        </p>
+        <ul>
+          <li><b>Concurrent Teams:</b> OpenPencil lets you run up to 6 agents on the same canvas simultaneously. While one builds the Hero section, another pipes in system tokens.</li>
+          <li><b>Git-Friendly Design:</b> The <code>.op</code> and <code>.pen</code> formats are designed for Git. We can finally merge design as easily as code.</li>
+        </ul>
+
+        <div style={{ margin: '2.5rem 0', padding: '1.5rem', border: '1px solid var(--border-color)', borderRadius: 'var(--radius)', background: 'var(--bg-primary)' }}>
+          <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', textTransform: 'uppercase', marginBottom: '1.25rem', color: 'var(--text-accent)' }}>DesOps Efficiency Metrics</h3>
+          <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.9rem', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)' }}>
+            <li style={{ marginBottom: '0.5rem' }}>⚡ <b>Time to Market:</b> -40% (eliminating the design-code gap)</li>
+            <li style={{ marginBottom: '0.5rem' }}>🎯 <b>Visual Consistency:</b> 100% (driven by Master Tokens)</li>
+            <li style={{ marginBottom: '0.5rem' }}>🦾 <b>Agent Autonomy:</b> High (managed via MCP)</li>
+            <li style={{ marginBottom: '0.5rem' }}>📖 <b>Type Color Stability:</b> LaTeX-grade (Knuth-Plass algorithm)</li>
+            <li>🏛️ <b>Systemic Integrity:</b> 100% (governed by Meta-Design)</li>
+          </ul>
+        </div>
+
+        <h2>11. The Death of Handoff: Onlook</h2>
+        <p>
+          {'For 20 years designers and developers have argued about the same thing: "that\'s not what I drew" vs "the code doesn\'t work that way." With <b>Onlook</b> (Cursor for designers) that argument is over.'}
+        </p>
+        <ul>
+          <li><b>The Design IS the Code:</b> We no longer export mockups. We visually edit a live React app. Any style or spacing change is instantly turned into clean code via AST parsing.</li>
+          <li><b>Visual Production:</b> The designer (or agent) works directly in the production codebase. No more "redraws from scratch" — design and code have become a single thing.</li>
+          <li><b>Bidirectional Sync:</b> Code edits update the visual editor; visual edits update the code. This is the highest form of DesOps.</li>
+        </ul>
+
+        <h2>12. Cultural Infiltration: Nerdsignalling</h2>
+        <p>
+          {'Design is a way of "raising an identity flag." We use DesOps Hub for <b>Nerdsignalling</b> — broadcasting deep technical and aesthetic code that lets you claim a status position in specific niches (for instance, youth subcultures).'}
+        </p>
+        <ul>
+          <li><b>OG / Unc Persona:</b> We advise and design systems from the position of an "OG" (Original Gangster) or "Unc" (Uncle). That\'s a position of authority backed by the hub\'s systemic standards.</li>
+          <li><b>Tribal Status:</b> In visual culture, status within the "tribe" matters more than mass appeal. We use the "Black Pill pipeline" in design to penetrate closed communities through an authentic visual language.</li>
+        </ul>
+
+        <h2>13. Quality Control: Impeccable 3.5</h2>
+        <p>
+          {'The final stage is professional review. With the <b>Impeccable 3.5</b> update from Paul Bakaus (creator of jQuery UI), our agents gained rules compiled for specific tools.'}
+        </p>
+        <ul>
+          <li><b>Tool-Specific Rules:</b> Codex and GPT receive different instructions targeting their respective typical mistakes. Surgical precision in fighting AI slop.</li>
+          <li><b>Live Mode:</b> We can now edit text and elements directly in the browser, and changes automatically propagate back to the source code. The perfect bridge between a curator\'s eye and the codebase.</li>
+          <li><b>Performance:</b> The anti-pattern detector became 20× faster. 41+ rules are checked instantly, ensuring "card inside a card" or poor contrast never reaches production.</li>
+        </ul>
+
+        <h2>14. The New Quotient: From the Measurable to the Magical</h2>
+        <p>
+          {'Design is not a neutral shell. It is <b>Relative Currency</b> — it affects social hierarchy, attention, and power. In an age of automation, the Meta-Designer becomes a <b>Guardian of Virtue</b>.'}
+        </p>
+        <p>
+          {'We introduced the concept of <b>The New Quotient</b>. Our goal: the intersection of the Measurable (pixels, tokens, grids) and the Meaningful (character, intelligence, empathy). Only at that intersection is Magical experience born.'}
+        </p>
+        <ul>
+          <li><b>Aesthetic Responsibility:</b> We don\'t just "looksmax" interfaces for status. We design systems that transmit values and human dignity.</li>
+          <li><b>Subverting Monoaesthetics:</b> We use DesOps Hub to rupture archaic beauty templates. Intelligence and meaning in our interfaces matter more than empty symmetry.</li>
+        </ul>
+
+        <h2>15. Sovereignty Architecture: Patterns of the Future</h2>
+        <p>
+          {'Our entire process is built on the foundational textbook <b>Agentic Design Patterns</b> by Antonio Gulli (Google). We implemented Parallelization for agent teamwork and deep Reflection for self-auditing.'}
+        </p>
+        <p>
+          {'This isn\'t just "a bunch of scripts." It\'s a scientifically grounded fortress where every agent knows its role in the orchestra. We moved from "creating pages" to "orchestrating the genes" of the interface through MCP protocols.'}
+        </p>
+
+        <p style={{ marginTop: '3rem' }}>
+          <strong>The future of design isn't Figma. It's DESIGN.md.</strong>
+        </p>
+        <p>
+          {'A single source of truth, equally legible to humans and machines. A shift from "creating pages" to "orchestrating the interface\'s genes." Welcome to the era of sovereign engineering, where your scale is limited only by the depth of your automation.'}
+        </p>
+
+        <div style={{
+          marginTop: '4rem',
+          paddingTop: '1.5rem',
+          borderTop: '1px solid var(--border-color)',
+          fontSize: '0.85rem',
+          color: 'var(--text-secondary)',
+          fontStyle: 'italic'
+        }}>
+          Article prepared autonomously as part of the DesOps Hub module deployment in NAUTILUS v3.3.
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className={styles.prose}>
