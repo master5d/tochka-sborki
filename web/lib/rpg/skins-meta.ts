@@ -8,5 +8,5 @@ export const SKINS_META: Record<WorldSkin, SkinMeta> = {
   'anime-quest':   { skin: 'anime-quest',   accent: '#ff7ace', glyph: '🎌', displayName: { ru: 'Аниме-Квест', en: 'Anime Quest' }, mentor: { name: { ru: 'Сэнсэй', en: 'Sensei' }, glyph: '🥋' } },
   'soviet-heroic': { skin: 'soviet-heroic', accent: '#e0b020', glyph: '🏛', displayName: { ru: 'Советский Героизм', en: 'Soviet Heroic' }, mentor: { name: { ru: 'Бригадир', en: 'The Foreman' }, glyph: '🔧' } },
   'mystic-arcane': { skin: 'mystic-arcane', accent: '#b388ff', glyph: '🔮', displayName: { ru: 'Мистическая Аркана', en: 'Mystic Arcane' }, mentor: { name: { ru: 'Оракул', en: 'The Oracle' }, glyph: '🔮' } },
-  'wanderer':      { skin: 'wanderer',      accent: '#00ff88', glyph: '🌀', displayName: { ru: 'Странник', en: 'Wanderer' }, mentor: { name: { ru: 'Проводник', en: 'Guide' }, glyph: '🧭' } },
+  'wanderer':      { skin: 'wanderer',      accent: '#00d1ff', glyph: '🌀', displayName: { ru: 'Странник', en: 'Wanderer' }, mentor: { name: { ru: 'Проводник', en: 'Guide' }, glyph: '🧭' } },
 }

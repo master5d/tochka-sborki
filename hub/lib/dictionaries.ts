@@ -62,7 +62,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
         href: 'https://ai.mamaev.coach',
         cta: 'Начать курс →',
         status: 'open · бесплатно',
-        color: '#00ff88',
+        color: '#00d1ff',
       },
       {
         badge: '⚙  ДЛЯ БИЗНЕСА',
@@ -107,7 +107,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
         href: 'https://ai.mamaev.coach/en/',
         cta: 'Start the course →',
         status: 'open · free',
-        color: '#00ff88',
+        color: '#00d1ff',
       },
       {
         badge: '⚙  FOR BUSINESS',

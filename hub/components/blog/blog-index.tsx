@@ -6,21 +6,21 @@ import { BlogFooter } from './blog-footer'
 export function BlogIndex() {
   const posts = getAllPosts()
   return (
-    <main style={{ maxWidth: 'var(--content-max)', margin: '0 auto', padding: '4rem 1.5rem 5rem' }}>
+    <main style={{ maxWidth: 'var(--content-max)', margin: '0 auto', padding: '3rem 1.5rem 4rem' }}>
       <BlogLd posts={posts} />
 
-      <Link href="/" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--text-accent)', textDecoration: 'none' }}>
+      <Link href="/" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-accent)', textDecoration: 'none', opacity: 0.8 }}>
         ← mamaev.coach
       </Link>
 
       <h1 style={{
         fontFamily: 'var(--font-display), system-ui, sans-serif',
-        fontSize: 'clamp(2.5rem, 8vw, 5rem)',
+        fontSize: 'clamp(2rem, 6vw, 4rem)',
         fontWeight: 900,
         textTransform: 'uppercase',
         letterSpacing: '-0.04em',
         color: 'var(--text-primary)',
-        margin: '1.5rem 0 3rem',
+        margin: '1rem 0 2.5rem',
       }}>
         Блог
       </h1>
@@ -29,36 +29,40 @@ export function BlogIndex() {
         <p style={{ color: 'var(--text-secondary)' }}>Пока нет публикаций.</p>
       )}
 
-      <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         {posts.map(post => (
-          <li key={post.slug}>
+          <li key={post.slug} style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem' }}>
             <Link href={`/blog/${post.slug}/`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
               <div style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.75rem',
+                fontSize: '0.7rem',
                 color: 'var(--text-secondary)',
                 letterSpacing: '0.04em',
-                marginBottom: '0.5rem',
+                marginBottom: '0.25rem',
+                opacity: 0.7,
               }}>
                 {formatDate(post.date)} · {post.readingTime}
               </div>
               <h2 style={{
                 fontFamily: 'var(--font-display), system-ui, sans-serif',
-                fontSize: 'clamp(1.5rem, 4vw, 2.25rem)',
+                fontSize: 'clamp(1.25rem, 3vw, 1.8rem)',
                 fontWeight: 900,
-                lineHeight: 1.05,
+                lineHeight: 1.1,
                 letterSpacing: '-0.02em',
                 color: 'var(--text-primary)',
-                margin: '0 0 0.75rem',
+                margin: '0 0 0.5rem',
               }}>
                 {post.title}
               </h2>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6, margin: '0 0 0.75rem' }}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.5, margin: '0 0 0.75rem', maxWidth: '60ch' }}>
                 {post.description}
               </p>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--text-accent)', fontWeight: 700 }}>
-                Читать →
-              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--text-accent)', fontWeight: 700 }}>
+                  Читать
+                </span>
+                <span style={{ color: 'var(--text-accent)', opacity: 0.5 }}>→</span>
+              </div>
             </Link>
           </li>
         ))}

@@ -7,6 +7,17 @@ html, body {
   color: var(--text-primary);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background-color: var(--border-accent);
+  color: var(--text-accent);
+}
+
+/* Sticky header logic handled in SiteHeader.tsx for better precision */
+header {
+  width: 100%;
 }
 
 a { color: var(--text-accent); text-decoration: none; }

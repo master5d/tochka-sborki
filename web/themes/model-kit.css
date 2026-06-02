@@ -14,15 +14,15 @@
   --bg-primary: #0a0a0f;
   --bg-secondary: #111118;
   --bg-surface: #16161f;
-  --text-primary: #e8e8f0;
-  --text-secondary: #9090a8;
-  --text-accent: #00ff88;
-  --border-color: #2a2a3a;
-  --border-accent: #00ff8840;
+  --text-primary: #f0f0f5;
+  --text-secondary: #8e8ea0;
+  --text-accent: #00d1ff;       /* Refined "Cyber Blue" for more expensive vibe */
+  --border-color: #242433;
+  --border-accent: #00d1ff30;
   --text-on-accent: #000000;
   --crit: #ff6b5b;
-  --phase-1: #00ff88;
-  --phase-2: #00aaff;
+  --phase-1: #00d1ff;           /* Unified with accent */
+  --phase-2: #5e5ce6;
   --phase-3: #ff9900;
   --phase-4: #ff44aa;
 }
@@ -34,13 +34,13 @@
   --bg-surface: #fbf9f4;
   --text-primary: #15151a;
   --text-secondary: #5a5a6a;
-  --text-accent: #0b7a3a;       /* darkened so white-on-accent + link-on-paper clear WCAG AA (4.5:1) */
+  --text-accent: #0077cc;       /* Deep blue for light mode contrast */
   --border-color: #d8d2c6;
-  --border-accent: #0b7a3a40;
+  --border-accent: #0077cc40;
   --text-on-accent: #ffffff;
   --crit: #c42619;              /* darkened to clear AA for error text on paper */
-  --phase-1: #0b7a3a;
-  --phase-2: #0061a8;
+  --phase-1: #0077cc;
+  --phase-2: #4a48d1;
   --phase-3: #8f5400;           /* amber darkened for AA on paper */
   --phase-4: #b51d6e;
 }

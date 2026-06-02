@@ -11,7 +11,12 @@ export function SiteHeader() {
         gap: '1rem',
         padding: '0.75rem 1.5rem',
         borderBottom: '1px solid var(--border-color)',
-        background: 'var(--bg-primary)',
+        background: 'rgba(var(--bg-primary-rgb), 0.85)', // Slightly more opaque for better legibility
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000, // Force topmost layer
       }}
     >
       <a
