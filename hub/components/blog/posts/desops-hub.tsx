@@ -1,4 +1,5 @@
 import styles from '../blog-prose.module.css'
+import { DesOpsEngineDiagram, DesOpsFactoryDiagram, DesOpsConstellation } from '../DesOpsMasterDiagram'
 
 type Props = { locale: 'ru' | 'en' }
 
@@ -8,16 +9,23 @@ export function DesOpsHub({ locale }: Props) {
   return (
     <div className={styles.prose}>
       <div style={{ 
-        padding: '1.25rem', 
+        padding: '2rem', 
         borderLeft: '4px solid var(--text-accent)', 
         background: 'var(--bg-secondary)',
         marginBottom: '2.5rem',
-        fontSize: '0.95rem',
+        fontSize: '1rem',
         fontFamily: 'var(--font-mono)',
-        lineHeight: 1.5
+        lineHeight: 1.6
       }}>
         <b>Rationale:</b> Дизайн для инженера — это не декор, а интерфейс управления сложностью. В этой статье я раскрываю архитектуру DesOps Hub, которая легла в основу NAUTILUS. Это путь от «рисования кнопок» к программированию визуальных смыслов на базе <b>Google-grade Agentic Design Patterns</b>.
       </div>
+
+      <h2>Мастер-Карта DesOps Hub</h2>
+      <p>Ниже представлены три варианта архитектурной визуализации нашего хаба, созданные по стандартам <b>PaperBanana</b>. Это не просто схемы, это исполняемые чертежи нашей системы.</p>
+      
+      <DesOpsEngineDiagram />
+      <DesOpsFactoryDiagram />
+      <DesOpsConstellation />
 
       <p className={styles.lead}>
         {'Дизайн всегда был узким горлышком для инженеров. Вы можете собрать сложнейший бэкенд, но если ваш интерфейс выглядит как «привет из 2012-го», доверие пользователя испаряется раньше, чем загрузится первый чанк данных.'}
