@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { type Post, getPost, formatDate, postUrl } from '@/lib/posts'
+import { type Post, getPost, localizedPost, type Locale } from '@/lib/posts'
+import { getDictionary } from '@/lib/dictionaries'
 import { BlogPostingLd } from './json-ld'
 import { BlogFooter } from './blog-footer'
 import { ReadWithAI } from './read-with-ai'
@@ -16,14 +17,17 @@ const backLinkStyle: React.CSSProperties = {
   letterSpacing: '0.04em',
 }
 
-export function PostLayout({ post, children }: { post: Post; children: React.ReactNode }) {
+export function PostLayout({ post, locale, children }: { post: Post; locale: Locale; children: React.ReactNode }) {
+  const d = getDictionary(locale)
+  const r = localizedPost(post, locale)
+  const path = (u: string) => u.replace('https://mamaev.coach', '')
   const related = post.related.map(getPost).filter((p): p is Post => Boolean(p))
 
   return (
     <main style={{ maxWidth: '680px' /* optimized reading column for Type Color */, margin: '0 auto', padding: '2rem 1.5rem 4rem' }}>
-      <BlogPostingLd post={post} />
+      <BlogPostingLd post={post} locale={locale} />
 
-      <Link href="/blog/" style={backLinkStyle}>← Блог</Link>
+      <Link href={locale === 'en' ? '/en/blog/' : '/blog/'} style={backLinkStyle}>{d.blog.backToBlog}</Link>
 
       <header style={{ margin: '1.5rem 0 2rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem' }}>
@@ -37,7 +41,7 @@ export function PostLayout({ post, children }: { post: Post; children: React.Rea
               color: 'var(--text-primary)',
               margin: '0 0 0.75rem',
             }}>
-              {post.title}
+              {r.title}
             </h1>
             <div style={{
               fontFamily: 'var(--font-mono)',
@@ -46,10 +50,10 @@ export function PostLayout({ post, children }: { post: Post; children: React.Rea
               letterSpacing: '0.04em',
               opacity: 0.8,
             }}>
-              {formatDate(post.date)} · {post.author} · {post.readingTime}
+              {r.formattedDate} · {post.author} · {r.readingTime}
             </div>
           </div>
-          <button 
+          <button
             title="Generate PPTX deck via Presenton"
             style={{
               background: 'transparent',
@@ -75,7 +79,7 @@ export function PostLayout({ post, children }: { post: Post; children: React.Rea
 
       {children}
 
-      <ReadWithAI url={postUrl(post.slug)} title={post.title} />
+      <ReadWithAI url={r.url} title={r.title} />
 
       {related.length > 0 && (
         <section style={{ marginTop: '2.5rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border-color)' }}>
@@ -87,29 +91,32 @@ export function PostLayout({ post, children }: { post: Post; children: React.Rea
             letterSpacing: '0.12em',
             marginBottom: '0.75rem',
           }}>
-            По теме
+            {d.blog.relatedLabel}
           </div>
           <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-            {related.map(r => (
-              <li key={r.slug}>
-                <Link href={`/blog/${r.slug}/`} style={{ color: 'var(--text-accent)', textDecoration: 'none', fontSize: '0.9rem' }}>
-                  {r.title}
-                </Link>
-              </li>
-            ))}
+            {related.map(rp => {
+              const rr = localizedPost(rp, locale)
+              return (
+                <li key={rp.slug}>
+                  <Link href={path(rr.url)} style={{ color: 'var(--text-accent)', textDecoration: 'none', fontSize: '0.9rem' }}>
+                    {rr.title}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
         </section>
       )}
 
       <div style={{ marginTop: '2.5rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border-color)' }}>
-        <Link href="/blog/" style={backLinkStyle}>← Блог</Link>
+        <Link href={locale === 'en' ? '/en/blog/' : '/blog/'} style={backLinkStyle}>{d.blog.backToBlog}</Link>
       </div>
 
-      <BlogFooter />
+      <BlogFooter locale={locale} />
       <div style={{ height: '2rem' }} /> {/* extra breathing room at the very bottom */}
 
-      <ReadWithAIDock url={postUrl(post.slug)} title={post.title} />
-      <SelectionAsk url={postUrl(post.slug)} />
+      <ReadWithAIDock url={r.url} title={r.title} />
+      <SelectionAsk url={r.url} />
     </main>
   )
 }

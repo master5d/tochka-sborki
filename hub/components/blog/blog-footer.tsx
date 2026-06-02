@@ -1,5 +1,7 @@
 'use client'
 
+import { getDictionary, type Locale } from '@/lib/dictionaries'
+
 const track = (door: 'telegram' | 'course') => {
   if (typeof window === 'undefined') return
   // @ts-expect-error analytics global is optional
@@ -13,7 +15,8 @@ const linkStyle: React.CSSProperties = {
 }
 
 /** Quiet site-wide footnote for the blog: think-aloud channel + the course. */
-export function BlogFooter() {
+export function BlogFooter({ locale }: { locale: Locale }) {
+  const d = getDictionary(locale)
   return (
     <footer
       style={{
@@ -27,18 +30,12 @@ export function BlogFooter() {
       }}
     >
       <p style={{ margin: 0 }}>
-        Думаю вслух в Telegram —{' '}
-        <a
-          href="https://t.me/ku_shaman"
-          target="_blank"
-          rel="noopener"
-          style={linkStyle}
-          onClick={() => track('telegram')}
-        >
+        {d.blog.footerThinkAloud}{' '}
+        <a href="https://t.me/ku_shaman" target="_blank" rel="noopener" style={linkStyle} onClick={() => track('telegram')}>
           @ku_shaman
         </a>
-        . Практика — в открытом бесплатном курсе{' '}
-        <a href="https://ai.mamaev.coach" style={linkStyle} onClick={() => track('course')}>
+        {d.blog.footerPractice}{' '}
+        <a href={d.blog.courseUrl} style={linkStyle} onClick={() => track('course')}>
           ai.mamaev.coach
         </a>
         .
