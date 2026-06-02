@@ -27,7 +27,7 @@ export const MODULE_INTROS_V2: ModuleIntro[] = [
 export const QUESTIONS_V2: Question[] = [
   {
     id: 'V_WHY', module: 'V', format: 'single', required: false,
-    prompt: { ru: 'Зачем тебе это сейчас?', en: 'Why this, why now?' },
+    prompt: { ru: 'Зачем тебе это — именно сейчас?', en: 'Why this — and why now?' },
     options: [
       { value: 'money_time', label: { ru: 'Деньги или время — практичный результат', en: 'Money or time — a practical result' } },
       { value: 'project', label: { ru: 'Есть проект, который давно хочу собрать', en: "There's a project I've wanted to build" } },
@@ -38,7 +38,7 @@ export const QUESTIONS_V2: Question[] = [
   },
   {
     id: 'V_HOOK', module: 'V', format: 'single', required: false,
-    prompt: { ru: 'Что цепляет сильнее?', en: 'What pulls you more?' },
+    prompt: { ru: 'От чего внутри загорается?', en: 'What lights you up most?' },
     options: [
       { value: 'build', label: { ru: 'Собирать, делать вещи', en: 'Building, making things' } },
       { value: 'talk', label: { ru: 'Говорить, объяснять, вести', en: 'Talking, explaining, leading' } },
@@ -70,7 +70,7 @@ export const QUESTIONS_V2: Question[] = [
   },
   {
     id: 'V_RHYTHM', module: 'V', format: 'single', required: false,
-    prompt: { ru: 'Выбери свой ритм.', en: 'Pick your rhythm.' },
+    prompt: { ru: 'Поймай свой ритм.', en: 'Catch your rhythm.' },
     options: [
       { value: 'suave', label: { ru: 'suave · мягко, без нажима', en: 'suave · soft, no pressure' } },
       { value: 'fuego', label: { ru: 'fuego · интенсивно, на огне', en: 'fuego · intense, on fire' } },
@@ -80,7 +80,7 @@ export const QUESTIONS_V2: Question[] = [
   },
   {
     id: 'V_ERR', module: 'V', format: 'single', required: false,
-    prompt: { ru: 'Как ты реагируешь на ошибку?', en: 'How do you react to a mistake?' },
+    prompt: { ru: 'Что с тобой делает ошибка?', en: 'What does a mistake do to you?' },
     options: [
       { value: 'calm', label: { ru: 'Спокойно, ошибка = настройка', en: 'Calmly — a mistake is just tuning' } },
       { value: 'lose_motivation', label: { ru: 'Падает мотивация', en: 'I lose motivation' } },
@@ -90,7 +90,7 @@ export const QUESTIONS_V2: Question[] = [
   },
   {
     id: 'V_ATTN', module: 'V', format: 'single', required: false,
-    prompt: { ru: 'Сколько внимания держится комфортно?', en: 'How long does your focus hold comfortably?' },
+    prompt: { ru: 'Сколько внимание держит, пока не устанет?', en: 'How long does attention hold before it tires?' },
     options: [
       { value: 'short', label: { ru: '3–5 минут', en: '3–5 minutes' } },
       { value: 'mid', label: { ru: '10–15 минут', en: '10–15 minutes' } },
@@ -99,7 +99,7 @@ export const QUESTIONS_V2: Question[] = [
   },
   {
     id: 'V_MODE', module: 'V', format: 'single', required: false,
-    prompt: { ru: 'Как тебе легче воспринимать?', en: 'What format lands easiest?' },
+    prompt: { ru: 'Через что заходит легче всего?', en: 'What channel lands easiest?' },
     options: [
       { value: 'video', label: { ru: 'Видео', en: 'Video' } },
       { value: 'audio', label: { ru: 'Короткое аудио', en: 'Short audio' } },
@@ -110,7 +110,7 @@ export const QUESTIONS_V2: Question[] = [
   },
   {
     id: 'V_ANCHOR', module: 'V', format: 'single', required: false,
-    prompt: { ru: 'Что помогает тебе не бросать?', en: 'What keeps you from quitting?' },
+    prompt: { ru: 'Что держит, когда хочется бросить?', en: 'What holds you when you want to quit?' },
     options: [
       { value: 'support', label: { ru: 'Поддержка', en: 'Support' } },
       { value: 'topics', label: { ru: 'Интересные темы', en: 'Interesting topics' } },
@@ -172,7 +172,7 @@ export const QUESTIONS_V2: Question[] = [
   },
   {
     id: 'V_SKIN', module: 'V', format: 'single', required: false,
-    prompt: { ru: 'Какой мир тебе ближе?', en: 'Which world feels closer?' },
+    prompt: { ru: 'В каком мире тебе дышится?', en: 'Which world do you breathe in?' },
     options: [
       { value: 'slavic-myth', label: { ru: 'Славянский миф', en: 'Slavic Myth' } },
       { value: 'dark-fantasy', label: { ru: 'Тёмное фэнтези', en: 'Dark Fantasy' } },
