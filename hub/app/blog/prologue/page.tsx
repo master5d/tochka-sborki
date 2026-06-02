@@ -8,6 +8,14 @@ export const metadata: Metadata = {
   title: 'Точка Сборки. Пролог',
   description:
     'Это не курс программирования. Это курс собирания себя в эпоху расщепления — через инструмент, который раньше казался врагом.',
+  alternates: {
+    canonical: 'https://mamaev.coach/blog/prologue/',
+    languages: {
+      'ru-RU': 'https://mamaev.coach/blog/prologue/',
+      'en-US': 'https://mamaev.coach/en/blog/prologue/',
+      'x-default': 'https://mamaev.coach/blog/prologue/',
+    },
+  },
   openGraph: {
     title: 'Точка Сборки. Пролог',
     description:
@@ -26,7 +34,7 @@ export const metadata: Metadata = {
 
 export default function ProloguePage() {
   return (
-    <PostLayout post={getPost('prologue')!}>
+    <PostLayout post={getPost('prologue')!} locale="ru">
       <Prologue locale="ru" />
     </PostLayout>
   )

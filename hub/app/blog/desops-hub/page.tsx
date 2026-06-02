@@ -11,6 +11,14 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://mamaev.coach'),
   title,
   description,
+  alternates: {
+    canonical: 'https://mamaev.coach/blog/desops-hub/',
+    languages: {
+      'ru-RU': 'https://mamaev.coach/blog/desops-hub/',
+      'en-US': 'https://mamaev.coach/en/blog/desops-hub/',
+      'x-default': 'https://mamaev.coach/blog/desops-hub/',
+    },
+  },
   openGraph: {
     title,
     description,
@@ -27,7 +35,7 @@ export const metadata: Metadata = {
 
 export default function DesOpsHubPage() {
   return (
-    <PostLayout post={getPost('desops-hub')!}>
+    <PostLayout post={getPost('desops-hub')!} locale="ru">
       <DesOpsHub locale="ru" />
     </PostLayout>
   )
