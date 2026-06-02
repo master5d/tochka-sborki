@@ -34,7 +34,7 @@ export function Horizons({ locale }: Props) {
           {' by hand. You don\'t adapt to the program. The program learns your language.'}
         </p>
         <div className={styles.boundary}>
-          <b>AI takes:</b> translating your words into the tool\'s actions, the rough assembly.<br />
+          <b>AI takes:</b> translating your words into the tool's actions, the rough assembly.<br />
           <b>Stays yours:</b> what exactly you want to say, and when "enough" is enough.
         </div>
 

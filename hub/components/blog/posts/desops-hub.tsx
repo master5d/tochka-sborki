@@ -114,7 +114,7 @@ export function DesOpsHub({ locale }: Props) {
           {'What agencies used to charge $5,000+ for is now automated. With <b>UI UX Pro Max</b>, creating a custom design system takes seconds.'}
         </p>
         <ul>
-          <li><b>Industry-Specific Intelligence:</b> The system runs 5 parallel searches across 161+ industry design rules. Whether it\'s a "SaaS dashboard" or a "crypto exchange" — the agent knows the context immediately.</li>
+          <li><b>Industry-Specific Intelligence:</b> The system runs 5 parallel searches across 161+ industry design rules. Whether it's a "SaaS dashboard" or a "crypto exchange" — the agent knows the context immediately.</li>
           <li><b>Library of Archetypes:</b> 67+ styles (Glassmorphism, Brutalism), 161+ color palettes, and 57+ curated font pairs available instantly.</li>
         </ul>
 
@@ -153,7 +153,7 @@ export function DesOpsHub({ locale }: Props) {
           {'Design is a way of "raising an identity flag." We use DesOps Hub for <b>Nerdsignalling</b> — broadcasting deep technical and aesthetic code that lets you claim a status position in specific niches (for instance, youth subcultures).'}
         </p>
         <ul>
-          <li><b>OG / Unc Persona:</b> We advise and design systems from the position of an "OG" (Original Gangster) or "Unc" (Uncle). That\'s a position of authority backed by the hub\'s systemic standards.</li>
+          <li><b>OG / Unc Persona:</b> We advise and design systems from the position of an "OG" (Original Gangster) or "Unc" (Uncle). That's a position of authority backed by the hub's systemic standards.</li>
           <li><b>Tribal Status:</b> In visual culture, status within the "tribe" matters more than mass appeal. We use the "Black Pill pipeline" in design to penetrate closed communities through an authentic visual language.</li>
         </ul>
 
@@ -163,7 +163,7 @@ export function DesOpsHub({ locale }: Props) {
         </p>
         <ul>
           <li><b>Tool-Specific Rules:</b> Codex and GPT receive different instructions targeting their respective typical mistakes. Surgical precision in fighting AI slop.</li>
-          <li><b>Live Mode:</b> We can now edit text and elements directly in the browser, and changes automatically propagate back to the source code. The perfect bridge between a curator\'s eye and the codebase.</li>
+          <li><b>Live Mode:</b> We can now edit text and elements directly in the browser, and changes automatically propagate back to the source code. The perfect bridge between a curator's eye and the codebase.</li>
           <li><b>Performance:</b> The anti-pattern detector became 20× faster. 41+ rules are checked instantly, ensuring "card inside a card" or poor contrast never reaches production.</li>
         </ul>
 
@@ -175,7 +175,7 @@ export function DesOpsHub({ locale }: Props) {
           {'We introduced the concept of <b>The New Quotient</b>. Our goal: the intersection of the Measurable (pixels, tokens, grids) and the Meaningful (character, intelligence, empathy). Only at that intersection is Magical experience born.'}
         </p>
         <ul>
-          <li><b>Aesthetic Responsibility:</b> We don\'t just "looksmax" interfaces for status. We design systems that transmit values and human dignity.</li>
+          <li><b>Aesthetic Responsibility:</b> We don't just "looksmax" interfaces for status. We design systems that transmit values and human dignity.</li>
           <li><b>Subverting Monoaesthetics:</b> We use DesOps Hub to rupture archaic beauty templates. Intelligence and meaning in our interfaces matter more than empty symmetry.</li>
         </ul>
 

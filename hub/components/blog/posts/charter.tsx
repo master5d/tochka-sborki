@@ -55,7 +55,7 @@ export function Charter({ locale }: Props) {
           {"That's not magic and not code. It's a charter — a description not of a task but of a"}
           {' character. Nina pastes it as the first message (or puts it in the assistant settings)'}
           {' — and from then on she never explains herself again. The assistant already knows who'}
-          {"it's working with."}
+          {" it's working with."}
         </p>
 
         <h2>What changed</h2>
