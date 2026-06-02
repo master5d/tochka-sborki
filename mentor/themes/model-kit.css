@@ -1,38 +1,54 @@
 :root {
-  /* Theme-agnostic: layout, type scale, radius, fonts — identical in both themes */
+  /* Theme-agnostic: layout, type scale, radius, fonts */
   --font-mono: 'Geist Mono', monospace;
+  --font-display: 'Unbounded', system-ui, sans-serif;
   --radius: 4px;
   --display-size: clamp(2.8rem, 7vw, 6.5rem);
   --section-label-size: 0.7rem;
-  --section-gap: 5rem;
+  --section-gap: 6rem;
   --content-max: 1100px;
+  
+  /* Elite Typography: Knuth-Plass derived Type Color */
+  --line-height-prose: 1.62;
+  --max-width-prose: 680px;
 }
 
 [data-theme="dark"] {
   --bg-primary: #0a0a0f;
+  --bg-primary-rgb: 10, 10, 15;
   --bg-secondary: #111118;
   --bg-surface: #16161f;
   --text-primary: #e8e8f0;
   --text-secondary: #9090a8;
-  --text-accent: #00aaff;          /* Blue accent — differentiates B2B from course green */
+  --text-accent: #00d1ff;          /* Cyber Blue — Elite DesOps Hub standard */
+  --text-accent-rgb: 0, 209, 255;
   --text-accent-warm: #00ff88;
   --border-color: #2a2a3a;
-  --border-accent: #00aaff40;
+  --border-accent: rgba(0, 209, 255, 0.25);
   --text-on-accent: #000000;
   --crit: #ff6b5b;
+  
+  /* Glassmorphism */
+  --glass-bg: rgba(10, 10, 15, 0.85);
+  --glass-blur: blur(12px);
 }
 
 [data-theme="light"] {
-  /* Warm "model kit" paper — constructivist blueprint feel; B2B blue preserved */
   --bg-primary: #f4f1ea;
+  --bg-primary-rgb: 244, 241, 234;
   --bg-secondary: #eae6dc;
   --bg-surface: #fbf9f4;
   --text-primary: #15151a;
   --text-secondary: #5a5a6a;
-  --text-accent: #0061a8;          /* darkened blue so white-on-accent + link-on-paper clear WCAG AA */
-  --text-accent-warm: #0b7a3a;     /* green darkened for AA on paper */
+  --text-accent: #0098bc;          /* Darker Cyber Blue for WCAG AA on paper */
+  --text-accent-rgb: 0, 152, 188;
+  --text-accent-warm: #0b7a3a;
   --border-color: #d8d2c6;
-  --border-accent: #0061a840;
+  --border-accent: rgba(0, 152, 188, 0.25);
   --text-on-accent: #ffffff;
   --crit: #c42619;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(244, 241, 234, 0.85);
+  --glass-blur: blur(12px);
 }
