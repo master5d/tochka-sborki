@@ -1,24 +1,29 @@
 /* ── Prologue long-read ──────────────────────────────────────────────
    Brand: model-kit (dark, neon-on-black). Unbounded shouts, Geist speaks,
    Geist Mono marks. Reading comfort first; typography paces the gradient
-   tone of the manifesto. */
+   tone of the manifesto. 
+   
+   Elite Update: Cyber Blue accent, optimized line-height (1.62), 
+   and glassmorphism integration.
+*/
 
 .article {
-  max-width: 660px;
+  max-width: var(--max-width-prose);
   margin: 0 auto;
   padding: clamp(2.5rem, 6vw, 4.5rem) 1.5rem 6rem;
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   font-size: 1.1875rem;
-  line-height: 1.72;
+  line-height: var(--line-height-prose);
   color: var(--text-primary);
   text-rendering: optimizeLegibility;
 }
 
 .article p {
   text-wrap: pretty;
+  margin-bottom: 1.5rem;
 }
 
-/* Inline emphasis — neon accent beats woven through the read. */
+/* Inline emphasis — Cyber Blue accent beats woven through the read. */
 .article strong {
   color: var(--text-accent);
   font-weight: 650;
@@ -30,20 +35,17 @@
   margin-bottom: clamp(3rem, 7vw, 4.5rem);
 }
 
-.opening p {
-  margin-bottom: 1.35rem;
-}
-
 /* The slap. Oversized, tight, it hits before the reader settles. */
 .lead {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
-  font-size: clamp(1.6rem, 4.5vw, 2.4rem);
-  line-height: 1.18;
-  font-weight: 600;
-  letter-spacing: -0.025em;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: -0.04em;
   color: var(--text-primary);
   text-wrap: balance;
-  margin-bottom: 2rem;
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
   animation: lead-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -55,71 +57,89 @@
 /* ── Sections / chapter plates ───────────────────────────────────── */
 
 .section {
-  margin-bottom: clamp(3rem, 7vw, 4.5rem);
-}
-
-.section p {
-  margin-bottom: 1.35rem;
+  margin-bottom: clamp(4rem, 10vw, 6rem);
 }
 
 /* Act headings as constructivist plates: hairline rule, mono tick, big
    Unbounded title. The acts ARE a sequence, so the structure is earned. */
 .sectionHeading {
   font-family: var(--font-display), system-ui, sans-serif;
-  font-size: clamp(1.9rem, 5vw, 2.9rem);
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
   font-weight: 900;
-  line-height: 1.04;
-  letter-spacing: -0.035em;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
   text-wrap: balance;
+  text-transform: uppercase;
   color: var(--text-primary);
-  margin: clamp(3.5rem, 8vw, 5rem) 0 1.75rem;
-  padding-top: 1.5rem;
+  margin: clamp(4rem, 10vw, 6rem) 0 2.5rem;
+  padding-top: 2rem;
   border-top: 1px solid var(--border-color);
+  position: relative;
+}
+
+.sectionHeading::before {
+  content: '//';
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-accent);
+  letter-spacing: 0.2em;
+  margin-bottom: 1rem;
 }
 
 /* ── Hall quote ──────────────────────────────────────────────────── */
-/* No side-stripe. Oversized neon quotation mark + top hairline. */
+/* Glassmorphism treatment for pull-quotes. */
 
 .blockquote {
-  margin: 2.75rem 0;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border-color);
+  margin: 3.5rem 0;
+  padding: 2.5rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  WebkitBackdropFilter: var(--glass-blur);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--text-accent);
+  border-radius: var(--radius);
 }
 
 .blockquote::before {
   content: '\00AB';
   display: block;
   font-family: var(--font-display), system-ui, sans-serif;
-  font-size: 3.5rem;
-  line-height: 0.6;
+  font-size: 4rem;
+  line-height: 0.5;
   color: var(--text-accent);
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
 }
 
 .blockquote em {
   font-style: italic;
-  font-size: clamp(1.3rem, 3vw, 1.65rem);
-  line-height: 1.4;
+  font-size: clamp(1.4rem, 3.5vw, 1.85rem);
+  line-height: 1.35;
   color: var(--text-primary);
   display: block;
-  margin-bottom: 0.9rem;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
 }
 
 .blockquoteAttrib {
   font-family: var(--font-mono), monospace;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
   font-style: normal;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 /* ── Manifesto beats ─────────────────────────────────────────────── */
-/* A paragraph that is ONLY a <strong> is a spine beat — promote it to a
-   large Unbounded pull-line that breaks the column rhythm. */
+/* Pull-lines that break the column rhythm. */
 
 .section p:has(> strong:only-child),
 .assembly p:has(> strong:only-child) {
-  margin: 2.5rem 0;
+  margin: 3.5rem 0;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border-accent);
+  border-bottom: 1px solid var(--border-accent);
 }
 
 .section p:has(> strong:only-child) strong,
@@ -127,21 +147,22 @@
   display: block;
   font-family: var(--font-display), system-ui, sans-serif;
   font-weight: 900;
-  font-size: clamp(1.35rem, 3.4vw, 2rem);
-  line-height: 1.12;
-  letter-spacing: -0.025em;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
   color: var(--text-primary);
   text-wrap: balance;
+  text-transform: uppercase;
 }
 
 /* ── Assembly ────────────────────────────────────────────────────── */
 
 .assembly {
-  margin-bottom: clamp(3rem, 7vw, 4.5rem);
-}
-
-.assembly p {
-  margin-bottom: 1.35rem;
+  margin-bottom: clamp(4rem, 10vw, 6rem);
+  padding: 2.5rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
 }
 
 /* ── Reduced motion ──────────────────────────────────────────────── */
@@ -154,8 +175,11 @@
 
 @media (max-width: 480px) {
   .article {
-    padding-left: 1.125rem;
-    padding-right: 1.125rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
     font-size: 1.125rem;
+  }
+  .sectionHeading {
+    font-size: 2rem;
   }
 }
