@@ -25,7 +25,7 @@ export function BlogPostingLd({ post, locale }: { post: Post; locale: Locale }) 
 }
 
 export function BlogLd({ posts, locale }: { posts: Post[]; locale: Locale }) {
-  const name = locale === 'en' ? `${SITE.name} — Blog` : `${SITE.name} — Блог`
+  const name = locale === 'en' ? `${SITE.nameEn} — Blog` : `${SITE.name} — Блог`
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
