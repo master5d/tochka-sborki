@@ -24,6 +24,7 @@ export type Post = {
 export const SITE = {
   url: 'https://mamaev.coach',
   name: 'Александр Мамаев',
+  nameEn: 'Alexander Mamaev', // EN agent surfaces (RSS title, llms.txt heading) — avoid Cyrillic for EN readers
   author: 'Александр Мамаев',
   lang: 'ru',
 } as const

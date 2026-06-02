@@ -20,7 +20,7 @@ export function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>${esc(SITE.name)} — Blog</title>
+    <title>${esc(SITE.nameEn)} — Blog</title>
     <link>${SITE.url}/en/blog/</link>
     <description>Essays and longreads on AI, practice, and agent engineering.</description>
     <language>en</language>
