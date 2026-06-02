@@ -104,10 +104,13 @@ export function PhaseShiftDiagram() {
           <text x="600" y="250" fill={theme.text} textAnchor="middle" fontSize="12" fontWeight="700">Goal: Meaning (Why?)</text>
         </g>
         
-        {/* Turbulence particles */}
-        {[...Array(20)].map((_, i) => (
-          <circle key={i} cx={450 + Math.random() * 300} cy={100 + Math.random() * 250} r="1" fill={theme.accent} opacity={Math.random()} />
-        ))}
+        {/* Turbulence particles (Deterministic to avoid hydration mismatch) */}
+        {[...Array(20)].map((_, i) => {
+          const cx = 450 + ((i * 137) % 300)
+          const cy = 100 + ((i * 149) % 250)
+          const opacity = 0.1 + ((i * 17) % 80) / 100
+          return <circle key={i} cx={cx} cy={cy} r="1" fill={theme.accent} opacity={opacity} />
+        })}
 
         <defs>
           <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
@@ -178,6 +181,110 @@ export function SovereigntyFormula() {
       </div>
       <div style={{ marginTop: '2rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
         Fig 4.0 // The Sovereign Practice Formula
+      </div>
+    </div>
+  )
+}
+
+/** 5. Systemic Integration Mindmap (PaperBanana Advanced) */
+export function SystemicIntegrationMindmap() {
+  return (
+    <div style={{ margin: '4rem 0', padding: '3rem', background: theme.bg, borderRadius: '4px', border: `1px solid ${theme.border}`, backdropFilter: 'blur(16px)', overflow: 'hidden' }}>
+      <svg viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Core: The Assembly Point */}
+        <circle cx="400" cy="250" r="60" stroke={theme.accent} strokeWidth="1" strokeDasharray="4 4" />
+        <circle cx="400" cy="250" r="10" fill={theme.accent} />
+        <text x="400" y="330" fill={theme.accent} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="14" fontWeight="900" letterSpacing="0.2em">THE ASSEMBLY POINT</text>
+        <text x="400" y="350" fill={theme.text} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="9" opacity="0.6">POINT-OF-MAXIMUM-INTEGRITY</text>
+
+        {/* Axis 1: External (Phase Shift) */}
+        <g transform="translate(400, 250) rotate(-120)">
+          <line x1="0" y1="60" x2="0" y2="200" stroke={theme.border} strokeWidth="0.5" />
+          <circle cx="0" cy="210" r="30" stroke={theme.border} strokeWidth="1" />
+          <text x="0" y="260" fill={theme.text} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" transform="rotate(120 0 250)">EXTERNAL PHASE SHIFT</text>
+          {/* Sub-nodes */}
+          <line x1="0" y1="240" x2="-40" y2="280" stroke={theme.border} opacity="0.3" />
+          <text x="-50" y="295" fill={theme.text} opacity="0.4" fontSize="8" transform="rotate(120 -50 295)">Institutional Decay</text>
+          <line x1="0" y1="240" x2="40" y2="280" stroke={theme.border} opacity="0.3" />
+          <text x="50" y="295" fill={theme.text} opacity="0.4" fontSize="8" transform="rotate(120 50 295)">Map Mismatch</text>
+        </g>
+
+        {/* Axis 2: Technological (Personal Node) */}
+        <g transform="translate(400, 250) rotate(0)">
+          <line x1="60" y1="0" x2="200" y2="0" stroke={theme.border} strokeWidth="0.5" />
+          <circle cx="210" cy="0" r="30" stroke={theme.border} strokeWidth="1" />
+          <text x="210" y="50" fill={theme.text} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10">PERSONAL AI NODE</text>
+          {/* Sub-nodes */}
+          <line x1="240" y1="0" x2="280" y2="-30" stroke={theme.border} opacity="0.3" />
+          <text x="290" y="-35" fill={theme.text} opacity="0.4" fontSize="8">Local Hardware</text>
+          <line x1="240" y1="0" x2="280" y2="30" stroke={theme.border} opacity="0.3" />
+          <text x="290" y="45" fill={theme.text} opacity="0.4" fontSize="8">Sovereign Data</text>
+        </g>
+
+        {/* Axis 3: Internal (Integrity) */}
+        <g transform="translate(400, 250) rotate(120)">
+          <line x1="0" y1="60" x2="0" y2="200" stroke={theme.accent} strokeWidth="1" />
+          <circle cx="0" cy="210" r="30" stroke={theme.accent} strokeWidth="1" />
+          <text x="0" y="260" fill={theme.accent} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" transform="rotate(-120 0 250)">INTERNAL INTEGRITY</text>
+          {/* Sub-nodes */}
+          <line x1="0" y1="240" x2="-40" y2="280" stroke={theme.accent} opacity="0.5" />
+          <text x="-50" y="295" fill={theme.text} opacity="0.8" fontSize="8" transform="rotate(-120 -50 295)">The New Quotient</text>
+          <line x1="0" y1="240" x2="40" y2="280" stroke={theme.accent} opacity="0.5" />
+          <text x="50" y="295" fill={theme.text} opacity="0.8" fontSize="8" transform="rotate(-120 50 295)">Presence Loop</text>
+        </g>
+
+        {/* Inter-locking Mesh (The Skeleton) */}
+        <path d="M400 50 Q600 150 700 250 T400 450" stroke={theme.accent} opacity="0.1" strokeWidth="0.5" />
+        <path d="M400 50 Q200 150 100 250 T400 450" stroke={theme.accent} opacity="0.1" strokeWidth="0.5" />
+      </svg>
+      <div style={{ marginTop: '2rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>
+        Systemic Architecture 0.1 // Interlocking Nodes of Sovereignty
+      </div>
+    </div>
+  )
+}
+
+/** 6. Reflective Feedback Loop (Act III) */
+export function ReflectiveLoop() {
+  return (
+    <div style={{ margin: '3rem 0', padding: '2rem', background: theme.bg, borderRadius: '4px', border: `1px solid ${theme.border}`, backdropFilter: 'blur(12px)' }}>
+      <svg viewBox="0 0 800 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Input Node */}
+        <rect x="50" y="100" width="120" height="100" rx="4" stroke={theme.text} strokeWidth="1" />
+        <text x="110" y="155" fill={theme.text} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="12">HUMAN INTENT</text>
+        
+        {/* The Loop Path */}
+        <path d="M170 150 L300 150" stroke={theme.accent} strokeWidth="1" markerEnd="url(#arrow-blue)" />
+        
+        {/* Agentic Mirror (Core) */}
+        <circle cx="400" cy="150" r="70" stroke={theme.accent} strokeWidth="1" strokeDasharray="5 5" />
+        <text x="400" y="145" fill={theme.accent} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="12" fontWeight="900">AGENTIC MIRROR</text>
+        <text x="400" y="165" fill={theme.text} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" opacity="0.5">REFLECTION ENGINE</text>
+        
+        {/* Iteration Rings */}
+        <circle cx="400" cy="150" r="80" stroke={theme.accent} strokeWidth="0.5" opacity="0.2" />
+        <circle cx="400" cy="150" r="90" stroke={theme.accent} strokeWidth="0.5" opacity="0.1" />
+        
+        {/* Round Labels */}
+        <text x="480" y="80" fill={theme.accent} fontSize="8" opacity="0.6">Round 1: Structure</text>
+        <text x="500" y="100" fill={theme.accent} fontSize="8" opacity="0.4">Round 2: Ethics</text>
+        <text x="520" y="120" fill={theme.accent} fontSize="8" opacity="0.2">Round 3: Aesthetics</text>
+        
+        {/* Output Path */}
+        <path d="M500 150 L630 150" stroke={theme.accent} strokeWidth="2" markerEnd="url(#arrow-blue)" />
+        
+        {/* Refined Artifact */}
+        <rect x="630" y="100" width="120" height="100" rx="4" fill={theme.accent} />
+        <text x="690" y="155" fill="#000" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="12" fontWeight="900">SOVEREIGN VOID</text>
+        
+        <defs>
+          <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 Z" fill={theme.accent} />
+          </marker>
+        </defs>
+      </svg>
+      <div style={{ marginTop: '1rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+        Fig 5.0 // The Reflective Refinement Cycle
       </div>
     </div>
   )

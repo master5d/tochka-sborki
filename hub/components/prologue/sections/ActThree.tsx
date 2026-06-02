@@ -1,4 +1,5 @@
 import styles from '../Prologue.module.css'
+import { ReflectiveLoop } from '../PrologueDiagrams'
 
 type Props = { locale: 'ru' | 'en' }
 
@@ -30,6 +31,8 @@ export function ActThree({ locale }: Props) {
       </p>
 
       <p>{'Теперь про технологию. Тот же принцип, в новой одежде.'}</p>
+
+      <ReflectiveLoop />
 
       <p>
         <strong>{'AI отражает то, что в тебя пришло до него. Это механика, не философия.'}</strong>
