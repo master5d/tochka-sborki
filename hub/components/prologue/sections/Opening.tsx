@@ -4,7 +4,58 @@ import { MirrorParadox } from '../PrologueDiagrams'
 type Props = { locale: 'ru' | 'en' }
 
 export function Opening({ locale }: Props) {
-  if (locale === 'en') throw new Error('EN translation pending')
+  if (locale === 'en') {
+    return (
+      <div className={styles.opening}>
+        <p className={styles.lead}>
+          {'You open ChatGPT twenty times a day. You open yourself — never.'}
+        </p>
+
+        <MirrorParadox />
+
+        <p>
+          {"Let's be honest, just between us, no one's listening. For the past couple of years"}
+          {" there's been a quiet hum in the chest. Something broke — not in you specifically, but"}
+          {' in the air itself. The old answers stopped answering. And you did what everyone does:'}
+          {' found something to hide your confusion behind. People used to hide behind the expert,'}
+          {" the diploma, the \"it'll make sense eventually.\" Now they hide behind a machine that"}
+          {" produces confident text faster than you can feel that you don't understand what's"}
+          {' happening at all. Convenient. And exactly for that reason — dangerous.'}
+        </p>
+
+        <p>
+          {"Or maybe it's the opposite for you. You have a craft — you heal with your hands or"}
+          {' your words, you lead groups, you write, you hold a paintbrush, you train a voice.'}
+          {' Behind you are your own teachers, your own subtlety, gathered not from books but'}
+          {' through the body, through years and mistakes. And you look at this wave — the speed,'}
+          {' the interfaces, the people who say "prompt" with the same intonation people once'}
+          {" reserved for \"prayer\" — and what washes over you isn't curiosity but a quiet dread."}
+          {' That your craft will become useless. That the live contact you came for in the first'}
+          {' place will dissolve into screens. And you decided the choice is simple: either you'}
+          {" stay faithful to your work, or you betray it and climb into this new world. No middle"}
+          {" ground. Between these two fears the space is very narrow, and there's no air to breathe."}
+        </p>
+
+        <p>
+          {"I know this place — not from a book. I'm a life coach, I've been sitting with people"}
+          {' in exactly this confusion for thirteen years, and in the evenings I build my own AI'}
+          {" with my own hands. So let me be direct: the choice you've drawn for yourself is false."}
+          {' There is no door with "faithful to your craft" on one side and "in the new world" on'}
+          {" the other. The wall you feel doesn't run between you and the technology. It runs inside"}
+          {" you. And as long as you treat it as external, you'll either hide behind the machine or"}
+          {' hide from it — and both split you apart equally.'}
+        </p>
+
+        <p>I thought it was the end too. Here are three things that flip the picture.</p>
+
+        <p>{'First: the map tore before AI arrived — it came in when the tearing was already underway.'}</p>
+
+        <p>{"Second: AI doesn't have to be someone else's system behind a wall."}</p>
+
+        <p>{"Third: whether you're assembled inside or fragmented is what decides what the tool becomes in your hands."}</p>
+      </div>
+    )
+  }
 
   return (
     <div className={styles.opening}>

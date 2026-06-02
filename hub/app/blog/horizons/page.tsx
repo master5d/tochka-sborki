@@ -11,6 +11,14 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://mamaev.coach'),
   title,
   description,
+  alternates: {
+    canonical: 'https://mamaev.coach/blog/horizons/',
+    languages: {
+      'ru-RU': 'https://mamaev.coach/blog/horizons/',
+      'en-US': 'https://mamaev.coach/en/blog/horizons/',
+      'x-default': 'https://mamaev.coach/blog/horizons/',
+    },
+  },
   openGraph: {
     title,
     description,
@@ -27,7 +35,7 @@ export const metadata: Metadata = {
 
 export default function HorizonsPage() {
   return (
-    <PostLayout post={getPost('horizons')!}>
+    <PostLayout post={getPost('horizons')!} locale="ru">
       <Horizons locale="ru" />
     </PostLayout>
   )

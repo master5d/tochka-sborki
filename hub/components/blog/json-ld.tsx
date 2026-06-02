@@ -1,48 +1,41 @@
-import { SITE, postUrl, type Post } from '@/lib/posts'
+import { SITE, localizedPost, langTag, type Post, type Locale } from '@/lib/posts'
 
 function Ld({ data }: { data: object }) {
-  // Escape `<` so a value containing `</script>` can't break out of the tag.
-  // Author-controlled today, but agent-written metadata may not be tomorrow.
   const json = JSON.stringify(data).replace(/</g, '\\u003c')
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: json }}
-    />
-  )
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: json }} />
 }
 
-export function BlogPostingLd({ post }: { post: Post }) {
+export function BlogPostingLd({ post, locale }: { post: Post; locale: Locale }) {
+  const r = localizedPost(post, locale)
   const data = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.description,
+    headline: r.title,
+    description: r.description,
     datePublished: post.date,
     dateModified: post.updated ?? post.date,
     author: { '@type': 'Person', name: post.author },
     publisher: { '@type': 'Person', name: SITE.author },
-    inLanguage: SITE.lang,
+    inLanguage: r.langTag,
     keywords: post.tags.join(', '),
-    url: postUrl(post.slug),
+    url: r.url,
     ...(post.ogImage ? { image: post.ogImage } : {}),
   }
   return <Ld data={data} />
 }
 
-export function BlogLd({ posts }: { posts: Post[] }) {
+export function BlogLd({ posts, locale }: { posts: Post[]; locale: Locale }) {
+  const name = locale === 'en' ? `${SITE.nameEn} — Blog` : `${SITE.name} — Блог`
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: `${SITE.name} — Блог`,
-    url: `${SITE.url}/blog/`,
-    inLanguage: SITE.lang,
-    blogPost: posts.map(p => ({
-      '@type': 'BlogPosting',
-      headline: p.title,
-      url: postUrl(p.slug),
-      datePublished: p.date,
-    })),
+    name,
+    url: locale === 'en' ? `${SITE.url}/en/blog/` : `${SITE.url}/blog/`,
+    inLanguage: langTag(locale),
+    blogPost: posts.map(p => {
+      const r = localizedPost(p, locale)
+      return { '@type': 'BlogPosting', headline: r.title, url: r.url, datePublished: p.date }
+    }),
   }
   return <Ld data={data} />
 }

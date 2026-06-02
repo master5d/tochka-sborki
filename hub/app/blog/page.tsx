@@ -5,6 +5,14 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://mamaev.coach'),
   title: 'Блог · Александр Мамаев',
   description: 'Эссе и лонгриды об AI, практике и агентском инжиниринге.',
+  alternates: {
+    canonical: 'https://mamaev.coach/blog/',
+    languages: {
+      'ru-RU': 'https://mamaev.coach/blog/',
+      'en-US': 'https://mamaev.coach/en/blog/',
+      'x-default': 'https://mamaev.coach/blog/',
+    },
+  },
   openGraph: {
     title: 'Блог · Александр Мамаев',
     description: 'Эссе и лонгриды об AI, практике и агентском инжиниринге.',
@@ -15,5 +23,5 @@ export const metadata: Metadata = {
 }
 
 export default function BlogPage() {
-  return <BlogIndex />
+  return <BlogIndex locale="ru" />
 }

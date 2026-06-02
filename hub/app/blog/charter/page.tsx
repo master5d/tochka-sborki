@@ -11,6 +11,14 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://mamaev.coach'),
   title,
   description,
+  alternates: {
+    canonical: 'https://mamaev.coach/blog/charter/',
+    languages: {
+      'ru-RU': 'https://mamaev.coach/blog/charter/',
+      'en-US': 'https://mamaev.coach/en/blog/charter/',
+      'x-default': 'https://mamaev.coach/blog/charter/',
+    },
+  },
   openGraph: {
     title,
     description,
@@ -27,7 +35,7 @@ export const metadata: Metadata = {
 
 export default function CharterPage() {
   return (
-    <PostLayout post={getPost('charter')!}>
+    <PostLayout post={getPost('charter')!} locale="ru">
       <Charter locale="ru" />
     </PostLayout>
   )

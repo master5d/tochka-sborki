@@ -40,6 +40,17 @@ export interface Dictionary {
     body: string
     ctaHome: string
   }
+  blog: {
+    indexHeading: string
+    backToSite: string
+    empty: string
+    readCta: string
+    backToBlog: string
+    relatedLabel: string
+    footerThinkAloud: string
+    footerPractice: string
+    courseUrl: string
+  }
 }
 
 const SOCIALS_COMMON: Social[] = [
@@ -92,6 +103,17 @@ export const dictionaries: Record<Locale, Dictionary> = {
       body: 'Этой страницы нет. Зато есть всё остальное — проекты, курс, контакты.',
       ctaHome: 'На главную →',
     },
+    blog: {
+      indexHeading: 'Блог',
+      backToSite: '← mamaev.coach',
+      empty: 'Пока нет публикаций.',
+      readCta: 'Читать',
+      backToBlog: '← Блог',
+      relatedLabel: 'По теме',
+      footerThinkAloud: 'Думаю вслух в Telegram —',
+      footerPractice: '. Практика — в открытом бесплатном курсе',
+      courseUrl: 'https://ai.mamaev.coach',
+    },
   },
   en: {
     tagline: '// mamaev.coach',
@@ -136,6 +158,17 @@ export const dictionaries: Record<Locale, Dictionary> = {
       heading: 'Nothing\nhere',
       body: 'This page does not exist. But everything else does — projects, the course, contacts.',
       ctaHome: 'Home →',
+    },
+    blog: {
+      indexHeading: 'Blog',
+      backToSite: '← mamaev.coach',
+      empty: 'No posts yet.',
+      readCta: 'Read',
+      backToBlog: '← Blog',
+      relatedLabel: 'Related',
+      footerThinkAloud: 'Thinking out loud on Telegram —',
+      footerPractice: '. Practice lives in the free open course',
+      courseUrl: 'https://ai.mamaev.coach/en/',
     },
   },
 }
