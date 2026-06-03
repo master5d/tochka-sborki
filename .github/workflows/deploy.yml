@@ -6,6 +6,7 @@ on:
     paths:
       - 'LMS/tochka-sborki/web/**'
       - 'hub/**'
+      - 'blog/**'
       - 'mentor/**'
       - 'workers/**'
       - '.github/workflows/deploy.yml'
@@ -43,7 +44,7 @@ jobs:
             --branch=main \
             --commit-message="${{ github.sha }}"
 
-  # ── mamaev.coach (landing hub) ────────────────────────────
+  # ── mamaev.coach (landing hub + blog, merged build) ───────
   deploy-hub:
     runs-on: ubuntu-latest
     permissions:
@@ -55,13 +56,23 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
-          cache-dependency-path: hub/package-lock.json
-      - name: Install
+          cache-dependency-path: |
+            blog/package-lock.json
+            hub/package-lock.json
+      - name: Install blog
+        working-directory: blog
+        run: npm ci
+      - name: Build blog
+        working-directory: blog
+        run: npm run build
+      - name: Install hub
         working-directory: hub
         run: npm ci
-      - name: Build
+      - name: Build hub
         working-directory: hub
         run: npm run build
+      - name: Merge blog into hub
+        run: node scripts/merge-blog.mjs
       - name: Ensure project exists
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
