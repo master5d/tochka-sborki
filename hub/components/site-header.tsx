@@ -1,6 +1,7 @@
 import { ThemeToggle } from '@/components/theme-toggle'
+import { HeaderLangSwitch } from '@/components/header-lang-switch'
 
-/** Thin top bar: wordmark home-link + theme toggle. hub has no other nav. */
+/** Thin top bar: wordmark home-link + EN/RU switch + theme toggle. */
 export function SiteHeader() {
   return (
     <header
@@ -31,7 +32,10 @@ export function SiteHeader() {
       >
         mamaev.coach
       </a>
-      <ThemeToggle />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+        <HeaderLangSwitch />
+        <ThemeToggle />
+      </div>
     </header>
   )
 }

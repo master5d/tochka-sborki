@@ -1,6 +1,7 @@
 import { ThemeToggle } from '@/components/theme-toggle'
+import { HeaderLangSwitch } from '@/components/header-lang-switch'
 
-/** Thin top bar: wordmark home-link + theme toggle. mentor has no other nav. */
+/** Thin top bar: wordmark home-link + EN/RU switch + theme toggle. */
 export function SiteHeader() {
   return (
     <header
@@ -29,9 +30,12 @@ export function SiteHeader() {
           textDecoration: 'none',
         }}
       >
-        Mamaev · Agent Engineering
+        Mamaev Agentic Lab
       </a>
-      <ThemeToggle />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+        <HeaderLangSwitch />
+        <ThemeToggle />
+      </div>
     </header>
   )
 }
