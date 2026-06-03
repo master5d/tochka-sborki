@@ -45,7 +45,8 @@
 ## Task 1: Scaffold the empty `blog/` Next app
 
 **Files:**
-- Create: `blog/package.json`, `blog/next.config.ts`, `blog/tsconfig.json`, `blog/postcss.config.mjs`, `blog/vitest.config.ts`, `blog/.gitignore`, `blog/app/layout.tsx` (temporary stub), `blog/app/not-found.tsx`
+- Create: `blog/package.json`, `blog/next.config.ts`, `blog/tsconfig.json`, `blog/.gitignore`, `blog/app/layout.tsx` (temporary stub), `blog/app/not-found.tsx`
+- NOTE: hub has **no** `postcss.config.mjs` and **no** `vitest.config.ts` (it uses plain CSS — no Tailwind — and vitest defaults). The blog mirrors hub: **do not** add either config. (LMS has them because it uses Tailwind; copying LMS's PostCSS config would break the blog build, which has no `@tailwindcss/postcss` dep, once `globals.css` is imported.)
 
 - [ ] **Step 1: Create `blog/package.json`** (mirror hub deps; distinct name)
 
@@ -119,17 +120,9 @@ export default config
 }
 ```
 
-- [ ] **Step 4: Create `blog/postcss.config.mjs`** (copy hub's verbatim)
+- [ ] **Step 4: (removed)** — do NOT create `blog/postcss.config.mjs`. Hub has none; blog uses plain CSS with no Tailwind/PostCSS deps. Adding one breaks the build.
 
-```bash
-cp hub/postcss.config.mjs blog/postcss.config.mjs
-```
-
-- [ ] **Step 5: Create `blog/vitest.config.ts`** (copy hub's verbatim)
-
-```bash
-cp hub/vitest.config.ts blog/vitest.config.ts
-```
+- [ ] **Step 5: (removed)** — do NOT create `blog/vitest.config.ts`. Hub has none; vitest defaults (node env) run the relative-import logic tests fine.
 
 - [ ] **Step 6: Create `blog/.gitignore`** (copy hub's — ignores `node_modules`, `.next`, `out`)
 
@@ -165,7 +158,7 @@ Expected: build succeeds, `blog/out/` created (contains `404.html`, `_next/`). N
 - [ ] **Step 10: Commit**
 
 ```bash
-git -C "C:/telo/Efforts/Ongoing/MDS_AI_COURSE" add blog/package.json blog/package-lock.json blog/next.config.ts blog/tsconfig.json blog/postcss.config.mjs blog/vitest.config.ts blog/.gitignore blog/app/layout.tsx blog/app/not-found.tsx
+git -C "C:/telo/Efforts/Ongoing/MDS_AI_COURSE" add blog/package.json blog/package-lock.json blog/next.config.ts blog/tsconfig.json blog/.gitignore blog/app/layout.tsx blog/app/not-found.tsx
 git -C "C:/telo/Efforts/Ongoing/MDS_AI_COURSE" commit -m "feat(blog): scaffold standalone Next app (assetPrefix /blog)"
 ```
 
