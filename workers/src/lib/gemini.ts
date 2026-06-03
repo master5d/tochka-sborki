@@ -1,5 +1,5 @@
-import { SKINS_META } from '../../../web/lib/rpg/skins-meta'
-import type { WorldSkin } from '../../../web/lib/rpg/types'
+import { SKINS_META } from '../../../LMS/tochka-sborki/web/lib/rpg/skins-meta'
+import type { WorldSkin } from '../../../LMS/tochka-sborki/web/lib/rpg/types'
 
 /** Readable world-skin name for prose, never the raw enum slug (e.g. 'slavic-myth' → 'Славянский Миф'). */
 function skinName(skin: string, ru: boolean): string {

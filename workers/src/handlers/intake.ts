@@ -1,8 +1,8 @@
-import { scoreProfile } from '../../../web/lib/intake/scoring'
-import { scoreProfileV2 } from '../../../web/lib/intake/scoring-v2'
-import { requiredIds } from '../../../web/lib/intake/instrument'
+import { scoreProfile } from '../../../LMS/tochka-sborki/web/lib/intake/scoring'
+import { scoreProfileV2 } from '../../../LMS/tochka-sborki/web/lib/intake/scoring-v2'
+import { requiredIds } from '../../../LMS/tochka-sborki/web/lib/intake/instrument'
 import { generateSheetProse, classifyFilmSkin } from '../lib/gemini'
-import type { Answers, InstrumentVersion, Locale } from '../../../web/lib/intake/types'
+import type { Answers, InstrumentVersion, Locale } from '../../../LMS/tochka-sborki/web/lib/intake/types'
 
 export async function handleMe(db: D1Database, userId: string): Promise<Response> {
   const row = await db.prepare('SELECT * FROM intake_profiles WHERE user_id = ?').bind(userId).first()
