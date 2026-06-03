@@ -14,23 +14,28 @@ description: >
 # Точка Сборки Course Updater
 
 You are updating an interactive Russian-language course on Claude Code and agent-based programming.
-The course lives in a flat Markdown structure with strict naming and style conventions.
+The course lives under `LMS/tochka-sborki/` (the `LMS/` container holds one folder per course) with strict naming and style conventions.
 Your job is to make changes cleanly and then cascade updates to all dependent files so nothing gets out of sync.
 
 ## Project Map
 
+All course paths are relative to `LMS/tochka-sborki/` (repo root holds the monorepo: `LMS/`, `hub/`, `mentor/`, `workers/`, `docs/`).
+
 ```
-Точка Сборки/
+LMS/tochka-sborki/
 ├── XX-topic.md          ← Lesson files (01-introduction.md, 02-setup-guide.md, ...)
 ├── INDEX.md             ← Full course navigator (structure, checkpoints, stats, FAQ)
 ├── README.md            ← Course overview, structure list, learning path, version
 ├── CHEATSHEET.md        ← Quick-reference commands and patterns
 ├── EXERCISES.md         ← 8 practical exercises
 ├── PERSONAL-CONTEXT.md  ← Student profile template
-├── CLAUDE.md            ← Project context for Claude Code
+├── web/                 ← Next.js LMS site (ai.mamaev.coach), MDX content/{ru,en}
+├── scripts/             ← Dev-time generators (gen-skins.mjs)
 ├── my-experiments/      ← Student work outputs
 └── my-templates/        ← Prompt templates
 ```
+
+> Repo-level `CLAUDE.md` (at the monorepo root, not inside the course) documents the overall structure — keep it current on structural changes.
 
 ## Style Conventions
 

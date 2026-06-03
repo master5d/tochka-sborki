@@ -1,121 +1,25 @@
-```
-████████╗ ██████╗  ██████╗██╗  ██╗██╗  ██╗ █████╗
-   ██╔══╝██╔═══██╗██╔════╝██║  ██║██║ ██╔╝██╔══██╗
-   ██║   ██║   ██║██║     ███████║█████╔╝ ███████║
-   ██║   ██║   ██║██║     ██╔══██║██╔═██╗ ██╔══██║
-   ██║   ╚██████╔╝╚██████╗██║  ██║██║  ██╗██║  ██║
-   ╚═╝    ╚═════╝  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+# mc_hub
 
- ███████╗██████╗  ██████╗ ██████╗ ██╗  ██╗██╗
- ██╔════╝██╔══██╗██╔═══██╗██╔══██╗██║ ██╔╝██║
- ███████╗██████╔╝██║   ██║██████╔╝█████╔╝ ██║
- ╚════██║██╔══██╗██║   ██║██╔══██╗██╔═██╗ ██║
- ███████║██████╔╝╚██████╔╝██║  ██║██║  ██╗██║
- ╚══════╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝
-```
+Монорепо проектов Александра Мамаева (`mamaev.coach`). Один git-репозиторий, несколько независимых деплоев на Cloudflare.
 
-<div align="center">
+## Структура
 
-**Agentic-AI Course · 9 тем · agent-agnostic (Claude Code / Sovereign / Cloud-OSS / Behind-GFW) · RU + EN**
-
-[![Deploy](https://img.shields.io/badge/deploy-Cloudflare_Pages-orange?style=flat-square&logo=cloudflare)](https://ai.mamaev.coach)
-[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org)
-[![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
-
-</div>
-
----
-
-## О курсе
-
-**Точка Сборки** — практический курс по вайб-кодингу. Освоение Claude Code, MCP-серверов, агентов и автоматизации через 8 элективных тем и 33 когнитивных юнита.
-
-Каждая тема разбита на юниты по циклу Колба: **Активация → Рефлексия → Концепция → Практика**. Темы независимы — выбирай в любом порядке.
-
-## Темы
-
-```
-8 тем × 3–5 юнитов = 33 когнитивных юнита
-
-Kickstart                — карта AI-мира для нонкодеров
-Знакомство               — Software 3.0, четыре сдвига
-Базовый сетап            — рабочая среда, Claude Code CLI
-Промпт-инжиниринг        — формулировка ТЗ, магические слова
-Контекст и память        — память агента, CLAUDE.md, sub-agents
-Pipeline автоматизации   — URL → scrape → analyze → insights
-Инструменты расширения   — MCP, Hooks, Skills, Superpowers
-Агентский инжиниринг     — оркестрация, prod-инфра (ENERV/SOVERN)
-```
-
-## Стек
-
-| Слой | Технология |
-|------|-----------|
-| LMS (web) | Next.js 16 App Router · `output: export` · MDX |
-| Контент | Markdown / MDX · Kolb-cycle unit structure |
-| Стилизация | CSS Custom Properties · Geist Mono |
-| Хостинг | Cloudflare Pages |
-| CI/CD | GitHub Actions |
-| Тесты | Vitest |
-
-## Быстрый старт
-
-```bash
-git clone https://github.com/master5d/tochka-sborki.git
-cd tochka-sborki/web
-npm install
-npm run dev
-```
-
-Открыть [http://localhost:3000](http://localhost:3000)
-
-## Разработка контента
-
-Каждый модуль — папка в `web/content/ru/`:
-
-```
-web/content/ru/
-  01-introduction/
-    _meta.json          ← метаданные модуля (title, module, units[])
-    u1-activation.mdx   ← юнит 1
-    u2-four-shifts.mdx  ← юнит 2
-    ...
-```
-
-MDX-юнит использует `<Phase>` компоненты:
-
-```mdx
-<Phase type="activation">
-  Вопрос для разогрева...
-</Phase>
-
-<Phase type="reflection">
-  Рефлексия...
-</Phase>
-
-<Phase type="concept">
-  Теория...
-</Phase>
-
-<Phase type="practice">
-  Практическое задание...
-</Phase>
-```
-
-## Команды
-
-```bash
-npm run dev          # dev-сервер
-npm run build        # production build (static export)
-npm test             # vitest
-```
+| Папка | Что это | Деплой |
+|-------|---------|--------|
+| `LMS/` | Контейнер курсов. Первый — `LMS/tochka-sborki/` («Точка Сборки»), задел на следующие. | — |
+| `LMS/tochka-sborki/web/` | Next.js 16 LMS-сайт курса | `ai.mamaev.coach` (CF Pages `tochka-sborki`) |
+| `hub/` | Личный лендинг + блог | `mamaev.coach` (CF Pages `mamaev-coach-hub`) |
+| `mentor/` | B2B agent-engineering | `mentor.mamaev.coach` (CF Pages `mamaev-coach-mentor`) |
+| `workers/` | CF Worker API (auth / progress / feedback / CRM) | `ai.mamaev.coach/api/*` |
+| `docs/superpowers/` | Spec'ы и планы (brainstorming, writing-plans) | — |
+| `skills/` | Claude Code skills | — |
 
 ## Деплой
 
-Push в `main` → GitHub Actions → Cloudflare Pages автоматически.
+Автоматический через GitHub Actions (`.github/workflows/deploy.yml`): `git push main` → 4 job'а по path-фильтрам (web / hub / mentor / workers) → CF Pages / Workers. Все сборки на Node 24.
 
----
+## Курсы
 
-<div align="center">
-  <sub>Сделано с Claude Code · <a href="https://ai.mamaev.coach">ai.mamaev.coach</a></sub>
-</div>
+«Точка Сборки» — открытый курс по agentic AI. См. [`LMS/tochka-sborki/README.md`](./LMS/tochka-sborki/README.md).
+
+> Структура и конвенции репо для AI-ассистентов — в [`CLAUDE.md`](./CLAUDE.md).
