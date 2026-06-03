@@ -1,7 +1,7 @@
 # Project Context
 
 ## Монорепо (mc_hub)
-Корень репо — `mc_hub`: контейнер для нескольких продуктов. Курсы живут под `LMS/<course>/` (первый — `LMS/tochka-sborki/`, задел на следующие). Лендинг+блог (`hub/`), B2B (`mentor/`) и API (`workers/`) — соседи в корне. `docs/` (superpowers specs/plans) и `skills/` — repo-wide, в корне.
+Корень репо — `mc_hub`: контейнер для нескольких продуктов. Курсы живут под `LMS/<course>/` (первый — `LMS/tochka-sborki/`, задел на следующие). Лендинг (`hub/`), блог (`blog/` — отдельный апп), B2B (`mentor/`) и API (`workers/`) — соседи в корне. `docs/` (superpowers specs/plans) и `skills/` — repo-wide, в корне.
 
 > **Конвенция путей в этом файле:** полные пути типа `LMS/tochka-sborki/web/...` даются от корня репо. Краткие `lib/`, `content/`, `components/`, `app/` — относительно web-аппа курса (`LMS/tochka-sborki/web/`).
 
@@ -10,7 +10,8 @@
 
 ## Три сайта (один репо, три CF Pages проекта)
 - **`LMS/tochka-sborki/web/`** → `ai.mamaev.coach` — LMS курса (проект `tochka-sborki`)
-- **`hub/`** → `mamaev.coach` — личный лендинг + **блог** (`/blog`, реестр `hub/lib/posts.ts`); agent-ready слои: llms.txt, /.well-known/agent-description.md, sitemap.xml, robots.txt, /blog/rss.xml, JSON-LD (проект `mamaev-coach-hub`). ⚠️ Блог будет вынесен в отдельный апп `blog/` (Фаза 2, модель B: тот же путь `/blog/*`, мёрж-сборка в hub/out).
+- **`hub/`** → `mamaev.coach` — личный лендинг + **whole-site agent-ready слои** всего домена: llms.txt (×2), /.well-known/agent-description.md, sitemap.xml, robots.txt. Читают `blog/out/posts-manifest.json` через `hub/lib/site.ts` (данные, не импорт). Проект `mamaev-coach-hub`.
+- **`blog/`** → `mamaev.coach/blog/*` + `/en/blog/*` — **отдельный** Next-апп (реестр `blog/lib/posts.ts`, JSON-LD, `/blog/rss.xml`, OG, «read with AI»). Модель B: `assetPrefix:'/blog'`, при деплое его вывод мёржится в `hub/out` (`scripts/merge-blog.mjs`) → один CF-проект `mamaev-coach-hub`. Общий chrome — копии из hub с маркерами `// SHARED CHROME`. Деплоит job `deploy-hub` (build blog → build hub → merge).
 - **`mentor/`** → `mentor.mamaev.coach` — B2B agent-engineering (проект `mamaev-coach-mentor`)
 - **`workers/`** → `ai.mamaev.coach/api/*` — CF Worker (auth magic-link, progress, feedback, CRM). Все три сайта bilingual (RU `/`, EN `/en/`).
 
@@ -45,7 +46,8 @@ mc_hub/                   — корень монорепо
 │                           rpg/ cs/ quests/ dungeon/ intake/ help/ wellbeing/ — RPG-слой
 │         lib/            — content.ts, dictionaries.ts (RU+EN), os-pref.ts, тесты;
 │                           rpg/ cs/ quests/ dungeon/ intake/ help/ pacing/ wellbeing/ — RPG-логика
-├── hub/                  — лендинг mamaev.coach + блог (Next.js, bilingual)
+├── hub/                  — лендинг mamaev.coach + whole-site SEO (Next.js, bilingual)
+├── blog/                 — блог mamaev.coach/blog/* — отдельный апп, мёрж в hub/out (model B)
 ├── mentor/               — B2B mentor.mamaev.coach (Next.js, bilingual)
 ├── workers/              — CF Worker (Hono-less router): auth/progress/feedback/CRM
 ├── docs/superpowers/     — Spec'ы и планы (brainstorming, writing-plans) — repo-wide

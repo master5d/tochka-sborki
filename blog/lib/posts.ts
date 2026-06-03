@@ -1,4 +1,4 @@
-// hub/lib/posts.ts
+// blog/lib/posts.ts
 // Single source of truth for blog posts. Every agent-ready artifact (index,
 // sitemap, llms.txt, RSS, JSON-LD) derives from here so they never drift.
 

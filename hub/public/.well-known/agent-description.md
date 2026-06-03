@@ -16,7 +16,7 @@
 - JSON-LD (BlogPosting/Blog) на страницах
 
 ## Source of truth
-Метаданные постов — `hub/lib/posts.ts`. Канонические URL — `/blog/<slug>/`.
+Метаданные постов — `blog/lib/posts.ts` (блог — отдельный апп, мёрж-сборка). Канонические URL — `/blog/<slug>/`.
 
 ## Permitted / restricted
 - Read: вся публичная часть и машинные слои — разрешено.
