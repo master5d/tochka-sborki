@@ -1,11 +1,11 @@
 import type { MetadataRoute } from 'next'
-import { SITE, getAllPosts, postUrl } from '@/lib/posts'
+import { SITE, manifestPosts, postUrl } from '@/lib/site'
 
 export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const today = new Date().toISOString().slice(0, 10)
-  const ruPosts = getAllPosts('ru')
+  const ruPosts = manifestPosts('ru')
   const entries: MetadataRoute.Sitemap = [
     { url: `${SITE.url}/`, lastModified: today, alternates: { languages: { en: `${SITE.url}/en/` } } },
     { url: `${SITE.url}/blog/`, lastModified: ruPosts[0]?.date ?? today, alternates: { languages: { en: `${SITE.url}/en/blog/` } } },

@@ -1,9 +1,9 @@
-import { SITE, getAllPosts, postUrl } from '@/lib/posts'
+import { SITE, manifestPosts, postUrl } from '@/lib/site'
 
 export const dynamic = 'force-static'
 
 export function GET() {
-  const posts = getAllPosts('en')
+  const posts = manifestPosts('en')
   const body = `# ${SITE.nameEn}
 
 Personal site: AI builder, vibe coder, coach. Landing, blog, and links to the course "Tochka Sborki" (ai.mamaev.coach).
