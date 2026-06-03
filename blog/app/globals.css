@@ -1,0 +1,25 @@
+/* SHARED CHROME — mirror of hub/app/globals.css. Keep in sync; see docs/superpowers/specs/2026-06-02-blog-split-design.md */
+@import "../themes/model-kit.css";
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background-color: var(--border-accent);
+  color: var(--text-accent);
+}
+
+/* Sticky header logic handled in SiteHeader.tsx for better precision */
+header {
+  width: 100%;
+}
+
+a { color: var(--text-accent); text-decoration: none; }
+a:hover { opacity: 0.85; }

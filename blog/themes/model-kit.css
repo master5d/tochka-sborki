@@ -1,0 +1,49 @@
+/* SHARED CHROME — mirror of hub/themes/model-kit.css. Keep in sync; see docs/superpowers/specs/2026-06-02-blog-split-design.md */
+:root {
+  /* Theme-agnostic: layout, type scale, radius, fonts — identical in both themes */
+  --font-mono: 'Geist Mono', monospace;
+  --radius: 4px;
+  --display-size: clamp(2.8rem, 7vw, 6.5rem);
+  --section-label-size: 0.7rem;
+  --number-size: clamp(5rem, 14vw, 11rem);
+  --section-gap: 5rem;
+  --accent-line: 3px solid var(--text-accent);
+  --content-max: 1100px;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0a0a0f;
+  --bg-primary-rgb: 10, 10, 15;
+  --bg-secondary: #111118;
+  --bg-surface: #16161f;
+  --text-primary: #f0f0f5;
+  --text-secondary: #8e8ea0;
+  --text-accent: #00d1ff;       /* Refined "Cyber Blue" for more expensive vibe */
+  --border-color: #242433;
+  --border-accent: #00d1ff30;
+  --text-on-accent: #000000;
+  --crit: #ff6b5b;
+  --phase-1: #00d1ff;           /* Unified with accent */
+  --phase-2: #5e5ce6;
+  --phase-3: #ff9900;
+  --phase-4: #ff44aa;
+}
+
+[data-theme="light"] {
+  /* Warm "model kit" paper — constructivist blueprint feel */
+  --bg-primary: #f4f1ea;
+  --bg-primary-rgb: 244, 241, 234;
+  --bg-secondary: #eae6dc;
+  --bg-surface: #fbf9f4;
+  --text-primary: #15151a;
+  --text-secondary: #5a5a6a;
+  --text-accent: #0077cc;       /* Deep blue for light mode contrast */
+  --border-color: #d8d2c6;
+  --border-accent: #0077cc40;
+  --text-on-accent: #ffffff;
+  --crit: #c42619;
+  --phase-1: #0077cc;
+  --phase-2: #4a48d1;
+  --phase-3: #8f5400;
+  --phase-4: #b51d6e;
+}
