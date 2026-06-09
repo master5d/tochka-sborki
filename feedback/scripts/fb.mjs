@@ -25,14 +25,24 @@ const [cmd, ...args] = process.argv.slice(2)
 
 switch (cmd) {
   case 'add': {
-    const input = JSON.parse(readFileSync(0, 'utf8')) // stdin
+    let input
+    try {
+      input = JSON.parse(readFileSync(0, 'utf8'))
+    } catch {
+      console.error('add: stdin должен быть JSON-тикетом')
+      process.exit(1)
+    }
+    if (typeof input.content !== 'string' || !input.content.trim()) {
+      console.error('add: поле content (строка) обязательно')
+      process.exit(1)
+    }
     const id = ticketId(input.content)
     const tickets = readTickets()
     if (tickets.some(t => t.id === id)) {
       console.log(`duplicate: ${id} уже в feedback.jsonl — пропущено`)
       break
     }
-    const ticket = { id, created: new Date().toISOString(), status: 'idle', ...input }
+    const ticket = { status: 'idle', ...input, id, created: new Date().toISOString() }
     appendFileSync(JSONL, JSON.stringify(ticket) + '\n')
     rebuild([...tickets, ticket])
     console.log(`added: ${id}`)
@@ -40,6 +50,10 @@ switch (cmd) {
   }
   case 'status': {
     const [prefix, status] = args
+    if (!prefix || !status) {
+      console.error('usage: fb.mjs status <id|prefix> <status>')
+      process.exit(1)
+    }
     if (!STATUSES.includes(status)) {
       console.error(`невалидный статус «${status}»; допустимо: ${STATUSES.join(', ')}`)
       process.exit(1)
@@ -63,6 +77,6 @@ switch (cmd) {
     break
   }
   default:
-    console.error('usage: fb.mjs add|status <id> <status>|build')
+    console.error('usage: fb.mjs add | status <id|prefix> <status> | build')
     process.exit(1)
 }

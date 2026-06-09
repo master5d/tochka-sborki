@@ -57,6 +57,9 @@ test('status: невалидный статус → ошибка, файл не 
   const out = run(['add'], sampleTicket)
   const id = out.match(/fb_[0-9a-f]{12}/)[0]
   assert.throws(() => run(['status', id, 'wat']))
+  // файл genuinely не тронут — статус остался idle
+  const saved = JSON.parse(readFileSync(join(dir, 'feedback.jsonl'), 'utf8').trim())
+  assert.equal(saved.status, 'idle')
 })
 
 test('build: пересобирает canvas из jsonl с нуля', () => {
@@ -65,4 +68,28 @@ test('build: пересобирает canvas из jsonl с нуля', () => {
   run(['build'])
   const canvas = JSON.parse(readFileSync(join(dir, 'board.canvas'), 'utf8'))
   assert.ok(canvas.nodes.length >= 2) // area-корень + тикет
+})
+
+test('add: id и created нельзя подделать через входной JSON', () => {
+  const forged = JSON.stringify({
+    id: 'fb_forged000000',
+    created: '1970-01-01T00:00:00Z',
+    source: 'paste',
+    content: 'Попытка подделки id',
+    title: 'Попытка подделки id',
+    triage: { category: 'bug', severity: 'low', area: 'lms', impact: 1, urgency: 1, confidence: 0.5, reason: 'test' },
+  })
+  run(['add'], forged)
+  const saved = JSON.parse(readFileSync(join(dir, 'feedback.jsonl'), 'utf8').trim())
+  assert.match(saved.id, /^fb_[0-9a-f]{12}$/)
+  assert.notEqual(saved.id, 'fb_forged000000')
+  assert.notEqual(saved.created, '1970-01-01T00:00:00Z')
+})
+
+test('add: невалидный JSON на stdin → ошибка', () => {
+  assert.throws(() => run(['add'], 'не json'))
+})
+
+test('add: без content → ошибка', () => {
+  assert.throws(() => run(['add'], '{"title":"x"}'))
 })
