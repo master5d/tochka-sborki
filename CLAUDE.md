@@ -52,6 +52,7 @@ mc_hub/                   — корень монорепо
 ├── workers/              — CF Worker (Hono-less router): auth/progress/feedback/CRM
 ├── docs/superpowers/     — Spec'ы и планы (brainstorming, writing-plans) — repo-wide
 ├── skills/               — Claude Code skills (tochka-sborki-update)
+├── feedback/             — triage-конвейер: feedback.jsonl + board.canvas (skill /triage, дэшборд sovern-mindmap)
 └── .github/workflows/    — deploy.yml: 4 jobs (web/hub/mentor/workers) → CF Pages/Workers
 ```
 
