@@ -1311,6 +1311,422 @@
           "reason": "два связанных use case у нон-кодера: AI как операционный менеджер non-profit + AI для authentic lead gen без ghostwriting — потенциальный модуль или упражнение"
         }
       }
+    },
+    {
+      "id": "fb_80ebb140000a",
+      "type": "text",
+      "x": 1140,
+      "y": 2180,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "💡 Методология микро-обучения (циклы, метафоры, профилирование) — интегрирована",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "done",
+        "sovern:impact": 6,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-10T05:07:02.180Z",
+        "feedback": {
+          "category": "idea",
+          "severity": "low",
+          "area": "course",
+          "impact": 6,
+          "urgency": 2,
+          "confidence": 0.85,
+          "reason": "предложенная методология совпадает с уже реализованным: Kolb-фазы, intake-профилирование, themed skins, CS-дофамин-луп; файлим ретроспективно как done"
+        }
+      }
+    },
+    {
+      "id": "fb_dd4e6e89c431",
+      "type": "text",
+      "x": 300,
+      "y": 2360,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Промпт самопрофилирования: ученик получает учебный профиль от своего AI",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T05:07:02.228Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "impact": 5,
+          "urgency": 3,
+          "confidence": 0.8,
+          "reason": "идея: выдать copy-paste промпт, который ученик прогоняет через свой AI-чат и получает learning-профиль для гипериндивидуализации"
+        }
+      }
+    },
+    {
+      "id": "fb_10b3d7deb968",
+      "type": "text",
+      "x": 580,
+      "y": 2360,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Блог как живой knowledge graph (evergreen notes) с визуалом и лендинг-подачей",
+      "metadata": {
+        "sovern:layer": "blog",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T05:07:02.274Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "blog",
+          "impact": 6,
+          "urgency": 3,
+          "confidence": 0.85,
+          "reason": "референс evergreen notes: блог → самообновляющийся граф заметок с визуальной навигацией вместо ленты статей"
+        }
+      }
+    },
+    {
+      "id": "fb_2489d7b7a924",
+      "type": "text",
+      "x": 860,
+      "y": 2360,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "✨ LMS: вкладка «Профиль ученика» — quest log roadmap + companion charter",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 6,
+        "sovern:created": "2026-06-10T05:07:02.321Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "medium",
+          "area": "lms",
+          "impact": 7,
+          "urgency": 6,
+          "confidence": 0.9,
+          "reason": "авторская корректировка брифа: консолидировать quest log, roadmap и companion charter в отдельной вкладке профиля"
+        }
+      }
+    },
+    {
+      "id": "fb_adb8fed30580",
+      "type": "text",
+      "x": 1140,
+      "y": 2360,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "🎨 Intake: вопросы предполагают экспертизу (60-day outcome, team) — чайнику нечего ответить",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 6,
+        "sovern:created": "2026-06-10T05:07:02.366Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "medium",
+          "area": "lms",
+          "impact": 7,
+          "urgency": 6,
+          "confidence": 0.9,
+          "reason": "вопросы про конкретный AI-outcome и команду требуют понимания возможностей, которого у новичка ещё нет — нужны ветки/варианты для нулевого уровня"
+        }
+      }
+    },
+    {
+      "id": "fb_bb96d47cbe4d",
+      "type": "text",
+      "x": 300,
+      "y": 2540,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "🎨 Intake: multi-select для вопросов «что вам подходит»",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-06-10T05:07:02.412Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "medium",
+          "area": "lms",
+          "impact": 6,
+          "urgency": 5,
+          "confidence": 0.9,
+          "reason": "single-choice фрустрирует там, где честный ответ — несколько опций; нужен множественный выбор"
+        }
+      }
+    },
+    {
+      "id": "fb_27b129752f54",
+      "type": "text",
+      "x": 580,
+      "y": 2540,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "🎨 Intake: гео-вопрос создаёт впечатление пост-советского фокуса",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 4,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T05:07:02.461Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "low",
+          "area": "lms",
+          "impact": 4,
+          "urgency": 3,
+          "confidence": 0.75,
+          "reason": "формулировка гео-вопроса в EN-анкете диссонирует с международной подачей — пересмотреть варианты/формулировку"
+        }
+      }
+    },
+    {
+      "id": "fb_8928b50acd36",
+      "type": "text",
+      "x": 860,
+      "y": 2540,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "🎨 Intake: «name ONE favorite» невыполним + не объяснена цель вопросов",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 6,
+        "sovern:created": "2026-06-10T05:07:02.507Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "medium",
+          "area": "lms",
+          "impact": 7,
+          "urgency": 6,
+          "confidence": 0.85,
+          "reason": "поп-культурные вопросы без объяснения цели (синтез метафор) кажутся странными и подрывают доверие — допустить несколько ответов и добавить микро-пояснение «зачем спрашиваем»"
+        }
+      }
+    },
+    {
+      "id": "fb_b49b06a0df86",
+      "type": "text",
+      "x": 1140,
+      "y": 2540,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "🎨 Intake: вопрос о формате контента не покрывает реальные паттерны (доверие к источнику, AI-research)",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 4,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T05:07:02.555Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "low",
+          "area": "lms",
+          "impact": 4,
+          "urgency": 3,
+          "confidence": 0.8,
+          "reason": "варианты не вмещают паттерн «долгое смотрю если доверяю» и «доверяю AI-research» — добавить опции или сменить вопрос на доверие к источнику"
+        }
+      }
+    },
+    {
+      "id": "fb_456c0742d840",
+      "type": "text",
+      "x": 300,
+      "y": 2720,
+      "width": 240,
+      "height": 140,
+      "color": "#f97316",
+      "text": "🎨 RPG-онбординг: переход intake→quest log шокирует нонгеймеров, жаргон без объяснений",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 8,
+        "sovern:urgency": 7,
+        "sovern:created": "2026-06-10T05:07:02.602Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "high",
+          "area": "lms",
+          "impact": 8,
+          "urgency": 7,
+          "confidence": 0.9,
+          "reason": "нонгеймер после анкеты попадает в RPG-интерфейс без моста: игровой жаргон (шарды, режимы, кадет) не объяснён, реакция — фрустрация и желание уйти; нужен вводный мост/глоссарий/plain-режим"
+        }
+      }
+    },
+    {
+      "id": "fb_8423715c58e2",
+      "type": "text",
+      "x": 580,
+      "y": 2720,
+      "width": 240,
+      "height": 140,
+      "color": "#f97316",
+      "text": "🎨 Ясность ценности: лендинг и курс не отвечают «что изменится в моей жизни» и «чем лучше моего чата»",
+      "metadata": {
+        "sovern:layer": "hub",
+        "sovern:status": "idle",
+        "sovern:impact": 9,
+        "sovern:urgency": 8,
+        "sovern:created": "2026-06-10T05:07:02.649Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "high",
+          "area": "hub",
+          "impact": 9,
+          "urgency": 8,
+          "confidence": 0.95,
+          "reason": "сквозная тема интервью: пользователь прошёл анкету, пролог и юниты, но так и не понял ценность — нужен простой value proposition на входе: что получу, чем отличается от голого чата, какая морковка"
+        }
+      }
+    },
+    {
+      "id": "fb_b2a67b22be2c",
+      "type": "text",
+      "x": 860,
+      "y": 2720,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "✨ Галерея возможностей: реальные кейсы + видео-демо на входе («о чём можно мечтать»)",
+      "metadata": {
+        "sovern:layer": "hub",
+        "sovern:status": "idle",
+        "sovern:impact": 8,
+        "sovern:urgency": 6,
+        "sovern:created": "2026-06-10T05:07:02.696Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "medium",
+          "area": "hub",
+          "impact": 8,
+          "urgency": 6,
+          "confidence": 0.85,
+          "reason": "новичок не знает спектра возможностей agentic AI — нужна витрина реальных кейсов и/или короткий engaging ролик, дающий мотивацию и ясность до анкеты"
+        }
+      }
+    },
+    {
+      "id": "fb_a6c79aa29b07",
+      "type": "text",
+      "x": 1140,
+      "y": 2720,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "✨ Отработка возражений: «закажу у фрилансера», «чат всё помнит», «боюсь автоматизации общения»",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-06-10T05:07:02.743Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "medium",
+          "area": "course",
+          "impact": 6,
+          "urgency": 5,
+          "confidence": 0.85,
+          "reason": "три повторяемых возражения потенциального студента — отработать в лендинге/FAQ и в контенте курса (limits чата vs агентов, human-in-the-loop, build vs buy)"
+        }
+      }
+    },
+    {
+      "id": "fb_20dfb9fb8e20",
+      "type": "text",
+      "x": 300,
+      "y": 2900,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "🎨 Пролог: хук «себя ни разу» отторгает аудиторию самопознания + черновая картинка усложняет",
+      "metadata": {
+        "sovern:layer": "blog",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-06-10T05:07:02.791Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "medium",
+          "area": "blog",
+          "impact": 5,
+          "urgency": 4,
+          "confidence": 0.85,
+          "reason": "хук не работает для сегмента, который уже использует AI для рефлексии; иллюстрация воспринимается как черновик и мешает ясности"
+        }
+      }
+    },
+    {
+      "id": "fb_6584796fb301",
+      "type": "text",
+      "x": 580,
+      "y": 2900,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "💡 Брендинг светлой полярности: символика/слоган для ценностной аудитории",
+      "metadata": {
+        "sovern:layer": "hub",
+        "sovern:status": "idle",
+        "sovern:impact": 4,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-10T05:07:02.838Z",
+        "feedback": {
+          "category": "idea",
+          "severity": "low",
+          "area": "hub",
+          "impact": 4,
+          "urgency": 2,
+          "confidence": 0.7,
+          "reason": "идея позиционирования через ценностную символику (созидательный AI) для притяжения соответствующей аудитории — сырая, требует обдумывания"
+        }
+      }
+    },
+    {
+      "id": "fb_e557d202d89b",
+      "type": "text",
+      "x": 860,
+      "y": 2900,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "💡 Что работает: кулинарная метафора в Unit 1 снижает порог — защитить от регрессий",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 4,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-10T05:07:02.886Z",
+        "feedback": {
+          "category": "idea",
+          "severity": "low",
+          "area": "course",
+          "impact": 4,
+          "urgency": 2,
+          "confidence": 0.85,
+          "reason": "позитивный сигнал из интервью: бытовая метафора в начале юнита дала первый момент ясности за весь онбординг — сохранить паттерн"
+        }
+      }
     }
   ],
   "edges": [
@@ -1548,6 +1964,86 @@
       "id": "e_fb_11b7a3c19d14",
       "fromNode": "area_course",
       "toNode": "fb_11b7a3c19d14"
+    },
+    {
+      "id": "e_fb_80ebb140000a",
+      "fromNode": "area_course",
+      "toNode": "fb_80ebb140000a"
+    },
+    {
+      "id": "e_fb_dd4e6e89c431",
+      "fromNode": "area_lms",
+      "toNode": "fb_dd4e6e89c431"
+    },
+    {
+      "id": "e_fb_10b3d7deb968",
+      "fromNode": "area_blog",
+      "toNode": "fb_10b3d7deb968"
+    },
+    {
+      "id": "e_fb_2489d7b7a924",
+      "fromNode": "area_lms",
+      "toNode": "fb_2489d7b7a924"
+    },
+    {
+      "id": "e_fb_adb8fed30580",
+      "fromNode": "area_lms",
+      "toNode": "fb_adb8fed30580"
+    },
+    {
+      "id": "e_fb_bb96d47cbe4d",
+      "fromNode": "area_lms",
+      "toNode": "fb_bb96d47cbe4d"
+    },
+    {
+      "id": "e_fb_27b129752f54",
+      "fromNode": "area_lms",
+      "toNode": "fb_27b129752f54"
+    },
+    {
+      "id": "e_fb_8928b50acd36",
+      "fromNode": "area_lms",
+      "toNode": "fb_8928b50acd36"
+    },
+    {
+      "id": "e_fb_b49b06a0df86",
+      "fromNode": "area_lms",
+      "toNode": "fb_b49b06a0df86"
+    },
+    {
+      "id": "e_fb_456c0742d840",
+      "fromNode": "area_lms",
+      "toNode": "fb_456c0742d840"
+    },
+    {
+      "id": "e_fb_8423715c58e2",
+      "fromNode": "area_hub",
+      "toNode": "fb_8423715c58e2"
+    },
+    {
+      "id": "e_fb_b2a67b22be2c",
+      "fromNode": "area_hub",
+      "toNode": "fb_b2a67b22be2c"
+    },
+    {
+      "id": "e_fb_a6c79aa29b07",
+      "fromNode": "area_course",
+      "toNode": "fb_a6c79aa29b07"
+    },
+    {
+      "id": "e_fb_20dfb9fb8e20",
+      "fromNode": "area_blog",
+      "toNode": "fb_20dfb9fb8e20"
+    },
+    {
+      "id": "e_fb_6584796fb301",
+      "fromNode": "area_hub",
+      "toNode": "fb_6584796fb301"
+    },
+    {
+      "id": "e_fb_e557d202d89b",
+      "fromNode": "area_course",
+      "toNode": "fb_e557d202d89b"
     }
   ]
 }
