@@ -6,3 +6,6 @@
 docs/**/report.html
 docs/**/report.json
 docs/**/*.png
+
+# Архив исходников/référence-материалов курса (docx-опросники и т.п.) — не для VCS
+LMS/tochka-sborki/_archive/
