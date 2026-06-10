@@ -44,6 +44,7 @@ export function ticketToNode(ticket, index) {
       'sovern:status': ticket.status ?? 'idle',
       'sovern:impact': t.impact ?? 5,
       'sovern:urgency': t.urgency ?? 5,
+      'sovern:created': ticket.created,
       feedback: t,
     },
   }

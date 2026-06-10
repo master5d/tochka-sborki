@@ -1,4 +1,1553 @@
 {
-  "nodes": [],
-  "edges": []
+  "nodes": [
+    {
+      "id": "area_lms",
+      "type": "text",
+      "x": 0,
+      "y": 0,
+      "width": 200,
+      "height": 80,
+      "text": "📂 LMS",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 5
+      }
+    },
+    {
+      "id": "area_blog",
+      "type": "text",
+      "x": 320,
+      "y": 0,
+      "width": 200,
+      "height": 80,
+      "text": "📂 BLOG",
+      "metadata": {
+        "sovern:layer": "blog",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 5
+      }
+    },
+    {
+      "id": "area_hub",
+      "type": "text",
+      "x": 640,
+      "y": 0,
+      "width": 200,
+      "height": 80,
+      "text": "📂 HUB",
+      "metadata": {
+        "sovern:layer": "hub",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 5
+      }
+    },
+    {
+      "id": "area_workers",
+      "type": "text",
+      "x": 960,
+      "y": 0,
+      "width": 200,
+      "height": 80,
+      "text": "📂 WORKERS",
+      "metadata": {
+        "sovern:layer": "workers",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 5
+      }
+    },
+    {
+      "id": "area_course",
+      "type": "text",
+      "x": 1280,
+      "y": 0,
+      "width": 200,
+      "height": 80,
+      "text": "📂 COURSE",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 5
+      }
+    },
+    {
+      "id": "area_infra",
+      "type": "text",
+      "x": 1600,
+      "y": 0,
+      "width": 200,
+      "height": 80,
+      "text": "📂 INFRA",
+      "metadata": {
+        "sovern:layer": "infra",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 5
+      }
+    },
+    {
+      "id": "fb_7857fee1fd8e",
+      "type": "text",
+      "x": 300,
+      "y": 200,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "🎨 Блог пролог: переформулировать «отсутствие воображения» → «неспособность ставить задачи через воображение»",
+      "metadata": {
+        "sovern:layer": "blog",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T00:53:19.035Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "low",
+          "area": "blog",
+          "impact": 5,
+          "urgency": 3,
+          "confidence": 0.85,
+          "reason": "wording-правка: концепция должна звучать как неумение ставить задачи с воображением, а не нехватка воображения как таковая; автоматизация — только после ручного освоения цикла с ИИ"
+        }
+      }
+    },
+    {
+      "id": "fb_2b20e4fe0e5e",
+      "type": "text",
+      "x": 580,
+      "y": 200,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Добавить tagline к курсу: «Start with a visit. Exit with the future.»",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 4,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T00:57:39.722Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "impact": 4,
+          "urgency": 3,
+          "confidence": 0.92,
+          "reason": "явный запрос добавить tagline — маркетинговый copy для сайта курса"
+        }
+      }
+    },
+    {
+      "id": "fb_dd0741bd4fb5",
+      "type": "text",
+      "x": 860,
+      "y": 200,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "✨ Сделать LMS installable PWA (Add to Home Screen / desktop install)",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-06-10T00:59:24.046Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "medium",
+          "area": "lms",
+          "impact": 6,
+          "urgency": 4,
+          "confidence": 0.95,
+          "reason": "запрос PWA-поддержки: manifest + service worker → Install prompt в браузере"
+        }
+      }
+    },
+    {
+      "id": "fb_f4e32117942e",
+      "type": "text",
+      "x": 1140,
+      "y": 200,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "✨ Добавить страницу Syllabus и раздел Course Materials в LMS",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-06-10T01:01:04.467Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "medium",
+          "area": "lms",
+          "impact": 7,
+          "urgency": 5,
+          "confidence": 0.88,
+          "reason": "нет структурированного обзора программы и материалов курса — мешает onboarding и навигации студентов"
+        }
+      }
+    },
+    {
+      "id": "fb_7fdd9f891109",
+      "type": "text",
+      "x": 300,
+      "y": 380,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Post-course: выбор группового проекта + alumni-матчинг по интересам для коллективного выполнения",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-10T01:05:49.414Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "impact": 7,
+          "urgency": 2,
+          "confidence": 0.75,
+          "reason": "vision: по завершению курса студент выбирает групповой проект и попадает в alumni-сеть по типу усилия/интереса — community + collective action слой поверх LMS"
+        }
+      }
+    },
+    {
+      "id": "fb_d72b457c3b94",
+      "type": "text",
+      "x": 580,
+      "y": 380,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "🎨 Добавить инструкцию/тултип в LMS: как установить приложение на десктоп",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 4,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T01:07:21.438Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "low",
+          "area": "lms",
+          "impact": 4,
+          "urgency": 3,
+          "confidence": 0.92,
+          "reason": "onboarding-подсказка для PWA install — студенты не знают что приложение можно установить; зависит от fb_dd0741bd4fb5"
+        }
+      }
+    },
+    {
+      "id": "fb_7c1b0cfd1bf9",
+      "type": "text",
+      "x": 860,
+      "y": 380,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "✨ Модуль для restricted-geo: два варианта agent stack (open-source + proxy)",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-06-10T01:12:16.172Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "medium",
+          "area": "course",
+          "impact": 7,
+          "urgency": 5,
+          "confidence": 0.85,
+          "reason": "доступность курса для GFW/blocked-geo аудитории; NB: модуль 03-stack-selection уже содержит Behind-GFW секцию — возможно расширение, а не новый модуль"
+        }
+      }
+    },
+    {
+      "id": "fb_9f32d5648608",
+      "type": "text",
+      "x": 1140,
+      "y": 380,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Добавить модуль Vibe Hacking в курс",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T01:16:57.610Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "course",
+          "impact": 5,
+          "urgency": 3,
+          "confidence": 0.65,
+          "reason": "новый модуль; термин «vibe hacking» размыт — возможно vibe-coding подход к security/pentesting или hacking mindset; требует уточнения scope"
+        }
+      }
+    },
+    {
+      "id": "fb_e60901c90115",
+      "type": "text",
+      "x": 300,
+      "y": 560,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "✨ Добавить правую боковую панель с chatbot-агентом в LMS",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-06-10T01:16:57.673Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "medium",
+          "area": "lms",
+          "impact": 7,
+          "urgency": 5,
+          "confidence": 0.9,
+          "reason": "встроенный AI-ассистент в UI курса — повышает engagement и снижает friction при изучении материала"
+        }
+      }
+    },
+    {
+      "id": "fb_25d8fa04c141",
+      "type": "text",
+      "x": 580,
+      "y": 560,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "✨ OAuth-аутентификация для профилей студентов",
+      "metadata": {
+        "sovern:layer": "workers",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-06-10T01:16:57.737Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "medium",
+          "area": "workers",
+          "impact": 6,
+          "urgency": 5,
+          "confidence": 0.92,
+          "reason": "magic-link auth в workers/ не поддерживает OAuth — ограничивает learner profile persistence и social login"
+        }
+      }
+    },
+    {
+      "id": "fb_bd7e98abe883",
+      "type": "text",
+      "x": 860,
+      "y": 560,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "🐛 Фикс: конфликт языка в SEO-сниппете (hreflang / meta lang)",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 6,
+        "sovern:created": "2026-06-10T01:16:57.797Z",
+        "feedback": {
+          "category": "bug",
+          "severity": "medium",
+          "area": "lms",
+          "impact": 6,
+          "urgency": 6,
+          "confidence": 0.8,
+          "reason": "двуязычный сайт (RU/EN) с конфликтующими language-сигналами в meta/hreflang — снижает поисковую видимость нужной локали"
+        }
+      }
+    },
+    {
+      "id": "fb_1b4b72623936",
+      "type": "text",
+      "x": 1140,
+      "y": 560,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "✨ Auto-install скрипты agentic stack под Mac/Win/Linux + вариант для restricted-geo",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 8,
+        "sovern:urgency": 6,
+        "sovern:created": "2026-06-10T01:25:52.982Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "medium",
+          "area": "course",
+          "impact": 8,
+          "urgency": 6,
+          "confidence": 0.92,
+          "reason": "снижает барьер входа для нетехнических студентов; три платформы + GFW-вариант (open-source / прокси); связан с fb_7c1b0cfd1bf9"
+        }
+      }
+    },
+    {
+      "id": "fb_7f18d5872e2a",
+      "type": "text",
+      "x": 300,
+      "y": 740,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Marketing CTA: binge watching / doom scrolling → vibe coding как замена дофамину",
+      "metadata": {
+        "sovern:layer": "hub",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-06-10T01:25:53.043Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "hub",
+          "impact": 6,
+          "urgency": 4,
+          "confidence": 0.88,
+          "reason": "конкретный pain-point hook для landing page — апеллирует к паттерну binge/scroll и предлагает vibe coding как функциональную замену"
+        }
+      }
+    },
+    {
+      "id": "fb_4abbb1dc6e29",
+      "type": "text",
+      "x": 580,
+      "y": 740,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Ввести концепт Machine Elves — AI-компаньоны в RPG-слое LMS",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-10T01:25:53.103Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "impact": 6,
+          "urgency": 2,
+          "confidence": 0.7,
+          "reason": "AI companion/pet концепт поверх RPG-слоя курса — аналог codex-pet.org; повышает engagement и нарратив; scope требует уточнения"
+        }
+      }
+    },
+    {
+      "id": "fb_2d1b203115fe",
+      "type": "text",
+      "x": 860,
+      "y": 740,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "💡 Расширение курса: модули coaching / astrology / psyops / remote viewing / Sacred Geometry → отдельные курсы",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-10T01:27:58.793Z",
+        "feedback": {
+          "category": "idea",
+          "severity": "low",
+          "area": "course",
+          "impact": 5,
+          "urgency": 2,
+          "confidence": 0.72,
+          "reason": "roadmap-идея расширения в нишевые домены с agentic AI применением; требует приоритизации по аудитории и product-market fit для каждого направления"
+        }
+      }
+    },
+    {
+      "id": "fb_282cf1c678f7",
+      "type": "text",
+      "x": 1140,
+      "y": 740,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Добавить микро-паззл игры как перерывы внутри курса",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T01:27:58.855Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "impact": 5,
+          "urgency": 3,
+          "confidence": 0.88,
+          "reason": "engagement mechanic — короткие puzzle-breaks снижают cognitive fatigue между блоками материала; вписывается в RPG-слой"
+        }
+      }
+    },
+    {
+      "id": "fb_ac57d81228f0",
+      "type": "text",
+      "x": 300,
+      "y": 920,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "💡 Исследовать и применить инновации LearnWorlds в архитектуре LMS",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-10T01:27:58.917Z",
+        "feedback": {
+          "category": "idea",
+          "severity": "low",
+          "area": "lms",
+          "impact": 7,
+          "urgency": 2,
+          "confidence": 0.65,
+          "reason": "стратегическое направление: competitive analysis LearnWorlds → выбрать применимые UX/arch паттерны; нет конкретных фич — требует discovery phase"
+        }
+      }
+    },
+    {
+      "id": "fb_e54f96f71700",
+      "type": "text",
+      "x": 580,
+      "y": 920,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Добавить модуль NotebookLM — работа с источниками из заметок",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T01:34:46.772Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "course",
+          "impact": 5,
+          "urgency": 3,
+          "confidence": 0.82,
+          "reason": "практический модуль по NotebookLM как инструменту для agentic работы со своей базой знаний"
+        }
+      }
+    },
+    {
+      "id": "fb_bd7e7adb1b56",
+      "type": "text",
+      "x": 860,
+      "y": 920,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "🎨 Onboarding: unboxing-аналогия — выбор платформы как открытие коробки с тулзами",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-06-10T01:34:46.848Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "low",
+          "area": "lms",
+          "impact": 6,
+          "urgency": 4,
+          "confidence": 0.85,
+          "reason": "метафора unboxing делает OS-выбор интуитивным для нетехнических студентов; усиливает first-impression onboarding"
+        }
+      }
+    },
+    {
+      "id": "fb_d858ea413075",
+      "type": "text",
+      "x": 1140,
+      "y": 920,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Инфраструктура для сезонных / event-driven пасхалок в LMS",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 4,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-10T01:34:46.929Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "impact": 4,
+          "urgency": 2,
+          "confidence": 0.9,
+          "reason": "engagement mechanic — скрытые пасхалки по датам/событиям; нужен infra-слой для триггеров, контент отдельно"
+        }
+      }
+    },
+    {
+      "id": "fb_bf076065b190",
+      "type": "text",
+      "x": 300,
+      "y": 1100,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Фоновый саундтрек для LMS",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 4,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-10T01:34:47.011Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "impact": 4,
+          "urgency": 2,
+          "confidence": 0.93,
+          "reason": "ambient audio для flow-состояния при прохождении курса; опциональный toggleable"
+        }
+      }
+    },
+    {
+      "id": "fb_891a71e43477",
+      "type": "text",
+      "x": 580,
+      "y": 1100,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Добавить модуль Meta Notetaking — playbook по заметкам и note-making",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-06-10T01:34:47.080Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "course",
+          "impact": 6,
+          "urgency": 4,
+          "confidence": 0.85,
+          "reason": "системный подход к ведению заметок с AI — высокий practical value для студентов-нонкодеров"
+        }
+      }
+    },
+    {
+      "id": "fb_26c4558588a9",
+      "type": "text",
+      "x": 860,
+      "y": 1100,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Добавить модуль Telegram management — agentic управление каналом/ботом",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-06-10T01:34:47.165Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "course",
+          "impact": 6,
+          "urgency": 4,
+          "confidence": 0.8,
+          "reason": "Telegram как платформа для agentic workflows — управление каналом, ботами, MCP интеграция"
+        }
+      }
+    },
+    {
+      "id": "fb_864d2df1dd9e",
+      "type": "text",
+      "x": 1140,
+      "y": 1100,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Наполнить курс мемами из коллекции автора",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T01:34:47.250Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "course",
+          "impact": 5,
+          "urgency": 3,
+          "confidence": 0.9,
+          "reason": "meme-контент снижает когнитивную нагрузку и повышает запоминаемость концепций; нужен pipeline для встраивания в MDX"
+        }
+      }
+    },
+    {
+      "id": "fb_0150af2c76f9",
+      "type": "text",
+      "x": 300,
+      "y": 1280,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Добавить модуль: тренинг по скорочтению",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T01:39:08.148Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "course",
+          "impact": 5,
+          "urgency": 3,
+          "confidence": 0.85,
+          "reason": "скорочтение как навык для ускорения освоения AI-материалов; референс — внешний курс по скорочтению"
+        }
+      }
+    },
+    {
+      "id": "fb_984b54a51615",
+      "type": "text",
+      "x": 580,
+      "y": 1280,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "✨ Мигрировать email CRM: отказаться от Notion + n8n, выбрать стабильную замену",
+      "metadata": {
+        "sovern:layer": "infra",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 7,
+        "sovern:created": "2026-06-10T01:39:08.217Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "medium",
+          "area": "infra",
+          "impact": 7,
+          "urgency": 7,
+          "confidence": 0.9,
+          "reason": "n8n workflow нестабилен — новые юзеры не попадают в CRM; data loss risk для лидов; нужна миграция на надёжную альтернативу"
+        }
+      }
+    },
+    {
+      "id": "fb_87c8a8ec8ab0",
+      "type": "text",
+      "x": 860,
+      "y": 1280,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "✨ Spec системного промпта для sidechat-панели: learner profile + Kolb + Кёстлер + Learning Loop",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 8,
+        "sovern:urgency": 6,
+        "sovern:created": "2026-06-10T01:54:41.489Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "medium",
+          "area": "lms",
+          "impact": 8,
+          "urgency": 6,
+          "confidence": 0.9,
+          "reason": "детальный spec для AI-панели fb_e60901c90115 — контекст learner profile, педагогические фреймворки, нарративная обёртка через персонажа темы"
+        }
+      }
+    },
+    {
+      "id": "fb_82646a4b4d05",
+      "type": "text",
+      "x": 1140,
+      "y": 1280,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Создать copy-paste role prompts для внешних AI-агентов (ChatGPT/Claude/Gemini/Copilot) — study mode",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-06-10T01:54:41.575Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "course",
+          "impact": 7,
+          "urgency": 5,
+          "confidence": 0.92,
+          "reason": "студенты используют свои подписки — нужен готовый system prompt для learning режима с memory bootstrap"
+        }
+      }
+    },
+    {
+      "id": "fb_b5383e81a757",
+      "type": "text",
+      "x": 300,
+      "y": 1460,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "🎨 Сдвиг нарратива: 'agentic AI' → 'ways of co-thinking and co-working with AI' (разделить роли)",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-06-10T01:54:41.645Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "low",
+          "area": "course",
+          "impact": 6,
+          "urgency": 4,
+          "confidence": 0.88,
+          "reason": "нарративный рефрейм снижает тревогу замещения и подчёркивает human agency — затрагивает контент всего курса"
+        }
+      }
+    },
+    {
+      "id": "fb_cbfe89324170",
+      "type": "text",
+      "x": 580,
+      "y": 1460,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "💡 Позиционирование Точки Сборки как AI literacy курса для устранения технического долга",
+      "metadata": {
+        "sovern:layer": "hub",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-06-10T01:54:41.730Z",
+        "feedback": {
+          "category": "idea",
+          "severity": "low",
+          "area": "hub",
+          "impact": 7,
+          "urgency": 4,
+          "confidence": 0.85,
+          "reason": "messaging shift на лендинге: AI literacy + tech debt framing расширяет аудиторию и снижает barrier для нон-кодеров"
+        }
+      }
+    },
+    {
+      "id": "fb_1075c99977be",
+      "type": "text",
+      "x": 860,
+      "y": 1460,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Добавить ASCII-диаграммы в юниты курса где уместно",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T01:54:41.806Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "course",
+          "impact": 5,
+          "urgency": 3,
+          "confidence": 0.9,
+          "reason": "ASCII-диаграммы работают в любой среде (терминал, MDX, копипаст в AI) — усиливают visual clarity без зависимостей"
+        }
+      }
+    },
+    {
+      "id": "fb_42afd7e71d95",
+      "type": "text",
+      "x": 1140,
+      "y": 1460,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Learning journeys / деревья прохождения / квесты в LMS",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-06-10T01:54:41.885Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "impact": 7,
+          "urgency": 4,
+          "confidence": 0.78,
+          "reason": "нелинейные пути обучения поверх RPG-слоя; три концепта в одном — требует разбивки на конкретные фичи при планировании"
+        }
+      }
+    },
+    {
+      "id": "fb_0c24f68e0f87",
+      "type": "text",
+      "x": 300,
+      "y": 1640,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ ASCII boilerplate / баннер Точки Сборки в GitHub-стиле",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 3,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-10T01:54:41.960Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "course",
+          "impact": 3,
+          "urgency": 2,
+          "confidence": 0.88,
+          "reason": "ASCII banner для README/терминала — branding деталь, низкий effort"
+        }
+      }
+    },
+    {
+      "id": "fb_f3c80611acb8",
+      "type": "text",
+      "x": 580,
+      "y": 1640,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Tachikoma — AI pet-ассистент в RPG-слое LMS (Ghost in the Shell)",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-10T01:54:42.039Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "impact": 6,
+          "urgency": 2,
+          "confidence": 0.9,
+          "reason": "Tachikoma как нарративный companion: любопытный, коллективный разум — идеально ложится в agentic AI тематику курса; связан с fb_4abbb1dc6e29"
+        }
+      }
+    },
+    {
+      "id": "fb_d717b5d28078",
+      "type": "text",
+      "x": 860,
+      "y": 1640,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "🎨 CTA Learning Journey: «выбери своего коня» — Claude Code / Codex / OpenCode / etc",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-06-10T01:54:42.119Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "low",
+          "area": "lms",
+          "impact": 6,
+          "urgency": 4,
+          "confidence": 0.88,
+          "reason": "onboarding CTA с horse/harness метафорой для выбора agent stack — усиливает agent-agnostic позиционирование курса"
+        }
+      }
+    },
+    {
+      "id": "fb_d71cdb099093",
+      "type": "text",
+      "x": 1140,
+      "y": 1640,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Добавить модуль Media Production — создание контента с AI",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T01:54:42.200Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "course",
+          "impact": 5,
+          "urgency": 3,
+          "confidence": 0.85,
+          "reason": "AI-assisted media production как практический skill для нон-кодеров — видео, подкасты, визуалы"
+        }
+      }
+    },
+    {
+      "id": "fb_ee6e7564058a",
+      "type": "text",
+      "x": 300,
+      "y": 1820,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Добавить модуль: настройка uncensored-моделей",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T01:54:42.265Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "course",
+          "impact": 5,
+          "urgency": 3,
+          "confidence": 0.82,
+          "reason": "sovereign/local uncensored models как альтернатива для специфичных use cases; связан с 03-stack-selection"
+        }
+      }
+    },
+    {
+      "id": "fb_2c38165f0cfd",
+      "type": "text",
+      "x": 580,
+      "y": 1820,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "💡 Создать отдельный курс по сну",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 4,
+        "sovern:urgency": 1,
+        "sovern:created": "2026-06-10T01:54:42.330Z",
+        "feedback": {
+          "category": "idea",
+          "severity": "low",
+          "area": "course",
+          "impact": 4,
+          "urgency": 1,
+          "confidence": 0.75,
+          "reason": "standalone wellbeing курс — расширение продуктовой линейки; минимальная связь с AI тематикой; долгосрочный roadmap"
+        }
+      }
+    },
+    {
+      "id": "fb_d4e6d92333f0",
+      "type": "text",
+      "x": 860,
+      "y": 1820,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ World Map: геометрическая карта фестиваля (Burning Man) — модули как лагеря, навигация через фигуры/петов",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T01:54:42.406Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "impact": 7,
+          "urgency": 3,
+          "confidence": 0.82,
+          "reason": "иммерсивная визуальная карта курса — Burning Man метафора усиливает RPG-слой и делает навигацию по модулям событием"
+        }
+      }
+    },
+    {
+      "id": "fb_ed319653a72b",
+      "type": "text",
+      "x": 1140,
+      "y": 1820,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "🎨 Лендинг: нет объяснения почему курс бесплатный — вызывает недоверие",
+      "metadata": {
+        "sovern:layer": "hub",
+        "sovern:status": "idle",
+        "sovern:impact": 8,
+        "sovern:urgency": 7,
+        "sovern:created": "2026-06-10T03:31:11.623Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "medium",
+          "area": "hub",
+          "impact": 8,
+          "urgency": 7,
+          "confidence": 0.95,
+          "reason": "conversion blocker: free = suspicious без объяснения модели (non-profit / мерч / коучинг / email); нужен trust signal прямо на CTA"
+        }
+      }
+    },
+    {
+      "id": "fb_79c342f29123",
+      "type": "text",
+      "x": 300,
+      "y": 2000,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "🎨 Intake: первый вопрос 'опишите работу' вызывает зависание у нон-кодеров без профессии в AI",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 6,
+        "sovern:created": "2026-06-10T03:31:11.695Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "medium",
+          "area": "lms",
+          "impact": 7,
+          "urgency": 6,
+          "confidence": 0.95,
+          "reason": "drop-off point в онбординге: люди в переходном периоде или без чёткой профессии зависают на открытом вопросе — нужны примеры или подсказки"
+        }
+      }
+    },
+    {
+      "id": "fb_b1bf63a0191b",
+      "type": "text",
+      "x": 580,
+      "y": 2000,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "🎨 Intake: вопрос о барьерах использования AI не работает для аудитории 'уже использую, не знаю горизонтов'",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 6,
+        "sovern:created": "2026-06-10T03:31:11.773Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "medium",
+          "area": "lms",
+          "impact": 7,
+          "urgency": 6,
+          "confidence": 0.93,
+          "reason": "вопрос предполагает барьер, но у части аудитории барьер — незнание возможностей; нужна альтернативная ветка: 'не знаю что ещё можно' как валидный ответ"
+        }
+      }
+    },
+    {
+      "id": "fb_aafef1a16de8",
+      "type": "text",
+      "x": 860,
+      "y": 2000,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "🎨 Intake EN: вопрос про 'specific result' грамматически предполагает прошлый опыт — путает до старта курса",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-06-10T03:31:11.856Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "low",
+          "area": "lms",
+          "impact": 5,
+          "urgency": 4,
+          "confidence": 0.92,
+          "reason": "temporal confusion в формулировке EN вопроса; нужен рефрейм на 'what promise/outcome caught your attention'"
+        }
+      }
+    },
+    {
+      "id": "fb_bda04ddb3166",
+      "type": "text",
+      "x": 1140,
+      "y": 2000,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "🎨 Intake EN: вопрос 'old way reluctant to change' — непонятен без контекста к чему он относится",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-06-10T03:31:11.939Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "low",
+          "area": "lms",
+          "impact": 5,
+          "urgency": 4,
+          "confidence": 0.9,
+          "reason": "вопрос про Habits без контекстного якоря — нужно добавить пример или привязать к AI/работе явно"
+        }
+      }
+    },
+    {
+      "id": "fb_8f119f649790",
+      "type": "text",
+      "x": 300,
+      "y": 2180,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "🎨 Intake: добавить опцию 'confronting AI / pushing back logically' в вопрос о реакции на плохой ответ",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T03:31:12.008Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "low",
+          "area": "lms",
+          "impact": 5,
+          "urgency": 3,
+          "confidence": 0.92,
+          "reason": "значимая аудитория уже знает как спорить с AI — их поведение не отражено в опциях; важно для сегментации по опытности"
+        }
+      }
+    },
+    {
+      "id": "fb_e0dd268661c2",
+      "type": "text",
+      "x": 580,
+      "y": 2180,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "💡 Persona insight: творцы с tech-кринжем — ключевая незакрытая аудитория курса",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 7,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-06-10T03:31:12.086Z",
+        "feedback": {
+          "category": "idea",
+          "severity": "low",
+          "area": "course",
+          "impact": 7,
+          "urgency": 4,
+          "confidence": 0.88,
+          "reason": "сегмент: creative professionals, у которых tech friction = emotional blocker, а не skill gap; AI как translator между символическим языком и техническим — strong course narrative hook"
+        }
+      }
+    },
+    {
+      "id": "fb_11b7a3c19d14",
+      "type": "text",
+      "x": 860,
+      "y": 2180,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "💡 JTBD pull: AI для non-profit management и клиентского привлечения с сохранением аутентичности",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-10T03:31:12.150Z",
+        "feedback": {
+          "category": "idea",
+          "severity": "low",
+          "area": "course",
+          "impact": 6,
+          "urgency": 3,
+          "confidence": 0.85,
+          "reason": "два связанных use case у нон-кодера: AI как операционный менеджер non-profit + AI для authentic lead gen без ghostwriting — потенциальный модуль или упражнение"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_fb_7857fee1fd8e",
+      "fromNode": "area_blog",
+      "toNode": "fb_7857fee1fd8e"
+    },
+    {
+      "id": "e_fb_2b20e4fe0e5e",
+      "fromNode": "area_lms",
+      "toNode": "fb_2b20e4fe0e5e"
+    },
+    {
+      "id": "e_fb_dd0741bd4fb5",
+      "fromNode": "area_lms",
+      "toNode": "fb_dd0741bd4fb5"
+    },
+    {
+      "id": "e_fb_f4e32117942e",
+      "fromNode": "area_lms",
+      "toNode": "fb_f4e32117942e"
+    },
+    {
+      "id": "e_fb_7fdd9f891109",
+      "fromNode": "area_lms",
+      "toNode": "fb_7fdd9f891109"
+    },
+    {
+      "id": "e_fb_d72b457c3b94",
+      "fromNode": "area_lms",
+      "toNode": "fb_d72b457c3b94"
+    },
+    {
+      "id": "e_fb_7c1b0cfd1bf9",
+      "fromNode": "area_course",
+      "toNode": "fb_7c1b0cfd1bf9"
+    },
+    {
+      "id": "e_fb_9f32d5648608",
+      "fromNode": "area_course",
+      "toNode": "fb_9f32d5648608"
+    },
+    {
+      "id": "e_fb_e60901c90115",
+      "fromNode": "area_lms",
+      "toNode": "fb_e60901c90115"
+    },
+    {
+      "id": "e_fb_25d8fa04c141",
+      "fromNode": "area_workers",
+      "toNode": "fb_25d8fa04c141"
+    },
+    {
+      "id": "e_fb_bd7e98abe883",
+      "fromNode": "area_lms",
+      "toNode": "fb_bd7e98abe883"
+    },
+    {
+      "id": "e_fb_1b4b72623936",
+      "fromNode": "area_course",
+      "toNode": "fb_1b4b72623936"
+    },
+    {
+      "id": "e_fb_7f18d5872e2a",
+      "fromNode": "area_hub",
+      "toNode": "fb_7f18d5872e2a"
+    },
+    {
+      "id": "e_fb_4abbb1dc6e29",
+      "fromNode": "area_lms",
+      "toNode": "fb_4abbb1dc6e29"
+    },
+    {
+      "id": "e_fb_2d1b203115fe",
+      "fromNode": "area_course",
+      "toNode": "fb_2d1b203115fe"
+    },
+    {
+      "id": "e_fb_282cf1c678f7",
+      "fromNode": "area_lms",
+      "toNode": "fb_282cf1c678f7"
+    },
+    {
+      "id": "e_fb_ac57d81228f0",
+      "fromNode": "area_lms",
+      "toNode": "fb_ac57d81228f0"
+    },
+    {
+      "id": "e_fb_e54f96f71700",
+      "fromNode": "area_course",
+      "toNode": "fb_e54f96f71700"
+    },
+    {
+      "id": "e_fb_bd7e7adb1b56",
+      "fromNode": "area_lms",
+      "toNode": "fb_bd7e7adb1b56"
+    },
+    {
+      "id": "e_fb_d858ea413075",
+      "fromNode": "area_lms",
+      "toNode": "fb_d858ea413075"
+    },
+    {
+      "id": "e_fb_bf076065b190",
+      "fromNode": "area_lms",
+      "toNode": "fb_bf076065b190"
+    },
+    {
+      "id": "e_fb_891a71e43477",
+      "fromNode": "area_course",
+      "toNode": "fb_891a71e43477"
+    },
+    {
+      "id": "e_fb_26c4558588a9",
+      "fromNode": "area_course",
+      "toNode": "fb_26c4558588a9"
+    },
+    {
+      "id": "e_fb_864d2df1dd9e",
+      "fromNode": "area_course",
+      "toNode": "fb_864d2df1dd9e"
+    },
+    {
+      "id": "e_fb_0150af2c76f9",
+      "fromNode": "area_course",
+      "toNode": "fb_0150af2c76f9"
+    },
+    {
+      "id": "e_fb_984b54a51615",
+      "fromNode": "area_infra",
+      "toNode": "fb_984b54a51615"
+    },
+    {
+      "id": "e_fb_87c8a8ec8ab0",
+      "fromNode": "area_lms",
+      "toNode": "fb_87c8a8ec8ab0"
+    },
+    {
+      "id": "e_fb_82646a4b4d05",
+      "fromNode": "area_course",
+      "toNode": "fb_82646a4b4d05"
+    },
+    {
+      "id": "e_fb_b5383e81a757",
+      "fromNode": "area_course",
+      "toNode": "fb_b5383e81a757"
+    },
+    {
+      "id": "e_fb_cbfe89324170",
+      "fromNode": "area_hub",
+      "toNode": "fb_cbfe89324170"
+    },
+    {
+      "id": "e_fb_1075c99977be",
+      "fromNode": "area_course",
+      "toNode": "fb_1075c99977be"
+    },
+    {
+      "id": "e_fb_42afd7e71d95",
+      "fromNode": "area_lms",
+      "toNode": "fb_42afd7e71d95"
+    },
+    {
+      "id": "e_fb_0c24f68e0f87",
+      "fromNode": "area_course",
+      "toNode": "fb_0c24f68e0f87"
+    },
+    {
+      "id": "e_fb_f3c80611acb8",
+      "fromNode": "area_lms",
+      "toNode": "fb_f3c80611acb8"
+    },
+    {
+      "id": "e_fb_d717b5d28078",
+      "fromNode": "area_lms",
+      "toNode": "fb_d717b5d28078"
+    },
+    {
+      "id": "e_fb_d71cdb099093",
+      "fromNode": "area_course",
+      "toNode": "fb_d71cdb099093"
+    },
+    {
+      "id": "e_fb_ee6e7564058a",
+      "fromNode": "area_course",
+      "toNode": "fb_ee6e7564058a"
+    },
+    {
+      "id": "e_fb_2c38165f0cfd",
+      "fromNode": "area_course",
+      "toNode": "fb_2c38165f0cfd"
+    },
+    {
+      "id": "e_fb_d4e6d92333f0",
+      "fromNode": "area_lms",
+      "toNode": "fb_d4e6d92333f0"
+    },
+    {
+      "id": "e_fb_ed319653a72b",
+      "fromNode": "area_hub",
+      "toNode": "fb_ed319653a72b"
+    },
+    {
+      "id": "e_fb_79c342f29123",
+      "fromNode": "area_lms",
+      "toNode": "fb_79c342f29123"
+    },
+    {
+      "id": "e_fb_b1bf63a0191b",
+      "fromNode": "area_lms",
+      "toNode": "fb_b1bf63a0191b"
+    },
+    {
+      "id": "e_fb_aafef1a16de8",
+      "fromNode": "area_lms",
+      "toNode": "fb_aafef1a16de8"
+    },
+    {
+      "id": "e_fb_bda04ddb3166",
+      "fromNode": "area_lms",
+      "toNode": "fb_bda04ddb3166"
+    },
+    {
+      "id": "e_fb_8f119f649790",
+      "fromNode": "area_lms",
+      "toNode": "fb_8f119f649790"
+    },
+    {
+      "id": "e_fb_e0dd268661c2",
+      "fromNode": "area_course",
+      "toNode": "fb_e0dd268661c2"
+    },
+    {
+      "id": "e_fb_11b7a3c19d14",
+      "fromNode": "area_course",
+      "toNode": "fb_11b7a3c19d14"
+    }
+  ]
 }
