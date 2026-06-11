@@ -27,6 +27,26 @@ export type Dictionary = {
   forWhoLabel: string
   forWhoHeading: string
   forWho: { title: string; body: string }[]
+  chatVsSystem: {
+    label: string
+    heading: string
+    hook: string
+    chatColLabel: string
+    systemColLabel: string
+    rows: { chat: string; system: string }[]
+  }
+  beforeAfter: {
+    label: string
+    heading: string
+    beforeLabel: string
+    afterLabel: string
+    items: { before: string; after: string }[]
+  }
+  dreams: {
+    label: string
+    heading: string
+    items: { niche: string; build: string }[]
+  }
   program: { sectionLabel: string }
   venn: {
     label: string
@@ -161,7 +181,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       tagline: '⬡ Открытый курс · Бесплатно',
       titleLine1: 'Точка',
       titleLine2: 'Сборки',
-      subtitle: 'Курс по agentic AI в потоке. От нонкодера до AI-generalist’а — Claude Code, Hermes/Aider, локальные модели, MCP, оркестрация. Твой стек на выбор.',
+      subtitle: 'Сейчас AI тебе советует — а делаешь ты всё равно руками. Курс научит превращать замыслы в задачи, которые AI доводит до конца. Без кода. На твоём языке.',
       stats: [
         ['9', 'тем'],
         ['~15', 'часов'],
@@ -180,6 +200,42 @@ export const dictionaries: Record<Locale, Dictionary> = {
       { title: 'Строишь AI-продукт', body: 'Нужен практический фундамент: Claude Code, MCP, агенты, деплой — без воды.' },
       { title: 'Ценишь суверенитет', body: 'Walk-away экономика, open-source стек, никаких lock-in платформ.' },
     ],
+    chatVsSystem: {
+      label: '// чат vs система',
+      heading: 'Чат отвечает.\nСистема делает.',
+      hook: 'Ты пользуешься AI каждый день — и всё равно делаешь руками то, что он мог бы сделать за тебя. С этого разрыва начинается путь.',
+      chatColLabel: 'Твой чат сейчас',
+      systemColLabel: 'После курса',
+      rows: [
+        { chat: 'Советует — а делаешь ты руками', system: 'Поручаешь — и получаешь готовый результат' },
+        { chat: 'Каждый раз объясняешь всё заново', system: 'Твой проект и контекст он уже знает' },
+        { chat: 'Один вопрос — один ответ', system: 'Один замысел — многошаговая работа до конца' },
+        { chat: 'Результат живёт во вкладке, копируешь сам', system: 'Результат появляется там, где он нужен: в файлах, письмах, таблицах' },
+      ],
+    },
+    beforeAfter: {
+      label: '// что изменится',
+      heading: 'Что изменится за курс',
+      beforeLabel: 'Было',
+      afterLabel: 'Стало',
+      items: [
+        { before: 'Вечер уходит на отчёт: собираешь данные из пяти источников руками.', after: 'Агент собирает черновик за 10 минут — ты проверяешь и отправляешь.' },
+        { before: '30 вкладок исследования, половина теряется.', after: 'Поручил агенту — получил выжимку с источниками одним файлом.' },
+        { before: 'Каждую неделю одни и те же рутинные шаги.', after: 'Описал процесс один раз — система повторяет сама.' },
+      ],
+    },
+    dreams: {
+      label: '// о чём можно мечтать',
+      heading: 'Люди без кода строят это',
+      items: [
+        { niche: 'Коуч', build: 'Ассистент готовит саммари сессий и план следующей встречи — клиент получает письмо сам.' },
+        { niche: 'Музыкант', build: 'Пайплайн релиза: обложки, описания, рассылка по площадкам — из одной папки с треком.' },
+        { niche: 'Нон-профит', build: 'Грантовые заявки: агент собирает черновик из базы проектов под требования фонда.' },
+        { niche: 'Рисёрчер', build: 'Обзор литературы за вечер: скрапинг, выжимки, таблица источников.' },
+        { niche: 'Предприниматель', build: 'CRM из писем и встреч обновляется сама: ты видишь картину, не вбиваешь данные.' },
+        { niche: 'Контент-мейкер', build: 'Из одного длинного видео: посты, сценарии шортсов и рассылка в твоём стиле.' },
+      ],
+    },
     program: {
       sectionLabel: 'Темы курса · выбирай в любом порядке',
     },
@@ -219,6 +275,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
         { q: 'Что такое vibe coding?', a: 'Разработка в потоке: ты описываешь задачу, AI реализует, ты итерируешь. Скорость ×10.' },
         { q: 'Сколько времени нужно в неделю?', a: '30–60 минут на тему + практика. Курс самостоятельный, без дедлайнов.' },
         { q: 'Чем отличается от других AI-курсов?', a: 'Мы не обзор нейросетей. Мы — практический стек: Claude Code, MCP, агенты, деплой, автоматизация.' },
+        { q: 'Почему не нанять фрилансера?', a: 'Фрилансер сделает один раз и уйдёт. Система остаётся у тебя, работает каждый день и переделывается за минуты, а не за новый бюджет.' },
+        { q: 'Мой чат и так всё помнит', a: 'Память чата — это заметки о тебе. Система помнит проект целиком: файлы, историю решений, процессы — и действует на их основе.' },
+        { q: 'Почему бесплатно? Где подвох?', a: 'Подвоха нет: курс бесплатный целиком. Это открытая часть моей практики — дальше у меня есть коучинг и работа с командами, и курс — лучшее знакомство. Ты ничего не должен.' },
       ],
     },
     author: {
@@ -349,7 +408,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       tagline: '⬡ Open course · Free',
       titleLine1: 'Tochka',
       titleLine2: 'Sborki',
-      subtitle: 'An agentic-AI course in flow. From non-coder to AI generalist — Claude Code, Hermes/Aider, local models, MCP, orchestration. Pick your stack.',
+      subtitle: 'Right now AI gives you advice — and you still do everything by hand. This course teaches you to turn your ideas into tasks AI carries to the finish. No code. In your own words.',
       stats: [
         ['9', 'topics'],
         ['~15', 'hours'],
@@ -368,6 +427,42 @@ export const dictionaries: Record<Locale, Dictionary> = {
       { title: 'You’re building an AI product', body: 'You need a practical foundation: Claude Code, MCP, agents, deploys — no fluff.' },
       { title: 'You value sovereignty', body: 'Walk-away economics, open-source stack, no platform lock-in.' },
     ],
+    chatVsSystem: {
+      label: '// chat vs system',
+      heading: 'A chat answers.\nA system gets it done.',
+      hook: 'You use AI every day — and still do by hand what it could do for you. That gap is where this course begins.',
+      chatColLabel: 'Your chat today',
+      systemColLabel: 'After the course',
+      rows: [
+        { chat: 'Gives advice — you do the work by hand', system: 'You delegate — and get the finished result' },
+        { chat: 'You explain everything from scratch every time', system: 'It already knows your project and context' },
+        { chat: 'One question — one answer', system: 'One idea — multi-step work carried to the end' },
+        { chat: 'Results live in a browser tab, you copy them out', system: 'Results land where they belong: files, emails, spreadsheets' },
+      ],
+    },
+    beforeAfter: {
+      label: '// what changes',
+      heading: 'What changes after the course',
+      beforeLabel: 'Before',
+      afterLabel: 'After',
+      items: [
+        { before: 'An evening goes into a report: you gather data from five sources by hand.', after: 'An agent drafts it in 10 minutes — you review and send.' },
+        { before: '30 research tabs, half of them lost.', after: 'Delegate it — get a digest with sources in a single file.' },
+        { before: 'The same routine steps every week.', after: 'Describe the process once — the system repeats it on its own.' },
+      ],
+    },
+    dreams: {
+      label: '// what to dream about',
+      heading: 'People with no code background build this',
+      items: [
+        { niche: 'Coach', build: 'An assistant preps session summaries and next-meeting plans — the client gets the email automatically.' },
+        { niche: 'Musician', build: 'A release pipeline: covers, descriptions, distribution to platforms — from one folder with a track.' },
+        { niche: 'Non-profit', build: 'Grant applications: an agent drafts them from your project base to fit each fund’s requirements.' },
+        { niche: 'Researcher', build: 'A literature review in one evening: scraping, digests, a table of sources.' },
+        { niche: 'Founder', build: 'A CRM that updates itself from emails and meetings — you see the picture, not type the data.' },
+        { niche: 'Content creator', build: 'From one long video: posts, shorts scripts, and a newsletter in your voice.' },
+      ],
+    },
     program: {
       sectionLabel: 'Course topics · pick any order',
     },
@@ -407,6 +502,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
         { q: 'What is vibe coding?', a: 'Development in flow: you describe the task, AI implements, you iterate. 10× speed.' },
         { q: 'How much time per week?', a: '30–60 minutes per topic + practice. Self-paced, no deadlines.' },
         { q: 'How is this different from other AI courses?', a: 'We’re not a tour of neural nets. We’re a practical stack: Claude Code, MCP, agents, deploys, automation.' },
+        { q: 'Why not just hire a freelancer?', a: 'A freelancer does it once and leaves. A system stays with you, works every day, and gets reworked in minutes — not for another budget.' },
+        { q: 'My chat already remembers everything', a: 'Chat memory is notes about you. A system remembers the whole project — files, decision history, processes — and acts on them.' },
+        { q: 'Why free? What’s the catch?', a: 'No catch: the course is fully free. It’s the open part of my practice — I also do coaching and work with teams, and the course is the best introduction. You owe nothing.' },
       ],
     },
     author: {
