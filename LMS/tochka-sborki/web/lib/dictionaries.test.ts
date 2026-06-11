@@ -21,8 +21,13 @@ describe('value-clarity dictionary parity (fb_8423715c58e2)', () => {
   })
 
   it('faq includes the three objection pairs in both locales', () => {
-    expect(ru.faq.items).toHaveLength(7)
-    expect(en.faq.items).toHaveLength(7)
+    expect(en.faq.items).toHaveLength(ru.faq.items.length)
+    expect(ru.faq.items.map(i => i.q)).toEqual(
+      expect.arrayContaining(['Почему не нанять фрилансера?', 'Мой чат и так всё помнит', 'Почему бесплатно? Где подвох?'])
+    )
+    expect(en.faq.items.map(i => i.q)).toEqual(
+      expect.arrayContaining(['Why not just hire a freelancer?', 'My chat already remembers everything', 'Why free? What’s the catch?'])
+    )
   })
 
   it('hero subtitle carries the spine (no jargon)', () => {
