@@ -4,7 +4,7 @@ import { getDictionary, type Locale } from '@/lib/dictionaries'
 import { Nav } from '@/components/nav'
 import { Footer } from '@/components/footer'
 import { ProgramVenn } from '@/components/program-venn'
-import { ChatBubble } from '@/components/chat-bubble'
+import { FaqAccordion } from '@/components/faq-accordion'
 import { HeroSecondaryCta } from '@/components/hero-secondary-cta'
 import { ChatVsSystem } from '@/components/chat-vs-system'
 import { BeforeAfter } from '@/components/before-after'
@@ -340,19 +340,8 @@ export function HomePage({ locale }: Props) {
           }}>
             {t.faq.label}
           </div>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1.25rem',
-            maxWidth: '600px',
-            margin: '0 auto',
-          }}>
-            {t.faq.items.map(item => (
-              <div key={item.q} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <ChatBubble text={item.q} side="user" maxWidth={420} />
-                <ChatBubble text={item.a} side="agent" maxWidth={520} />
-              </div>
-            ))}
+          <div style={{ maxWidth: '720px', margin: '0 auto' }}>
+            <FaqAccordion items={t.faq.items} />
           </div>
         </div>
       </section>
