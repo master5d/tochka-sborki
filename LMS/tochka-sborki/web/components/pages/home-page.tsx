@@ -6,6 +6,9 @@ import { Footer } from '@/components/footer'
 import { ProgramVenn } from '@/components/program-venn'
 import { ChatBubble } from '@/components/chat-bubble'
 import { HeroSecondaryCta } from '@/components/hero-secondary-cta'
+import { ChatVsSystem } from '@/components/chat-vs-system'
+import { BeforeAfter } from '@/components/before-after'
+import { DreamScenarios } from '@/components/dream-scenarios'
 
 const lessonsHref = (locale: Locale, slug: string) =>
   locale === 'en' ? `/en/lessons/${slug}/` : `/lessons/${slug}/`
@@ -123,6 +126,8 @@ export function HomePage({ locale }: Props) {
         </div>
       </section>
 
+      <ChatVsSystem locale={locale} />
+
       {/* ── ДЛЯ КОГО ─────────────────────────────────────────── */}
       <section className="home-section" style={{
         padding: 'var(--section-gap) 2rem',
@@ -174,6 +179,8 @@ export function HomePage({ locale }: Props) {
           </div>
         </div>
       </section>
+
+      <BeforeAfter locale={locale} />
 
       <ProgramVenn locale={locale} />
 
@@ -248,6 +255,8 @@ export function HomePage({ locale }: Props) {
           ))}
         </div>
       </section>
+
+      <DreamScenarios locale={locale} />
 
       {/* ── ОБ АВТОРЕ ────────────────────────────────────────── */}
       <section className="home-section" style={{
