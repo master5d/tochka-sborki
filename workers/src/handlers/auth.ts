@@ -1,6 +1,7 @@
 import type { Env } from '../lib/types'
 import { signJWT, generateToken } from '../lib/jwt'
 import { requireAuth } from '../middleware'
+import { addContactToAudience } from '../lib/crm'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -22,7 +23,7 @@ function buildSource(body: { utm_source?: string; utm_medium?: string; utm_campa
   return parts.length > 0 ? parts.join('/') : 'direct'
 }
 
-export async function handleSendLink(request: Request, env: Env): Promise<Response> {
+export async function handleSendLink(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   let body: { email?: string; telegram_handle?: string; utm_source?: string; utm_medium?: string; utm_campaign?: string }
   try { body = await request.json() } catch { return Response.json({ error: 'Invalid JSON' }, { status: 400 }) }
 
@@ -44,22 +45,11 @@ export async function handleSendLink(request: Request, env: Env): Promise<Respon
     ).bind(id, email, Math.floor(Date.now() / 1000), language, source, telegramHandle).run()
     user = { id }
 
-    // fire-and-forget CRM webhook — failure must not block magic link
-    // strip BOM / stray whitespace that can sneak in via copy-pasted secrets
-    const crmUrl = env.N8N_CRM_WEBHOOK_URL?.replace(/^﻿/, '').trim()
-    if (crmUrl) {
-      fetch(crmUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Webhook-Secret': (env.N8N_CRM_SECRET ?? '').replace(/^﻿/, '').trim() },
-        body: JSON.stringify({
-          email,
-          language,
-          source,
-          telegram_handle: telegramHandle,
-          signed_up_at: new Date().toISOString(),
-        }),
-      }).catch(e => console.error('CRM webhook failed', e))
-    }
+    // добавить лид в Resend Audience; waitUntil — чтобы рантайм не оборвал запрос после ответа
+    ctx.waitUntil(
+      addContactToAudience(env, { email, language, source })
+        .catch(e => console.error('Resend audience add failed', e))
+    )
   }
 
   const token = generateToken()

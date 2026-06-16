@@ -4,8 +4,7 @@ export interface Env {
   RESEND_API_KEY: string
   N8N_WEBHOOK_URL: string
   N8N_WEBHOOK_SECRET: string
-  N8N_CRM_WEBHOOK_URL: string
-  N8N_CRM_SECRET: string
+  RESEND_AUDIENCE_ID: string
   GEMINI_API_KEY: string
   OWNER_EMAIL: string
 }
