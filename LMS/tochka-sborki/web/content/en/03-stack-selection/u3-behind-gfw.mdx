@@ -45,6 +45,32 @@ This unit isn't about bypassing — it's about **building a full agentic workflo
 
 <Phase type="concept">
 
+## ⚡ Quick install of the GFW stack (one line)
+
+One command installs the LiteLLM proxy and Aider and writes a ready config (Cerebras + Gemini Flash). Then you just add two keys. The step-by-step breakdown is below if you want to understand what happens.
+
+<OsToggle />
+
+<OsBlock os="mac">
+
+```bash
+curl -fsSL https://ai.mamaev.coach/install-gfw.sh | bash
+```
+
+</OsBlock>
+
+<OsBlock os="windows">
+
+```powershell
+irm https://ai.mamaev.coach/install-gfw.ps1 | iex
+```
+
+</OsBlock>
+
+> 💡 On Linux, use the same command as Mac (`curl … | bash`).
+
+After install: add your keys to `~/.config/litellm/.env`, run `start.sh`/`start.ps1`, point Aider at `http://localhost:4000`.
+
 ## "Behind-GFW" architecture
 
 ```

@@ -45,6 +45,32 @@ duration: "20 мин"
 
 <Phase type="concept">
 
+## ⚡ Быстрая установка GFW-стека (одной строкой)
+
+Одна команда ставит LiteLLM-прокси и Aider и пишет готовый конфиг (Cerebras + Gemini Flash). Дальше останется вписать два ключа. Ниже — разбор по шагам, если хочешь понять, что происходит.
+
+<OsToggle />
+
+<OsBlock os="mac">
+
+```bash
+curl -fsSL https://ai.mamaev.coach/install-gfw.sh | bash
+```
+
+</OsBlock>
+
+<OsBlock os="windows">
+
+```powershell
+irm https://ai.mamaev.coach/install-gfw.ps1 | iex
+```
+
+</OsBlock>
+
+> 💡 На Linux работает та же команда, что и для Mac (`curl … | bash`).
+
+После установки: впиши ключи в `~/.config/litellm/.env`, запусти `start.sh`/`start.ps1`, наведи Aider на `http://localhost:4000`.
+
 ## Архитектура «Behind-GFW»
 
 ```
