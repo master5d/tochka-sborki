@@ -21,6 +21,7 @@ export interface SkinMeta {
   glyph: string                   // emoji
   displayName: Bi
   mentor?: { name: Bi; glyph: string } // named persona for hint box
+  decoder?: Bi   // plain-language «что одевает твой мир» — для онбординг-моста
 }
 
 export type QuestStatus = 'completed' | 'current' | 'todo'
