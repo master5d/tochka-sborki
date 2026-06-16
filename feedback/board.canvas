@@ -751,7 +751,7 @@
       "text": "✨ Мигрировать email CRM: отказаться от Notion + n8n, выбрать стабильную замену",
       "metadata": {
         "sovern:layer": "infra",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 7,
         "sovern:urgency": 7,
         "sovern:created": "2026-06-10T01:39:08.217Z",
