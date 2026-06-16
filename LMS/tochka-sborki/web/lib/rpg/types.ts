@@ -1,4 +1,4 @@
-import type { WorldSkin, CharacterClass, Locale } from '@/lib/intake/types'
+import type { WorldSkin, CharacterClass, Locale } from '../intake/types'
 
 export type Bi = { ru: string; en: string }
 

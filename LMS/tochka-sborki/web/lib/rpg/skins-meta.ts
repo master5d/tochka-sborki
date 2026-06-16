@@ -1,5 +1,5 @@
 import type { SkinMeta, WorldSkin } from './types'
-import type { Locale } from '@/lib/intake/types'
+import type { Locale } from '../intake/types'
 
 export const SKINS_META: Record<WorldSkin, SkinMeta> = {
   'slavic-myth':   { skin: 'slavic-myth',   accent: '#7bd88f', glyph: '🌿', displayName: { ru: 'Славянский Миф', en: 'Slavic Myth' }, mentor: { name: { ru: 'Домовой', en: 'House-Spirit' }, glyph: '🪆' }, decoder: { ru: 'Твой мир — Славянский Миф: уроки звучат как сказ, наставник — Домовой, агенты — помощники у очага. Это лишь образ — под ним обычный курс.', en: "Your world is Slavic Myth: lessons sound like folk tales, your mentor is the House-Spirit, agents are hearth-helpers. It's just imagery — underneath is a normal course." } },
