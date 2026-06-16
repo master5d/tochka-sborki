@@ -5,6 +5,7 @@ import { visibleQuestions } from '@/lib/intake/visible'
 import { QuestionRenderer } from './question-renderer'
 import type { Answers, AnswerValue, InstrumentVersion, Locale } from '@/lib/intake/types'
 import { CharterReveal } from './charter-reveal'
+import { OnboardingBridge } from './onboarding-bridge'
 import { buildCompanionCharter } from '@/lib/intake/charter'
 import { deriveMbti } from '@/lib/intake/mbti'
 import { SKINS_META } from '@/lib/rpg/skins-meta'
@@ -17,6 +18,7 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
   const [version, setVersion] = useState<InstrumentVersion>(2) // new students default to v2
   const [charter, setCharter] = useState<string | null>(null)
   const [pendingHref, setPendingHref] = useState<string | null>(null)
+  const [showBridge, setShowBridge] = useState(false)
 
   useEffect(() => {
     fetch('/api/intake/me', { credentials: 'include' })
@@ -89,7 +91,11 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
     } else setSubmitting(false)
   }
 
-  if (charter) return <CharterReveal charter={charter} locale={locale} onContinue={() => { if (pendingHref) window.location.replace(pendingHref) }} />
+  if (charter && showBridge) {
+    const skinKey = answers['V_SKIN'] as WorldSkin | undefined
+    return <OnboardingBridge skin={skinKey ?? 'wanderer'} locale={locale} onEnter={() => { if (pendingHref) window.location.replace(pendingHref) }} />
+  }
+  if (charter) return <CharterReveal charter={charter} locale={locale} onContinue={() => setShowBridge(true)} />
   if (!q) return null
   const isLast = step === total - 1
   const answered = answers[q.id] != null && answers[q.id] !== '' && !(Array.isArray(answers[q.id]) && (answers[q.id] as string[]).length === 0)

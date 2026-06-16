@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { SKINS_META } from './skins-meta'
+import { SKINS_META, skinDecoder } from './skins-meta'
 
 describe('SKINS_META mentor personas', () => {
   it('every non-wanderer skin has a named mentor with a glyph', () => {
@@ -9,5 +9,28 @@ describe('SKINS_META mentor personas', () => {
       expect(meta.mentor?.name.en.length ?? 0).toBeGreaterThan(0)
       expect(meta.mentor?.glyph.length ?? 0).toBeGreaterThan(0)
     }
+  })
+})
+
+const SKINS = Object.keys(SKINS_META) as (keyof typeof SKINS_META)[]
+
+describe('skinDecoder', () => {
+  it('возвращает непустую строку для каждого скина в обоих локалях', () => {
+    for (const s of SKINS) {
+      expect(skinDecoder(s, 'ru').length, `ru ${s}`).toBeGreaterThan(10)
+      expect(skinDecoder(s, 'en').length, `en ${s}`).toBeGreaterThan(10)
+    }
+  })
+  it('каждый из 8 скинов имеет явный decoder (не fallback)', () => {
+    for (const s of SKINS) {
+      expect(SKINS_META[s].decoder, `decoder ${s}`).toBeTruthy()
+    }
+  })
+  it('даёт непустой fallback, если decoder отсутствует', () => {
+    const meta = { ...SKINS_META['wanderer'], decoder: undefined }
+    const orig = SKINS_META['wanderer'].decoder
+    ;(SKINS_META as any)['wanderer'].decoder = undefined
+    expect(skinDecoder('wanderer', 'ru').length).toBeGreaterThan(10)
+    ;(SKINS_META as any)['wanderer'].decoder = orig
   })
 })
