@@ -74,10 +74,14 @@ mc_hub/                   — корень монорепо
 
 ### Backend (`workers/`)
 - CF Worker на `ai.mamaev.coach/api/*`. Эндпоинты: auth (magic-link через Resend),
-  progress (D1 SQLite), feedback, CRM webhook.
-- **CRM pipeline**: новый юзер → Worker fires `N8N_CRM_WEBHOOK_URL` (n8n workflow
-  `mds-crm` на n8n.synergify.com) → создаёт строку в Notion. Секрет
-  `N8N_CRM_SECRET` должен совпадать с IF-нодой «Check Secret» в n8n.
+  progress (D1 SQLite), feedback, leads CRM.
+- **CRM pipeline** (с 2026-06-15, заменил Notion+n8n): источник правды лидов — D1 `users`
+  (email, created_at, language, source, telegram_handle), пишется на signup в `auth.ts`.
+  Новый юзер → `ctx.waitUntil(addContactToAudience())` (`lib/crm.ts`) пушит контакт в
+  **Resend Audience** (`POST /audiences/{RESEND_AUDIENCE_ID}/contacts`). Витрина —
+  owner-gated `/admin/leads` (таблица + CSV + кнопка backfill `POST /api/admin/leads/sync-audience`).
+  n8n `mds-crm` и Notion CRM выведены. Push дремлет (graceful no-op) пока не задан
+  секрет `RESEND_AUDIENCE_ID`.
 - D1 база `tochka-sborki-db`; секреты через `wrangler secret put` (не в коде).
 
 ## RPG / геймификация (LMS/tochka-sborki/web/)
