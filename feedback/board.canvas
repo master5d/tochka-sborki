@@ -1115,7 +1115,7 @@
       "text": "🎨 Лендинг: нет объяснения почему курс бесплатный — вызывает недоверие",
       "metadata": {
         "sovern:layer": "hub",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 8,
         "sovern:urgency": 7,
         "sovern:created": "2026-06-10T03:31:11.623Z",
@@ -1557,7 +1557,7 @@
       "text": "🎨 RPG-онбординг: переход intake→quest log шокирует нонгеймеров, жаргон без объяснений",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 8,
         "sovern:urgency": 7,
         "sovern:created": "2026-06-10T05:07:02.602Z",
