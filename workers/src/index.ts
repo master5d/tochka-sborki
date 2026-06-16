@@ -4,6 +4,7 @@ import { handleSendLink, handleVerify, handleMe, handleLogout } from './handlers
 import { handleView, handleComplete, handleList } from './handlers/progress'
 import { handleMe as handleIntakeMe, handleProgress as handleIntakeProgress, handleSubmit as handleIntakeSubmit } from './handlers/intake'
 import { runDemandRadar, listBriefs, listSignals, decideBrief } from './handlers/demand'
+import { listLeads, syncAudience } from './handlers/leads'
 import { requireAuth, requireOwner } from './middleware'
 
 const ALLOWED_ORIGINS = [
@@ -41,7 +42,7 @@ export default {
       if (path === '/api/feedback' && method === 'POST') {
         response = await handleFeedback(request, env)
       } else if (path === '/api/auth/send-link' && method === 'POST') {
-        response = await handleSendLink(request, env)
+        response = await handleSendLink(request, env, ctx)
       } else if (path === '/api/auth/verify' && method === 'POST') {
         response = await handleVerify(request, env)
       } else if (path === '/api/auth/me' && method === 'GET') {
@@ -76,6 +77,16 @@ export default {
           response = await handleIntakeSubmit(env.DB, auth.sub, { answers: body.answers ?? {}, locale: body.locale }, env.GEMINI_API_KEY)
           if (response.ok) ctx.waitUntil(runDemandRadar(env, auth.sub, body.answers ?? {}))
         }
+      } else if (path === '/api/admin/leads' && method === 'GET') {
+        const auth = await requireOwner(request, env)
+        response = auth instanceof Response ? auth
+          : await listLeads(env.DB, {
+              q: url.searchParams.get('q') ?? undefined,
+              limit: Number(url.searchParams.get('limit')) || undefined,
+            })
+      } else if (path === '/api/admin/leads/sync-audience' && method === 'POST') {
+        const auth = await requireOwner(request, env)
+        response = auth instanceof Response ? auth : await syncAudience(env)
       } else if (path === '/api/admin/content-demand/briefs' && method === 'GET') {
         const auth = await requireOwner(request, env)
         response = auth instanceof Response ? auth : await listBriefs(env.DB, url.searchParams.get('status') ?? undefined)
