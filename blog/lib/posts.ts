@@ -88,6 +88,18 @@ export const posts: Post[] = [
     related: ['charter', 'prologue'],
     en: { title: 'Design without drawing: how to install "taste" into AI agents', description: 'Design has always been the bottleneck for engineers. My report on turning design from "creative agony" into an executable engineering spec through the DesOps Hub.', readingTime: '~8 min' },
   },
+  {
+    slug: 'imagination',
+    title: 'Барьер не в воображении: почему сто идей не доходят до дела',
+    description:
+      'Тебя останавливает не «нет воображения» — образ результата есть у всех. Останавливает непереведённое в задачу воображение. Три ступени: воображение → задача → автоматизация, и порядок важен.',
+    date: '2026-06-17',
+    author: 'Александр Мамаев',
+    readingTime: '~6 мин',
+    tags: ['AI', 'воображение', 'задачи', 'нетехнари', 'Точка Сборки'],
+    related: ['horizons', 'prologue'],
+    en: { title: "The barrier isn't imagination: why a hundred ideas never get done", description: "You're not stopped by \"no imagination\" — the image of the result is there. You're stopped by imagination that was never translated into a task. Three stages: imagination → task → automation, and the order matters.", readingTime: '~6 min' },
+  },
 ]
 
 /**
