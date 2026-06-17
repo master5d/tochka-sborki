@@ -6,7 +6,6 @@ import { useProgress } from '@/components/progress-provider'
 import { buildQuestLog } from '@/lib/rpg/quest-log'
 import { SKINS_META } from '@/lib/rpg/skins-meta'
 import { CharacterStrip } from '@/components/rpg/character-strip'
-import { WorldMap } from '@/components/rpg/world-map'
 import { QuestFeed } from '@/components/rpg/quest-feed'
 import wandererPack from '@/lib/rpg/skins/wanderer.json'
 import type { SkinPack } from '@/lib/rpg/types'
@@ -16,7 +15,6 @@ import { Vault } from '@/components/cs/vault'
 import { DailyPanel } from '@/components/quests/daily-panel'
 import { useUnitProgress } from '@/lib/unit-progress'
 import { DungeonCard } from '@/components/dungeon/dungeon-card'
-import { useNicheDungeonCleared } from '@/lib/dungeon/use-dungeon'
 import { NICHE_MODULE } from '@/lib/rpg/niche-map'
 import { FLAVOR_BANK } from '@/lib/dungeon/flavor-bank'
 import { parseOutcome } from '@/lib/intake/parse-outcome'
@@ -37,7 +35,6 @@ export function DashboardClient({ modules, unitsByModule, locale }: Props) {
   const { isCompleted } = useUnitProgress()
   const [profile, setProfile] = useState<any>(null)
   const [pack, setPack] = useState<SkinPack | null>(null)
-  const nicheDungeonCleared = useNicheDungeonCleared(profile?.niche ?? null)
 
   useEffect(() => {
     fetch('/api/intake/me', { credentials: 'include' })
@@ -56,7 +53,6 @@ export function DashboardClient({ modules, unitsByModule, locale }: Props) {
   if (!profile || !loaded) return (<><Nav locale={locale} /><main style={{ maxWidth: 660, margin: '0 auto', padding: '4rem 1.5rem' }}><p style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>…</p></main></>)
 
   const accent = SKINS_META[profile.world_skin as keyof typeof SKINS_META]?.accent ?? 'var(--text-accent)'
-  const glyph = SKINS_META[profile.world_skin as keyof typeof SKINS_META]?.glyph ?? '⬡'
   const completed = Object.keys(modules).filter(s => getState(s) === 'completed')
   const dungeonNiche = profile.niche && FLAVOR_BANK[profile.niche] ? profile.niche : 'other'
   const dungeonModule = NICHE_MODULE[dungeonNiche] ?? '04-prompt-engineering'
@@ -107,10 +103,6 @@ export function DashboardClient({ modules, unitsByModule, locale }: Props) {
           completedModules={completed}
           helpId="daily"
         />
-        <div style={{ margin: '1.5rem 0' }}>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.25rem' }}><HelpTip id="world-map" locale={locale} align="right" /></div>
-          <WorldMap zones={vm.zones} accent={accent} glyph={glyph} nicheDungeonCleared={nicheDungeonCleared} />
-        </div>
         <QuestFeed zones={vm.zones} accent={accent} locale={locale} />
         <DungeonCard
           locale={locale}
