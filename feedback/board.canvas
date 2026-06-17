@@ -517,7 +517,7 @@
       "text": "💡 Исследовать и применить инновации LearnWorlds в архитектуре LMS",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 7,
         "sovern:urgency": 2,
         "sovern:created": "2026-06-10T01:27:58.917Z",
@@ -1797,6 +1797,32 @@
         "sovern:created": "2026-06-17T19:08:29.349Z",
         "feedback": {}
       }
+    },
+    {
+      "id": "fb_97b6ac1af7b9",
+      "type": "text",
+      "x": 860,
+      "y": 3080,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Lightweight interactive-video: chapters + end-of-video reflection checkpoint",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-17T19:26:26.316Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "impact": 6,
+          "urgency": 3,
+          "confidence": 0.7,
+          "reason": "единственная worth-stealing инновация LearnWorlds (interactive video) в reflection-compatible форме; из gap-анализа fb_ac57d812"
+        }
+      }
     }
   ],
   "edges": [
@@ -2129,6 +2155,11 @@
       "id": "e_fb_54dd5739f9ce",
       "fromNode": "area_infra",
       "toNode": "fb_54dd5739f9ce"
+    },
+    {
+      "id": "e_fb_97b6ac1af7b9",
+      "fromNode": "area_lms",
+      "toNode": "fb_97b6ac1af7b9"
     }
   ]
 }
