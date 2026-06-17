@@ -19,6 +19,7 @@ export interface Dictionary {
   tagline: string
   name: string
   bio: string
+  pitch: { eyebrow: string; body: string; cta: string }
   projectsLabel: string
   contactsLabel: string
   projects: Project[]
@@ -63,6 +64,11 @@ export const dictionaries: Record<Locale, Dictionary> = {
     tagline: '// mamaev.coach',
     name: 'Александр\nМамаев',
     bio: 'Vibe coder, AI builder, коуч. Строю agent-системы на Claude Code + n8n. Учу других делать то же самое.',
+    pitch: {
+      eyebrow: 'замена залипанию',
+      body: 'Бинж-вотчинг и бесконечная лента дают дофамин, после которого пусто. Vibe coding даёт тот же заряд — но к утру у тебя в руках работающая штука, а не разряженная батарея.',
+      cta: 'Поменять скролл на сборку →',
+    },
     projectsLabel: '// проекты',
     contactsLabel: '// контакты',
     projects: [
@@ -119,6 +125,11 @@ export const dictionaries: Record<Locale, Dictionary> = {
     tagline: '// mamaev.coach',
     name: 'Alexander\nMamaev',
     bio: 'Vibe coder, AI builder, coach. I build agent systems on Claude Code + n8n. I teach others to do the same.',
+    pitch: {
+      eyebrow: 'a swap for the scroll',
+      body: "Binge-watching and the endless feed give you a dopamine hit that leaves you empty. Vibe coding gives the same charge — but by morning you're holding a working thing, not a drained battery.",
+      cta: 'Trade the scroll for building →',
+    },
     projectsLabel: '// projects',
     contactsLabel: '// contacts',
     projects: [

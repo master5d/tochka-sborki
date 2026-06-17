@@ -74,6 +74,45 @@ export function HomePage({ locale }: Props) {
         </p>
       </section>
 
+      {/* ── PITCH (doom-scroll → vibe coding) ──────────────────── */}
+      <section className="hub-section" style={{
+        padding: 'var(--section-gap) 2rem',
+        borderTop: '1px solid var(--border-color)',
+      }}>
+        <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
+          <div style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--section-label-size)',
+            color: 'var(--text-accent)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.15em',
+            marginBottom: '1.25rem',
+          }}>
+            {t.pitch.eyebrow}
+          </div>
+          <p style={{
+            fontSize: 'clamp(1.3rem, 3vw, 1.9rem)',
+            fontWeight: 700,
+            color: 'var(--text-primary)',
+            maxWidth: '720px',
+            lineHeight: 1.4,
+            letterSpacing: '-0.02em',
+            margin: '0 0 1.75rem',
+          }}>
+            {t.pitch.body}
+          </p>
+          <a href={t.blog.courseUrl} style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.95rem',
+            color: 'var(--text-accent)',
+            textDecoration: 'none',
+            letterSpacing: '0.04em',
+          }}>
+            {t.pitch.cta}
+          </a>
+        </div>
+      </section>
+
       {/* ── PROJECTS ───────────────────────────────────────────── */}
       <section className="hub-section" style={{
         padding: 'var(--section-gap) 2rem',
