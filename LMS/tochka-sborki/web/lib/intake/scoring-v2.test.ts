@@ -39,3 +39,18 @@ describe('scoreProfileV2', () => {
     expect(s.sheetLanguage).toBe('en')
   })
 })
+
+describe('scoreProfileV2 multi-select V_HOOK', () => {
+  it('берёт max замапленного веса по массиву (не сумму)', () => {
+    const multi = scoreProfileV2({ V_HOOK: ['understand', 'talk'] }, 'ru')   // understand=6, talk=2
+    const single = scoreProfileV2({ V_HOOK: 'understand' }, 'ru')             // 6
+    expect(multi.int).toBe(single.int)
+  })
+  it('одиночный V_HOOK по-прежнему работает', () => {
+    const r = scoreProfileV2({ V_HOOK: 'build' }, 'ru')
+    expect(r.int).toBeGreaterThan(0)
+  })
+  it('пустой массив → нулевой вклад, не падает', () => {
+    expect(() => scoreProfileV2({ V_HOOK: [] }, 'ru')).not.toThrow()
+  })
+})

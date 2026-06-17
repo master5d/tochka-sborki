@@ -35,6 +35,7 @@ export interface Question {
   required: boolean
   prompt: { ru: string; en: string }
   options?: QuestionOption[]
+  placeholder?: { ru: string; en: string }
   showIf?: { questionId: string; equals: string }
 }
 

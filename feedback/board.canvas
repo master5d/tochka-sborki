@@ -1141,7 +1141,7 @@
       "text": "🎨 Intake: первый вопрос 'опишите работу' вызывает зависание у нон-кодеров без профессии в AI",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 7,
         "sovern:urgency": 6,
         "sovern:created": "2026-06-10T03:31:11.695Z",
@@ -1167,7 +1167,7 @@
       "text": "🎨 Intake: вопрос о барьерах использования AI не работает для аудитории 'уже использую, не знаю горизонтов'",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 7,
         "sovern:urgency": 6,
         "sovern:created": "2026-06-10T03:31:11.773Z",
@@ -1193,7 +1193,7 @@
       "text": "🎨 Intake EN: вопрос про 'specific result' грамматически предполагает прошлый опыт — путает до старта курса",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 5,
         "sovern:urgency": 4,
         "sovern:created": "2026-06-10T03:31:11.856Z",
@@ -1219,7 +1219,7 @@
       "text": "🎨 Intake EN: вопрос 'old way reluctant to change' — непонятен без контекста к чему он относится",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 5,
         "sovern:urgency": 4,
         "sovern:created": "2026-06-10T03:31:11.939Z",
@@ -1245,7 +1245,7 @@
       "text": "🎨 Intake: добавить опцию 'confronting AI / pushing back logically' в вопрос о реакции на плохой ответ",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 5,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T03:31:12.008Z",
@@ -1349,7 +1349,7 @@
       "text": "✨ Промпт самопрофилирования: ученик получает учебный профиль от своего AI",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 5,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T05:07:02.228Z",
@@ -1427,7 +1427,7 @@
       "text": "🎨 Intake: вопросы предполагают экспертизу (60-day outcome, team) — чайнику нечего ответить",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 7,
         "sovern:urgency": 6,
         "sovern:created": "2026-06-10T05:07:02.366Z",
@@ -1453,7 +1453,7 @@
       "text": "🎨 Intake: multi-select для вопросов «что вам подходит»",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 6,
         "sovern:urgency": 5,
         "sovern:created": "2026-06-10T05:07:02.412Z",
@@ -1479,7 +1479,7 @@
       "text": "🎨 Intake: гео-вопрос создаёт впечатление пост-советского фокуса",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 4,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T05:07:02.461Z",
@@ -1505,7 +1505,7 @@
       "text": "🎨 Intake: «name ONE favorite» невыполним + не объяснена цель вопросов",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 7,
         "sovern:urgency": 6,
         "sovern:created": "2026-06-10T05:07:02.507Z",
@@ -1531,7 +1531,7 @@
       "text": "🎨 Intake: вопрос о формате контента не покрывает реальные паттерны (доверие к источнику, AI-research)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 4,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T05:07:02.555Z",

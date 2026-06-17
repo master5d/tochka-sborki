@@ -37,7 +37,7 @@ export const QUESTIONS_V2: Question[] = [
     ],
   },
   {
-    id: 'V_HOOK', module: 'V', format: 'single', required: false,
+    id: 'V_HOOK', module: 'V', format: 'multi', required: false,
     prompt: { ru: 'От чего внутри загорается?', en: 'What lights you up most?' },
     options: [
       { value: 'build', label: { ru: 'Собирать, делать вещи', en: 'Building, making things' } },
@@ -64,8 +64,12 @@ export const QUESTIONS_V2: Question[] = [
   {
     id: 'V_OUTCOME', module: 'V', format: 'text', required: false,
     prompt: {
-      ru: 'Один результат от ИИ, который в ближайшие 60 дней принёс бы деньги или сэкономил время?',
-      en: 'One AI outcome that would make you money or save time in the next 60 days?',
+      ru: 'Один результат от ИИ, который в ближайшие 60 дней принёс бы деньги или сэкономил время? Если пока не знаешь — пропусти, вернёмся к этому позже.',
+      en: "One AI outcome that would make you money or save time in the next 60 days? If you don't know yet, skip it — we'll come back to it.",
+    },
+    placeholder: {
+      ru: 'напр.: собрать лендинг · автоматизировать отчёты · писать посты быстрее',
+      en: 'e.g.: build a landing page · automate reports · write posts faster',
     },
   },
   {
@@ -98,7 +102,7 @@ export const QUESTIONS_V2: Question[] = [
     ],
   },
   {
-    id: 'V_MODE', module: 'V', format: 'single', required: false,
+    id: 'V_MODE', module: 'V', format: 'multi', required: false,
     prompt: { ru: 'Через что заходит легче всего?', en: 'What channel lands easiest?' },
     options: [
       { value: 'video', label: { ru: 'Видео', en: 'Video' } },
