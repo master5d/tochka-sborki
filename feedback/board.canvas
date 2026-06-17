@@ -257,7 +257,7 @@
       "text": "✨ Модуль для restricted-geo: два варианта agent stack (open-source + proxy)",
       "metadata": {
         "sovern:layer": "course",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 7,
         "sovern:urgency": 5,
         "sovern:created": "2026-06-10T01:12:16.172Z",
@@ -283,7 +283,7 @@
       "text": "✨ Добавить модуль Vibe Hacking в курс",
       "metadata": {
         "sovern:layer": "course",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 5,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T01:16:57.610Z",
@@ -465,7 +465,7 @@
       "text": "💡 Расширение курса: модули coaching / astrology / psyops / remote viewing / Sacred Geometry → отдельные курсы",
       "metadata": {
         "sovern:layer": "course",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 5,
         "sovern:urgency": 2,
         "sovern:created": "2026-06-10T01:27:58.793Z",
@@ -543,7 +543,7 @@
       "text": "✨ Добавить модуль NotebookLM — работа с источниками из заметок",
       "metadata": {
         "sovern:layer": "course",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 5,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T01:34:46.772Z",
@@ -647,7 +647,7 @@
       "text": "✨ Добавить модуль Meta Notetaking — playbook по заметкам и note-making",
       "metadata": {
         "sovern:layer": "course",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 6,
         "sovern:urgency": 4,
         "sovern:created": "2026-06-10T01:34:47.080Z",
@@ -673,7 +673,7 @@
       "text": "✨ Добавить модуль Telegram management — agentic управление каналом/ботом",
       "metadata": {
         "sovern:layer": "course",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 6,
         "sovern:urgency": 4,
         "sovern:created": "2026-06-10T01:34:47.165Z",
@@ -725,7 +725,7 @@
       "text": "✨ Добавить модуль: тренинг по скорочтению",
       "metadata": {
         "sovern:layer": "course",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 5,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T01:39:08.148Z",
@@ -1011,7 +1011,7 @@
       "text": "✨ Добавить модуль Media Production — создание контента с AI",
       "metadata": {
         "sovern:layer": "course",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 5,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T01:54:42.200Z",
@@ -1037,7 +1037,7 @@
       "text": "✨ Добавить модуль: настройка uncensored-моделей",
       "metadata": {
         "sovern:layer": "course",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 5,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T01:54:42.265Z",
@@ -1063,7 +1063,7 @@
       "text": "💡 Создать отдельный курс по сну",
       "metadata": {
         "sovern:layer": "course",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 4,
         "sovern:urgency": 1,
         "sovern:created": "2026-06-10T01:54:42.330Z",
