@@ -1,4 +1,33 @@
-# mc_hub
+```
+████████╗ ██████╗  ██████╗██╗  ██╗██╗  ██╗ █████╗
+   ██╔══╝██╔═══██╗██╔════╝██║  ██║██║ ██╔╝██╔══██╗
+   ██║   ██║   ██║██║     ███████║█████╔╝ ███████║
+   ██║   ██║   ██║██║     ██╔══██║██╔═██╗ ██╔══██║
+   ██║   ╚██████╔╝╚██████╗██║  ██║██║  ██╗██║  ██║
+   ╚═╝    ╚═════╝  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+
+ ███████╗██████╗  ██████╗ ██████╗ ██╗  ██╗██╗
+ ██╔════╝██╔══██╗██╔═══██╗██╔══██╗██║ ██╔╝██║
+ ███████╗██████╔╝██║   ██║██████╔╝█████╔╝ ██║
+ ╚════██║██╔══██╗██║   ██║██╔══██╗██╔═██╗ ██║
+ ███████║██████╔╝╚██████╔╝██║  ██║██║  ██╗██║
+ ╚══════╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝
+```
+
+<div align="center">
+
+**mc_hub — монорепо экосистемы Точки Сборки** · курс + лендинг + блог + B2B + API · один git-репо, независимые деплои на Cloudflare · RU + EN
+
+[![Deploy](https://img.shields.io/badge/deploy-Cloudflare-orange?style=flat-square&logo=cloudflare)](https://mamaev.coach)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org)
+[![Workers](https://img.shields.io/badge/edge-CF_Workers-f38020?style=flat-square&logo=cloudflareworkers)](https://workers.cloudflare.com)
+[![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
+
+[Курс →](https://ai.mamaev.coach) · [Лендинг →](https://mamaev.coach) · [Блог →](https://mamaev.coach/blog/)
+
+</div>
+
+---
 
 Монорепо проектов Александра Мамаева (`mamaev.coach`). Один git-репозиторий, несколько независимых деплоев на Cloudflare.
 
