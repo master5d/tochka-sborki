@@ -1713,7 +1713,7 @@
       "text": "💡 Что работает: кулинарная метафора в Unit 1 снижает порог — защитить от регрессий",
       "metadata": {
         "sovern:layer": "course",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 4,
         "sovern:urgency": 2,
         "sovern:created": "2026-06-10T05:07:02.886Z",
