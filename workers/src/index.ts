@@ -4,7 +4,7 @@ import { handleSendLink, handleVerify, handleMe, handleLogout } from './handlers
 import { handleView, handleComplete, handleList } from './handlers/progress'
 import { handleMe as handleIntakeMe, handleProgress as handleIntakeProgress, handleSubmit as handleIntakeSubmit } from './handlers/intake'
 import { runDemandRadar, listBriefs, listSignals, decideBrief } from './handlers/demand'
-import { listLeads, syncAudience } from './handlers/leads'
+import { listLeads, syncContacts } from './handlers/leads'
 import { requireAuth, requireOwner } from './middleware'
 
 const ALLOWED_ORIGINS = [
@@ -84,9 +84,9 @@ export default {
               q: url.searchParams.get('q') ?? undefined,
               limit: Number(url.searchParams.get('limit')) || undefined,
             })
-      } else if (path === '/api/admin/leads/sync-audience' && method === 'POST') {
+      } else if (path === '/api/admin/leads/sync-resend' && method === 'POST') {
         const auth = await requireOwner(request, env)
-        response = auth instanceof Response ? auth : await syncAudience(env)
+        response = auth instanceof Response ? auth : await syncContacts(env)
       } else if (path === '/api/admin/content-demand/briefs' && method === 'GET') {
         const auth = await requireOwner(request, env)
         response = auth instanceof Response ? auth : await listBriefs(env.DB, url.searchParams.get('status') ?? undefined)

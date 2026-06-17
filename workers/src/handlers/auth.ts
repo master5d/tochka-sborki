@@ -1,7 +1,7 @@
 import type { Env } from '../lib/types'
 import { signJWT, generateToken } from '../lib/jwt'
 import { requireAuth } from '../middleware'
-import { addContactToAudience } from '../lib/crm'
+import { addResendContact } from '../lib/crm'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -45,10 +45,10 @@ export async function handleSendLink(request: Request, env: Env, ctx: ExecutionC
     ).bind(id, email, Math.floor(Date.now() / 1000), language, source, telegramHandle).run()
     user = { id }
 
-    // добавить лид в Resend Audience; waitUntil — чтобы рантайм не оборвал запрос после ответа
+    // добавить лид в Resend (глобальный контакт); waitUntil — чтобы рантайм не оборвал запрос после ответа
     ctx.waitUntil(
-      addContactToAudience(env, { email, language, source })
-        .catch(e => console.error('Resend audience add failed', e))
+      addResendContact(env, { email, language, source })
+        .catch(e => console.error('Resend contact add failed', e))
     )
   }
 

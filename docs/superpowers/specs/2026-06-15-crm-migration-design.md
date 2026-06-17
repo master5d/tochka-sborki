@@ -120,3 +120,13 @@ ctx.waitUntil(
 ## Критерий готовности
 
 Новый юзер → строка в D1 `users` + контакт в Resend Audience (без n8n/Notion). Автор видит/ищет/экспортит лидов на `/admin/leads`, может прогнать backfill кнопкой. `Env` очищен от `N8N_CRM_*`. Все тесты `workers/` зелёные, typecheck чист. Ручной чеклист cutover задокументирован.
+
+---
+
+## Update 2026-06-16 — Resend Audiences deprecated → глобальные Contacts
+
+Резенд задепрекейтил **Audiences** (→ Segments); контакты теперь **глобальные**: `POST https://api.resend.com/contacts` (без `audience_id`). Поэтому:
+- `addContactToAudience` → **`addResendContact`** (`POST /contacts`, body `{email, unsubscribed:false}`), гейт на `RESEND_API_KEY`.
+- `RESEND_AUDIENCE_ID` **удалён** из `Env` — больше не нужен (zero-config, активно при наличии `RESEND_API_KEY`).
+- `syncAudience` → **`syncContacts`**; роут `/api/admin/leads/sync-audience` → **`/sync-resend`**.
+- Cutover упрощён: создавать Audience НЕ нужно. Группировка лидов под кампании — через Resend Segments/Properties в дашборде позже.

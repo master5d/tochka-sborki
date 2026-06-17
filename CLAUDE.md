@@ -77,11 +77,11 @@ mc_hub/                   — корень монорепо
   progress (D1 SQLite), feedback, leads CRM.
 - **CRM pipeline** (с 2026-06-15, заменил Notion+n8n): источник правды лидов — D1 `users`
   (email, created_at, language, source, telegram_handle), пишется на signup в `auth.ts`.
-  Новый юзер → `ctx.waitUntil(addContactToAudience())` (`lib/crm.ts`) пушит контакт в
-  **Resend Audience** (`POST /audiences/{RESEND_AUDIENCE_ID}/contacts`). Витрина —
-  owner-gated `/admin/leads` (таблица + CSV + кнопка backfill `POST /api/admin/leads/sync-audience`).
-  n8n `mds-crm` и Notion CRM выведены. Push дремлет (graceful no-op) пока не задан
-  секрет `RESEND_AUDIENCE_ID`.
+  Новый юзер → `ctx.waitUntil(addResendContact())` (`lib/crm.ts`) пушит **глобальный
+  Resend-контакт** (`POST /contacts`; Audiences у Resend deprecated → Segments, контакты
+  глобальные — `RESEND_AUDIENCE_ID` НЕ нужен, активно при наличии `RESEND_API_KEY`). Витрина —
+  owner-gated `/admin/leads` (таблица + CSV + кнопка backfill `POST /api/admin/leads/sync-resend`).
+  n8n `mds-crm` и Notion CRM выведены (секреты `N8N_CRM_*` удалены 2026-06-16).
 - D1 база `tochka-sborki-db`; секреты через `wrangler secret put` (не в коде).
 
 ## RPG / геймификация (LMS/tochka-sborki/web/)
