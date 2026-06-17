@@ -777,7 +777,7 @@
       "text": "✨ Spec системного промпта для sidechat-панели: learner profile + Kolb + Кёстлер + Learning Loop",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 8,
         "sovern:urgency": 6,
         "sovern:created": "2026-06-10T01:54:41.489Z",
