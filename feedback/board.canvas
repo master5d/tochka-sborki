@@ -439,7 +439,7 @@
       "text": "✨ Ввести концепт Machine Elves — AI-компаньоны в RPG-слое LMS",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 6,
         "sovern:urgency": 2,
         "sovern:created": "2026-06-10T01:25:53.103Z",
@@ -959,7 +959,7 @@
       "text": "✨ Tachikoma — AI pet-ассистент в RPG-слое LMS (Ghost in the Shell)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 6,
         "sovern:urgency": 2,
         "sovern:created": "2026-06-10T01:54:42.039Z",
@@ -1089,7 +1089,7 @@
       "text": "✨ World Map: геометрическая карта фестиваля (Burning Man) — модули как лагеря, навигация через фигуры/петов",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 7,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T01:54:42.406Z",
@@ -1779,6 +1779,24 @@
           "reason": "платформенный шаг: шаблон нового курса; зависит от course.ts + materials scaffold"
         }
       }
+    },
+    {
+      "id": "fb_54dd5739f9ce",
+      "type": "text",
+      "x": 580,
+      "y": 3080,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "📌 undefined",
+      "metadata": {
+        "sovern:layer": "infra",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-06-17T19:08:29.349Z",
+        "feedback": {}
+      }
     }
   ],
   "edges": [
@@ -2106,6 +2124,11 @@
       "id": "e_fb_31371f4dfd19",
       "fromNode": "area_lms",
       "toNode": "fb_31371f4dfd19"
+    },
+    {
+      "id": "e_fb_54dd5739f9ce",
+      "fromNode": "area_infra",
+      "toNode": "fb_54dd5739f9ce"
     }
   ]
 }

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { SKINS_META, skinDecoder } from './skins-meta'
+import { SKINS_META, skinDecoder, skinCompanion } from './skins-meta'
 
 describe('SKINS_META mentor personas', () => {
   it('every non-wanderer skin has a named mentor with a glyph', () => {
@@ -8,6 +8,27 @@ describe('SKINS_META mentor personas', () => {
       expect(meta.mentor?.name.ru.length ?? 0).toBeGreaterThan(0)
       expect(meta.mentor?.name.en.length ?? 0).toBeGreaterThan(0)
       expect(meta.mentor?.glyph.length ?? 0).toBeGreaterThan(0)
+    }
+  })
+})
+
+describe('SKINS_META companions (familiars / «Machine Elves»)', () => {
+  it('every skin has a companion with name, glyph, and vibe in both locales', () => {
+    for (const [skin, meta] of Object.entries(SKINS_META)) {
+      const c = meta.companion
+      expect(c, `companion ${skin}`).toBeTruthy()
+      expect(c!.name.ru.length, `name.ru ${skin}`).toBeGreaterThan(0)
+      expect(c!.name.en.length, `name.en ${skin}`).toBeGreaterThan(0)
+      expect(c!.glyph.length, `glyph ${skin}`).toBeGreaterThan(0)
+      expect(c!.vibe.ru.length, `vibe.ru ${skin}`).toBeGreaterThan(0)
+      expect(c!.vibe.en.length, `vibe.en ${skin}`).toBeGreaterThan(0)
+    }
+  })
+
+  it('skinCompanion renders a non-empty line per skin and locale', () => {
+    for (const skin of Object.keys(SKINS_META) as (keyof typeof SKINS_META)[]) {
+      expect(skinCompanion(skin, 'ru')?.length ?? 0, `ru ${skin}`).toBeGreaterThan(10)
+      expect(skinCompanion(skin, 'en')?.length ?? 0, `en ${skin}`).toBeGreaterThan(10)
     }
   })
 })

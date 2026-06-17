@@ -39,6 +39,10 @@ scaffold (`fb_31371f4dfd19`, done). Each becomes its own `LMS/<course>/`.
 
 - **Restricted-geo agent stack** (`fb_7c1b0cfd1bf9`) — asked for two install variants (open-source vs proxy) for users behind the GFW. **Already shipped** in `03-stack-selection`: `u3-behind-gfw` (LiteLLM proxy + `install-gfw` scripts) + `u4-hermes-sovereign` (open-source/local Sovereign stack). Closed as covered.
 
+## Deferred — RPG-layer / visual (need product+visual direction)
+
+- **Burning Man World Map** (`fb_d4e6d92333f0`) — visual redesign of the existing `WorldMap`: geometric festival grounds, modules as camps, navigation via figures/pets. A larger visual effort needing the owner's art direction (palette, layout, asset style). Companion familiars (`skinCompanion`) shipped as the navigable "pets"; the festival-map visual is deferred until a visual direction is set. Promote via a design spec + the visual companion in brainstorming.
+
 ## How to promote a backlog item to "build"
 
 1. Pick an entry; open a spec in `docs/superpowers/specs/` (brainstorming skill).

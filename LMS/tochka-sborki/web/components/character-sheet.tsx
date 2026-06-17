@@ -2,7 +2,9 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { ATTRIBUTES } from '@/lib/intake/attributes'
+import { skinCompanion } from '@/lib/rpg/skins-meta'
 import type { Locale } from '@/lib/intake/types'
+import type { WorldSkin } from '@/lib/intake/types'
 
 export function CharacterSheet({ locale, profile }: { locale: Locale; profile?: any }) {
   const [fetched, setFetched] = useState<any>(null)
@@ -19,7 +21,11 @@ export function CharacterSheet({ locale, profile }: { locale: Locale; profile?: 
       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.66rem', color: 'var(--text-accent)', textTransform: 'uppercase' }}>
         {p.world_skin} · {p.char_class} · {locale === 'en' ? 'Level' : 'Уровень'} {p.char_level}
       </div>
-      <h1 style={{ fontSize: '1.7rem', fontWeight: 900, margin: '.4rem 0 1.4rem' }}>{p.legendary_title}</h1>
+      <h1 style={{ fontSize: '1.7rem', fontWeight: 900, margin: '.4rem 0 1rem' }}>{p.legendary_title}</h1>
+      {(() => {
+        const line = skinCompanion(p.world_skin as WorldSkin, locale)
+        return line ? <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.74rem', color: 'var(--text-secondary)', margin: '0 0 1.4rem' }}>{line}</div> : null
+      })()}
       {ATTRIBUTES.map(a => (
         <div key={a.code} style={{ marginBottom: '1rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: '.74rem' }}>

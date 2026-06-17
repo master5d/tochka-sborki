@@ -21,6 +21,7 @@ export interface SkinMeta {
   glyph: string                   // emoji
   displayName: Bi
   mentor?: { name: Bi; glyph: string } // named persona for hint box
+  companion?: { name: Bi; glyph: string; vibe: Bi } // playful familiar/sidekick, distinct from the mentor («Machine Elves»)
   decoder?: Bi   // plain-language «что одевает твой мир» — для онбординг-моста
 }
 
