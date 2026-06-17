@@ -39,12 +39,14 @@ mc_hub/                   — корень монорепо
 │       web/              — Next.js 16 LMS сайт (ai.mamaev.coach), см. web/README.md
 │         app/            — App Router; RU `/` + EN `/en/`. Маршруты: lessons,
 │                           quest-intake, dashboard, character, dungeon, roadmap,
-│                           cheatsheet, exercises, feedback, certificate, login, admin
+│                           syllabus, cheatsheet, exercises, feedback, certificate,
+│                           login, admin, offline; metadata-routes manifest/sitemap/robots
 │         content/{ru,en}/ — MDX-версии уроков (9 модулей) с frontmatter
 │         components/     — Nav, Sidebar, UnitWizard, MDX-компоненты, OsToggle/OsBlock,
 │                           AgentToggle/AgentBlock/StackMatrix, MobileGate, LangSuggestBanner;
 │                           rpg/ cs/ quests/ dungeon/ intake/ help/ wellbeing/ — RPG-слой
-│         lib/            — content.ts, dictionaries.ts (RU+EN), os-pref.ts, тесты;
+│         lib/            — content.ts, dictionaries.ts (RU+EN), os-pref.ts, course.ts
+│                           (central config), materials.ts, sitemap.ts, pwa.ts, тесты;
 │                           rpg/ cs/ quests/ dungeon/ intake/ help/ pacing/ wellbeing/ — RPG-логика
 ├── hub/                  — лендинг mamaev.coach + whole-site SEO (Next.js, bilingual)
 ├── blog/                 — блог mamaev.coach/blog/* — отдельный апп, мёрж в hub/out (model B)
@@ -94,7 +96,13 @@ mc_hub/                   — корень монорепо
 - **Help-система** (`lib/help/`, `components/help/`): `<HelpTip>` (tap-popover) + `<IntroCard>` (авто-онбординг). Маркер «💭 в уме» на reflection-фазах.
 - **Bisociation**: фазы `activation`/`reflection` урока — бисоциативные провокации (мысленные, без полей ввода). Drift-guard тест `lib/content/reflection-prompts.test.ts` запрещает «вводные» глаголы в этих блоках.
 - **Pacing & Wellbeing (SP4)** (`lib/pacing/`, `lib/wellbeing/`, `components/wellbeing/`): `pacing`-store логирует таймстемпы завершений + режимы + калибровки. `<WellbeingPanel>` на dashboard показывает ОДИН мягкий dismissible-nudge по приоритету (re-engage на якоре G11 > anxiety check-in > rest-day > post-Boss калибровка). Калибровка → suggest-only бейдж режима в `ModeSelector`. Всё клиентское.
-- **localStorage-ключи** (изолированы): `cs_wallet`, `unit_progress`, `daily_quests`, `niche_dungeon`, `help_seen`, `pacing`, `os`, `theme-pref`, `stack`, `lang-preference`.
+- **localStorage-ключи** (изолированы): `cs_wallet`, `unit_progress`, `daily_quests`, `niche_dungeon`, `help_seen`, `pacing`, `os`, `theme-pref`, `stack`, `lang-preference`, `pwa_install_dismissed`, `lwai_dock_dismissed`.
+
+## Платформа / scaffold + learn-with-AI (LMS/tochka-sborki/web/)
+- **LMS-scaffold** (задел на будущие курсы): `lib/course.ts` (`COURSE = {name, fullName, domain, locales, publisher}` — единый источник бренда/домена для sitemap/robots/manifest, не хардкод). `lib/materials.ts` — декларативный манифест `MaterialGroup[]` (templates/links/tools). `/syllabus` (RU+EN, nav «Программа») = generic `syllabus-tree.tsx` (дерево модуль→юнит из `getAllModules`) + `materials-section.tsx`. Шаблоны для скачивания — `public/materials/`. Принцип: движок читает данные курса. Future: course-data слой для RPG/intake, `LMS/_template/` boilerplate.
+- **learn-with-AI** (handoff во внешний ИИ ученика, без ключей/OAuth): session-слой = `LearnWithAI` секция + `LearnWithAIDock` (per-unit, `buildLearnPrompt`/`buildBootstrapDeepLink`); memory-слой = `CompanionSetup` на `/character` (`buildCompanionRolePrompt` + `AGENT_MEMORY` — стоячая роль в память агента). ChatGPT/Claude несут `?q=` deep-link, Gemini/Copilot — copy.
+- **PWA**: installable (`app/manifest.ts` + `public/icon-*.png` ← `scripts/gen-pwa-icons.mjs` sharp + `public/sw.js` network-first). `InstallPrompt` (iOS-хинт vs beforeinstallprompt-pill), `PwaRegister` в layout. `lib/pwa.ts` SSR-safe.
+- **SEO bilingual**: hreflang ru/en/x-default через `app/sitemap.ts` (+pure `lib/sitemap.ts`), `app/robots.ts`, pre-paint lang-скрипт (`<html lang>` по локали), `metadataBase`. ⚠ Metadata-routes требуют `export const dynamic = 'force-static'` под `output: export`. ⚠ НЕ ставить `alternates.canonical` в root-layout metadata — протечёт на все страницы.
 
 ## Инструкции для Claude Code
 - Контент пишется на **русском** (основной), затем зеркалится в **EN** (`content/en/`, `/en/` маршруты)
