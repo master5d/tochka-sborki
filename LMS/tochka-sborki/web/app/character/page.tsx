@@ -1,3 +1,9 @@
-import { Nav } from '@/components/nav'
-import { CharacterSheet } from '@/components/character-sheet'
-export default function Page() { return (<><Nav locale="ru" /><CharacterSheet locale="ru" /></>) }
+import { getAllModules } from '@/lib/content'
+import { ProfileClient } from './profile-client'
+
+export default function Page() {
+  const mods = getAllModules('ru')
+  const modules = Object.fromEntries(mods.map(m => [m.slug, { title: m.title, duration: m.duration }]))
+  const unitsByModule = Object.fromEntries(mods.map(m => [m.slug, m.units]))
+  return <ProfileClient modules={modules} unitsByModule={unitsByModule} locale="ru" />
+}

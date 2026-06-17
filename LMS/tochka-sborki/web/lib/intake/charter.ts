@@ -1,4 +1,7 @@
 import type { Locale, RelationalStyle } from './types'
+import { SKINS_META } from '@/lib/rpg/skins-meta'
+import { parseOutcome } from './parse-outcome'
+import { deriveMbti, relationalStyle } from './mbti'
 
 export interface CharterInput {
   locale: Locale
@@ -46,4 +49,20 @@ export function buildCompanionCharter(i: CharterInput): string {
     `## Goal`,
     ru ? `Помочь мне: ${goal}.` : `Help me: ${goal}.`,
   ].join('\n')
+}
+
+/** Пересобирает companion-charter из сохранённого профиля (для карточки на «Профиле»). */
+export function profileToCharter(profile: any, locale: Locale): string {
+  let answers: Record<string, unknown> = {}
+  try { answers = JSON.parse(profile?.answers ?? '{}') } catch { answers = {} }
+  const meta = SKINS_META[profile?.world_skin as keyof typeof SKINS_META]
+  return buildCompanionCharter({
+    locale,
+    skinName: meta?.displayName[locale] ?? null,
+    mentorName: meta?.mentor?.name[locale] ?? null,
+    niche: profile?.niche ?? null,
+    outcome: parseOutcome(profile),
+    mbti: deriveMbti(answers as any),
+    relational: relationalStyle(answers as any),
+  })
 }
