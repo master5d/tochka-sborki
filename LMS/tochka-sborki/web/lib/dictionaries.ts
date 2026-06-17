@@ -192,7 +192,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       tagline: '⬡ Открытый курс · Бесплатно',
       titleLine1: 'Точка',
       titleLine2: 'Сборки',
-      slogan: 'Зайди в гости — выйди с будущим.',
+      slogan: 'Начни с клика — выйди с будущим.',
       subtitle: 'Сейчас AI тебе советует — а делаешь ты всё равно руками. Курс научит превращать замыслы в задачи, которые AI доводит до конца. Без кода. На твоём языке.',
       stats: [
         ['9', 'тем'],
@@ -428,7 +428,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       tagline: '⬡ Open course · Free',
       titleLine1: 'Tochka',
       titleLine2: 'Sborki',
-      slogan: 'Start with a visit. Exit with the future.',
+      slogan: 'Start with a click. Exit with the future.',
       subtitle: 'Right now AI gives you advice — and you still do everything by hand. This course teaches you to turn your ideas into tasks AI carries to the finish. No code. In your own words.',
       stats: [
         ['9', 'topics'],
