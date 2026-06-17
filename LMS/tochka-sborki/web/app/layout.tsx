@@ -25,13 +25,24 @@ const themeScript = `(function(){try{` +
   `document.documentElement.setAttribute('data-theme',(p==='light'||p==='dark')?p:sys);` +
   `}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`
 
+// Static export uses a single root layout, so <html lang> can't be set per route at build.
+// Correct it pre-paint from the path: /en/* → 'en', everything else → 'ru'. This removes the
+// language conflict on English pages (which would otherwise declare lang="ru").
+const langScript =
+  `(function(){try{document.documentElement.lang=/^\\/en(\\/|$)/.test(location.pathname)?'en':'ru';}catch(e){}})();`
+
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ai.mamaev.coach'),
   title: 'Точка Сборки — курс по vibe-кодингу',
   description: 'Открытый курс по AI-разработке и агентному программированию. Presented by Mamaev Institute for AI.',
   publisher: 'Mamaev Institute for AI',
   authors: [{ name: 'Alexander Mamaev' }],
   manifest: '/manifest.webmanifest',
   appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: 'Точка Сборки' },
+  // No global canonical/alternates here: a root-level canonical would leak to every page
+  // (canonicalizing all routes to '/'). hreflang pairing is declared in the sitemap instead;
+  // Google self-canonicalizes each URL by default.
+  openGraph: { locale: 'ru_RU', alternateLocale: ['en_US'], siteName: 'Точка Сборки' },
 }
 
 export const viewport: Viewport = {
@@ -48,6 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: langScript }} />
       </head>
       <body>
         <ThemeProvider>
