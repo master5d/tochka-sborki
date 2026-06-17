@@ -9,6 +9,7 @@ import { HeroSecondaryCta } from '@/components/hero-secondary-cta'
 import { ChatVsSystem } from '@/components/chat-vs-system'
 import { BeforeAfter } from '@/components/before-after'
 import { DreamScenarios } from '@/components/dream-scenarios'
+import { ShowcaseGallery } from '@/components/showcase-gallery'
 
 const lessonsHref = (locale: Locale, slug: string) =>
   locale === 'en' ? `/en/lessons/${slug}/` : `/lessons/${slug}/`
@@ -257,6 +258,7 @@ export function HomePage({ locale }: Props) {
       </section>
 
       <DreamScenarios locale={locale} />
+      <ShowcaseGallery locale={locale} />
 
       {/* ── ОБ АВТОРЕ ────────────────────────────────────────── */}
       <section className="home-section" style={{
@@ -316,7 +318,7 @@ export function HomePage({ locale }: Props) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/author.jpg"
-              alt={t.author.name.replace('\n', ' ')}
+              alt={t.author.name.replace(/\n/g, ' ')}
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
             />
           </div>
