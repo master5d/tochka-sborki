@@ -1,10 +1,11 @@
 import type { MetadataRoute } from 'next'
 import { getAllModules } from '@/lib/content'
 import { buildSitemap } from '@/lib/sitemap'
+import { COURSE } from '@/lib/course'
 
 export const dynamic = 'force-static'
 
-const BASE = 'https://ai.mamaev.coach'
+const BASE = COURSE.domain
 
 // Public, indexable pages. Auth-gated / noindex routes (dashboard, character, login,
 // quest-intake, admin, dungeon, exercises, offline) are intentionally excluded.

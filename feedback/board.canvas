@@ -179,7 +179,7 @@
       "text": "✨ Добавить страницу Syllabus и раздел Course Materials в LMS",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 7,
         "sovern:urgency": 5,
         "sovern:created": "2026-06-10T01:01:04.467Z",
@@ -1727,6 +1727,58 @@
           "reason": "позитивный сигнал из интервью: бытовая метафора в начале юнита дала первый момент ясности за весь онбординг — сохранить паттерн"
         }
       }
+    },
+    {
+      "id": "fb_8f1a05ce1150",
+      "type": "text",
+      "x": 1140,
+      "y": 2900,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "💡 Извлечь RPG/intake/showcase данные курса в course-data слой (LMS multi-course)",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-17T15:02:54.585Z",
+        "feedback": {
+          "category": "idea",
+          "severity": "low",
+          "area": "lms",
+          "impact": 6,
+          "urgency": 2,
+          "confidence": 0.7,
+          "reason": "крупный рефактор разъединения движка и данных курса; следствие scaffold-направления Syllabus/Materials/course.ts"
+        }
+      }
+    },
+    {
+      "id": "fb_31371f4dfd19",
+      "type": "text",
+      "x": 300,
+      "y": 3080,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "💡 LMS/_template/ boilerplate для нового курса (scaffold второго курса)",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:impact": 6,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-17T15:02:54.679Z",
+        "feedback": {
+          "category": "idea",
+          "severity": "low",
+          "area": "lms",
+          "impact": 6,
+          "urgency": 2,
+          "confidence": 0.7,
+          "reason": "платформенный шаг: шаблон нового курса; зависит от course.ts + materials scaffold"
+        }
+      }
     }
   ],
   "edges": [
@@ -2044,6 +2096,16 @@
       "id": "e_fb_e557d202d89b",
       "fromNode": "area_course",
       "toNode": "fb_e557d202d89b"
+    },
+    {
+      "id": "e_fb_8f1a05ce1150",
+      "fromNode": "area_lms",
+      "toNode": "fb_8f1a05ce1150"
+    },
+    {
+      "id": "e_fb_31371f4dfd19",
+      "fromNode": "area_lms",
+      "toNode": "fb_31371f4dfd19"
     }
   ]
 }

@@ -7,6 +7,7 @@ import { LangSuggestBanner } from '@/components/lang-suggest-banner'
 import { PwaRegister } from '@/components/pwa/pwa-register'
 import { InstallPrompt } from '@/components/pwa/install-prompt'
 import { ThemeProvider } from '@/components/theme-provider'
+import { COURSE } from '@/lib/course'
 import './globals.css'
 
 const unbounded = Unbounded({
@@ -32,7 +33,7 @@ const langScript =
   `(function(){try{document.documentElement.lang=/^\\/en(\\/|$)/.test(location.pathname)?'en':'ru';}catch(e){}})();`
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ai.mamaev.coach'),
+  metadataBase: new URL(COURSE.domain),
   title: 'Точка Сборки — курс по vibe-кодингу',
   description: 'Открытый курс по AI-разработке и агентному программированию. Presented by Mamaev Institute for AI.',
   publisher: 'Mamaev Institute for AI',

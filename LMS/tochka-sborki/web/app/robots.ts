@@ -1,8 +1,9 @@
 import type { MetadataRoute } from 'next'
+import { COURSE } from '@/lib/course'
 
 export const dynamic = 'force-static'
 
-const BASE = 'https://ai.mamaev.coach'
+const BASE = COURSE.domain
 
 export default function robots(): MetadataRoute.Robots {
   return {

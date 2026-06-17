@@ -3,6 +3,7 @@ export type Locale = 'ru' | 'en'
 export type Dictionary = {
   nav: {
     brand: string
+    syllabus: string
     roadmap: string
     cheatsheet: string
     feedback: string
@@ -173,6 +174,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
   ru: {
     nav: {
       brand: 'Точка Сборки',
+      syllabus: 'Программа',
       roadmap: 'Roadmap',
       cheatsheet: 'Шпаргалка',
       questLog: '⬡ Квест-лог',
@@ -407,6 +409,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
   en: {
     nav: {
       brand: 'Tochka Sborki',
+      syllabus: 'Syllabus',
       roadmap: 'Roadmap',
       cheatsheet: 'Cheatsheet',
       questLog: '⬡ Quest Log',
