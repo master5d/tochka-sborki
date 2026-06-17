@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { getDictionary, type Locale } from '@/lib/dictionaries'
 import { detectOs, readStoredOs, storeOs } from '@/lib/os-pref'
+import { activeEasterEgg, type EasterEgg } from '@/lib/easter-eggs'
 import { ThemeToggle } from '@/components/theme-toggle'
 
 interface Props { locale?: Locale }
@@ -17,8 +18,11 @@ export function Nav({ locale: localeProp }: Props = {}) {
 
   const [email, setEmail] = useState<string | null>(null)
   const [os, setOs] = useState<string | null>(null)
+  // Date-driven easter egg — computed client-side to avoid SSR/hydration date drift.
+  const [egg, setEgg] = useState<EasterEgg | null>(null)
 
   useEffect(() => {
+    setEgg(activeEasterEgg())
     fetch('/api/auth/me', { credentials: 'include' })
       .then(r => r.ok ? r.json() : null)
       .then(d => { if (d?.email) setEmail(d.email) })
@@ -82,7 +86,7 @@ export function Nav({ locale: localeProp }: Props = {}) {
         }
       `}</style>
       <Link href={homeHref} style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-accent)', fontWeight: 700, whiteSpace: 'nowrap' }}>
-        <span className="nav-brand-glyph" aria-hidden="true">⬡ </span>{t.nav.brand}
+        <span className="nav-brand-glyph" aria-hidden="true" title={egg?.label[locale] ?? undefined}>{egg ? egg.glyph : '⬡'} </span>{t.nav.brand}
       </Link>
       <div style={{ display: 'flex', gap: '1rem', fontSize: '0.875rem', alignItems: 'center' }}>
         <div className="nav-secondary-links" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>

@@ -43,6 +43,16 @@ scaffold (`fb_31371f4dfd19`, done). Each becomes its own `LMS/<course>/`.
 
 - **Burning Man World Map** (`fb_d4e6d92333f0`) — visual redesign of the existing `WorldMap`: geometric festival grounds, modules as camps, navigation via figures/pets. A larger visual effort needing the owner's art direction (palette, layout, asset style). Companion familiars (`skinCompanion`) shipped as the navigable "pets"; the festival-map visual is deferred until a visual direction is set. Promote via a design spec + the visual companion in brainstorming.
 
+## Deferred — engagement flavor (need owner assets / direction)
+
+These are low-priority engagement features blocked on the owner's assets or aesthetic direction,
+not on engineering. Captured so they aren't lost; promote when assets/direction exist.
+
+- **Memes** (`fb_864d2df1dd9e`) — populate units with memes from the author's collection. Blocked on the actual meme assets + rights; needs an MDX embed pattern (a `<Meme>` component) once images exist.
+- **Background soundtrack** (`fb_bf076065b190`) — opt-in ambient audio. Blocked on the owner's track choice + licensing; UX must be opt-in (no autoplay), with a persisted toggle. Build is small once a track is chosen.
+- **Micro-puzzle breaks** (`fb_282cf1c678f7`) — small puzzle games as breaks between units. Needs game design (which puzzles, win/lose, reward into Cognitive Shards?) + product direction before build.
+- **Shipped infra** (`fb_d858ea413075`): seasonal/event easter eggs — `lib/easter-eggs.ts` (date-driven `activeEasterEgg`, surfaced via the nav brand glyph). Memes/soundtrack/puzzles can hang off the same date-driven pattern when assets land.
+
 ## How to promote a backlog item to "build"
 
 1. Pick an entry; open a spec in `docs/superpowers/specs/` (brainstorming skill).

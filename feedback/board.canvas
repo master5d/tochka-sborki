@@ -491,7 +491,7 @@
       "text": "✨ Добавить микро-паззл игры как перерывы внутри курса",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 5,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T01:27:58.855Z",
@@ -595,7 +595,7 @@
       "text": "✨ Инфраструктура для сезонных / event-driven пасхалок в LMS",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 4,
         "sovern:urgency": 2,
         "sovern:created": "2026-06-10T01:34:46.929Z",
@@ -621,7 +621,7 @@
       "text": "✨ Фоновый саундтрек для LMS",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 4,
         "sovern:urgency": 2,
         "sovern:created": "2026-06-10T01:34:47.011Z",
@@ -699,7 +699,7 @@
       "text": "✨ Наполнить курс мемами из коллекции автора",
       "metadata": {
         "sovern:layer": "course",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 5,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T01:34:47.250Z",
