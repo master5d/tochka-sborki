@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { buildLearnPrompt } from './learn-prompt'
+import { buildLearnPrompt, buildBootstrapDeepLink, agentUrl } from './learn-prompt'
 
 const base = {
   locale: 'ru' as const,
@@ -59,5 +59,36 @@ describe('buildLearnPrompt', () => {
   it('omits the bonding block entirely when absent', () => {
     const p = buildLearnPrompt(base)
     expect(p).not.toContain('MBTI')
+  })
+})
+
+describe('buildBootstrapDeepLink', () => {
+  it('is compact (≤1500 chars) and carries co-thinking + module + the loop', () => {
+    const p = buildBootstrapDeepLink({ ...base, skinName: 'Кибер-Нуар', mentorName: 'Фиксер' })
+    expect(p.length).toBeLessThanOrEqual(1500)
+    expect(p).toMatch(/со-мышл|co-think/i)
+    expect(p).toContain('Промпт-инжиниринг')
+    expect(p).toContain('Фиксер')
+    expect(p).toMatch(/намерени|intent/i)
+  })
+
+  it('caps a long outcome so the URL stays bounded', () => {
+    const long = 'цель '.repeat(400) // ~2000 chars
+    const p = buildBootstrapDeepLink({ ...base, outcome: long })
+    expect(p.length).toBeLessThanOrEqual(1500)
+    expect(p).toContain('…')
+  })
+
+  it('produces an English variant', () => {
+    const p = buildBootstrapDeepLink({ ...base, locale: 'en' })
+    expect(p).toMatch(/co-think/i)
+    expect(p).toMatch(/intent/i)
+  })
+})
+
+describe('agentUrl', () => {
+  it('builds chatgpt and claude deep-links with the prompt url-encoded', () => {
+    expect(agentUrl('chatgpt', 'a b')).toBe('https://chatgpt.com/?q=a%20b')
+    expect(agentUrl('claude', 'a b')).toBe('https://claude.ai/new?q=a%20b')
   })
 })

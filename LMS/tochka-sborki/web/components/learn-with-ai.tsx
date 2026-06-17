@@ -1,12 +1,16 @@
 'use client'
 import { useState } from 'react'
 import type { Locale } from '@/lib/dictionaries'
+import { agentUrl } from '@/lib/learn-prompt'
 
-const AGENTS: { key: string; label: string; url: string }[] = [
-  { key: 'chatgpt', label: 'ChatGPT', url: 'https://chatgpt.com/' },
-  { key: 'claude', label: 'Claude', url: 'https://claude.ai/new' },
-  { key: 'gemini', label: 'Gemini', url: 'https://gemini.google.com/app' },
-  { key: 'copilot', label: 'Copilot', url: 'https://copilot.microsoft.com/' },
+// ChatGPT/Claude support `?q=` prefill — they carry the compact bootstrap so the agent
+// opens already oriented. Gemini/Copilot have no reliable prefill param, so they open bare
+// and rely on the copied full charter.
+const AGENTS: { key: string; label: string; url: string; prefill: boolean }[] = [
+  { key: 'chatgpt', label: 'ChatGPT', url: 'https://chatgpt.com/', prefill: true },
+  { key: 'claude', label: 'Claude', url: 'https://claude.ai/new', prefill: true },
+  { key: 'gemini', label: 'Gemini', url: 'https://gemini.google.com/app', prefill: false },
+  { key: 'copilot', label: 'Copilot', url: 'https://copilot.microsoft.com/', prefill: false },
 ]
 
 const T = {
@@ -25,14 +29,16 @@ const T = {
 }
 
 /** Hands the learner a personalized study system-prompt for their own agent. */
-export function LearnWithAI({ prompt, locale = 'ru' }: { prompt: string; locale?: Locale }) {
+export function LearnWithAI({ prompt, bootstrap, locale = 'ru' }: { prompt: string; bootstrap?: string; locale?: Locale }) {
   const [copied, setCopied] = useState(false)
   const t = T[locale === 'en' ? 'en' : 'ru']
 
   const track = (agent: string) => {
     // @ts-expect-error analytics global is optional
-    if (typeof window !== 'undefined') window.plausible?.('learn_with_ai_clicked', { props: { agent } })
+    if (typeof window !== 'undefined') window.plausible?.('learn_with_ai_clicked', { props: { agent, mode: 'inline' } })
   }
+  const hrefFor = (a: typeof AGENTS[number]) =>
+    a.prefill && bootstrap ? agentUrl(a.key as 'chatgpt' | 'claude', bootstrap) : a.url
   const copy = async () => {
     track('copy')
     try {
@@ -68,7 +74,7 @@ export function LearnWithAI({ prompt, locale = 'ru' }: { prompt: string; locale?
       <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', alignItems: 'center' }}>
         <button type="button" onClick={copy} style={primary}>{copied ? t.copied : t.copy}</button>
         {AGENTS.map(a => (
-          <a key={a.key} href={a.url} target="_blank" rel="noopener" onClick={() => track(a.key)} style={ghost}>
+          <a key={a.key} href={hrefFor(a)} target="_blank" rel="noopener" onClick={() => track(a.key)} style={ghost}>
             {a.label} →
           </a>
         ))}

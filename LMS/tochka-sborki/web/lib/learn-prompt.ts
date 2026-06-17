@@ -71,6 +71,52 @@ function bondingLine(i: LearnPromptInput, ru: boolean): string {
   return (ru ? 'Под привязку: ' : 'For bonding: ') + parts.join('; ') + '.'
 }
 
+/** Hard cap for the bootstrap so it survives agent URL-length limits (before encodeURIComponent). */
+export const MAX_BOOTSTRAP = 1500
+
+function cap(s: string, max: number): string {
+  const clean = s.trim().replace(/\s+/g, ' ')
+  return clean.length > max ? clean.slice(0, max).trimEnd() + '…' : clean
+}
+
+/**
+ * Compact one-paragraph bootstrap for the `?q=` deep-link (Шаблон 2). The full charter
+ * goes through the clipboard (buildLearnPrompt); this subset only needs to fit a URL and
+ * orient the learner's own agent. Capped to MAX_BOOTSTRAP chars.
+ */
+export function buildBootstrapDeepLink(i: LearnPromptInput): string {
+  const ru = i.locale !== 'en'
+  const niche = i.niche ? NICHE[i.niche]?.[ru ? 'ru' : 'en'] : null
+  const unitNo = i.unitIndex + 1
+  // Reserve room for the fixed scaffolding; cap the free-text outcome to keep total bounded.
+  const outcome = i.outcome ? cap(i.outcome, 280) : null
+  const persona = i.mentorName
+    ? (ru ? `Ты — ${i.mentorName}` : `You are ${i.mentorName}`) + (i.skinName ? (ru ? ` из мира «${i.skinName}»` : ` from the world "${i.skinName}"`) : '')
+    : (ru ? 'Ты — мой наставник-напарник' : 'You are my mentor-partner')
+
+  const text = ru
+    ? `${persona}, мой наставник со-мышления (не пиши и не решай за меня — веди меня думать). ` +
+      `Я прохожу курс «Точка Сборки»${niche ? `, моя сфера — ${niche}` : ''}. ` +
+      `Сейчас я на материале: модуль «${i.moduleTitle}», юнит ${unitNo} из ${i.totalUnits}.` +
+      (outcome ? ` Мой запрос: «${outcome}».` : '') +
+      ` Веди по циклу: намерение → системное мышление → дизайн → шаг → todo. ` +
+      `Говори как персонаж своего мира, один вопрос за ход. Сначала спроси, что я уже понял и где затык.`
+    : `${persona}, my co-thinking mentor (don't write or decide for me — guide me to think). ` +
+      `I'm taking the "Точка Сборки" course${niche ? `, my field is ${niche}` : ''}. ` +
+      `I'm currently on: module "${i.moduleTitle}", unit ${unitNo} of ${i.totalUnits}.` +
+      (outcome ? ` My goal: "${outcome}".` : '') +
+      ` Lead the loop: intent → systems thinking → design → step → todo. ` +
+      `Speak as your world's character, one question per turn. First ask what I already understood and where I'm stuck.`
+
+  return cap(text, MAX_BOOTSTRAP)
+}
+
+/** Deep-link that opens the learner's own agent with the prompt prefilled (mirror of blog/lib/ai-prompt.ts). */
+export function agentUrl(agent: 'chatgpt' | 'claude', prompt: string): string {
+  const q = encodeURIComponent(prompt)
+  return agent === 'chatgpt' ? `https://chatgpt.com/?q=${q}` : `https://claude.ai/new?q=${q}`
+}
+
 export function buildLearnPrompt(i: LearnPromptInput): string {
   const ru = i.locale !== 'en'
   const niche = i.niche ? NICHE[i.niche]?.[ru ? 'ru' : 'en'] : null
