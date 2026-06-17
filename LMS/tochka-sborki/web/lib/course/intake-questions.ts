@@ -3,7 +3,7 @@
 // Every question is optional. Value keys for niche/skin/os reuse the canonical v1 enums
 // so the RPG layer + companion consume the same fields. New question IDs never collide
 // with v1 (A1..G12, OS). Scored by scoring-v2.ts, never by v1 scoring.ts.
-import type { Question, ModuleIntro } from './types'
+import type { Question, ModuleIntro } from '../intake/types'
 
 export const MODULE_INTROS_V2: ModuleIntro[] = [
   {

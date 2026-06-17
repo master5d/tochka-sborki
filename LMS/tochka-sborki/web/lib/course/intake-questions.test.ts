@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { QUESTIONS_V2, MODULE_INTROS_V2 } from './questions.v2'
+import { QUESTIONS_V2, MODULE_INTROS_V2 } from './intake-questions'
 
 const NICHE = new Set(['coach','massage','astrology','content','ecommerce','service','tech','other'])
 const SKIN = new Set(['slavic-myth','dark-fantasy','cyber-noir','space-opera','anime-quest','soviet-heroic','mystic-arcane'])

@@ -1835,7 +1835,7 @@
       "text": "✨ course-data extraction Phase 2: skins-meta + intake (high-coupling, workers-careful)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 6,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-17T20:03:08.597Z",

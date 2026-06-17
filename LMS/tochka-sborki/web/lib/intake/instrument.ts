@@ -1,5 +1,5 @@
 import { QUESTIONS, MODULE_INTROS } from './questions'
-import { QUESTIONS_V2, MODULE_INTROS_V2 } from './questions.v2'
+import { QUESTIONS_V2, MODULE_INTROS_V2 } from '../course/intake-questions'
 import type { InstrumentVersion, Question, ModuleIntro } from './types'
 
 export function getQuestions(v: InstrumentVersion): Question[] {
