@@ -153,7 +153,7 @@
       "text": "✨ Сделать LMS installable PWA (Add to Home Screen / desktop install)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 6,
         "sovern:urgency": 4,
         "sovern:created": "2026-06-10T00:59:24.046Z",
@@ -231,7 +231,7 @@
       "text": "🎨 Добавить инструкцию/тултип в LMS: как установить приложение на десктоп",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 4,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T01:07:21.438Z",
@@ -309,7 +309,7 @@
       "text": "✨ Добавить правую боковую панель с chatbot-агентом в LMS",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 7,
         "sovern:urgency": 5,
         "sovern:created": "2026-06-10T01:16:57.673Z",
@@ -803,7 +803,7 @@
       "text": "✨ Создать copy-paste role prompts для внешних AI-агентов (ChatGPT/Claude/Gemini/Copilot) — study mode",
       "metadata": {
         "sovern:layer": "course",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 7,
         "sovern:urgency": 5,
         "sovern:created": "2026-06-10T01:54:41.575Z",

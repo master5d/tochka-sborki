@@ -85,6 +85,12 @@ export type Dictionary = {
     switchAction: string
     dismissAction: string
   }
+  pwa: {
+    install: string
+    installing: string
+    iosHint: string
+    dismiss: string
+  }
   feedback: {
     pageLabel: string
     pageHeading: string
@@ -301,6 +307,12 @@ export const dictionaries: Record<Locale, Dictionary> = {
       message: '🌐 This site is also available in English.',
       switchAction: 'Switch to English →',
       dismissAction: 'Stay in Russian',
+    },
+    pwa: {
+      install: '⬇ Установить приложение',
+      installing: 'Установка…',
+      iosHint: 'Чтобы установить: нажми «Поделиться» → «На экран „Домой"».',
+      dismiss: 'Скрыть',
     },
     feedback: {
       pageLabel: '⬡ Фидбек',
@@ -529,6 +541,12 @@ export const dictionaries: Record<Locale, Dictionary> = {
       message: '🌐 Этот сайт также доступен на русском.',
       switchAction: 'Переключить на русский →',
       dismissAction: 'Остаться на английском',
+    },
+    pwa: {
+      install: '⬇ Install app',
+      installing: 'Installing…',
+      iosHint: 'To install: tap Share → "Add to Home Screen".',
+      dismiss: 'Hide',
     },
     feedback: {
       pageLabel: '⬡ Feedback',

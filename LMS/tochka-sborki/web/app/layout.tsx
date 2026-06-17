@@ -1,9 +1,11 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { Unbounded } from 'next/font/google'
 import { ProgressProvider } from '@/components/progress-provider'
 import { LangSuggestBanner } from '@/components/lang-suggest-banner'
+import { PwaRegister } from '@/components/pwa/pwa-register'
+import { InstallPrompt } from '@/components/pwa/install-prompt'
 import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 
@@ -28,6 +30,12 @@ export const metadata: Metadata = {
   description: 'Открытый курс по AI-разработке и агентному программированию. Presented by Mamaev Institute for AI.',
   publisher: 'Mamaev Institute for AI',
   authors: [{ name: 'Alexander Mamaev' }],
+  manifest: '/manifest.webmanifest',
+  appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: 'Точка Сборки' },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#0a0a0f',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -45,6 +53,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <ProgressProvider>
             <LangSuggestBanner />
+            <PwaRegister />
+            <InstallPrompt />
             {children}
           </ProgressProvider>
         </ThemeProvider>
