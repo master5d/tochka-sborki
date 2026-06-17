@@ -2,7 +2,7 @@
 import type { CharacterClass, WorldSkin } from '@/lib/intake/types'
 import { MODULE_SLUGS } from './modules'
 import { QUEST_LINES } from './quest-lines'
-import { NICHE_MODULE } from './niche-map'
+import { NICHE_MODULE } from '@/lib/course/niche-map'
 import type { SkinPack, QuestLogVM, ZoneVM, QuestStatus } from './types'
 
 type GetState = (slug: string) => 'completed' | 'viewed' | 'none'

@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { buildDungeon } from './build-dungeon'
 import type { DungeonInput } from './types'
-import { FLAVOR_BANK } from './flavor-bank'
-import { NICHE_MODULE } from '@/lib/rpg/niche-map'
+import { FLAVOR_BANK } from '@/lib/course/dungeon-flavor'
+import { NICHE_MODULE } from '@/lib/course/niche-map'
 
 function base(over: Partial<DungeonInput> = {}): DungeonInput {
   return {

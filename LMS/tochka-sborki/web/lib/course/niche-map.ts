@@ -1,5 +1,5 @@
-// web/lib/rpg/niche-map.ts
-import type { Bi } from './types'
+// web/lib/course/niche-map.ts
+import type { Bi } from '@/lib/rpg/types'
 
 // niche (Module F2 value) -> module slug most tied to that niche's first win.
 export const NICHE_MODULE: Record<string, string> = {

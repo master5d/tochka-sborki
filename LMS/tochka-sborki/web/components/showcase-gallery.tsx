@@ -1,4 +1,4 @@
-import { getShowcase, videoEmbedUrl } from '@/lib/showcase'
+import { getShowcase, videoEmbedUrl } from '@/lib/course/showcase'
 import type { Locale } from '@/lib/intake/types'
 
 export function ShowcaseGallery({ locale }: { locale: Locale }) {

@@ -1,7 +1,7 @@
 // web/lib/rpg/niche-map.test.ts
 import { describe, it, expect } from 'vitest'
 import { NICHE_MODULE } from './niche-map'
-import { MODULE_SLUGS } from './modules'
+import { MODULE_SLUGS } from '@/lib/rpg/modules'
 
 describe('NICHE_MODULE', () => {
   it('maps every niche to a real module slug', () => {

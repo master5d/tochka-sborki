@@ -1,8 +1,8 @@
 // web/lib/dungeon/build-dungeon.ts
 import type { DungeonInput, DungeonView, StageTier } from './types'
-import { NICHE_MODULE } from '@/lib/rpg/niche-map'
+import { NICHE_MODULE } from '@/lib/course/niche-map'
 import { getAppliedChallenge, fillNicheSlots } from '@/lib/cs/applied-challenge'
-import { FLAVOR_BANK } from './flavor-bank'
+import { FLAVOR_BANK } from '@/lib/course/dungeon-flavor'
 
 const TIERS: StageTier[] = ['task', 'process', 'outcome']
 const FALLBACK_MODULE = '04-prompt-engineering'

@@ -1,5 +1,5 @@
-// web/lib/dungeon/flavor-bank.ts
-import type { NicheFlavor } from './types'
+// web/lib/course/dungeon-flavor.ts
+import type { NicheFlavor } from '@/lib/dungeon/types'
 
 // Per-niche dungeon identity. Skin-neutral (skin = accent/chrome); niche is the identity axis.
 // `other` is both its own niche and the fallback for null/unknown niches.

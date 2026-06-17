@@ -4,7 +4,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import type { DungeonInput } from './types'
 import { buildDungeon } from './build-dungeon'
-import { FLAVOR_BANK } from './flavor-bank'
+import { FLAVOR_BANK } from '@/lib/course/dungeon-flavor'
 import { readDungeon, writeDungeon, markCleared, type DungeonStore } from './dungeon-store'
 import { useShards } from '@/lib/cs/use-shards'
 
