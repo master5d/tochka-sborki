@@ -87,6 +87,7 @@ export function Nav({ locale: localeProp }: Props = {}) {
       <div style={{ display: 'flex', gap: '1rem', fontSize: '0.875rem', alignItems: 'center' }}>
         <div className="nav-secondary-links" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
         {email && (() => { const h = `${locale === 'en' ? '/en' : ''}/dashboard/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.questLog}</Link> })()}
+        {email && (() => { const h = `${locale === 'en' ? '/en' : ''}/character/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.profile}</Link> })()}
         {(() => { const h = `${locale === 'en' ? '/en' : ''}/roadmap/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.roadmap}</Link> })()}
         {(() => { const h = `${locale === 'en' ? '/en' : ''}/cheatsheet/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.cheatsheet}</Link> })()}
         {(() => { const h = `${locale === 'en' ? '/en' : ''}/feedback/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.feedback}</Link> })()}

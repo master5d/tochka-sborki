@@ -4,10 +4,14 @@ import { useEffect, useState } from 'react'
 import { ATTRIBUTES } from '@/lib/intake/attributes'
 import type { Locale } from '@/lib/intake/types'
 
-export function CharacterSheet({ locale }: { locale: Locale }) {
-  const [p, setP] = useState<any>(null)
-  useEffect(() => { fetch('/api/intake/me', { credentials: 'include' })
-    .then(r => r.ok ? r.json() : null).then(setP).catch(() => {}) }, [])
+export function CharacterSheet({ locale, profile }: { locale: Locale; profile?: any }) {
+  const [fetched, setFetched] = useState<any>(null)
+  useEffect(() => {
+    if (profile) return
+    fetch('/api/intake/me', { credentials: 'include' })
+      .then(r => r.ok ? r.json() : null).then(setFetched).catch(() => {})
+  }, [profile])
+  const p = profile ?? fetched
   if (!p) return null
   const scores: Record<string, number> = { INT: p.int_score ?? 0, WIS: p.wis_score ?? 0, CON: p.con_score ?? 0, DEX: p.dex_score ?? 0, CHA: p.cha_score ?? 0, STR: p.str_score ?? 0 }
   return (

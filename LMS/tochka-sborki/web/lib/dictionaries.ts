@@ -8,6 +8,7 @@ export type Dictionary = {
     feedback: string
     certificate: string
     questLog: string
+    profile: string
     login: string
     logout: string
     osTitle: string
@@ -169,6 +170,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       roadmap: 'Roadmap',
       cheatsheet: 'Шпаргалка',
       questLog: '⬡ Квест-лог',
+      profile: 'Профиль',
       feedback: 'Фидбек',
       certificate: 'Сертификат',
       login: '→ Войти',
@@ -396,6 +398,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       roadmap: 'Roadmap',
       cheatsheet: 'Cheatsheet',
       questLog: '⬡ Quest Log',
+      profile: 'Profile',
       feedback: 'Feedback',
       certificate: 'Certificate',
       login: '→ Sign in',

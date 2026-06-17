@@ -1401,7 +1401,7 @@
       "text": "✨ LMS: вкладка «Профиль ученика» — quest log roadmap + companion charter",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 7,
         "sovern:urgency": 6,
         "sovern:created": "2026-06-10T05:07:02.321Z",
