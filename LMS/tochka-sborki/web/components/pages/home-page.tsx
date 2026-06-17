@@ -72,6 +72,18 @@ export function HomePage({ locale }: Props) {
           {t.hero.titleLine1}<br />{t.hero.titleLine2}
         </h1>
         <p style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: 'clamp(1rem, 2.4vw, 1.35rem)',
+          fontWeight: 700,
+          color: 'var(--text-accent)',
+          maxWidth: '560px',
+          lineHeight: 1.4,
+          marginBottom: '1.5rem',
+          letterSpacing: '-0.01em',
+        }}>
+          {t.hero.slogan}
+        </p>
+        <p style={{
           fontSize: '1.2rem',
           color: 'var(--text-secondary)',
           maxWidth: '560px',
