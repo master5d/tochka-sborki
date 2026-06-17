@@ -8,6 +8,7 @@ import { SKINS_META } from '@/lib/rpg/skins-meta'
 import { WorldMap } from '@/components/rpg/world-map'
 import { CharacterSheet } from '@/components/character-sheet'
 import { CharterCard } from '@/components/intake/charter-card'
+import { CompanionSetup } from '@/components/intake/companion-setup'
 import { useNicheDungeonCleared } from '@/lib/dungeon/use-dungeon'
 import wandererPack from '@/lib/rpg/skins/wanderer.json'
 import type { SkinPack } from '@/lib/rpg/types'
@@ -55,6 +56,7 @@ export function ProfileClient({ modules, locale }: Props) {
         </div>
       </main>
       <CharterCard profile={profile} locale={locale} />
+      <CompanionSetup profile={profile} locale={locale} />
     </>
   )
 }
