@@ -20,7 +20,7 @@ export function QuestionRenderer({ question: q, locale, value, onChange, otherVa
         className="intake-field"
         value={(value as string) ?? ''}
         onChange={e => onChange(e.target.value)}
-        placeholder={otherPlaceholder}
+        placeholder={q.placeholder?.[locale] ?? otherPlaceholder}
         rows={4}
       />
     )

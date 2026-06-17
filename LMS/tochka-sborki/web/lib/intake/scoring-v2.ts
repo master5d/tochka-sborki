@@ -3,7 +3,9 @@ import { deriveMbti, relationalStyle } from './mbti'
 import type { Answers, Locale, ScoreResult, WorldSkin } from './types'
 
 const num = (a: Answers, id: string, table: Record<string, number>) => {
-  const v = a[id]; return (typeof v === 'string' && table[v] != null) ? table[v] : 0
+  const v = a[id]
+  if (Array.isArray(v)) return v.reduce((m, k) => Math.max(m, table[k as string] ?? 0), 0)
+  return (typeof v === 'string' && table[v] != null) ? table[v] : 0
 }
 
 // Core proxy points (small, always available). 0..~10 raw per attribute before depth.
