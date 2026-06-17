@@ -363,7 +363,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       appliedChallenge: 'Твой прикладной вызов',
     },
     footer: {
-      tagline: 'Курс по agentic AI. От нуля до агентских систем — 9 элективных тем, твой стек на выбор.',
+      tagline: 'Курс о со-мышлении и со-работе с agentic AI: инструмент — отдельно, твоя роль — отдельно. 9 элективных тем, твой стек на выбор.',
       topicsLabel: '// темы',
       resourcesLabel: '// материалы',
       authorLabel: '// автор',
@@ -599,7 +599,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       appliedChallenge: 'Your applied challenge',
     },
     footer: {
-      tagline: 'An agentic-AI course. From zero to agentic systems across 9 elective topics, pick your stack.',
+      tagline: 'A course in co-thinking and co-working with agentic AI — the tool stays separate from your role. 9 elective topics, pick your stack.',
       topicsLabel: '// topics',
       resourcesLabel: '// resources',
       authorLabel: '// author',
