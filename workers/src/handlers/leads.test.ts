@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { listLeads, syncAudience } from './leads'
+import { listLeads, syncContacts } from './leads'
 
 function fakeDb(rows: any[] = []) {
   const calls: { sql: string; binds: any[] }[] = []
@@ -30,11 +30,11 @@ describe('listLeads', () => {
   })
 })
 
-describe('syncAudience', () => {
+describe('syncContacts', () => {
   it('pushes every user to Resend and returns counts', async () => {
     const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{}', { status: 200 }))
-    const env = { DB: fakeDb([{ email: 'a@b.com' }, { email: 'c@d.com' }]), RESEND_API_KEY: 'rk', RESEND_AUDIENCE_ID: 'aud' } as any
-    const res = await syncAudience(env)
+    const env = { DB: fakeDb([{ email: 'a@b.com' }, { email: 'c@d.com' }]), RESEND_API_KEY: 'rk' } as any
+    const res = await syncContacts(env)
     const body = await res.json()
     expect(body.total).toBe(2)
     expect(body.synced).toBe(2)

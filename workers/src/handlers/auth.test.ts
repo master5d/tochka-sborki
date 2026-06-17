@@ -22,7 +22,6 @@ function makeEnv(opts: { existing?: boolean; calls?: DbCall[] } = {}): Env {
     RESEND_API_KEY: 'resend_key',
     N8N_WEBHOOK_URL: '',
     N8N_WEBHOOK_SECRET: '',
-    RESEND_AUDIENCE_ID: 'aud_test',
   } as Env
 }
 
@@ -95,26 +94,26 @@ describe('handleSendLink enrichment (persisted to D1 users)', () => {
   })
 })
 
-describe('handleSendLink Resend audience', () => {
-  it('adds a new user to the Resend audience', async () => {
+describe('handleSendLink Resend contact', () => {
+  it('adds a new user as a Resend contact', async () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{}', { status: 200 }))
     await handleSendLink(sendLinkReq({ email: 'new@example.com' }), makeEnv(), ctx)
-    const audienceCall = (fetchSpy.mock.calls as [string][]).find(([url]) => url === 'https://api.resend.com/audiences/aud_test/contacts')
-    expect(audienceCall).toBeDefined()
+    const contactCall = (fetchSpy.mock.calls as [string][]).find(([url]) => url === 'https://api.resend.com/contacts')
+    expect(contactCall).toBeDefined()
     fetchSpy.mockRestore()
   })
 
-  it('does not add an existing user to the audience', async () => {
+  it('does not add an existing user as a contact', async () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{}', { status: 200 }))
     await handleSendLink(sendLinkReq({ email: 'existing@example.com' }), makeEnv({ existing: true }), ctx)
-    const audienceCall = (fetchSpy.mock.calls as [string][]).find(([url]) => (url as string).includes('/audiences/'))
-    expect(audienceCall).toBeUndefined()
+    const contactCall = (fetchSpy.mock.calls as [string][]).find(([url]) => (url as string).endsWith('/contacts'))
+    expect(contactCall).toBeUndefined()
     fetchSpy.mockRestore()
   })
 
-  it('still returns 200 when the audience add fails', async () => {
+  it('still returns 200 when the contact add fails', async () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (url) => {
-      if ((url as string).includes('/audiences/')) throw new Error('resend down')
+      if ((url as string).endsWith('/contacts')) throw new Error('resend down')
       return new Response('{}', { status: 200 })
     })
     const res = await handleSendLink(sendLinkReq({ email: 'test@example.com' }), makeEnv(), ctx)

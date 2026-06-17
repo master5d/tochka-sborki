@@ -1,5 +1,5 @@
 import type { Env } from '../lib/types'
-import { addContactToAudience } from '../lib/crm'
+import { addResendContact } from '../lib/crm'
 
 export async function listLeads(
   db: D1Database,
@@ -17,11 +17,11 @@ export async function listLeads(
   return Response.json(rows)
 }
 
-export async function syncAudience(env: Env): Promise<Response> {
+export async function syncContacts(env: Env): Promise<Response> {
   const rows = (await env.DB.prepare('SELECT email, language, source FROM users').all()).results ?? []
   let ok = 0, failed = 0
   for (const r of rows as any[]) {
-    try { await addContactToAudience(env, { email: r.email, language: r.language, source: r.source }); ok++ }
+    try { await addResendContact(env, { email: r.email, language: r.language, source: r.source }); ok++ }
     catch { failed++ }
   }
   return Response.json({ synced: ok, failed, total: rows.length })
