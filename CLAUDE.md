@@ -9,7 +9,7 @@
 Точка Сборки — открытый курс по agentic AI в потоке. **Agent-agnostic**: концепции работают с Claude Code, Hermes (SOVERN), Aider, Cline, и др. 9 модулей + упражнения + шпаргалка. **Bilingual**: RU (основной) + EN (`/en/` маршруты). Refactor 2026-05-18: добавлен модуль 03-stack-selection (Behind-GFW + Sovereign), модули 03→04 ... 07→08.
 
 ## Три сайта (один репо, три CF Pages проекта)
-- **`LMS/tochka-sborki/web/`** → `ai.mamaev.coach` — LMS курса (проект `tochka-sborki`)
+- **`LMS/tochka-sborki/web/`** → `ai.mamaev.coach` — LMS курса (проект `tochka-sborki`). `public/` хостит one-liner установщики (раздаются по `ai.mamaev.coach/install.sh` и т.д., запуск одной строкой через curl/irm): `install.sh`/`install.ps1` (Claude-стек: Node+Git+Claude Code) и `install-gfw.sh`/`.ps1` (GFW cloud-relay: Python+LiteLLM proxy:4000+Aider); точки входа — в `02-setup-guide`/`u3-behind-gfw`.
 - **`hub/`** → `mamaev.coach` — личный лендинг + **whole-site agent-ready слои** всего домена: llms.txt (×2), /.well-known/agent-description.md, sitemap.xml, robots.txt. Читают `blog/out/posts-manifest.json` через `hub/lib/site.ts` (данные, не импорт). Проект `mamaev-coach-hub`.
 - **`blog/`** → `mamaev.coach/blog/*` + `/en/blog/*` — **отдельный** Next-апп (реестр `blog/lib/posts.ts`, JSON-LD, `/blog/rss.xml`, OG, «read with AI»). Модель B: `assetPrefix:'/blog'`, при деплое его вывод мёржится в `hub/out` (`scripts/merge-blog.mjs`) → один CF-проект `mamaev-coach-hub`. Общий chrome — копии из hub с маркерами `// SHARED CHROME`. Деплоит job `deploy-hub` (build blog → build hub → merge).
 - **`mentor/`** → `mentor.mamaev.coach` — B2B agent-engineering (проект `mamaev-coach-mentor`)
@@ -86,8 +86,8 @@ mc_hub/                   — корень монорепо
 
 ## RPG / геймификация (LMS/tochka-sborki/web/)
 Поверх LMS построен RPG-слой. Все статичные данные — клиентские (localStorage); сервер хранит только intake-профиль и прогресс уроков.
-- **Intake** (`/quest-intake`, `lib/intake/`): опросник → профиль `{ niche, cog_tier, world_skin, F3-outcome }` в D1 `intake_profiles`. `scoring.ts`, `attributes.ts`, `parse-outcome.ts`.
-- **Квест-лог** (`/dashboard`) + **лист персонажа** (`/character`): World Map (зоны = модули), QuestFeed, CharacterStrip. `lib/rpg/` — `quest-log.ts`, `map-layout.ts`, `niche-map.ts`, `unit-framing.ts`.
+- **Intake** (`/quest-intake`, `lib/intake/`): опросник → профиль `{ niche, cog_tier, world_skin, F3-outcome }` в D1 `intake_profiles`. `scoring.ts`, `attributes.ts`, `parse-outcome.ts`. V2-инструмент (`questions.v2.ts`+`scoring-v2.ts`) — короткие evocative вопросы (фидбэк по старым вопросам часто устарел); V_HOOK/V_MODE — multi-select (`num()` берёт max по массиву); на `charter-reveal` — кнопка self-profile (`self-profile-prompt.ts`). Онбординг-мост (intake→quest-log) разоружает RPG-жаргон для нонгеймеров (`onboarding-bridge`).
+- **Квест-лог** (`/dashboard`): QuestFeed, CharacterStrip, Daily, Dungeon, Vault. **Профиль** (`/character`, таб в nav): лист героя + **World Map** (зоны = модули; перенесён сюда с dashboard) + карточка companion-charter (`profileToCharter` пересобирает устав из профиля). `lib/rpg/` — `quest-log.ts`, `map-layout.ts`, `niche-map.ts`, `unit-framing.ts`.
 - **Themed skins**: `lib/rpg/skins/*.json` (7 скинов) + `skins-meta.ts` — переосмысление формулировок юнитов под выбранный мир.
 - **Cognitive Shards (CS)** — единая валюта вместо XP. 3 режима прохождения (commander 1.0× / copilot 1.5× / archmage 2.5×). `lib/cs/`: `wallet.ts`, `award.ts`, `modes.ts`, `applied-challenge.ts` (персонализация под niche/outcome).
 - **Daily Quests** (`lib/quests/`) и **Niche Dungeons** (`/dungeon`, `lib/dungeon/`) — детерминированная генерация (FNV-1a seed + mulberry32).
