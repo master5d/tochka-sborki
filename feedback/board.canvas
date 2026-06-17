@@ -881,7 +881,7 @@
       "text": "✨ Добавить ASCII-диаграммы в юниты курса где уместно",
       "metadata": {
         "sovern:layer": "course",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 5,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T01:54:41.806Z",
@@ -907,7 +907,7 @@
       "text": "✨ Learning journeys / деревья прохождения / квесты в LMS",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 7,
         "sovern:urgency": 4,
         "sovern:created": "2026-06-10T01:54:41.885Z",
