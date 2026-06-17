@@ -1,5 +1,4 @@
 import styles from '../Prologue.module.css'
-import { MirrorParadox } from '../PrologueDiagrams'
 
 type Props = { locale: 'ru' | 'en' }
 
@@ -8,10 +7,8 @@ export function Opening({ locale }: Props) {
     return (
       <div className={styles.opening}>
         <p className={styles.lead}>
-          {'You open ChatGPT twenty times a day. You open yourself — never.'}
+          {'You open ChatGPT twenty times a day. You sit down to it assembled — almost never.'}
         </p>
-
-        <MirrorParadox />
 
         <p>
           {"Let's be honest, just between us, no one's listening. For the past couple of years"}
@@ -60,10 +57,8 @@ export function Opening({ locale }: Props) {
   return (
     <div className={styles.opening}>
       <p className={styles.lead}>
-        {'Ты открываешь ChatGPT по двадцать раз на дню. А себя — ни разу.'}
+        {'Ты открываешь ChatGPT по двадцать раз на дню. А садишься к нему собранным — почти никогда.'}
       </p>
-
-      <MirrorParadox />
 
       <p>
         {'Давай честно, наедине, никто не слышит. Последние пару лет в груди стоит тихий гул.'}
