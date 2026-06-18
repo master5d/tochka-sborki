@@ -1809,7 +1809,7 @@
       "text": "✨ Lightweight interactive-video: chapters + end-of-video reflection checkpoint",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 6,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-17T19:26:26.316Z",
