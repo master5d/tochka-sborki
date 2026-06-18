@@ -11,7 +11,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
       // Auth-gated / private routes — keep out of the index.
-      disallow: ['/dashboard/', '/character/', '/login/', '/quest-intake/', '/admin/', '/dungeon/', '/exercises/', '/offline/'],
+      disallow: ['/dashboard/', '/character/', '/login/', '/quest-intake/', '/admin/', '/dungeon/', '/exercises/', '/offline/', '/alumni/'],
     },
     sitemap: `${BASE}/sitemap.xml`,
     host: BASE,

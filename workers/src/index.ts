@@ -5,6 +5,7 @@ import { handleView, handleComplete, handleList } from './handlers/progress'
 import { handleMe as handleIntakeMe, handleProgress as handleIntakeProgress, handleSubmit as handleIntakeSubmit } from './handlers/intake'
 import { runDemandRadar, listBriefs, listSignals, decideBrief } from './handlers/demand'
 import { listLeads, syncContacts } from './handlers/leads'
+import { handleAlumniList, handleAlumniMe, handleAlumniOptin } from './handlers/alumni'
 import { requireAuth, requireOwner } from './middleware'
 
 const ALLOWED_ORIGINS = [
@@ -76,6 +77,21 @@ export default {
           try { body = await request.json() } catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }) }
           response = await handleIntakeSubmit(env.DB, auth.sub, { answers: body.answers ?? {}, locale: body.locale }, env.GEMINI_API_KEY)
           if (response.ok) ctx.waitUntil(runDemandRadar(env, auth.sub, body.answers ?? {}))
+        }
+      } else if (path === '/api/alumni' && method === 'GET') {
+        const auth = await requireAuth(request, env)
+        response = auth instanceof Response ? auth : await handleAlumniList(env.DB)
+      } else if (path === '/api/alumni/me' && method === 'GET') {
+        const auth = await requireAuth(request, env)
+        response = auth instanceof Response ? auth : await handleAlumniMe(env.DB, auth.sub)
+      } else if (path === '/api/alumni/optin' && method === 'POST') {
+        const auth = await requireAuth(request, env)
+        if (auth instanceof Response) {
+          response = auth
+        } else {
+          let body: { optin?: boolean; contact?: string; blurb?: string }
+          try { body = await request.json() } catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }) }
+          response = await handleAlumniOptin(env.DB, auth.sub, body)
         }
       } else if (path === '/api/admin/leads' && method === 'GET') {
         const auth = await requireOwner(request, env)
