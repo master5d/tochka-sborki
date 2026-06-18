@@ -1375,7 +1375,7 @@
       "text": "✨ Блог как живой knowledge graph (evergreen notes) с визуалом и лендинг-подачей",
       "metadata": {
         "sovern:layer": "blog",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:impact": 6,
         "sovern:urgency": 3,
         "sovern:created": "2026-06-10T05:07:02.274Z",
@@ -1849,6 +1849,32 @@
           "reason": "вторая фаза разъединения движок/данные; high-coupling модули с workers cross-import — отдельная осторожная работа"
         }
       }
+    },
+    {
+      "id": "fb_2367bdbf2304",
+      "type": "text",
+      "x": 300,
+      "y": 3260,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Blog knowledge-graph Phase B: evergreen atomic notes",
+      "metadata": {
+        "sovern:layer": "blog",
+        "sovern:status": "idle",
+        "sovern:impact": 5,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-18T06:49:02.838Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "blog",
+          "impact": 5,
+          "urgency": 2,
+          "confidence": 0.6,
+          "reason": "контентная фаза графа знаний — атомарные evergreen-заметки; зависит от контент-решения владельца"
+        }
+      }
     }
   ],
   "edges": [
@@ -2191,6 +2217,11 @@
       "id": "e_fb_f2c7279911ca",
       "fromNode": "area_lms",
       "toNode": "fb_f2c7279911ca"
+    },
+    {
+      "id": "e_fb_2367bdbf2304",
+      "fromNode": "area_blog",
+      "toNode": "fb_2367bdbf2304"
     }
   ]
 }

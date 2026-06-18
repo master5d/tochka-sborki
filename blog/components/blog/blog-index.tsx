@@ -27,6 +27,10 @@ export function BlogIndex({ locale }: { locale: Locale }) {
         {d.blog.indexHeading}
       </h1>
 
+      <Link href={locale === 'en' ? '/en/blog/graph/' : '/blog/graph/'} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--text-accent)', textDecoration: 'none', display: 'inline-block', marginBottom: '2rem' }}>
+        {locale === 'en' ? '⬡ Knowledge graph →' : '⬡ Граф знаний →'}
+      </Link>
+
       {posts.length === 0 && (
         <p style={{ color: 'var(--text-secondary)' }}>{d.blog.empty}</p>
       )}
