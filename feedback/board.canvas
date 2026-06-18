@@ -335,7 +335,7 @@
       "text": "✨ OAuth-аутентификация для профилей студентов",
       "metadata": {
         "sovern:layer": "workers",
-        "sovern:status": "idle",
+        "sovern:status": "blocked",
         "sovern:impact": 6,
         "sovern:urgency": 5,
         "sovern:created": "2026-06-10T01:16:57.737Z",

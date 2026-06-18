@@ -53,6 +53,10 @@ not on engineering. Captured so they aren't lost; promote when assets/direction 
 - **Micro-puzzle breaks** (`fb_282cf1c678f7`) — small puzzle games as breaks between units. Needs game design (which puzzles, win/lose, reward into Cognitive Shards?) + product direction before build.
 - **Shipped infra** (`fb_d858ea413075`): seasonal/event easter eggs — `lib/easter-eggs.ts` (date-driven `activeEasterEgg`, surfaced via the nav brand glyph). Memes/soundtrack/puzzles can hang off the same date-driven pattern when assets land.
 
+## Deferred — auth (blocked on owner action)
+
+- **OAuth social login** (`fb_25d8fa04c141`, status `blocked`) — Google/GitHub social login. Designed (`docs/superpowers/specs/2026-06-18-oauth-social-login-design.md`) but parked: OAuth-app creation has **no API** (UI-gated by both Google & GitHub), so it needs the owner to create the app(s) and provide `client_id` (+ `client_secret` via `wrangler secret put`). Magic-link already covers passwordless auth, so the marginal gain is low — revisit only if magic-link friction shows up. Unblock = owner provides credentials → build per spec.
+
 ## How to promote a backlog item to "build"
 
 1. Pick an entry; open a spec in `docs/superpowers/specs/` (brainstorming skill).
