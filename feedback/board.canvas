@@ -1875,6 +1875,23 @@
           "reason": "контентная фаза графа знаний — атомарные evergreen-заметки; зависит от контент-решения владельца"
         }
       }
+    },
+    {
+      "id": "fb_54dd5739f9ce",
+      "type": "text",
+      "x": 580,
+      "y": 3260,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "📌 LMS-embed: Walkthrough-компонент для self-contained Learn-mode HTML (sovern-mindmap)",
+      "metadata": {
+        "sovern:layer": "infra",
+        "sovern:status": "done",
+        "sovern:impact": 5,
+        "sovern:urgency": 5,
+        "feedback": {}
+      }
     }
   ],
   "edges": [
@@ -2222,6 +2239,11 @@
       "id": "e_fb_2367bdbf2304",
       "fromNode": "area_blog",
       "toNode": "fb_2367bdbf2304"
+    },
+    {
+      "id": "e_fb_54dd5739f9ce",
+      "fromNode": "area_infra",
+      "toNode": "fb_54dd5739f9ce"
     }
   ]
 }

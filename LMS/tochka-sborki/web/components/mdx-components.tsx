@@ -6,6 +6,7 @@ import { AgentToggle } from './agent-toggle'
 import { StackMatrix } from './stack-matrix'
 import { Phase } from './phase'
 import { VideoCheckpoint } from './video-checkpoint'
+import { Walkthrough } from './walkthrough'
 
 export const mdxComponents: MDXComponents = {
   h1: ({ children }) => (
@@ -76,4 +77,5 @@ export const mdxComponents: MDXComponents = {
   StackMatrix,
   Phase,
   VideoCheckpoint,
+  Walkthrough,
 }
