@@ -5,6 +5,10 @@ compatibility_date = "2025-01-01"
 [vars]
 OWNER_EMAIL = "mamaev.sasha@gmail.com"
 
+# Логи воркера (Resend message-id/статус) — чтобы отлаживать доставку magic-link, а не вслепую
+[observability]
+enabled = true
+
 [[d1_databases]]
 binding = "DB"
 database_name = "tochka-sborki-db"

@@ -23,6 +23,28 @@ function buildSource(body: { utm_source?: string; utm_medium?: string; utm_campa
   return parts.length > 0 ? parts.join('/') : 'direct'
 }
 
+// Письмо magic-link на языке юзера (users.language). RU — дефолт; EN только для language === 'en'.
+function buildMagicLinkEmail(lang: string, verifyUrl: string): { subject: string; text: string; html: string } {
+  if (lang === 'en') {
+    return {
+      subject: 'Your sign-in link',
+      text: `Hi!\n\nYour sign-in link for the "Точка Сборки" course (valid for 15 minutes):\n${verifyUrl}\n\nIf you didn't request this, just ignore this email.`,
+      html: `<p>Hi!</p>
+<p>Your sign-in link for the "Точка Сборки" course (valid for 15 minutes):</p>
+<p><a href="${verifyUrl}">Sign in to the course</a></p>
+<p>If you didn't request this, just ignore this email.</p>`,
+    }
+  }
+  return {
+    subject: 'Ваша ссылка для входа',
+    text: `Здравствуйте!\n\nВаша ссылка для входа в курс «Точка Сборки» (действует 15 минут):\n${verifyUrl}\n\nЕсли вы не запрашивали вход — просто проигнорируйте это письмо.`,
+    html: `<p>Здравствуйте!</p>
+<p>Ваша ссылка для входа в курс «Точка Сборки» (действует 15 минут):</p>
+<p><a href="${verifyUrl}">Войти в курс</a></p>
+<p>Если вы не запрашивали вход — просто проигнорируйте это письмо.</p>`,
+  }
+}
+
 export async function handleSendLink(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   let body: { email?: string; telegram_handle?: string; utm_source?: string; utm_medium?: string; utm_campaign?: string }
   try { body = await request.json() } catch { return Response.json({ error: 'Invalid JSON' }, { status: 400 }) }
@@ -32,30 +54,36 @@ export async function handleSendLink(request: Request, env: Env, ctx: ExecutionC
     return Response.json({ error: 'Valid email required' }, { status: 400 })
   }
 
-  let user = await env.DB.prepare('SELECT id FROM users WHERE email = ?').bind(email).first<{ id: string }>()
+  let user = await env.DB.prepare('SELECT id, language FROM users WHERE email = ?').bind(email).first<{ id: string; language: string }>()
   const isNewUser = !user
 
+  // язык письма — по users.language; для нового юзера = свежедетектированный (он же и сохраняется)
+  let lang = user?.language ?? 'unknown'
+
+  // лид для Resend-контакта добавляем ПОСЛЕ отправки письма (best-effort, не должен гонять с критичным письмом)
+  let newLead: { email: string; language: string; source: string } | null = null
   if (isNewUser) {
     const id = crypto.randomUUID()
     const language = parseLanguage(request.headers.get('Accept-Language'))
+    lang = language
     const source = buildSource(body)
     const telegramHandle = sanitizeTelegram(body.telegram_handle)
     await env.DB.prepare(
       'INSERT INTO users (id, email, created_at, language, source, telegram_handle) VALUES (?, ?, ?, ?, ?, ?)'
     ).bind(id, email, Math.floor(Date.now() / 1000), language, source, telegramHandle).run()
-    user = { id }
-
-    // добавить лид в Resend (глобальный контакт); waitUntil — чтобы рантайм не оборвал запрос после ответа
-    ctx.waitUntil(
-      addResendContact(env, { email, language, source })
-        .catch(e => console.error('Resend contact add failed', e))
-    )
+    user = { id, language }
+    newLead = { email, language, source }
   }
 
   const token = generateToken()
   const expiresAt = Math.floor(Date.now() / 1000) + 900
   await env.DB.prepare('INSERT INTO magic_links (token, user_id, expires_at) VALUES (?, ?, ?)').bind(token, user!.id, expiresAt).run()
 
+  const verifyUrl = `https://ai.mamaev.coach/auth/verify?token=${token}`
+  const mail = buildMagicLinkEmail(lang, verifyUrl)
+
+  // Транзакционное письмо: plain-text + минимальный HTML, одна ссылка, без маркетинговых стилей —
+  // чтобы Gmail клал его в Inbox/Primary, а не в Promotions.
   let resendRes: Response
   try {
     resendRes = await fetch('https://api.resend.com/emails', {
@@ -67,21 +95,34 @@ export async function handleSendLink(request: Request, env: Env, ctx: ExecutionC
       body: JSON.stringify({
         from: 'Точка Сборки <noreply@mamaev.coach>',
         to: [email],
-        subject: 'Войти в Точку Сборки',
-        html: `
-          <p>Нажми, чтобы войти в курс:</p>
-          <p><a href="https://ai.mamaev.coach/auth/verify?token=${token}" style="color:#00ff88">Войти →</a></p>
-          <p style="color:#666;font-size:12px">Ссылка действует 15 минут. Если ты не запрашивал вход — проигнорируй письмо.</p>
-        `,
+        subject: mail.subject,
+        text: mail.text,
+        html: mail.html,
+        // уникальный ref → Gmail не группирует/не обрезает одноразовые письма
+        headers: { 'X-Entity-Ref-ID': token },
       }),
     })
   } catch (e) {
+    console.error('Resend email send threw', e)
     return Response.json({ error: 'Failed to send email', details: e instanceof Error ? e.message : String(e) }, { status: 502 })
   }
 
   if (!resendRes.ok) {
     const errorText = await resendRes.text()
+    console.error('Resend email send non-OK', resendRes.status, errorText)
     return Response.json({ error: 'Failed to send email', status: resendRes.status, details: errorText }, { status: 502 })
+  }
+
+  // observability: message-id принятого письма — чтобы сверять статус доставки в Resend-дэшборде
+  const sent = (await resendRes.json().catch(() => ({}))) as { id?: string }
+  console.log('magic-link email accepted', JSON.stringify({ email, resend_id: sent.id ?? null, new_user: isNewUser }))
+
+  // CRM-контакт — best-effort, после критичного письма; waitUntil чтобы рантайм не оборвал после ответа
+  if (newLead) {
+    ctx.waitUntil(
+      addResendContact(env, newLead)
+        .catch(e => console.error('Resend contact add failed', e))
+    )
   }
 
   return Response.json({ ok: true })

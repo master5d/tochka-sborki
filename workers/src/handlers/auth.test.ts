@@ -4,13 +4,13 @@ import type { Env } from '../lib/types'
 
 type DbCall = { sql: string; binds: unknown[] }
 
-function makeEnv(opts: { existing?: boolean; calls?: DbCall[] } = {}): Env {
+function makeEnv(opts: { existing?: boolean; calls?: DbCall[]; language?: string } = {}): Env {
   const DB = {
     prepare: (sql: string) => ({
       bind: (...binds: unknown[]) => {
         opts.calls?.push({ sql, binds })
         return {
-          first: vi.fn().mockResolvedValue(opts.existing ? { id: 'existing-user-id' } : null),
+          first: vi.fn().mockResolvedValue(opts.existing ? { id: 'existing-user-id', language: opts.language ?? 'ru' } : null),
           run: vi.fn().mockResolvedValue({ success: true }),
         }
       },
@@ -118,6 +118,35 @@ describe('handleSendLink Resend contact', () => {
     })
     const res = await handleSendLink(sendLinkReq({ email: 'test@example.com' }), makeEnv(), ctx)
     expect(res.status).toBe(200)
+    fetchSpy.mockRestore()
+  })
+})
+
+describe('handleSendLink bilingual (по users.language)', () => {
+  function emailBody(fetchSpy: ReturnType<typeof vi.spyOn>): { subject: string; text: string; html: string } {
+    const call = (fetchSpy.mock.calls as [string, RequestInit][]).find(([url]) => url === 'https://api.resend.com/emails')
+    return JSON.parse(call![1].body as string)
+  }
+
+  it('sends an English email for a new EN-locale user', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ id: 'x' }), { status: 200 }))
+    await handleSendLink(sendLinkReq({ email: 'en-new@example.com' }, { 'Accept-Language': 'en-US,en;q=0.9' }), makeEnv(), ctx)
+    expect(emailBody(fetchSpy).subject).toBe('Your sign-in link')
+    fetchSpy.mockRestore()
+  })
+
+  it('sends a Russian email for a new RU-locale user', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ id: 'x' }), { status: 200 }))
+    await handleSendLink(sendLinkReq({ email: 'ru-new@example.com' }, { 'Accept-Language': 'ru-RU,ru;q=0.9' }), makeEnv(), ctx)
+    expect(emailBody(fetchSpy).subject).toBe('Ваша ссылка для входа')
+    fetchSpy.mockRestore()
+  })
+
+  it('uses stored users.language for an existing user, ignoring the request header', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ id: 'x' }), { status: 200 }))
+    // header говорит ru, но в БД у юзера language=en → письмо должно быть на EN
+    await handleSendLink(sendLinkReq({ email: 'en-existing@example.com' }, { 'Accept-Language': 'ru-RU' }), makeEnv({ existing: true, language: 'en' }), ctx)
+    expect(emailBody(fetchSpy).subject).toBe('Your sign-in link')
     fetchSpy.mockRestore()
   })
 })
