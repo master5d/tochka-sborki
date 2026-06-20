@@ -7,6 +7,8 @@ import { getDictionary, type Locale } from '@/lib/dictionaries'
 import { detectOs, readStoredOs, storeOs } from '@/lib/os-pref'
 import { activeEasterEgg, type EasterEgg } from '@/lib/easter-eggs'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { RpgModeToggle } from '@/components/rpg-mode-toggle'
+import { useRpgMode } from '@/lib/use-rpg-mode'
 
 interface Props { locale?: Locale }
 
@@ -15,6 +17,7 @@ export function Nav({ locale: localeProp }: Props = {}) {
   const detected: Locale = pathname.startsWith('/en') ? 'en' : 'ru'
   const locale = localeProp ?? detected
   const t = getDictionary(locale)
+  const { plain } = useRpgMode(locale)
 
   const [email, setEmail] = useState<string | null>(null)
   const [os, setOs] = useState<string | null>(null)
@@ -90,7 +93,7 @@ export function Nav({ locale: localeProp }: Props = {}) {
       </Link>
       <div style={{ display: 'flex', gap: '1rem', fontSize: '0.875rem', alignItems: 'center' }}>
         <div className="nav-secondary-links" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-        {email && (() => { const h = `${locale === 'en' ? '/en' : ''}/dashboard/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.questLog}</Link> })()}
+        {email && (() => { const h = `${locale === 'en' ? '/en' : ''}/dashboard/`; return <Link href={h} style={navLinkStyle(h)}>{plain('navQuestLog', t.nav.questLog)}</Link> })()}
         {email && (() => { const h = `${locale === 'en' ? '/en' : ''}/character/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.profile}</Link> })()}
         {(() => { const h = `${locale === 'en' ? '/en' : ''}/syllabus/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.syllabus}</Link> })()}
         {(() => { const h = `${locale === 'en' ? '/en' : ''}/roadmap/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.roadmap}</Link> })()}
@@ -117,6 +120,8 @@ export function Nav({ locale: localeProp }: Props = {}) {
         </Link>
 
         <ThemeToggle locale={locale} />
+
+        <RpgModeToggle locale={locale} />
 
         {os && (
           <button

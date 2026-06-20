@@ -15,6 +15,7 @@ export type Dictionary = {
     osTitle: string
     osCurrent: (os: string) => string
     theme: { title: string; light: string; dark: string; system: string }
+    rpgMode: { title: string; rpg: string; plain: string }
   }
   hero: {
     tagline: string
@@ -187,6 +188,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       osTitle: 'Сменить OS',
       osCurrent: (os: string) => `Текущая OS: ${os === 'mac' ? 'macOS' : 'Windows'}. Нажми для смены.`,
       theme: { title: 'Тема', light: 'Светлая', dark: 'Тёмная', system: 'Системная' },
+      rpgMode: { title: 'Режим подачи', rpg: 'Игровой режим', plain: 'Простой язык' },
     },
     hero: {
       tagline: '⬡ Открытый курс · Бесплатно',
@@ -424,6 +426,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       osTitle: 'Switch OS',
       osCurrent: (os: string) => `Current OS: ${os === 'mac' ? 'macOS' : 'Windows'}. Click to switch.`,
       theme: { title: 'Theme', light: 'Light', dark: 'Dark', system: 'System' },
+      rpgMode: { title: 'Presentation', rpg: 'Game mode', plain: 'Plain language' },
     },
     hero: {
       tagline: '⬡ Open course · Free',

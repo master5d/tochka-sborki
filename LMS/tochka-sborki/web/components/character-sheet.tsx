@@ -5,8 +5,11 @@ import { ATTRIBUTES } from '@/lib/intake/attributes'
 import { skinCompanion } from '@/lib/rpg/skins-meta'
 import type { Locale } from '@/lib/intake/types'
 import type { WorldSkin } from '@/lib/intake/types'
+import { useRpgMode } from '@/lib/use-rpg-mode'
+import { SKILL_GATING_NOTE } from '@/lib/rpg-mode'
 
 export function CharacterSheet({ locale, profile }: { locale: Locale; profile?: any }) {
+  const { plain } = useRpgMode(locale)
   const [fetched, setFetched] = useState<any>(null)
   useEffect(() => {
     if (profile) return
@@ -38,6 +41,9 @@ export function CharacterSheet({ locale, profile }: { locale: Locale; profile?: 
           </div>
         </div>
       ))}
+      <p style={{ fontSize: '.72rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: '0 0 1rem', fontStyle: 'italic' }}>
+        {SKILL_GATING_NOTE[locale]}
+      </p>
       {[['backstory', p.backstory], ['first_quest', p.first_quest], ['final_boss', p.final_boss]].map(([k, v]) => (
         <div key={k as string} style={{ borderLeft: '3px solid var(--text-accent)', paddingLeft: '.9rem', margin: '1rem 0' }}>{v}</div>
       ))}
@@ -55,12 +61,12 @@ export function CharacterSheet({ locale, profile }: { locale: Locale; profile?: 
           textDecoration: 'none',
         }}
       >
-        {locale === 'en' ? 'Enter your Quest Log →' : 'Войти в Квест-лог →'}
+        {plain('enterQuestLog', locale === 'en' ? 'Enter your Quest Log →' : 'Войти в Квест-лог →')}
       </Link>
       <p style={{ textAlign: 'center', fontSize: '.78rem', color: 'var(--text-secondary)', marginTop: '.8rem' }}>
         {locale === 'en'
-          ? 'Your character sheet stays here — you can revisit it anytime.'
-          : 'Лист персонажа останется здесь — можно вернуться в любой момент.'}
+          ? `Your ${plain('sheetName', 'character sheet')} stays here — you can revisit it anytime.`
+          : `${(s => s.charAt(0).toUpperCase() + s.slice(1))(plain('sheetName', 'Лист персонажа'))} останется здесь — можно вернуться в любой момент.`}
       </p>
     </main>
   )
