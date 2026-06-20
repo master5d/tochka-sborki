@@ -88,6 +88,13 @@ export function ActThree({ locale }: Props) {
         </p>
 
         <p>
+          {'And if you\'re thinking right now: "but I\'m the split one — how am I supposed to" —'}
+          {" that's not a disqualification, it's the starting point. You don't need to be assembled"}
+          {' to begin; you need one honest breath in which you noticed you\'re split. That\'s where'}
+          {' assembly starts — not from the already-whole, but from the honestly seen split.'}
+        </p>
+
+        <p>
           {'How this comes together in practice is a separate conversation, and there is a course'}
           {' for that. Here I want to bring three threads into one.'}
         </p>
@@ -176,6 +183,13 @@ export function ActThree({ locale }: Props) {
         {' Важно, что ты раз за разом возвращаешься в это место внутри. Через него проходит дверь в'}
         {' инструмент. Не через подписку, не через курс, не через правильную модель. Через тебя,'}
         {' собранного.'}
+      </p>
+
+      <p>
+        {'И если ты сейчас думаешь: «но я-то как раз расколот, мне как» — это не дисквалификация,'}
+        {' а отправная точка. Не нужно быть собранным, чтобы начать; нужен один честный вдох, в'}
+        {' котором ты заметил, что расщеплён. С него и начинается сборка — не из уже-целого, а из'}
+        {' честно увиденного раскола.'}
       </p>
 
       <p>

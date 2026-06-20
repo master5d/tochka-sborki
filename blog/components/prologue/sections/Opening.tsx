@@ -7,7 +7,7 @@ export function Opening({ locale }: Props) {
     return (
       <div className={styles.opening}>
         <p className={styles.lead}>
-          {'You open ChatGPT twenty times a day. You sit down to it assembled — almost never.'}
+          {'You open ChatGPT twenty times a day. How often do you sit down to it assembled?'}
         </p>
 
         <p>
@@ -57,7 +57,7 @@ export function Opening({ locale }: Props) {
   return (
     <div className={styles.opening}>
       <p className={styles.lead}>
-        {'Ты открываешь ChatGPT по двадцать раз на дню. А садишься к нему собранным — почти никогда.'}
+        {'Ты открываешь ChatGPT по двадцать раз на дню. А собранным к нему садишься — как часто?'}
       </p>
 
       <p>
