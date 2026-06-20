@@ -6,6 +6,7 @@ import { QuestionRenderer } from './question-renderer'
 import type { Answers, AnswerValue, InstrumentVersion, Locale } from '@/lib/intake/types'
 import { CharterReveal } from './charter-reveal'
 import { OnboardingBridge } from './onboarding-bridge'
+import { IntakeGate } from './intake-gate'
 import { buildCompanionCharter } from '@/lib/intake/charter'
 import { deriveMbti } from '@/lib/intake/mbti'
 import { SKINS_META } from '@/lib/rpg/skins-meta'
@@ -19,6 +20,10 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
   const [charter, setCharter] = useState<string | null>(null)
   const [pendingHref, setPendingHref] = useState<string | null>(null)
   const [showBridge, setShowBridge] = useState(false)
+  // Clarity-gate: shown once at a fresh start (step 0, no saved answers), before the first question.
+  const [gateDismissed, setGateDismissed] = useState(false)
+  // Gate render on saved-progress fetch settling — avoids flashing the gate/Q1 to resuming students.
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     fetch('/api/intake/me', { credentials: 'include' })
@@ -29,6 +34,7 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
         if (d.answers) { setAnswers(JSON.parse(d.answers)); setStep(d.current_step ?? 0) }
       })
       .catch(() => {})
+      .finally(() => setLoaded(true))
   }, [])
 
   const QUESTIONS = getQuestions(version)
@@ -96,6 +102,10 @@ export function IntakeWizard({ locale }: { locale: Locale }) {
     return <OnboardingBridge skin={skinKey ?? 'wanderer'} locale={locale} onEnter={() => { if (pendingHref) window.location.replace(pendingHref) }} />
   }
   if (charter) return <CharterReveal charter={charter} locale={locale} onContinue={() => setShowBridge(true)} />
+  if (!loaded) return null
+  // Fresh start (no saved answers) → plain-language clarity-gate before the first RPG question.
+  if (!gateDismissed && step === 0 && Object.keys(answers).length === 0)
+    return <IntakeGate locale={locale} onEnter={() => setGateDismissed(true)} />
   if (!q) return null
   const isLast = step === total - 1
   const answered = answers[q.id] != null && answers[q.id] !== '' && !(Array.isArray(answers[q.id]) && (answers[q.id] as string[]).length === 0)
