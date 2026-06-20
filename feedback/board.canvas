@@ -3348,7 +3348,7 @@
       "text": "🎨 Clarity-first над геймификацией: объяснить «что это и что я получу» простым языком",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 9,
         "sovern:urgency": 8,
@@ -3404,7 +3404,7 @@
       "text": "🎨 Value-prop delta: ответить «что это даст сверх моего заряженного ChatGPT/Claude»",
       "metadata": {
         "sovern:layer": "hub",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 9,
         "sovern:urgency": 8,
