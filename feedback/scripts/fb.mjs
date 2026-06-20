@@ -49,9 +49,11 @@ switch (cmd) {
     break
   }
   case 'status': {
-    const [prefix, status] = args
+    // --verified снимает reopen-guard при закрытии переоткрытого тикета.
+    const verified = args.includes('--verified')
+    const [prefix, status] = args.filter(a => a !== '--verified')
     if (!prefix || !status) {
-      console.error('usage: fb.mjs status <id|prefix> <status>')
+      console.error('usage: fb.mjs status <id|prefix> <status> [--verified]')
       process.exit(1)
     }
     if (!STATUSES.includes(status)) {
@@ -64,10 +66,24 @@ switch (cmd) {
       console.error(matches.length === 0 ? `тикет «${prefix}» не найден` : `«${prefix}» неоднозначен (${matches.length} совпадений)`)
       process.exit(1)
     }
-    matches[0].status = status
+    const ticket = matches[0]
+    const wasDone = ticket.status === 'done'
+    // Переоткрытие: бывший-done (или уже-reopened) уводят в открытый статус → метим reopened.
+    if (status !== 'done' && (wasDone || ticket.reopened)) {
+      ticket.reopened = true
+      if (wasDone) ticket.reopen_count = (ticket.reopen_count ?? 0) + 1
+    }
+    // Reopen-guard: закрыть переоткрытый тикет можно только после проверки исполнения (--verified).
+    if (status === 'done' && ticket.reopened && !verified) {
+      console.error(`«${ticket.id}» переоткрывался (reopen_count=${ticket.reopen_count ?? 1}) — проверь исполнение, затем закрывай: fb.mjs status ${prefix} done --verified`)
+      process.exit(1)
+    }
+    if (status === 'done' && verified) delete ticket.reopened
+    ticket.status = status
     writeFileSync(JSONL, tickets.map(t => JSON.stringify(t)).join('\n') + '\n')
     rebuild(tickets)
-    console.log(`status: ${matches[0].id} → ${status}`)
+    const tag = ticket.reopened ? ' 🔁 reopened' : verified ? ' (verified)' : ''
+    console.log(`status: ${ticket.id} → ${status}${tag}`)
     break
   }
   case 'build': {

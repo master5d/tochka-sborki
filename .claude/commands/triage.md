@@ -32,6 +32,11 @@ description: >
 
 **area** (словарь продуктов mc_hub): `lms` (ai.mamaev.coach, курс-приложение), `blog`, `hub` (mamaev.coach лендинг), `mentor`, `workers` (API), `course` (контент курса: уроки, упражнения), `infra` (CI, деплой, тулчейн).
 
+**lms_target** (ТОЛЬКО для area `lms` или `course`; для прочих — опусти поле): куда тикет приземляется в разрезе мульти-курсовой платформы.
+- `engine` — переиспользуемый движок LMS (выгода для ВСЕХ будущих курсов): RPG-движок, intake/scoring-движок, learn-with-AI, PWA, SEO-baseline, auth/guards, content-loader, i18n, контракт `lib/course.ts`, generic-компоненты, `LMS/_template/`.
+- `course` — инстанс «Точка Сборки» (контент/данные именно этого курса): `lib/course/*` (skins-данные, intake-вопросы, showcase, niche-map, flavor), `content/{ru,en}`, `public/materials/`, тексты/слоганы, модули/упражнения.
+- Лакмус: «новый курс получит это автоматически → `engine`; это про данные/контент именно Точки Сборки → `course`».
+
 **impact / urgency:** 1–10 для Priority Matrix. impact = скольких затрагивает × насколько глубоко; urgency = можно ли отложить.
 
 **confidence:** 0–1. Если < 0.6 — НЕ записывай сразу: покажи карточку с пометкой `⚠ низкая уверенность` в первой строке и спроси: «Записать как есть, поправить классификацию или отбросить?». Записывай только после ответа.
@@ -40,7 +45,7 @@ description: >
 Сформируй JSON и передай в CLI (из корня mc_hub):
 
 ```bash
-echo '{"source":"paste","content":"<сырой текст>","title":"<заголовок ≤80>","status":"idle","triage":{"category":"...","severity":"...","area":"...","impact":N,"urgency":N,"confidence":0.X,"reason":"<одна строка>"}}' | node feedback/scripts/fb.mjs add
+echo '{"source":"paste","content":"<сырой текст>","title":"<заголовок ≤80>","status":"idle","triage":{"category":"...","severity":"...","area":"...","lms_target":"engine|course","impact":N,"urgency":N,"confidence":0.X,"reason":"<одна строка>"}}' | node feedback/scripts/fb.mjs add
 ```
 
 На Windows надёжнее через временный файл и stdin-pipe:
@@ -52,7 +57,7 @@ echo '{"source":"paste","content":"<сырой текст>","title":"<загол
 
 ```
 ┌─ ТРИАЖ ──────────────────────────────────────
-│ 🐛 bug · high · area: lms · conf 0.9
+│ 🐛 bug · high · area: lms · target: engine · conf 0.9
 │ «Аватар-генератор падает на PNG»
 │ Impact 8 × Urgency 7 → Matrix: Do First
 │ Kanban: idle · id: fb_a1b2c3d4e5f6
@@ -73,6 +78,9 @@ node feedback/scripts/fb.mjs status <префикс> <status>
 ```
 
 Покажи результат (id → новый статус). При ошибке «неоднозначен» — выведи совпадающие тикеты и попроси уточнить.
+
+### Reopen-guard (переоткрытые тикеты)
+Когда тикет уводят из `done` обратно в открытый статус (`idle/pending/active`), CLI помечает его `reopened: true` (+ `reopen_count`), а на доске он получает префикс 🔁. **Переоткрытый тикет нельзя закрыть просто так** — `status <id> done` блокируется (exit 1), пока ты не ПРОВЕРИШЬ исполнение и не закроешь явно через `status <id> done --verified`. Правило: reopen = «работа не доделана / надо перепроверить», а не «можно снова закрыть по факту наличия кода». Сначала сверь обещание тикета с тем, что реально на диске, и только потом `--verified`.
 
 ## Privacy
 В `title` и `reason` не включай имена людей и компаний из текста — перефразируй суть.

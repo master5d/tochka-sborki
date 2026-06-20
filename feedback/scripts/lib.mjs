@@ -38,10 +38,11 @@ export function ticketToNode(ticket, index) {
     width: 240,
     height: 140,
     color: SEVERITY_COLOR[t.severity] ?? '#64748b',
-    text: `${CATEGORY_EMOJI[t.category] ?? '📌'} ${ticket.title}`,
+    text: `${ticket.reopened ? '🔁 ' : ''}${CATEGORY_EMOJI[t.category] ?? '📌'} ${ticket.title}`,
     metadata: {
       'sovern:layer': t.area ?? 'infra',
       'sovern:status': ticket.status ?? 'idle',
+      'sovern:reopened': ticket.reopened ?? false,
       'sovern:impact': t.impact ?? 5,
       'sovern:urgency': t.urgency ?? 5,
       'sovern:created': ticket.created,

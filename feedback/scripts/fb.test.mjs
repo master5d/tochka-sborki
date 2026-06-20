@@ -86,6 +86,38 @@ test('add: id и created нельзя подделать через входно
   assert.notEqual(saved.created, '1970-01-01T00:00:00Z')
 })
 
+test('reopen-guard: done→idle метит reopened, закрытие блокируется без --verified, проходит с ним', () => {
+  const out = run(['add'], sampleTicket)
+  const id = out.match(/fb_[0-9a-f]{12}/)[0]
+  const read = () => JSON.parse(readFileSync(join(dir, 'feedback.jsonl'), 'utf8').trim())
+
+  // свежий тикет закрывается свободно
+  run(['status', id, 'done'])
+  assert.equal(read().status, 'done')
+
+  // увод из done → reopened + 🔁 на доске
+  const reopenOut = run(['status', id, 'idle'])
+  assert.match(reopenOut, /reopened/)
+  let saved = read()
+  assert.equal(saved.reopened, true)
+  assert.equal(saved.reopen_count, 1)
+  const canvas = JSON.parse(readFileSync(join(dir, 'board.canvas'), 'utf8'))
+  const node = canvas.nodes.find(n => n.id === id)
+  assert.match(node.text, /🔁/)
+  assert.equal(node.metadata['sovern:reopened'], true)
+
+  // закрыть reopened без --verified → блок, статус не меняется
+  assert.throws(() => run(['status', id, 'done']))
+  assert.equal(read().status, 'idle')
+
+  // с --verified → закрывается, флаг снят, счётчик сохранён
+  run(['status', id, 'done', '--verified'])
+  saved = read()
+  assert.equal(saved.status, 'done')
+  assert.equal(saved.reopened, undefined)
+  assert.equal(saved.reopen_count, 1)
+})
+
 test('add: невалидный JSON на stdin → ошибка', () => {
   assert.throws(() => run(['add'], 'не json'))
 })
