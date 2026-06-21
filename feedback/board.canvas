@@ -3581,6 +3581,146 @@
           "reason": "запрос автора: каждый showcase из fb_2fbf86ac3c67 сопровождается блогпостом-разбором (use-case). Серия use-cases/«Горизонты»; связан с fb_6ded7b (golden-ticket showcase). Блог-апп standalone (model B)."
         }
       }
+    },
+    {
+      "id": "fb_bfbdbcf0c2b4",
+      "type": "text",
+      "x": 300,
+      "y": 5960,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Синергема: структурированный матчинг по интересу/усилию (синдицированная экономика)",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 7,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-06-21T07:03:43.993Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "lms_target": "engine",
+          "impact": 7,
+          "urgency": 4,
+          "confidence": 0.8,
+          "reason": "Эпик-сплит fb_7fdd9f891109 (Phase B reframe сделан). Структурный матчинг по интересу/усилию = ядро синдицированной экономики; deferred из Phase B чтобы не плодить миграции сразу."
+        }
+      }
+    },
+    {
+      "id": "fb_c3a3d02458df",
+      "type": "text",
+      "x": 580,
+      "y": 5960,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Синергема: синтетический наставник (AI-ментор на кластер)",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 6,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-21T07:03:44.065Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "lms_target": "engine",
+          "impact": 6,
+          "urgency": 3,
+          "confidence": 0.75,
+          "reason": "Эпик-сплит fb_7fdd9f891109. Столб синергема-платформы; строится поверх companion/learn-with-AI. Далеко за Phase B."
+        }
+      }
+    },
+    {
+      "id": "fb_daa79c74eff9",
+      "type": "text",
+      "x": 860,
+      "y": 5960,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Синергема: встроенная акселерационная программа (сетевые ресурсы/прогрессия)",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 6,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-21T07:03:44.153Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "lms_target": "engine",
+          "impact": 6,
+          "urgency": 2,
+          "confidence": 0.7,
+          "reason": "Эпик-сплит fb_7fdd9f891109. Дальний столб; требует Phase B+C синергем сначала."
+        }
+      }
+    },
+    {
+      "id": "fb_c5d771f00e9a",
+      "type": "text",
+      "x": 1140,
+      "y": 5960,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ Синергема: ИГИ — Игра в Групповой Инсайт (ритуал формирования)",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 6,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-21T07:03:44.232Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "lms_target": "engine",
+          "impact": 6,
+          "urgency": 3,
+          "confidence": 0.78,
+          "reason": "Эпик-сплит fb_7fdd9f891109. Ритуал формирования группы (Институт Человеческой Связи, флеш-карты Келдена); самостоятельная игровая механика."
+        }
+      }
+    },
+    {
+      "id": "fb_029568403443",
+      "type": "text",
+      "x": 300,
+      "y": 6140,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "💡 Синергема: Web3/DAO-управление + синергемная экономика (дальний горизонт)",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 5,
+        "sovern:urgency": 1,
+        "sovern:created": "2026-06-21T07:03:44.317Z",
+        "feedback": {
+          "category": "idea",
+          "severity": "low",
+          "area": "lms",
+          "lms_target": "engine",
+          "impact": 5,
+          "urgency": 1,
+          "confidence": 0.6,
+          "reason": "Эпик-сплит fb_7fdd9f891109. Самый дальний горизонт (Web3/DAO/ноосфера); фиксируем как vision-anchor, не план."
+        }
+      }
     }
   ],
   "edges": [
@@ -4223,6 +4363,31 @@
       "id": "e_fb_83d05aa7ee6f",
       "fromNode": "area_blog",
       "toNode": "fb_83d05aa7ee6f"
+    },
+    {
+      "id": "e_fb_bfbdbcf0c2b4",
+      "fromNode": "area_lms",
+      "toNode": "fb_bfbdbcf0c2b4"
+    },
+    {
+      "id": "e_fb_c3a3d02458df",
+      "fromNode": "area_lms",
+      "toNode": "fb_c3a3d02458df"
+    },
+    {
+      "id": "e_fb_daa79c74eff9",
+      "fromNode": "area_lms",
+      "toNode": "fb_daa79c74eff9"
+    },
+    {
+      "id": "e_fb_c5d771f00e9a",
+      "fromNode": "area_lms",
+      "toNode": "fb_c5d771f00e9a"
+    },
+    {
+      "id": "e_fb_029568403443",
+      "fromNode": "area_lms",
+      "toNode": "fb_029568403443"
     }
   ]
 }
