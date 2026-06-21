@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { AlumniClient } from '@/components/alumni-client'
 
 export const metadata: Metadata = {
-  title: 'Alumni — Tochka Sborki',
-  description: 'An opt-in directory of fellow learners by field.',
+  title: 'Synergems — Tochka Sborki',
+  description: 'Opt-in clusters of fellow learners by shared interest and effort.',
   robots: { index: false, follow: false },
 }
 
