@@ -42,6 +42,8 @@ export function IntakeGate({ locale, onEnter }: { locale: Locale; onEnter: () =>
         ))}
       </div>
 
+      <p style={{ color: 'var(--text-primary)', fontSize: '0.95rem', fontWeight: 600, marginBottom: '1.2rem', lineHeight: 1.5 }}>{c.keep}</p>
+
       <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.6rem', lineHeight: 1.55 }}>{c.frame}</p>
 
       <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center', flexWrap: 'wrap' }}>

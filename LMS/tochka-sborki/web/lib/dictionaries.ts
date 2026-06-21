@@ -31,6 +31,7 @@ export type Dictionary = {
   forWhoLabel: string
   forWhoHeading: string
   forWho: { title: string; body: string }[]
+  forWhoTagline: string
   chatVsSystem: {
     label: string
     heading: string
@@ -45,6 +46,7 @@ export type Dictionary = {
     beforeLabel: string
     afterLabel: string
     items: { before: string; after: string }[]
+    roiLine: string
   }
   dreams: {
     label: string
@@ -214,6 +216,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       { title: 'Строишь AI-продукт', body: 'Нужен практический фундамент: Claude Code, MCP, агенты, деплой — без воды.' },
       { title: 'Ценишь суверенитет', body: 'Walk-away экономика, open-source стек, никаких lock-in платформ.' },
     ],
+    forWhoTagline: 'Если ты строишь AI во благо, а не чтобы урвать — ты дома. Я учу осознанных людей строить решения, которые делают мир лучше.',
     chatVsSystem: {
       label: '// чат vs система',
       heading: 'Чат отвечает.\nСистема делает.',
@@ -237,6 +240,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
         { before: '30 вкладок исследования, половина теряется.', after: 'Поручил агенту — получил выжимку с источниками одним файлом.' },
         { before: 'Каждую неделю одни и те же рутинные шаги.', after: 'Описал процесс один раз — система повторяет сама.' },
       ],
+      roiLine: 'Собери систему один раз — возвращай себе часы каждую неделю.',
     },
     dreams: {
       label: '// о чём можно мечтать',
@@ -293,6 +297,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
         { q: 'Мой чат и так всё помнит', a: 'Память чата — это заметки о тебе. Система помнит проект целиком: файлы, историю решений, процессы — и действует на их основе.' },
         { q: 'Боюсь, что AI будет писать живым людям от моего имени', a: 'И не должен. Ты в цикле: AI помогает думать и готовить, но голос и отправка остаются твоими. Он не пишет за тебя — переводит твой замысел в форму и усиливает, а не подменяет. Аутентичность — это граница, которую курс защищает, а не стирает.' },
         { q: 'Почему бесплатно? Где подвох?', a: 'Подвоха нет: курс бесплатный целиком. Это открытая часть моей практики — дальше у меня есть коучинг и работа с командами, и курс — лучшее знакомство. Ты ничего не должен.' },
+        { q: 'А если я так и не стану «вайб-кодером»?', a: 'Даже если ты им никогда не станешь — навык думать вместе с AI останется с тобой навсегда: превращать замыслы в задачи, которые он исполняет, и наконец видеть, что вообще возможно. Это уже не отнять.' },
       ],
     },
     author: {
@@ -452,6 +457,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       { title: 'You’re building an AI product', body: 'You need a practical foundation: Claude Code, MCP, agents, deploys — no fluff.' },
       { title: 'You value sovereignty', body: 'Walk-away economics, open-source stack, no platform lock-in.' },
     ],
+    forWhoTagline: 'If you build AI for good, not to grab — you’re home. I teach conscious people to build solutions that make the world better.',
     chatVsSystem: {
       label: '// chat vs system',
       heading: 'A chat answers.\nA system gets it done.',
@@ -475,6 +481,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
         { before: '30 research tabs, half of them lost.', after: 'Delegate it — get a digest with sources in a single file.' },
         { before: 'The same routine steps every week.', after: 'Describe the process once — the system repeats it on its own.' },
       ],
+      roiLine: 'Build the system once — get hours back every week.',
     },
     dreams: {
       label: '// what to dream about',
@@ -531,6 +538,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
         { q: 'My chat already remembers everything', a: 'Chat memory is notes about you. A system remembers the whole project — files, decision history, processes — and acts on them.' },
         { q: 'I’m afraid AI will message real people as me', a: 'It shouldn’t. You stay in the loop: AI helps you think and prepare, but the voice and the send stay yours. It doesn’t write for you — it translates your intent into shape and amplifies it, not replaces it. Authenticity is a line this course protects, not erases.' },
         { q: 'Why free? What’s the catch?', a: 'No catch: the course is fully free. It’s the open part of my practice — I also do coaching and work with teams, and the course is the best introduction. You owe nothing.' },
+        { q: 'What if I never become a “vibe coder”?', a: 'Even if you never do, the skill of thinking with AI stays with you for good — turning your intentions into tasks it can execute, and finally seeing what’s possible. No one can take that back.' },
       ],
     },
     author: {

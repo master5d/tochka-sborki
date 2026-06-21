@@ -190,6 +190,15 @@ export function HomePage({ locale }: Props) {
               </div>
             ))}
           </div>
+          <p style={{
+            marginTop: '3rem',
+            fontSize: 'clamp(1.05rem, 2.2vw, 1.35rem)',
+            color: 'var(--text-primary)',
+            lineHeight: 1.5,
+            maxWidth: '60ch',
+          }}>
+            {t.forWhoTagline}
+          </p>
         </div>
       </section>
 

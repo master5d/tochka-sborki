@@ -12,6 +12,7 @@ export interface IntakeGateContent {
   beforeLabel: string
   afterLabel: string
   rows: IntakeGateRow[]
+  keep: string
   frame: string
   enterLabel: string
   moreLabel: string
@@ -30,6 +31,10 @@ const T = {
   },
   beforeLabel: { ru: 'Сейчас', en: 'Now' },
   afterLabel: { ru: 'После курса', en: 'After the course' },
+  keep: {
+    ru: 'Даже если ты не станешь вайб-кодером — навык думать вместе с AI останется с тобой навсегда.',
+    en: "Even if you never become a vibe coder, the skill of thinking with AI stays with you for good.",
+  },
   frame: {
     ru: 'Дальше — пара вопросов и игровая обёртка: миры, спутник, карта пути. Это метафора курса, чтобы учиться было живее — не компьютерная игра и не про программирование, просто способ подачи.',
     en: "Next come a few questions and a game wrapper: worlds, a companion, a path map. It's a metaphor for the course, to make learning livelier — not a video game and not about programming, just a way of framing it.",
@@ -61,6 +66,7 @@ export function buildIntakeGateContent(locale: Locale): IntakeGateContent {
     beforeLabel: T.beforeLabel[locale],
     afterLabel: T.afterLabel[locale],
     rows: ROWS.map(r => ({ before: r.before[locale], after: r.after[locale] })),
+    keep: T.keep[locale],
     frame: T.frame[locale],
     enterLabel: T.enter[locale],
     moreLabel: T.more[locale],

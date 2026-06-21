@@ -8,6 +8,7 @@ describe('buildIntakeGateContent', () => {
       expect(c.eyebrow).toBeTruthy()
       expect(c.title).toBeTruthy()
       expect(c.lead).toBeTruthy()
+      expect(c.keep).toBeTruthy()
       expect(c.frame).toBeTruthy()
       expect(c.enterLabel).toBeTruthy()
       expect(c.moreLabel).toBeTruthy()

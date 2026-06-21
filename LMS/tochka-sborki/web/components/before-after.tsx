@@ -66,6 +66,16 @@ export function BeforeAfter({ locale }: Props) {
             </div>
           ))}
         </div>
+        <p style={{
+          marginTop: '3rem',
+          fontSize: 'clamp(1.2rem, 2.6vw, 1.6rem)',
+          fontWeight: 700,
+          color: 'var(--text-accent)',
+          lineHeight: 1.4,
+          letterSpacing: '-0.01em',
+        }}>
+          {t.roiLine}
+        </p>
       </div>
     </section>
   )
