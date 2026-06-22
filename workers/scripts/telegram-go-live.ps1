@@ -18,6 +18,8 @@
 
 [CmdletBinding()]
 param(
+  [switch]$RegisterWebhook,
+  [string]$WebhookUrl = 'https://ai.mamaev.coach/api/telegram/webhook',
   [string]$MiniAppUrl = 'https://ai.mamaev.coach/',
   [string]$ButtonText = 'Открыть курс',
   [string]$ProdRoute  = 'https://ai.mamaev.coach/api/auth/telegram'
@@ -70,6 +72,34 @@ try {
   } else {
     Write-Warning "    setChatMenuButton returned not-ok: $($btn | ConvertTo-Json -Compress)"
     Write-Warning '    Fallback: BotFather -> /setmenubutton -> URL above. (Secret is still set; auth works.)'
+  }
+
+  # --- 3b. register the webhook (only with -RegisterWebhook) --------------------------------
+  if ($RegisterWebhook) {
+    Write-Step '3b' 'Registering the Telegram webhook (secret_token) ...'
+    # generate a random secret, store it as a Worker secret, then point Telegram at our route
+    $whSecret = ([Convert]::ToBase64String([System.Security.Cryptography.RandomNumberGenerator]::GetBytes(24))) `
+      -replace '[^A-Za-z0-9]', ''
+    Push-Location $workersDir
+    try {
+      $whSecret | npx --yes wrangler secret put TELEGRAM_WEBHOOK_SECRET
+      if ($LASTEXITCODE -ne 0) { throw "wrangler secret put (webhook) exited $LASTEXITCODE" }
+    } finally { Pop-Location }
+
+    $whBody = @{
+      url                  = $WebhookUrl
+      secret_token         = $whSecret
+      allowed_updates      = @('message', 'callback_query')
+      drop_pending_updates = $true
+    } | ConvertTo-Json -Depth 6
+    $wh = Invoke-RestMethod -Uri "https://api.telegram.org/bot$plain/setWebhook" `
+      -Method Post -ContentType 'application/json; charset=utf-8' -Body $whBody
+    if ($wh.ok) {
+      Write-Host '    OK — webhook registered' -ForegroundColor Green
+    } else {
+      Write-Warning "    setWebhook returned not-ok: $($wh | ConvertTo-Json -Compress)"
+    }
+    $whSecret = $null
   }
 }
 finally {
