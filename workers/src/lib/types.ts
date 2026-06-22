@@ -7,6 +7,7 @@ export interface Env {
   GEMINI_API_KEY: string
   OWNER_EMAIL: string
   TELEGRAM_BOT_TOKEN: string
+  TELEGRAM_WEBHOOK_SECRET: string
 }
 
 export interface JWTPayload {
