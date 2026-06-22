@@ -8,6 +8,7 @@ export interface Env {
   OWNER_EMAIL: string
   TELEGRAM_BOT_TOKEN: string
   TELEGRAM_WEBHOOK_SECRET: string
+  STRIPE_SECRET_KEY: string
 }
 
 export interface JWTPayload {
