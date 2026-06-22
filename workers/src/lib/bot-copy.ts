@@ -12,6 +12,9 @@ export interface BotCopy {
   nudgeLabel: string
   stopAck: string
   startResub: string
+  askPrompt: string
+  askThanks: string
+  askButton: string
 }
 
 const RU: BotCopy = {
@@ -26,6 +29,9 @@ const RU: BotCopy = {
   nudgeLabel: '▶️ Продолжить',
   stopAck: 'Окей, больше не буду напоминать. Захочешь снова — отправь /start.',
   startResub: 'Снова на связи — буду мягко напоминать продолжить. Выключить в любой момент: /stop.',
+  askPrompt: 'Напиши свой вопрос одним сообщением — передам куратору, а пока подскажу, где спросить своего AI.',
+  askThanks: 'Спасибо, передал твой вопрос куратору. А пока — открой курс и спроси своего AI прямо в уроке.',
+  askButton: '▶️ Открыть курс',
 }
 
 const EN: BotCopy = {
@@ -40,7 +46,13 @@ const EN: BotCopy = {
   nudgeLabel: '▶️ Continue',
   stopAck: "Got it — I won't remind you anymore. Want them back? Send /start.",
   startResub: "Back on — I'll gently remind you to continue. Turn off anytime: /stop.",
+  askPrompt: 'Send your question in one message — I\'ll pass it to the curator, and meanwhile point you to your own AI.',
+  askThanks: 'Thanks — I\'ve passed your question to the curator. Meanwhile, open the course and ask your own AI right in the lesson.',
+  askButton: '▶️ Open course',
 }
+
+// The force_reply prompts, locale-free — so the update parser can recognize a reply to "ask".
+export const ASK_PROMPTS: string[] = [RU.askPrompt, EN.askPrompt]
 
 export function botCopy(locale: BotLocale): BotCopy {
   return locale === 'en' ? EN : RU
