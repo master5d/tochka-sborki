@@ -6,6 +6,7 @@ export interface Env {
   N8N_WEBHOOK_SECRET: string
   GEMINI_API_KEY: string
   OWNER_EMAIL: string
+  TELEGRAM_BOT_TOKEN: string
 }
 
 export interface JWTPayload {
