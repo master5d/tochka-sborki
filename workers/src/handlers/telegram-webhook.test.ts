@@ -96,4 +96,43 @@ describe('handleTelegramWebhook', () => {
     )
     expect(calls.find(c => /UPDATE users SET nudge_optout = 0/.test(c.sql))).toBeDefined()
   })
+
+  it('bare /ask sends a force_reply prompt', async () => {
+    const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{"ok":true}', { status: 200 }))
+    await handleTelegramWebhook(
+      req({ message: { text: '/ask', from: { id: 600 }, chat: { id: 600 } } }),
+      makeEnv({ user: { id: 'u-600', language: 'ru', nudge_optout: 0 } })
+    )
+    const body = JSON.parse((spy.mock.calls[0][1] as RequestInit).body as string)
+    expect(body.reply_markup).toEqual({ force_reply: true })
+  })
+
+  it('/ask <question> from a linked user inserts a question and acks with a button', async () => {
+    const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{"ok":true}', { status: 200 }))
+    const calls: DbCall[] = []
+    await handleTelegramWebhook(
+      req({ message: { text: '/ask how do I install?', from: { id: 601 }, chat: { id: 601 } } }),
+      makeEnv({ user: { id: 'u-601', language: 'ru', nudge_optout: 0 }, calls })
+    )
+    const ins = calls.find(c => /INSERT INTO questions/.test(c.sql))
+    expect(ins).toBeDefined()
+    expect(ins!.binds[3]).toBe('how do I install?') // id, user_id, telegram_id, text, ...
+    expect(ins!.binds[1]).toBe('u-601')             // user_id
+    const tgCall = (spy.mock.calls as [string, RequestInit][]).find(([u]) => /api\.telegram\.org/.test(u) && /sendMessage/.test(u))
+    const ackBody = JSON.parse(tgCall![1].body as string)
+    expect(ackBody.reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.mamaev.coach/')
+  })
+
+  it('captures a question from an unlinked user with user_id null', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{"ok":true}', { status: 200 }))
+    const calls: DbCall[] = []
+    await handleTelegramWebhook(
+      req({ message: { text: '/ask anonymous q', from: { id: 602 }, chat: { id: 602 } } }),
+      makeEnv({ user: null, calls })
+    )
+    const ins = calls.find(c => /INSERT INTO questions/.test(c.sql))
+    expect(ins).toBeDefined()
+    expect(ins!.binds[1]).toBeNull()            // user_id null
+    expect(ins!.binds[2]).toBe('602')           // telegram_id
+  })
 })

@@ -2,7 +2,8 @@ import type { Env } from '../lib/types'
 import { parseUpdate } from '../lib/telegram-update'
 import { nextLesson, lessonUrl, homeUrl } from '../lib/course-order'
 import { botCopy, pickLocale, type BotLocale } from '../lib/bot-copy'
-import { sendMessage } from '../lib/telegram-api'
+import { sendMessage, sendForceReply } from '../lib/telegram-api'
+import { notifyOwnerQuestion } from '../lib/owner-notify'
 
 async function loadProgress(env: Env, userId: string): Promise<{ completed: Set<string>; viewed: Set<string> }> {
   const { results } = await env.DB.prepare(
@@ -51,6 +52,17 @@ export async function handleTelegramWebhook(request: Request, env: Env): Promise
         await env.DB.prepare('UPDATE users SET nudge_optout = 1 WHERE id = ?').bind(user.id).run()
       }
       await sendMessage(env, intent.chatId, copy.stopAck)
+    } else if (intent.kind === 'ask') {
+      const question = intent.text?.trim()
+      if (!question) {
+        await sendForceReply(env, intent.chatId, copy.askPrompt)
+      } else {
+        await env.DB.prepare(
+          'INSERT INTO questions (id, user_id, telegram_id, text, locale, created_at, status) VALUES (?, ?, ?, ?, ?, ?, ?)'
+        ).bind(crypto.randomUUID(), user?.id ?? null, intent.fromId, question, locale, Math.floor(Date.now() / 1000), 'new').run()
+        await notifyOwnerQuestion(env, { question, asker: intent.fromId, locale })
+        await sendMessage(env, intent.chatId, copy.askThanks, { text: copy.askButton, url: homeUrl(locale) })
+      }
     } else if (intent.kind === 'continue') {
       if (!user) {
         await sendMessage(env, intent.chatId, copy.openFirst, { text: copy.openCourse, url: homeUrl(locale) })
