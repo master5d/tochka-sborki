@@ -135,4 +135,14 @@ describe('handleTelegramWebhook', () => {
     expect(ins!.binds[1]).toBeNull()            // user_id null
     expect(ins!.binds[2]).toBe('602')           // telegram_id
   })
+
+  it('/support sends a button to the support page', async () => {
+    const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{"ok":true}', { status: 200 }))
+    await handleTelegramWebhook(
+      req({ message: { text: '/support', from: { id: 700 }, chat: { id: 700 } } }),
+      makeEnv({ user: { id: 'u-700', language: 'ru', nudge_optout: 0 } })
+    )
+    const body = JSON.parse((spy.mock.calls[0][1] as RequestInit).body as string)
+    expect(body.reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.mamaev.coach/support/')
+  })
 })

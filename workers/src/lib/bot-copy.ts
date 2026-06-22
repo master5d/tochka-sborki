@@ -15,6 +15,8 @@ export interface BotCopy {
   askPrompt: string
   askThanks: string
   askButton: string
+  supportIntro: string
+  supportButton: string
 }
 
 const RU: BotCopy = {
@@ -32,6 +34,8 @@ const RU: BotCopy = {
   askPrompt: 'Напиши свой вопрос одним сообщением — передам куратору, а пока подскажу, где спросить своего AI.',
   askThanks: 'Спасибо, передал твой вопрос куратору. А пока — открой курс и спроси своего AI прямо в уроке.',
   askButton: '▶️ Открыть курс',
+  supportIntro: 'Курс бесплатный и таким останется. Если хочешь поддержать автора — вот здесь:',
+  supportButton: '❤️ Поддержать',
 }
 
 const EN: BotCopy = {
@@ -49,6 +53,8 @@ const EN: BotCopy = {
   askPrompt: 'Send your question in one message — I\'ll pass it to the curator, and meanwhile point you to your own AI.',
   askThanks: 'Thanks — I\'ve passed your question to the curator. Meanwhile, open the course and ask your own AI right in the lesson.',
   askButton: '▶️ Open course',
+  supportIntro: 'The course is free and stays free. If you’d like to support the creator — here:',
+  supportButton: '❤️ Support',
 }
 
 // The force_reply prompts, locale-free — so the update parser can recognize a reply to "ask".

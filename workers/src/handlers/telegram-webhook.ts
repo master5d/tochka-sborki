@@ -1,6 +1,6 @@
 import type { Env } from '../lib/types'
 import { parseUpdate } from '../lib/telegram-update'
-import { nextLesson, lessonUrl, homeUrl } from '../lib/course-order'
+import { nextLesson, lessonUrl, homeUrl, supportUrl } from '../lib/course-order'
 import { botCopy, pickLocale, type BotLocale } from '../lib/bot-copy'
 import { sendMessage, sendForceReply } from '../lib/telegram-api'
 import { notifyOwnerQuestion } from '../lib/owner-notify'
@@ -52,6 +52,8 @@ export async function handleTelegramWebhook(request: Request, env: Env): Promise
         await env.DB.prepare('UPDATE users SET nudge_optout = 1 WHERE id = ?').bind(user.id).run()
       }
       await sendMessage(env, intent.chatId, copy.stopAck)
+    } else if (intent.kind === 'support') {
+      await sendMessage(env, intent.chatId, copy.supportIntro, { text: copy.supportButton, url: supportUrl(locale) })
     } else if (intent.kind === 'ask') {
       const question = intent.text?.trim()
       if (!question) {

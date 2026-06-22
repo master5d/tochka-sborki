@@ -1,7 +1,7 @@
 import { ASK_PROMPTS } from './bot-copy'
 
 export interface BotIntent {
-  kind: 'start' | 'continue' | 'stop' | 'ask' | 'other'
+  kind: 'start' | 'continue' | 'stop' | 'support' | 'ask' | 'other'
   fromId: string | null    // telegram numeric id as decimal string (< 2^53 assumed)
   chatId: number | null
   languageCode: string | null
@@ -51,6 +51,8 @@ export function parseUpdate(update: unknown): BotIntent {
       kind = 'continue'
     } else if (/^\/stop(\b|@|$)/.test(text)) {
       kind = 'stop'
+    } else if (/^\/support(\b|@|$)/.test(text)) {
+      kind = 'support'
     } else if (/^\/ask(\b|@|$)/.test(text)) {
       kind = 'ask'
       payload = text.replace(/^\/ask(@\S+)?\s*/, '').trim() || null

@@ -60,4 +60,9 @@ describe('parseUpdate', () => {
     expect(r.kind).toBe('ask')
     expect(r.text).toBe('как поставить Claude Code?')
   })
+
+  it('parses /support', () => {
+    const r = parseUpdate({ message: { text: '/support', from: { id: 4 }, chat: { id: 4 } } })
+    expect(r.kind).toBe('support')
+  })
 })

@@ -25,3 +25,7 @@ export function lessonUrl(slug: string, locale: 'ru' | 'en'): string {
 export function homeUrl(locale: 'ru' | 'en'): string {
   return locale === 'en' ? 'https://ai.mamaev.coach/en/' : 'https://ai.mamaev.coach/'
 }
+
+export function supportUrl(locale: 'ru' | 'en'): string {
+  return locale === 'en' ? 'https://ai.mamaev.coach/en/support/' : 'https://ai.mamaev.coach/support/'
+}
