@@ -7,6 +7,8 @@ import { LangSuggestBanner } from '@/components/lang-suggest-banner'
 import { PwaRegister } from '@/components/pwa/pwa-register'
 import { InstallPrompt } from '@/components/pwa/install-prompt'
 import { ThemeProvider } from '@/components/theme-provider'
+import { TelegramAuthBridge } from '@/components/telegram/telegram-auth-bridge'
+import Script from 'next/script'
 import { COURSE } from '@/lib/course'
 import './globals.css'
 
@@ -61,9 +63,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script dangerouslySetInnerHTML={{ __html: langScript }} />
+        <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
       </head>
       <body>
         <ThemeProvider>
+          <TelegramAuthBridge />
           <ProgressProvider>
             <LangSuggestBanner />
             <PwaRegister />

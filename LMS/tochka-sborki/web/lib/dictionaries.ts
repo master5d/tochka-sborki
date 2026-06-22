@@ -173,6 +173,9 @@ export type Dictionary = {
     start: string
     changeLater: string
   }
+  telegram: {
+    signingIn: string
+  }
 }
 
 export const dictionaries: Record<Locale, Dictionary> = {
@@ -417,6 +420,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
       start: 'Начать курс →',
       changeLater: 'Можно изменить позже в настройках',
     },
+    telegram: {
+      signingIn: 'Входим через Telegram…',
+    },
   },
   en: {
     nav: {
@@ -658,6 +664,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
       radioLabel: 'Operating system',
       start: 'Start the course →',
       changeLater: 'You can change this later in settings',
+    },
+    telegram: {
+      signingIn: 'Signing in via Telegram…',
     },
   },
 }
