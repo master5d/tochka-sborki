@@ -3,6 +3,7 @@ import { handleFeedback } from './handlers/feedback'
 import { handleSendLink, handleVerify, handleMe, handleLogout } from './handlers/auth'
 import { handleTelegramAuth } from './handlers/telegram-auth'
 import { handleTelegramWebhook } from './handlers/telegram-webhook'
+import { runDailyNudge } from './handlers/nudge-cron'
 import { handleView, handleComplete, handleList } from './handlers/progress'
 import { handleMe as handleIntakeMe, handleProgress as handleIntakeProgress, handleSubmit as handleIntakeSubmit } from './handlers/intake'
 import { runDemandRadar, listBriefs, listSignals, decideBrief } from './handlers/demand'
@@ -139,5 +140,9 @@ export default {
         headers: { 'Content-Type': 'application/json', ...corsHeaders }
       })
     }
+  },
+
+  async scheduled(_event: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
+    ctx.waitUntil(runDailyNudge(env))
   },
 }

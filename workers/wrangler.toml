@@ -17,3 +17,6 @@ database_id = "c904db4d-a900-4ff1-80ae-6056c150ca53"
 [[routes]]
 pattern = "ai.mamaev.coach/api/*"
 zone_name = "mamaev.coach"
+
+[triggers]
+crons = ["0 16 * * *"]
