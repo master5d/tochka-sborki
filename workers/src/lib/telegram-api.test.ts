@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { sendMessage } from './telegram-api'
+import { sendMessage, sendForceReply } from './telegram-api'
 import type { Env } from './types'
 
 const env = { TELEGRAM_BOT_TOKEN: 'BOTTOKEN' } as Env
@@ -23,5 +23,16 @@ describe('sendMessage', () => {
     await sendMessage(env, 1, 'go', { text: 'Open', url: 'https://ai.mamaev.coach/' })
     const body = JSON.parse((spy.mock.calls[0][1] as RequestInit).body as string)
     expect(body.reply_markup.inline_keyboard[0][0]).toEqual({ text: 'Open', web_app: { url: 'https://ai.mamaev.coach/' } })
+  })
+})
+
+describe('sendForceReply', () => {
+  it('sends a message with a force_reply markup', async () => {
+    const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{"ok":true}', { status: 200 }))
+    await sendForceReply(env, 7, 'ask me')
+    const body = JSON.parse((spy.mock.calls[0][1] as RequestInit).body as string)
+    expect(body.chat_id).toBe(7)
+    expect(body.reply_markup).toEqual({ force_reply: true })
+    spy.mockRestore()
   })
 })
