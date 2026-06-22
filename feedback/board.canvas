@@ -2595,7 +2595,7 @@
       "text": "✨ Telegram Mini App wrapper — embed LMS, initData→magic-link auth bridge",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "pending",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 8,
         "sovern:urgency": 4,
