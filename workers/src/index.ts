@@ -2,6 +2,7 @@ import type { Env } from './lib/types'
 import { handleFeedback } from './handlers/feedback'
 import { handleSendLink, handleVerify, handleMe, handleLogout } from './handlers/auth'
 import { handleTelegramAuth } from './handlers/telegram-auth'
+import { handleTelegramWebhook } from './handlers/telegram-webhook'
 import { handleView, handleComplete, handleList } from './handlers/progress'
 import { handleMe as handleIntakeMe, handleProgress as handleIntakeProgress, handleSubmit as handleIntakeSubmit } from './handlers/intake'
 import { runDemandRadar, listBriefs, listSignals, decideBrief } from './handlers/demand'
@@ -49,6 +50,8 @@ export default {
         response = await handleVerify(request, env)
       } else if (path === '/api/auth/telegram' && method === 'POST') {
         response = await handleTelegramAuth(request, env)
+      } else if (path === '/api/telegram/webhook' && method === 'POST') {
+        response = await handleTelegramWebhook(request, env)
       } else if (path === '/api/auth/me' && method === 'GET') {
         response = await handleMe(request, env)
       } else if (path === '/api/auth/logout' && method === 'POST') {
