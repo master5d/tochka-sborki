@@ -1,5 +1,5 @@
 export interface BotIntent {
-  kind: 'start' | 'continue' | 'other'
+  kind: 'start' | 'continue' | 'stop' | 'other'
   fromId: string | null    // telegram numeric id as decimal string (< 2^53 assumed)
   chatId: number | null
   languageCode: string | null
@@ -36,6 +36,7 @@ export function parseUpdate(update: unknown): BotIntent {
     let kind: BotIntent['kind'] = 'other'
     if (/^\/start(\b|@|$)/.test(text)) kind = 'start'
     else if (/^\/continue(\b|@|$)/.test(text)) kind = 'continue'
+    else if (/^\/stop(\b|@|$)/.test(text)) kind = 'stop'
     return {
       kind,
       fromId: idToStr(m.from?.id),

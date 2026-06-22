@@ -35,4 +35,9 @@ describe('parseUpdate', () => {
   it('returns nulls for an empty update', () => {
     expect(parseUpdate({})).toEqual({ kind: 'other', fromId: null, chatId: null, languageCode: null })
   })
+
+  it('parses /stop', () => {
+    const r = parseUpdate({ message: { text: '/stop', from: { id: 8 }, chat: { id: 8 } } })
+    expect(r.kind).toBe('stop')
+  })
 })
