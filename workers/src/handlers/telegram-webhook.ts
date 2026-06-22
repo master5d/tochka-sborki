@@ -32,16 +32,25 @@ export async function handleTelegramWebhook(request: Request, env: Env): Promise
     if (intent.chatId == null) return new Response('ok', { status: 200 })
 
     let locale: BotLocale = pickLocale(intent.languageCode)
-    let user: { id: string; language: string | null } | null = null
+    let user: { id: string; language: string | null; nudge_optout: number } | null = null
     if (intent.fromId) {
-      user = await env.DB.prepare('SELECT id, language FROM users WHERE telegram_id = ?')
-        .bind(intent.fromId).first<{ id: string; language: string | null }>()
+      user = await env.DB.prepare('SELECT id, language, nudge_optout FROM users WHERE telegram_id = ?')
+        .bind(intent.fromId).first<{ id: string; language: string | null; nudge_optout: number }>()
       if (user?.language) locale = pickLocale(user.language)
     }
     const copy = botCopy(locale)
 
     if (intent.kind === 'start') {
       await sendMessage(env, intent.chatId, copy.greeting, { text: copy.openCourse, url: homeUrl(locale) })
+      if (user && user.nudge_optout) {
+        await env.DB.prepare('UPDATE users SET nudge_optout = 0 WHERE id = ?').bind(user.id).run()
+        await sendMessage(env, intent.chatId, copy.startResub)
+      }
+    } else if (intent.kind === 'stop') {
+      if (user) {
+        await env.DB.prepare('UPDATE users SET nudge_optout = 1 WHERE id = ?').bind(user.id).run()
+      }
+      await sendMessage(env, intent.chatId, copy.stopAck)
     } else if (intent.kind === 'continue') {
       if (!user) {
         await sendMessage(env, intent.chatId, copy.openFirst, { text: copy.openCourse, url: homeUrl(locale) })

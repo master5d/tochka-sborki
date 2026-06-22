@@ -5,13 +5,18 @@ import type { Env } from '../lib/types'
 const SECRET = 'wh-secret'
 
 type Row = Record<string, unknown>
-function makeEnv(opts: { user?: Row | null; progress?: Row[] } = {}): Env {
+type DbCall = { sql: string; binds: unknown[] }
+function makeEnv(opts: { user?: Row | null; progress?: Row[]; calls?: DbCall[] } = {}): Env {
   const DB = {
     prepare: (sql: string) => ({
-      bind: (..._b: unknown[]) => ({
-        first: vi.fn().mockResolvedValue(/FROM users/.test(sql) ? (opts.user ?? null) : null),
-        all: vi.fn().mockResolvedValue({ results: /FROM progress/.test(sql) ? (opts.progress ?? []) : [] }),
-      }),
+      bind: (...b: unknown[]) => {
+        opts.calls?.push({ sql, binds: b })
+        return {
+          first: vi.fn().mockResolvedValue(/FROM users/.test(sql) ? (opts.user ?? null) : null),
+          all: vi.fn().mockResolvedValue({ results: /FROM progress/.test(sql) ? (opts.progress ?? []) : [] }),
+          run: vi.fn().mockResolvedValue({ success: true }),
+        }
+      },
     }),
   } as unknown as D1Database
   return { DB, TELEGRAM_BOT_TOKEN: 'BOT', TELEGRAM_WEBHOOK_SECRET: SECRET } as Env
@@ -68,5 +73,27 @@ describe('handleTelegramWebhook', () => {
   it('returns 200 even when the update is junk', async () => {
     const res = await handleTelegramWebhook(req({ nonsense: true }), makeEnv())
     expect(res.status).toBe(200)
+  })
+
+  it('/stop from a linked user sets nudge_optout = 1 and acks', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{"ok":true}', { status: 200 }))
+    const calls: DbCall[] = []
+    await handleTelegramWebhook(
+      req({ message: { text: '/stop', from: { id: 400 }, chat: { id: 400 } } }),
+      makeEnv({ user: { id: 'u-400', language: 'ru', nudge_optout: 0 }, calls })
+    )
+    const upd = calls.find(c => /UPDATE users SET nudge_optout = 1/.test(c.sql))
+    expect(upd).toBeDefined()
+    expect(upd!.binds[0]).toBe('u-400')
+  })
+
+  it('/start from an opted-out user clears nudge_optout = 0', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{"ok":true}', { status: 200 }))
+    const calls: DbCall[] = []
+    await handleTelegramWebhook(
+      req({ message: { text: '/start', from: { id: 401 }, chat: { id: 401 } } }),
+      makeEnv({ user: { id: 'u-401', language: 'ru', nudge_optout: 1 }, calls })
+    )
+    expect(calls.find(c => /UPDATE users SET nudge_optout = 0/.test(c.sql))).toBeDefined()
   })
 })
