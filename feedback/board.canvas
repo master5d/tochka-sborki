@@ -2623,7 +2623,7 @@
       "text": "✨ Companion bot (grammY on CF Worker) — daily nudge + drip gating + deep-link continue",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "pending",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 7,
         "sovern:urgency": 4,
