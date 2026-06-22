@@ -100,6 +100,7 @@ export function Nav({ locale: localeProp }: Props = {}) {
         {(() => { const h = `${locale === 'en' ? '/en' : ''}/roadmap/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.roadmap}</Link> })()}
         {(() => { const h = `${locale === 'en' ? '/en' : ''}/cheatsheet/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.cheatsheet}</Link> })()}
         {(() => { const h = `${locale === 'en' ? '/en' : ''}/feedback/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.feedback}</Link> })()}
+        {(() => { const h = `${locale === 'en' ? '/en' : ''}/support/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.support}</Link> })()}
         {(() => { const h = `${locale === 'en' ? '/en' : ''}/certificate/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.certificate} <span aria-hidden="true">◆</span></Link> })()}
         </div>
 
