@@ -2707,7 +2707,7 @@
       "text": "✨ Checkout for merch + donations (external, all-umbrella; courses stay free)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "pending",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
