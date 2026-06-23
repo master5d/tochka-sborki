@@ -7,6 +7,7 @@ import { StackMatrix } from './stack-matrix'
 import { Phase } from './phase'
 import { VideoCheckpoint } from './video-checkpoint'
 import { Walkthrough } from './walkthrough'
+import { AnnotatedExample } from './annotated-example'
 
 export const mdxComponents: MDXComponents = {
   h1: ({ children }) => (
@@ -78,4 +79,5 @@ export const mdxComponents: MDXComponents = {
   Phase,
   VideoCheckpoint,
   Walkthrough,
+  AnnotatedExample,
 }
