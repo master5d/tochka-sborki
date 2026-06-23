@@ -22,8 +22,9 @@ export interface ShowcaseVM {
 const LABEL: Bi = { ru: 'Возможности', en: 'Possibilities' }
 const HEADING: Bi = { ru: 'О чём можно мечтать', en: 'What you can dream about' }
 const CTA: Bi = { ru: 'Начать свой путь →', en: 'Start your path →' }
-const VIDEO: { url: string | null; caption: Bi } = {
-  url: null, // впиши YouTube/Vimeo watch-URL — встроится автоматически
+const VIDEO: { url: string | null; poster: string | null; caption: Bi } = {
+  url: null,    // впиши YouTube/Vimeo watch-URL или путь к .mp4 — встроится автоматически
+  poster: null, // путь к постеру в /public, например '/showcase-poster.jpg'
   caption: { ru: 'Короткий ролик о сути — скоро', en: 'A short film about the essence — coming soon' },
 }
 
@@ -53,6 +54,19 @@ export function videoEmbedUrl(url: string | null): string | null {
   const vm = url.match(/vimeo\.com\/(\d+)/)
   if (vm) return `https://player.vimeo.com/video/${vm[1]}`
   return url
+}
+
+export interface VideoSource { kind: 'embed' | 'file'; src: string }
+
+export function resolveVideoSource(url: string | null): VideoSource | null {
+  if (!url) return null
+  if (/\.(mp4|webm|ogg)(\?|#|$)/i.test(url)) return { kind: 'file', src: url }
+  const embed = videoEmbedUrl(url)
+  return embed ? { kind: 'embed', src: embed } : null
+}
+
+export function withAutoplay(embedUrl: string): string {
+  return embedUrl + (embedUrl.includes('?') ? '&' : '?') + 'autoplay=1'
 }
 
 export function getShowcase(locale: Locale): ShowcaseVM {
