@@ -84,9 +84,9 @@ mc_hub/                   — корень монорепо
   глобальные — `RESEND_AUDIENCE_ID` НЕ нужен, активно при наличии `RESEND_API_KEY`). Витрина —
   owner-gated `/admin/leads` (таблица + CSV + кнопка backfill `POST /api/admin/leads/sync-resend`).
   n8n `mds-crm` и Notion CRM выведены (секреты `N8N_CRM_*` удалены 2026-06-16).
-- D1 база `tochka-sborki-db`; секреты через `wrangler secret put` (не в коде). Миграции **0001–0010** применены
-  (0008 telegram_id, 0009 nudge cols, 0010 questions); additive-миграции прода накатываются через Cloudflare-api
-  MCP `/query` (zero-token), НЕ `wrangler migrations apply`.
+- D1 база `tochka-sborki-db`; секреты через `wrangler secret put` (не в коде). Миграции **0001–0011** применены
+  (0008 telegram_id, 0009 nudge cols, 0010 questions, 0011 purchases); additive-миграции прода накатываются через
+  Cloudflare-api MCP `/query` (zero-token), НЕ `wrangler migrations apply`.
 - **Telegram** (Mini App Phase 0 + companion bot Phase 1, оба LIVE; бот **@tochka_sborki_lms_bot**):
   - `POST /api/auth/telegram` — auth-мост: верифицирует подписанный `initData` (HMAC, `lib/telegram-initdata.ts`)
     → выдаёт тот же `session` JWT-cookie; hybrid identity (telegram_id → handle → native synthetic email). Web:
@@ -98,13 +98,21 @@ mc_hub/                   — корень монорепо
     guard-chain `lib/nudge-policy.ts` (optout/throttle 20h/active/lapse 14d; reuse паттерна wellbeing select-nudge).
   - Go-live скрипты: `workers/scripts/telegram-go-live.ps1` (token + menu button + `-RegisterWebhook`).
   - Secrets: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_WEBHOOK_SECRET`. Спека: `docs/superpowers/specs/2026-06-22-telegram-*`.
-- **Stripe support checkout** (engine; курсы всегда БЕСПЛАТНЫ — checkout только для support/tips + digital goods
-  later): `POST /api/checkout/support` (`handlers/checkout.ts`) создаёт Stripe-hosted Checkout Session (no PCI),
-  amount валидируется server-side ($1–$1000, `lib/checkout.ts`). Web `/support` (`components/support/support-form.tsx`,
-  пресеты $3/$7/$15 + custom) + бот `/support`. **Framing = «поддержка автора (ИП)», НЕ «нонпрофит/tax-deductible»**
-  (нон-профит не зарегистрирован; до `fb_3dc7f76f5f4e`). Secret `STRIPE_SECRET_KEY` (sandbox-LIVE; прод = restricted
-  `rk_live` со scope Checkout-Sessions-Write + активация нового аккаунта, НЕ Luma-managed). Скрипт
-  `workers/scripts/stripe-set-key.ps1`. Slice 2 (TODO) = digital goods + signature-verified webhook + Resend-delivery.
+- **Stripe checkout** (engine; курсы всегда БЕСПЛАТНЫ — checkout только для support/tips + digital goods + physical
+  later). **Framing = «поддержка/покупка у автора (ИП)», НЕ «нонпрофит/tax-deductible»** (нон-профит не
+  зарегистрирован; до `fb_3dc7f76f5f4e`). Stripe-hosted Checkout Sessions (no PCI). Secrets `STRIPE_SECRET_KEY`
+  (sandbox-LIVE; прод = restricted `rk_live` scope Checkout-Sessions-Write + новый аккаунт, НЕ Luma-managed) +
+  `STRIPE_WEBHOOK_SECRET`. Скрипт `workers/scripts/stripe-set-key.ps1`.
+  - **Slice 1 (support/PWYW)**: `POST /api/checkout/support` (`handlers/checkout.ts`), amount server-side $1–$1000
+    (`lib/checkout.ts`), `submit_type=donate`. Web `/support` (пресеты $3/$7/$15 + custom) + бот `/support`.
+  - **Slice 2 (digital goods, SHIPPED dark 2026-06-22)**: статичный каталог `lib/products.ts` (`PRODUCTS=[]` пока →
+    фича тёмная; web-зеркало `lib/store/products.data.ts`, держать в синхроне). `POST /api/checkout/product` —
+    цена из каталога (НЕ от клиента), `submit_type=pay`, `metadata[product_id/locale]`. `POST /api/stripe/webhook`
+    (`handlers/stripe-webhook.ts`) — `Stripe-Signature` HMAC-verify (`lib/stripe-webhook.ts`, WebCrypto, 300s replay),
+    идемпотентность `purchases.stripe_session_id UNIQUE` + `meta.changes`, доставка asset-ссылки письмом
+    (`lib/purchase-email.ts`, Resend best-effort, `delivered_at` = retry-маркер). Web `/store` + `/en/store` (+thanks),
+    nav «Магазин». Доставка: `delivery {kind:'url'}` реализована; `{kind:'r2'}` (presigned) отложена в свой слайс.
+    Go-live (owner): добавить товары в ОБА products-файла + зарегистрировать webhook-эндпоинт + set `STRIPE_WEBHOOK_SECRET`.
 
 ## RPG / геймификация (LMS/tochka-sborki/web/)
 Поверх LMS построен RPG-слой. Все статичные данные — клиентские (localStorage); сервер хранит только intake-профиль и прогресс уроков.
