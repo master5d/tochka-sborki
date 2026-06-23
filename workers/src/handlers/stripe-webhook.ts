@@ -8,7 +8,7 @@ export async function handleStripeWebhook(request: Request, env: Env): Promise<R
   if (!env.STRIPE_WEBHOOK_SECRET) return new Response('stripe_webhook_not_configured', { status: 503 })
 
   const rawBody = await request.text()
-  const verified = await verifyStripeSignature(rawBody, request.headers.get('Stripe-Signature'), env.STRIPE_WEBHOOK_SECRET, { toleranceSec: Infinity })
+  const verified = await verifyStripeSignature(rawBody, request.headers.get('Stripe-Signature'), env.STRIPE_WEBHOOK_SECRET)
   if (!verified.ok) return new Response(verified.error, { status: 400 })
 
   const event = verified.event
