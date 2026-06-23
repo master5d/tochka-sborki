@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, afterEach } from 'vitest'
 import { handleSendLink, handleLogout } from './auth'
 import type { Env } from '../lib/types'
 
@@ -173,6 +173,7 @@ const emailsCalls = (spy: ReturnType<typeof vi.spyOn>) =>
     .map(([, init]) => JSON.parse(init.body as string) as { subject: string })
 
 describe('welcome email trigger', () => {
+  afterEach(() => vi.restoreAllMocks())   // guard: a failed test must not leak the fetch spy
   it('sends BOTH magic-link and welcome emails for a NEW user', async () => {
     const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ id: 'ok' }), { status: 200 }))
     const { ctx, settle } = makeCollectingCtx()
