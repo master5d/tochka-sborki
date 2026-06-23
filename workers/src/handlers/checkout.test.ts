@@ -1,6 +1,7 @@
-import { describe, it, expect, vi, afterEach } from 'vitest'
-import { handleSupportCheckout } from './checkout'
+import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest'
+import { handleSupportCheckout, handleProductCheckout } from './checkout'
 import type { Env } from '../lib/types'
+import { PRODUCTS } from '../lib/products'
 
 afterEach(() => vi.restoreAllMocks())
 
@@ -35,6 +36,48 @@ describe('handleSupportCheckout', () => {
   it('returns 502 when Stripe responds non-OK', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('bad', { status: 400 }))
     const res = await handleSupportCheckout(req({ amount: 700 }), { STRIPE_SECRET_KEY: 'sk' } as Env)
+    expect(res.status).toBe(502)
+  })
+})
+
+function preq(body: unknown): Request {
+  return new Request('https://ai.mamaev.coach/api/checkout/product', {
+    method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' },
+  })
+}
+
+describe('handleProductCheckout', () => {
+  // seed an in-memory product for the duration of these tests
+  const seeded = { id: 'test-kit', priceCents: 1900,
+    name: { ru: 'Набор', en: 'Kit' }, blurb: { ru: 'b', en: 'b' },
+    delivery: { kind: 'url' as const, href: 'https://x/y' } }
+  beforeEach(() => { PRODUCTS.push(seeded) })
+  afterEach(() => { const i = PRODUCTS.indexOf(seeded); if (i >= 0) PRODUCTS.splice(i, 1) })
+
+  it('creates a Stripe session for a known product and returns its url', async () => {
+    const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ url: 'https://checkout.stripe.com/c/p' }), { status: 200 }))
+    const res = await handleProductCheckout(preq({ productId: 'test-kit', locale: 'ru' }), { STRIPE_SECRET_KEY: 'sk_test' } as Env)
+    expect(res.status).toBe(200)
+    expect((await res.json() as { url: string }).url).toBe('https://checkout.stripe.com/c/p')
+    const body = (spy.mock.calls[0][1] as RequestInit).body as string
+    expect(body).toContain('unit_amount%5D=1900')
+    expect(body).toContain('metadata%5Bproduct_id%5D=test-kit')
+  })
+
+  it('returns 503 when the key is not configured', async () => {
+    const res = await handleProductCheckout(preq({ productId: 'test-kit' }), {} as Env)
+    expect(res.status).toBe(503)
+  })
+
+  it('returns 404 for an unknown product', async () => {
+    const res = await handleProductCheckout(preq({ productId: 'ghost' }), { STRIPE_SECRET_KEY: 'sk' } as Env)
+    expect(res.status).toBe(404)
+  })
+
+  it('returns 502 when Stripe responds non-OK', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('bad', { status: 400 }))
+    const res = await handleProductCheckout(preq({ productId: 'test-kit' }), { STRIPE_SECRET_KEY: 'sk' } as Env)
     expect(res.status).toBe(502)
   })
 })
