@@ -7,7 +7,7 @@ export function AnnotatedExample({ segments, caption, mono = true }: {
 }) {
   const tokens = buildAnatomy(segments)
 
-  const badge = (n: number, color: { bg: string; text: string }): React.CSSProperties => ({
+  const badge = (color: { bg: string; text: string }): React.CSSProperties => ({
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
     minWidth: '1.25rem', height: '1.25rem', borderRadius: '999px',
     background: color.bg, color: color.text,
@@ -68,7 +68,7 @@ export function AnnotatedExample({ segments, caption, mono = true }: {
             padding: '0.75rem 0.9rem',
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
-              <span aria-hidden="true" style={badge(t.n, t.color)}>{t.n}</span>
+              <span aria-hidden="true" style={badge(t.color)}>{t.n}</span>
               <span style={{
                 fontFamily: 'var(--font-mono)', fontSize: '0.78rem', fontWeight: 700,
                 color: t.color.text, textTransform: 'uppercase', letterSpacing: '0.05em',
