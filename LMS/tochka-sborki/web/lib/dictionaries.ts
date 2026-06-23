@@ -118,6 +118,8 @@ export type Dictionary = {
     errorMessage: string
     pageTitle: string
     pageDescription: string
+    surveyHeading: string
+    surveySkipHint: string
   }
   wizard: {
     unit: (i: number, total: number) => string
@@ -354,6 +356,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
       errorMessage: 'Что-то пошло не так, попробуй снова.',
       pageTitle: 'Фидбек — Точка Сборки',
       pageDescription: 'Обратная связь по курсу',
+      surveyHeading: 'Как прошёл модуль?',
+      surveySkipHint: 'Любой вопрос можно пропустить — по желанию.',
     },
     mobileGate: {
       title: '💻 Этот урок — для десктопа',
@@ -601,6 +605,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
       errorMessage: 'Something went wrong, try again.',
       pageTitle: 'Feedback — Tochka Sborki',
       pageDescription: 'Feedback on the course',
+      surveyHeading: 'How was this module?',
+      surveySkipHint: "You can skip any question — it's optional.",
     },
     mobileGate: {
       title: '💻 This lesson is for desktop',

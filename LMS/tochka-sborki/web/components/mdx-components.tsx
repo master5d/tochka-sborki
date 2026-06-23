@@ -10,6 +10,7 @@ import { Walkthrough } from './walkthrough'
 import { AnnotatedExample } from './annotated-example'
 import { PromptAnatomy } from './prompt-anatomy'
 import { WillWont } from './will-wont'
+import { ModuleSurvey } from './module-survey'
 
 export const mdxComponents: MDXComponents = {
   h1: ({ children }) => (
@@ -84,4 +85,5 @@ export const mdxComponents: MDXComponents = {
   AnnotatedExample,
   PromptAnatomy,
   WillWont,
+  ModuleSurvey,
 }
