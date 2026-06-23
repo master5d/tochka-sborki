@@ -2,6 +2,7 @@ import type { Env } from '../lib/types'
 import { signJWT, generateToken } from '../lib/jwt'
 import { requireAuth } from '../middleware'
 import { addResendContact } from '../lib/crm'
+import { sendWelcomeEmail } from '../lib/welcome-email'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -122,6 +123,10 @@ export async function handleSendLink(request: Request, env: Env, ctx: ExecutionC
     ctx.waitUntil(
       addResendContact(env, newLead)
         .catch(e => console.error('Resend contact add failed', e))
+    )
+    ctx.waitUntil(
+      sendWelcomeEmail(env, { email, lang, verifyUrl })
+        .catch(e => console.error('welcome email failed', e))
     )
   }
 
