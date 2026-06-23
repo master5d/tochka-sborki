@@ -2,9 +2,9 @@ import type { Env } from '../lib/types'
 
 interface FeedbackBody {
   lesson: string
-  recommend: string
-  impact: string
-  apply: string
+  recommend?: string
+  impact?: string
+  apply?: string
   unclear?: string
   other?: string
 }
@@ -17,8 +17,8 @@ export async function handleFeedback(request: Request, env: Env): Promise<Respon
     return Response.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  if (!body.lesson || !body.recommend || !body.impact || !body.apply) {
-    return Response.json({ error: 'Missing required fields: lesson, recommend, impact, apply' }, { status: 400 })
+  if (!body.lesson) {
+    return Response.json({ error: 'Missing required field: lesson' }, { status: 400 })
   }
 
   let n8nRes: Response

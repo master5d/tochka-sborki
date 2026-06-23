@@ -14,14 +14,29 @@ function makeEnv(overrides: Partial<Env> = {}): Env {
 }
 
 describe('handleFeedback', () => {
-  it('returns 400 if required fields missing', async () => {
+  it('returns 400 if lesson is missing', async () => {
     const req = new Request('https://ai.mamaev.coach/api/feedback', {
       method: 'POST',
-      body: JSON.stringify({ lesson: 'Meeting 1' }),
+      body: JSON.stringify({ recommend: '5' }),
       headers: { 'Content-Type': 'application/json' },
     })
     const res = await handleFeedback(req, makeEnv())
     expect(res.status).toBe(400)
+  })
+
+  it('forwards a lesson-only payload (Likert skipped)', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(new Response(null, { status: 200 }))
+    const req = new Request('https://ai.mamaev.coach/api/feedback', {
+      method: 'POST',
+      body: JSON.stringify({ lesson: '01-introduction' }),
+      headers: { 'Content-Type': 'application/json' },
+    })
+    const res = await handleFeedback(req, makeEnv())
+    expect(res.status).toBe(200)
+    expect(fetchSpy).toHaveBeenCalledOnce()
+    const [, init] = fetchSpy.mock.calls[0] as [string, RequestInit]
+    expect((init.headers as Record<string, string>)['X-Webhook-Secret']).toBe('webhook_secret')
+    fetchSpy.mockRestore()
   })
 
   it('forwards to n8n with secret header on valid payload', async () => {
