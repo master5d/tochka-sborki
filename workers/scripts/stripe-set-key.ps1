@@ -37,14 +37,15 @@ $kind = if ($plain.StartsWith('rk_')) { 'restricted' } else { 'standard secret' 
 try {
   # --- 1. verify the key against Stripe (create a throwaway Checkout Session) ---------------------
   Write-Step 1 "Verifying the key with Stripe ($kind, $mode) ..."
+  # Raw URLs in the value (Stripe's own curl examples do this) — ':' and '/' are safe with no '&'/'='.
   $body = @(
     'mode=payment',
     'line_items[0][quantity]=1',
     'line_items[0][price_data][currency]=usd',
     'line_items[0][price_data][product_data][name]=Verify',
     'line_items[0][price_data][unit_amount]=100',
-    'success_url=' + [uri]::EscapeDataString('https://ai.mamaev.coach/support/thanks/'),
-    'cancel_url='  + [uri]::EscapeDataString('https://ai.mamaev.coach/support/')
+    'success_url=https://ai.mamaev.coach/support/thanks/',
+    'cancel_url=https://ai.mamaev.coach/support/'
   ) -join '&'
   try {
     $session = Invoke-RestMethod -Uri 'https://api.stripe.com/v1/checkout/sessions' -Method Post `
