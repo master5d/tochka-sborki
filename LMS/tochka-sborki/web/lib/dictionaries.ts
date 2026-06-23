@@ -12,6 +12,7 @@ export type Dictionary = {
     profile: string
     synergems: string
     support: string
+    store: string
     login: string
     logout: string
     osTitle: string
@@ -190,6 +191,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       profile: 'Профиль',
       synergems: 'Синергемы',
       support: 'Поддержать',
+      store: 'Магазин',
       feedback: 'Фидбек',
       certificate: 'Сертификат',
       login: '→ Войти',
@@ -436,6 +438,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       profile: 'Profile',
       synergems: 'Synergems',
       support: 'Support',
+      store: 'Store',
       feedback: 'Feedback',
       certificate: 'Certificate',
       login: '→ Sign in',
