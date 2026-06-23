@@ -84,6 +84,12 @@ mc_hub/                   — корень монорепо
   глобальные — `RESEND_AUDIENCE_ID` НЕ нужен, активно при наличии `RESEND_API_KEY`). Витрина —
   owner-gated `/admin/leads` (таблица + CSV + кнопка backfill `POST /api/admin/leads/sync-resend`).
   n8n `mds-crm` и Notion CRM выведены (секреты `N8N_CRM_*` удалены 2026-06-16).
+- **Welcome email** (LIVE с 2026-06-22): новый юзер в `handleSendLink` получает ДВА письма — транзакционный
+  magic-link (без изменений, лучшая доставляемость) + welcome (`lib/welcome-email.ts buildWelcomeEmail`/
+  `sendWelcomeEmail`, bilingual, best-effort `ctx.waitUntil`, никогда не роняет signup). Идемпотентно через
+  `isNewUser`/`newLead` (existing-юзер → только magic-link), без новой колонки. Копия = course-data в билдере
+  (де-хастленный Cabral; founder-нота → меню → ОДИН CTA intake → cheatsheet → anti-fluff). `List-Unsubscribe:
+  <mailto:OWNER_EMAIL>` (нативная кнопка Gmail/Apple Mail; полный suppression-роут отложен до рекуррентных кампаний).
 - D1 база `tochka-sborki-db`; секреты через `wrangler secret put` (не в коде). Миграции **0001–0011** применены
   (0008 telegram_id, 0009 nudge cols, 0010 questions, 0011 purchases); additive-миграции прода накатываются через
   Cloudflare-api MCP `/query` (zero-token), НЕ `wrangler migrations apply`.
