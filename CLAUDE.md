@@ -13,7 +13,7 @@
 - **`hub/`** → `mamaev.coach` — личный лендинг + **whole-site agent-ready слои** всего домена: llms.txt (×2), /.well-known/agent-description.md, sitemap.xml, robots.txt. Читают `blog/out/posts-manifest.json` через `hub/lib/site.ts` (данные, не импорт). Проект `mamaev-coach-hub`.
 - **`blog/`** → `mamaev.coach/blog/*` + `/en/blog/*` — **отдельный** Next-апп (реестр `blog/lib/posts.ts`, JSON-LD, `/blog/rss.xml`, OG, «read with AI»). Модель B: `assetPrefix:'/blog'`, при деплое его вывод мёржится в `hub/out` (`scripts/merge-blog.mjs`) → один CF-проект `mamaev-coach-hub`. Общий chrome — копии из hub с маркерами `// SHARED CHROME`. Деплоит job `deploy-hub` (build blog → build hub → merge).
 - **`mentor/`** → `mentor.mamaev.coach` — B2B agent-engineering (проект `mamaev-coach-mentor`)
-- **`workers/`** → `ai.mamaev.coach/api/*` — CF Worker (auth magic-link, progress, feedback, CRM). Все три сайта bilingual (RU `/`, EN `/en/`).
+- **`workers/`** → `ai.mamaev.coach/api/*` — CF Worker (auth magic-link, progress, feedback, CRM, **Telegram Mini App + companion bot**, **Stripe support checkout**, daily-nudge **cron**). Все три сайта bilingual (RU `/`, EN `/en/`).
 
 ## Структура
 ```
@@ -40,7 +40,7 @@ mc_hub/                   — корень монорепо
 │         app/            — App Router; RU `/` + EN `/en/`. Маршруты: lessons,
 │                           quest-intake, dashboard, character, dungeon, roadmap,
 │                           syllabus, cheatsheet, exercises, feedback, certificate,
-│                           login, admin, offline; metadata-routes manifest/sitemap/robots
+│                           login, admin, offline, alumni, support; metadata-routes manifest/sitemap/robots
 │         content/{ru,en}/ — MDX-версии уроков (9 модулей) с frontmatter
 │         components/     — Nav, Sidebar, UnitWizard, MDX-компоненты, OsToggle/OsBlock,
 │                           AgentToggle/AgentBlock/StackMatrix, MobileGate, LangSuggestBanner;
@@ -51,7 +51,7 @@ mc_hub/                   — корень монорепо
 ├── hub/                  — лендинг mamaev.coach + whole-site SEO (Next.js, bilingual)
 ├── blog/                 — блог mamaev.coach/blog/* — отдельный апп, мёрж в hub/out (model B)
 ├── mentor/               — B2B mentor.mamaev.coach (Next.js, bilingual)
-├── workers/              — CF Worker (Hono-less router): auth/progress/feedback/CRM
+├── workers/              — CF Worker (Hono-less router): auth/progress/feedback/CRM/telegram/checkout + scheduled() cron
 ├── docs/superpowers/     — Spec'ы и планы (brainstorming, writing-plans) — repo-wide
 ├── skills/               — Claude Code skills (tochka-sborki-update)
 ├── feedback/             — triage-конвейер: feedback.jsonl + board.canvas (skill /triage, дэшборд sovern-mindmap)
@@ -84,7 +84,27 @@ mc_hub/                   — корень монорепо
   глобальные — `RESEND_AUDIENCE_ID` НЕ нужен, активно при наличии `RESEND_API_KEY`). Витрина —
   owner-gated `/admin/leads` (таблица + CSV + кнопка backfill `POST /api/admin/leads/sync-resend`).
   n8n `mds-crm` и Notion CRM выведены (секреты `N8N_CRM_*` удалены 2026-06-16).
-- D1 база `tochka-sborki-db`; секреты через `wrangler secret put` (не в коде).
+- D1 база `tochka-sborki-db`; секреты через `wrangler secret put` (не в коде). Миграции **0001–0010** применены
+  (0008 telegram_id, 0009 nudge cols, 0010 questions); additive-миграции прода накатываются через Cloudflare-api
+  MCP `/query` (zero-token), НЕ `wrangler migrations apply`.
+- **Telegram** (Mini App Phase 0 + companion bot Phase 1, оба LIVE; бот **@tochka_sborki_lms_bot**):
+  - `POST /api/auth/telegram` — auth-мост: верифицирует подписанный `initData` (HMAC, `lib/telegram-initdata.ts`)
+    → выдаёт тот же `session` JWT-cookie; hybrid identity (telegram_id → handle → native synthetic email). Web:
+    `<TelegramAuthBridge>` авто-логинит когда LMS открыт как Telegram WebApp.
+  - `POST /api/telegram/webhook` — бот (raw, без grammY; secret-token verify). Команды `/start` `/continue`
+    (advisory drip — следующий незавершённый модуль из `lib/course-order.ts`) `/stop` `/ask` `/support`. `/ask` →
+    лид в `questions` + owner-email (`lib/owner-notify.ts`) + handoff. Bilingual copy в `lib/bot-copy.ts`.
+  - **`scheduled()` cron `0 16 * * *`** → `runDailyNudge` (`handlers/nudge-cron.ts`): один daily nudge по
+    guard-chain `lib/nudge-policy.ts` (optout/throttle 20h/active/lapse 14d; reuse паттерна wellbeing select-nudge).
+  - Go-live скрипты: `workers/scripts/telegram-go-live.ps1` (token + menu button + `-RegisterWebhook`).
+  - Secrets: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_WEBHOOK_SECRET`. Спека: `docs/superpowers/specs/2026-06-22-telegram-*`.
+- **Stripe support checkout** (engine; курсы всегда БЕСПЛАТНЫ — checkout только для support/tips + digital goods
+  later): `POST /api/checkout/support` (`handlers/checkout.ts`) создаёт Stripe-hosted Checkout Session (no PCI),
+  amount валидируется server-side ($1–$1000, `lib/checkout.ts`). Web `/support` (`components/support/support-form.tsx`,
+  пресеты $3/$7/$15 + custom) + бот `/support`. **Framing = «поддержка автора (ИП)», НЕ «нонпрофит/tax-deductible»**
+  (нон-профит не зарегистрирован; до `fb_3dc7f76f5f4e`). Secret `STRIPE_SECRET_KEY` (sandbox-LIVE; прод = restricted
+  `rk_live` со scope Checkout-Sessions-Write + активация нового аккаунта, НЕ Luma-managed). Скрипт
+  `workers/scripts/stripe-set-key.ps1`. Slice 2 (TODO) = digital goods + signature-verified webhook + Resend-delivery.
 
 ## RPG / геймификация (LMS/tochka-sborki/web/)
 Поверх LMS построен RPG-слой. Все статичные данные — клиентские (localStorage); сервер хранит только intake-профиль и прогресс уроков.
