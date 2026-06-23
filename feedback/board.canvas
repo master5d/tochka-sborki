@@ -3264,7 +3264,7 @@
       "text": "✨ 'Anatomy of a Prompt' annotated example in prompt-engineering module + cheatsheet",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
