@@ -5,7 +5,6 @@ import { PRODUCTS } from '../lib/products'
 import type { Env } from '../lib/types'
 
 const SECRET = 'whsec_test'
-const NOW = 1_800_000_000
 
 async function sign(payload: string, t = Math.floor(Date.now() / 1000), secret = SECRET): Promise<string> {
   const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret),
