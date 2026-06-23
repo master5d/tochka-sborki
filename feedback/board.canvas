@@ -2040,7 +2040,7 @@
       "text": "✨ 'You are here' progress locator on World Map / learning roadmap",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 4,
