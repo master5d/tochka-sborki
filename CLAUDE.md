@@ -150,6 +150,7 @@ mc_hub/                   — корень монорепо
 - Новый UI-текст → в `lib/dictionaries.ts` (RU+EN), не хардкодить в компонентах
 - OS-специфичные команды → `<OsBlock os="mac|windows">`; стек-специфичные → `<AgentBlock stack="...">`
 - Разбор примера (промпт/CLI/команда) → `<AnnotatedExample segments caption? mono?>` («exploded anatomy»: цветные номер-токены + callouts; `lib/content/annotated-example.ts buildAnatomy` + 6-цветная `ACCENT`-палитра; коннектор = номер-бейдж ①②③, не SVG; server-компонент; fb_e92087192011). ⚠ `next-mdx-remote@6` НЕ пробрасывает inline array/object props (`segments={[...]}` → `undefined` → build падает) — данные класть в `lib/`-модуль + тонкий wrapper с **string**-prop (как `<PromptAnatomy locale="ru">` ← `lib/content/prompt-anatomy.ts`, применён в u2-spec-formula + cheatsheet; fb_2e3ffcf70af2). Паттерн: engine props-driven, курс-данные в wrapper (как `StackMatrix`).
+- Контракт ожиданий intro (что будет / чего НЕ будет, honest, без хайпа) → `<WillWont id="course-intro" locale="ru">` (← `lib/content/will-wont.ts` keyed by id, `WillWontBlock`-engine две колонки ✓/✗ + punchline; засеян course-intro в модуле 01 u1; fb_797eef868c61). Лендинг-версия = `ProgramVenn` (Venn, отдельно). Тот же engine+wrapper+string-prop паттерн.
 - Сохранять единый стиль: секции с emoji, таблицы, чеклисты `- [ ]`, blockquote tips `> 💡`
 - Лимит CLAUDE.md ~200 строк
 - При обновлении урока (.md) — обновить соответствующий .mdx в `content/{ru,en}/`
