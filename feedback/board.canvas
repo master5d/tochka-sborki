@@ -1956,7 +1956,7 @@
       "text": "✨ Per-module post-class evaluation survey block (recommend / impact / applicability + open)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
