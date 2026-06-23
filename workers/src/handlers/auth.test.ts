@@ -159,3 +159,41 @@ describe('handleLogout', () => {
     expect(res.headers.get('Set-Cookie')).toContain('session=;')
   })
 })
+
+// collecting ctx: capture waitUntil promises so the queued welcome send actually runs
+function makeCollectingCtx() {
+  const promises: Promise<unknown>[] = []
+  const ctx = { waitUntil: (p: Promise<unknown>) => { promises.push(p) } } as unknown as ExecutionContext
+  return { ctx, settle: () => Promise.allSettled(promises) }
+}
+
+const emailsCalls = (spy: ReturnType<typeof vi.spyOn>) =>
+  (spy.mock.calls as [string, RequestInit][])
+    .filter(([url]) => url === 'https://api.resend.com/emails')
+    .map(([, init]) => JSON.parse(init.body as string) as { subject: string })
+
+describe('welcome email trigger', () => {
+  it('sends BOTH magic-link and welcome emails for a NEW user', async () => {
+    const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ id: 'ok' }), { status: 200 }))
+    const { ctx, settle } = makeCollectingCtx()
+    const res = await handleSendLink(sendLinkReq({ email: 'new@example.com' }), makeEnv({ existing: false }), ctx)
+    expect(res.status).toBe(200)
+    await settle()
+    const subjects = emailsCalls(spy).map(b => b.subject)
+    expect(subjects).toContain('Ваша ссылка для входа')              // magic-link
+    expect(subjects).toContain('Добро пожаловать в Точку Сборки')    // welcome
+    expect(subjects.length).toBe(2)
+    spy.mockRestore()
+  })
+
+  it('sends ONLY the magic-link email for an EXISTING user (idempotent)', async () => {
+    const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ id: 'ok' }), { status: 200 }))
+    const { ctx, settle } = makeCollectingCtx()
+    const res = await handleSendLink(sendLinkReq({ email: 'old@example.com' }), makeEnv({ existing: true }), ctx)
+    expect(res.status).toBe(200)
+    await settle()
+    const subjects = emailsCalls(spy).map(b => b.subject)
+    expect(subjects).toEqual(['Ваша ссылка для входа'])               // no welcome
+    spy.mockRestore()
+  })
+})
