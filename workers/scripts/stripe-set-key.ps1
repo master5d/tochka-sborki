@@ -51,10 +51,16 @@ try {
       -Headers @{ Authorization = "Bearer $plain" } -ContentType 'application/x-www-form-urlencoded' -Body $body
   } catch {
     $code = $_.Exception.Response.StatusCode.value__
-    if ($code -eq 403) {
-      throw "Stripe returned 403 — the key is valid but lacks 'Checkout Sessions: Write'. If it's a restricted key, add that scope. Nothing changed."
+    # PS7 puts the response body (Stripe's JSON error) here; surface error.message (never the key).
+    $detail = ''
+    try { $detail = ($_.ErrorDetails.Message | ConvertFrom-Json).error.message } catch { $detail = $_.ErrorDetails.Message }
+    if ($code -eq 401) {
+      throw "Stripe returned 401 — the key was not accepted. Re-copy the SECRET key. Nothing changed."
     }
-    throw "Stripe rejected the key (HTTP $code). Check you copied the SECRET key correctly. Nothing changed."
+    if ($code -eq 403) {
+      throw "Stripe returned 403 — valid key but missing 'Checkout Sessions: Write'. Add that scope to the restricted key. Nothing changed."
+    }
+    throw "Stripe returned HTTP $code. Stripe says: $detail`nNothing changed."
   }
   if (-not $session.url) { throw 'Stripe did not return a session url — unexpected. Nothing changed.' }
   Write-Host "    OK — key works and can create Checkout Sessions ($mode)" -ForegroundColor Green
