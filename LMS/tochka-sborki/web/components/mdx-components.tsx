@@ -8,6 +8,7 @@ import { Phase } from './phase'
 import { VideoCheckpoint } from './video-checkpoint'
 import { Walkthrough } from './walkthrough'
 import { AnnotatedExample } from './annotated-example'
+import { PromptAnatomy } from './prompt-anatomy'
 
 export const mdxComponents: MDXComponents = {
   h1: ({ children }) => (
@@ -80,4 +81,5 @@ export const mdxComponents: MDXComponents = {
   VideoCheckpoint,
   Walkthrough,
   AnnotatedExample,
+  PromptAnatomy,
 }
