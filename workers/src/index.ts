@@ -5,6 +5,7 @@ import { handleTelegramAuth } from './handlers/telegram-auth'
 import { handleTelegramWebhook } from './handlers/telegram-webhook'
 import { runDailyNudge } from './handlers/nudge-cron'
 import { handleSupportCheckout, handleProductCheckout } from './handlers/checkout'
+import { handleStripeWebhook } from './handlers/stripe-webhook'
 import { handleView, handleComplete, handleList } from './handlers/progress'
 import { handleMe as handleIntakeMe, handleProgress as handleIntakeProgress, handleSubmit as handleIntakeSubmit } from './handlers/intake'
 import { runDemandRadar, listBriefs, listSignals, decideBrief } from './handlers/demand'
@@ -58,6 +59,8 @@ export default {
         response = await handleSupportCheckout(request, env)
       } else if (path === '/api/checkout/product' && method === 'POST') {
         response = await handleProductCheckout(request, env)
+      } else if (path === '/api/stripe/webhook' && method === 'POST') {
+        response = await handleStripeWebhook(request, env)
       } else if (path === '/api/auth/me' && method === 'GET') {
         response = await handleMe(request, env)
       } else if (path === '/api/auth/logout' && method === 'POST') {
