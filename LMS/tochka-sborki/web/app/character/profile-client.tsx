@@ -52,7 +52,7 @@ export function ProfileClient({ modules, locale }: Props) {
       <CharacterSheet locale={locale} profile={profile} />
       <main style={{ maxWidth: 660, margin: '0 auto', padding: '0 1.5rem' }}>
         <div style={{ margin: '1.5rem 0' }}>
-          <WorldMap zones={vm.zones} accent={accent} glyph={glyph} nicheDungeonCleared={nicheDungeonCleared} />
+          <WorldMap zones={vm.zones} accent={accent} glyph={glyph} locale={locale} nicheDungeonCleared={nicheDungeonCleared} />
         </div>
       </main>
       <CharterCard profile={profile} locale={locale} />

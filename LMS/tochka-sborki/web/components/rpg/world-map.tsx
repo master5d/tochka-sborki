@@ -1,13 +1,18 @@
 'use client'
 import { nodePositions, snakePath } from '@/lib/rpg/map-layout'
+import { buildLocator } from '@/lib/rpg/locator'
 import type { ZoneVM } from '@/lib/rpg/types'
 
 const VB = 100
 const COLS = 3
 
-export function WorldMap({ zones, accent, glyph, nicheDungeonCleared = false }: { zones: ZoneVM[]; accent: string; glyph: string; nicheDungeonCleared?: boolean }) {
+export function WorldMap({ zones, accent, glyph, locale, nicheDungeonCleared = false }: { zones: ZoneVM[]; accent: string; glyph: string; locale: 'ru' | 'en'; nicheDungeonCleared?: boolean }) {
   const pts = nodePositions(zones.length, VB, VB, COLS)
   const path = snakePath(pts)
+  const loc = buildLocator(zones, locale)
+  const mapLabel = locale === 'en'
+    ? (loc.finished ? 'Learning map — course complete' : `Learning map — you are here: ${loc.zoneName}`)
+    : (loc.finished ? 'Карта обучения — курс пройден' : `Карта обучения — Вы тут: ${loc.zoneName}`)
   return (
     <div style={{ maxWidth: 520, margin: '0 auto' }}>
       <style>{`
@@ -15,7 +20,7 @@ export function WorldMap({ zones, accent, glyph, nicheDungeonCleared = false }: 
         .wm-cur { animation: wm-pulse 1.8s infinite; }
         @media (prefers-reduced-motion: reduce){ .wm-cur{ animation:none } }
       `}</style>
-      <svg viewBox={`0 0 ${VB} ${VB}`} style={{ width: '100%', height: 'auto' }} role="img" aria-label="World map">
+      <svg viewBox={`0 0 ${VB} ${VB}`} style={{ width: '100%', height: 'auto' }} role="img" aria-label={mapLabel}>
         <path d={path} fill="none" stroke="var(--border-color)" strokeWidth={1.2} strokeDasharray="2 2" />
         {zones.map((z, i) => {
           const p = pts[i]
@@ -33,10 +38,16 @@ export function WorldMap({ zones, accent, glyph, nicheDungeonCleared = false }: 
               {z.isNiche && nicheDungeonCleared && (
                 <text x={p.x} y={p.y - 7} textAnchor="middle" fontSize={5} aria-hidden="true">👑</text>
               )}
+              {cur && (
+                <text x={p.x} y={p.y - 9} textAnchor="middle" fontSize={5.5} fill={accent} aria-hidden="true">✦</text>
+              )}
             </g>
           )
         })}
       </svg>
+      <p style={{ marginTop: '0.5rem', textAlign: 'center', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', fontSize: '0.8rem' }}>
+        {loc.caption}
+      </p>
     </div>
   )
 }
