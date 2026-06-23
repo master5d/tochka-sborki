@@ -149,6 +149,7 @@ mc_hub/                   — корень монорепо
 - При добавлении нового Meeting обновлять: INDEX.md, README.md, оба `content/{ru,en}/`
 - Новый UI-текст → в `lib/dictionaries.ts` (RU+EN), не хардкодить в компонентах
 - OS-специфичные команды → `<OsBlock os="mac|windows">`; стек-специфичные → `<AgentBlock stack="...">`
+- Разбор примера (промпт/CLI/команда) → `<AnnotatedExample segments={[{text,label,note,accent}]} caption? mono?>` («exploded anatomy»: цветные номер-токены + callouts; engine-reusable, `lib/content/annotated-example.ts buildAnatomy` + 6-цветная `ACCENT`-палитра; коннектор = номер-бейдж ①②③, не SVG; server-компонент; fb_e92087192011)
 - Сохранять единый стиль: секции с emoji, таблицы, чеклисты `- [ ]`, blockquote tips `> 💡`
 - Лимит CLAUDE.md ~200 строк
 - При обновлении урока (.md) — обновить соответствующий .mdx в `content/{ru,en}/`

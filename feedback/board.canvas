@@ -3236,7 +3236,7 @@
       "text": "✨ <AnnotatedExample> MDX component — exploded/annotated anatomy (color-coded tokens + callouts)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
