@@ -1,3 +1,5 @@
+import type { Product } from './products'
+
 export const MIN_CENTS = 100        // $1
 export const MAX_CENTS = 100_000    // $1000
 
@@ -26,5 +28,22 @@ export function buildSupportSessionForm(opts: { cents: number; locale: 'ru' | 'e
   f.set('line_items[0][price_data][unit_amount]', String(opts.cents))
   f.set('success_url', `${BASE}${prefix}/support/thanks/`)
   f.set('cancel_url', `${BASE}${prefix}/support/`)
+  return f
+}
+
+export function buildProductSessionForm(opts: { product: Product; locale: 'ru' | 'en' }): URLSearchParams {
+  const prefix = opts.locale === 'en' ? '/en' : ''
+  const f = new URLSearchParams()
+  f.set('mode', 'payment')
+  f.set('submit_type', 'pay')
+  f.set('customer_creation', 'always')
+  f.set('line_items[0][quantity]', '1')
+  f.set('line_items[0][price_data][currency]', 'usd')
+  f.set('line_items[0][price_data][product_data][name]', opts.product.name[opts.locale])
+  f.set('line_items[0][price_data][unit_amount]', String(opts.product.priceCents))
+  f.set('metadata[product_id]', opts.product.id)
+  f.set('metadata[locale]', opts.locale)
+  f.set('success_url', `${BASE}${prefix}/store/thanks/`)
+  f.set('cancel_url', `${BASE}${prefix}/store/`)
   return f
 }

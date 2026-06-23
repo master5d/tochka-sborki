@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { validateSupportAmount, buildSupportSessionForm, MIN_CENTS, MAX_CENTS } from './checkout'
+import { validateSupportAmount, buildSupportSessionForm, buildProductSessionForm, MIN_CENTS, MAX_CENTS } from './checkout'
+import type { Product } from './products'
 
 describe('validateSupportAmount', () => {
   it('accepts an integer amount within bounds', () => {
@@ -28,5 +29,32 @@ describe('buildSupportSessionForm', () => {
     expect(ru.get('cancel_url')).toBe('https://ai.mamaev.coach/support/')
     const en = buildSupportSessionForm({ cents: 300, locale: 'en' })
     expect(en.get('success_url')).toBe('https://ai.mamaev.coach/en/support/thanks/')
+  })
+})
+
+const product: Product = {
+  id: 'agent-starter-kit', priceCents: 1900,
+  name: { ru: 'Стартовый набор', en: 'Starter Kit' },
+  blurb: { ru: 'b', en: 'b' },
+  delivery: { kind: 'url', href: 'https://drive.example.com/kit' },
+}
+
+describe('buildProductSessionForm', () => {
+  it('prices from the product and carries fulfilment metadata', () => {
+    const f = buildProductSessionForm({ product, locale: 'ru' })
+    expect(f.get('mode')).toBe('payment')
+    expect(f.get('submit_type')).toBe('pay')
+    expect(f.get('customer_creation')).toBe('always')
+    expect(f.get('line_items[0][price_data][unit_amount]')).toBe('1900')
+    expect(f.get('line_items[0][price_data][product_data][name]')).toBe('Стартовый набор')
+    expect(f.get('metadata[product_id]')).toBe('agent-starter-kit')
+    expect(f.get('metadata[locale]')).toBe('ru')
+    expect(f.get('success_url')).toBe('https://ai.mamaev.coach/store/thanks/')
+    expect(f.get('cancel_url')).toBe('https://ai.mamaev.coach/store/')
+  })
+  it('uses the en prefix and en product name', () => {
+    const f = buildProductSessionForm({ product, locale: 'en' })
+    expect(f.get('success_url')).toBe('https://ai.mamaev.coach/en/store/thanks/')
+    expect(f.get('line_items[0][price_data][product_data][name]')).toBe('Starter Kit')
   })
 })
