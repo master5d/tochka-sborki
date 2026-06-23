@@ -3721,6 +3721,33 @@
           "reason": "Эпик-сплит fb_7fdd9f891109. Самый дальний горизонт (Web3/DAO/ноосфера); фиксируем как vision-anchor, не план."
         }
       }
+    },
+    {
+      "id": "fb_54dd5739f9ce",
+      "type": "text",
+      "x": 580,
+      "y": 6140,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ LMS-embed Part 2: land first Learn-mode walkthrough in a course unit (handoff ready)",
+      "metadata": {
+        "sovern:layer": "web",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 5,
+        "sovern:urgency": 3,
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "web",
+          "impact": 5,
+          "urgency": 3,
+          "confidence": 0.9,
+          "reason": "scaffold complete; remaining is authoring + one bilingual embed + verify, fully specified in handoff doc",
+          "lms_target": "course"
+        }
+      }
     }
   ],
   "edges": [
@@ -4388,6 +4415,11 @@
       "id": "e_fb_029568403443",
       "fromNode": "area_lms",
       "toNode": "fb_029568403443"
+    },
+    {
+      "id": "e_fb_54dd5739f9ce",
+      "fromNode": "area_web",
+      "toNode": "fb_54dd5739f9ce"
     }
   ]
 }
