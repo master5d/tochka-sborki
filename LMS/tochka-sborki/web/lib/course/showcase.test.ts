@@ -3,22 +3,39 @@ import { getShowcase, videoEmbedUrl, resolveVideoSource, withAutoplay } from './
 
 describe('getShowcase', () => {
   for (const loc of ['ru', 'en'] as const) {
-    it(`label/heading/cta + >=4 cases with content (${loc})`, () => {
+    it(`label/cta + >=4 dream cases with content (${loc})`, () => {
       const s = getShowcase(loc)
       expect(s.label.length).toBeGreaterThan(0)
-      expect(s.heading.length).toBeGreaterThan(0)
       expect(s.cta.length).toBeGreaterThan(0)
-      expect(s.cases.length).toBeGreaterThanOrEqual(4)
-      for (const c of s.cases) {
+      expect(s.dream.heading.length).toBeGreaterThan(0)
+      expect(s.dream.cases.length).toBeGreaterThanOrEqual(4)
+      for (const c of s.dream.cases) {
         expect(c.title.length).toBeGreaterThan(0)
         expect(c.blurb.length).toBeGreaterThan(0)
         expect(c.tag.length).toBeGreaterThan(0)
         expect(c.icon.length).toBeGreaterThan(0)
       }
     })
+    it(`>=1 real case with proof fields (${loc})`, () => {
+      const s = getShowcase(loc)
+      expect(s.real.heading.length).toBeGreaterThan(0)
+      expect(s.real.cases.length).toBeGreaterThanOrEqual(1)
+      for (const c of s.real.cases) {
+        expect(c.title.length).toBeGreaterThan(0)
+        expect(c.blurb.length).toBeGreaterThan(0)
+        expect(c.tag.length).toBeGreaterThan(0)
+        expect(c.icon.length).toBeGreaterThan(0)
+        expect(c.result.length).toBeGreaterThan(0)
+        expect(c.author.length).toBeGreaterThan(0)
+      }
+    })
   }
   it('ru and en differ', () => {
-    expect(getShowcase('ru').heading).not.toBe(getShowcase('en').heading)
+    expect(getShowcase('ru').dream.heading).not.toBe(getShowcase('en').dream.heading)
+    expect(getShowcase('ru').real.heading).not.toBe(getShowcase('en').real.heading)
+  })
+  it('video source is null until a URL is configured', () => {
+    expect(getShowcase('ru').video.source).toBeNull()
   })
 })
 
