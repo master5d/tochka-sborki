@@ -3748,6 +3748,34 @@
           "lms_target": "course"
         }
       }
+    },
+    {
+      "id": "fb_df698341da2a",
+      "type": "text",
+      "x": 860,
+      "y": 6140,
+      "width": 240,
+      "height": 140,
+      "color": "#f97316",
+      "text": "🐛 Migrate /api/feedback off retired n8n to direct D1 (ModuleSurvey/FeedbackForm 502 risk)",
+      "metadata": {
+        "sovern:layer": "workers",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 7,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-06-24T00:16:14.298Z",
+        "feedback": {
+          "category": "bug",
+          "severity": "high",
+          "area": "workers",
+          "lms_target": "engine",
+          "impact": 7,
+          "urgency": 5,
+          "confidence": 0.7,
+          "reason": "Latent breakage: shipped ModuleSurvey+FeedbackForm POST /api/feedback -> handleFeedback -> n8n (retired? only legacy ref, not in wrangler.toml, crm.ts says D1+Resend is live model) -> 502 + silent data loss. Migrate to direct-D1+Resend like new /api/leads/capture. MUST verify n8n truly dead before removing (could be live via CF secret)."
+        }
+      }
     }
   ],
   "edges": [
@@ -4420,6 +4448,11 @@
       "id": "e_fb_54dd5739f9ce",
       "fromNode": "area_web",
       "toNode": "fb_54dd5739f9ce"
+    },
+    {
+      "id": "e_fb_df698341da2a",
+      "fromNode": "area_workers",
+      "toNode": "fb_df698341da2a"
     }
   ]
 }
