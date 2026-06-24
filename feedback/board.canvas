@@ -3760,7 +3760,7 @@
       "text": "🐛 Migrate /api/feedback off retired n8n to direct D1 (ModuleSurvey/FeedbackForm 502 risk)",
       "metadata": {
         "sovern:layer": "workers",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 7,
         "sovern:urgency": 5,
