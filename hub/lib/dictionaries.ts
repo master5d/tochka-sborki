@@ -52,6 +52,16 @@ export interface Dictionary {
     footerPractice: string
     courseUrl: string
   }
+  capture: {
+    nameLabel: string
+    emailLabel: string
+    phoneLabel: string
+    cityLabel: string
+    cityPlaceholder: string
+    messageLabel: string
+    submitting: string
+    errorMessage: string
+  }
 }
 
 const SOCIALS_COMMON: Social[] = [
@@ -120,6 +130,16 @@ export const dictionaries: Record<Locale, Dictionary> = {
       footerPractice: '. Практика — в открытом бесплатном курсе',
       courseUrl: 'https://ai.mamaev.coach',
     },
+    capture: {
+      nameLabel: 'Имя',
+      emailLabel: 'Email',
+      phoneLabel: 'Телефон / WhatsApp (по желанию)',
+      cityLabel: 'Город',
+      cityPlaceholder: 'Выбери город...',
+      messageLabel: 'Вопрос или комментарий (по желанию)',
+      submitting: 'Отправляем...',
+      errorMessage: 'Что-то пошло не так, попробуй снова.',
+    },
   },
   en: {
     tagline: '// mamaev.coach',
@@ -180,6 +200,16 @@ export const dictionaries: Record<Locale, Dictionary> = {
       footerThinkAloud: 'Thinking out loud on Telegram —',
       footerPractice: '. Practice lives in the free open course',
       courseUrl: 'https://ai.mamaev.coach/en/',
+    },
+    capture: {
+      nameLabel: 'Name',
+      emailLabel: 'Email',
+      phoneLabel: 'Phone / WhatsApp (optional)',
+      cityLabel: 'City',
+      cityPlaceholder: 'Choose a city...',
+      messageLabel: 'Question or comment (optional)',
+      submitting: 'Sending...',
+      errorMessage: 'Something went wrong, please try again.',
     },
   },
 }
