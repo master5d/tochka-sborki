@@ -1,88 +1,59 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { handleFeedback } from './feedback'
 import type { Env } from '../lib/types'
 
-function makeEnv(overrides: Partial<Env> = {}): Env {
+type DbCall = { sql: string; binds: unknown[] }
+
+function makeEnv(opts: { calls?: DbCall[] } = {}): Env {
+  const DB = {
+    prepare: (sql: string) => ({
+      bind: (...binds: unknown[]) => {
+        opts.calls?.push({ sql, binds })
+        return { run: async () => ({ success: true }) }
+      },
+    }),
+  } as unknown as D1Database
   return {
-    DB: {} as D1Database,
-    WORKER_JWT_SECRET: 'secret',
-    RESEND_API_KEY: 'resend_key',
-    N8N_WEBHOOK_URL: 'https://n8n.example.com/webhook/feedback',
-    N8N_WEBHOOK_SECRET: 'webhook_secret',
-    ...overrides,
-  }
+    DB,
+    WORKER_JWT_SECRET: 'test-secret',
+    RESEND_API_KEY: '',
+  } as Env
 }
 
+function req(body: unknown) {
+  return new Request('https://ai.mamaev.coach/api/feedback', {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: { 'Content-Type': 'application/json' },
+  })
+}
+
+const feedbackInsert = (calls: DbCall[]) => calls.find(c => /INSERT INTO course_feedback/.test(c.sql))
+
 describe('handleFeedback', () => {
-  it('returns 400 if lesson is missing', async () => {
-    const req = new Request('https://ai.mamaev.coach/api/feedback', {
-      method: 'POST',
-      body: JSON.stringify({ recommend: '5' }),
-      headers: { 'Content-Type': 'application/json' },
-    })
-    const res = await handleFeedback(req, makeEnv())
+  it('returns 400 and writes nothing when lesson is missing', async () => {
+    const calls: DbCall[] = []
+    const res = await handleFeedback(req({ recommend: '5' }), makeEnv({ calls }))
     expect(res.status).toBe(400)
+    expect(feedbackInsert(calls)).toBeUndefined()
   })
 
-  it('forwards a lesson-only payload (Likert skipped)', async () => {
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(new Response(null, { status: 200 }))
-    const req = new Request('https://ai.mamaev.coach/api/feedback', {
-      method: 'POST',
-      body: JSON.stringify({ lesson: '01-introduction' }),
-      headers: { 'Content-Type': 'application/json' },
-    })
-    const res = await handleFeedback(req, makeEnv())
-    expect(res.status).toBe(200)
-    expect(fetchSpy).toHaveBeenCalledOnce()
-    const [, init] = fetchSpy.mock.calls[0] as [string, RequestInit]
-    expect((init.headers as Record<string, string>)['X-Webhook-Secret']).toBe('webhook_secret')
-    fetchSpy.mockRestore()
-  })
-
-  it('forwards to n8n with secret header on valid payload', async () => {
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
-      new Response(null, { status: 200 })
+  it('persists a full payload to course_feedback and returns 200', async () => {
+    const calls: DbCall[] = []
+    const res = await handleFeedback(
+      req({ lesson: '01-introduction', recommend: '5', impact: '4', apply: '5', unclear: 'x', other: 'y', locale: 'ru' }),
+      makeEnv({ calls }),
     )
-    const req = new Request('https://ai.mamaev.coach/api/feedback', {
-      method: 'POST',
-      body: JSON.stringify({ lesson: 'Meeting 1', recommend: '5', impact: '4', apply: '5' }),
-      headers: { 'Content-Type': 'application/json' },
-    })
-    const res = await handleFeedback(req, makeEnv())
     expect(res.status).toBe(200)
-    expect(fetchSpy).toHaveBeenCalledOnce()
-    const [url, init] = fetchSpy.mock.calls[0] as [string, RequestInit]
-    expect(url).toBe('https://n8n.example.com/webhook/feedback')
-    expect((init.headers as Record<string, string>)['X-Webhook-Secret']).toBe('webhook_secret')
-    const forwarded = JSON.parse(init.body as string)
-    expect(forwarded.lesson).toBe('Meeting 1')
-    expect(typeof forwarded.submitted_at).toBe('string')
-    fetchSpy.mockRestore()
+    const ins = feedbackInsert(calls)
+    expect(ins).toBeDefined()
+    expect(ins!.binds).toContain('01-introduction')
   })
 
-  it('returns 502 if n8n fetch fails with network error', async () => {
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockRejectedValueOnce(new Error('Network error'))
-    const req = new Request('https://ai.mamaev.coach/api/feedback', {
-      method: 'POST',
-      body: JSON.stringify({ lesson: 'Meeting 1', recommend: '5', impact: '4', apply: '5' }),
-      headers: { 'Content-Type': 'application/json' },
-    })
-    const res = await handleFeedback(req, makeEnv())
-    expect(res.status).toBe(502)
-    fetchSpy.mockRestore()
-  })
-
-  it('returns 502 if n8n returns non-2xx', async () => {
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
-      new Response(null, { status: 500 })
-    )
-    const req = new Request('https://ai.mamaev.coach/api/feedback', {
-      method: 'POST',
-      body: JSON.stringify({ lesson: 'Meeting 1', recommend: '5', impact: '4', apply: '5' }),
-      headers: { 'Content-Type': 'application/json' },
-    })
-    const res = await handleFeedback(req, makeEnv())
-    expect(res.status).toBe(502)
-    fetchSpy.mockRestore()
+  it('persists a skippable (lesson-only) payload and returns 200', async () => {
+    const calls: DbCall[] = []
+    const res = await handleFeedback(req({ lesson: '01-introduction' }), makeEnv({ calls }))
+    expect(res.status).toBe(200)
+    expect(feedbackInsert(calls)).toBeDefined()
   })
 })
