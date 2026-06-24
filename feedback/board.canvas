@@ -2068,7 +2068,7 @@
       "text": "✨ Single 'ecosystem' diagram — show all support pillars at a glance",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 5,
         "sovern:urgency": 3,
@@ -3180,7 +3180,7 @@
       "text": "💡 'Learn / Connect / Prove' 3-pillar platform framework (binds course + community + showcase/credential)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
