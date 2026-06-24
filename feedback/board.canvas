@@ -2012,7 +2012,7 @@
       "text": "✨ Adopt Manus-style use-case gallery: filterable category tabs + cards + step-by-step replay",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
