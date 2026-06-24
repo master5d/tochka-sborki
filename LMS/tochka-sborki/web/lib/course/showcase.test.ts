@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { getShowcase, videoEmbedUrl, resolveVideoSource, withAutoplay } from './showcase'
+import { getShowcase, videoEmbedUrl, resolveVideoSource, withAutoplay, filterByCategory, CATEGORY_KEYS } from './showcase'
 
 describe('getShowcase', () => {
   for (const loc of ['ru', 'en'] as const) {
@@ -59,4 +59,48 @@ describe('resolveVideoSource', () => {
 describe('withAutoplay', () => {
   it('no query → appends ?autoplay=1', () => expect(withAutoplay('https://www.youtube-nocookie.com/embed/ID')).toBe('https://www.youtube-nocookie.com/embed/ID?autoplay=1'))
   it('existing query → appends &autoplay=1', () => expect(withAutoplay('https://player.vimeo.com/video/1?h=x')).toBe('https://player.vimeo.com/video/1?h=x&autoplay=1'))
+})
+
+describe('categories', () => {
+  it('every real+dream case has a valid category key', () => {
+    const s = getShowcase('ru')
+    for (const c of [...s.real.cases, ...s.dream.cases]) {
+      expect(CATEGORY_KEYS).toContain(c.category)
+    }
+  })
+
+  for (const loc of ['ru', 'en'] as const) {
+    it(`categories = used keys in registry order, non-empty, labelled, each >=1 case (${loc})`, () => {
+      const s = getShowcase(loc)
+      expect(s.categories.length).toBeGreaterThan(0)
+      const all = [...s.real.cases, ...s.dream.cases]
+      const used = new Set(all.map(c => c.category))
+      // exactly the used keys
+      expect(new Set(s.categories.map(c => c.key))).toEqual(used)
+      // registry order
+      expect(s.categories.map(c => c.key)).toEqual(CATEGORY_KEYS.filter(k => used.has(k)))
+      // each labelled + maps to >=1 case (no empty tabs)
+      for (const cat of s.categories) {
+        expect(cat.label.length).toBeGreaterThan(0)
+        expect(all.filter(c => c.category === cat.key).length).toBeGreaterThanOrEqual(1)
+      }
+    })
+  }
+
+  it('ru and en category labels differ (bilingual)', () => {
+    const ru = getShowcase('ru').categories.map(c => c.label).join('|')
+    const en = getShowcase('en').categories.map(c => c.label).join('|')
+    expect(ru).not.toBe(en)
+  })
+})
+
+describe('filterByCategory', () => {
+  const sample = [
+    { category: 'launch' as const, id: 'a' },
+    { category: 'flow' as const, id: 'b' },
+    { category: 'launch' as const, id: 'c' },
+  ]
+  it('all → full list unchanged', () => expect(filterByCategory(sample, 'all')).toEqual(sample))
+  it('key → only that category', () => expect(filterByCategory(sample, 'launch').map(x => x.id)).toEqual(['a', 'c']))
+  it('unused key → empty', () => expect(filterByCategory(sample, 'knowledge')).toEqual([]))
 })
