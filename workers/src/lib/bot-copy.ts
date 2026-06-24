@@ -68,3 +68,28 @@ export function botCopy(locale: BotLocale): BotCopy {
 export function pickLocale(code: string | null | undefined): BotLocale {
   return (code ?? '').toLowerCase().startsWith('en') ? 'en' : 'ru'
 }
+
+export const NUDGE_VARIANTS: Record<BotLocale, string[]> = {
+  ru: [
+    'Привет! Не теряем темп — у тебя есть незаконченный модуль. Продолжим?',
+    'Эй, пара минут найдётся? Следующий модуль ждёт — можно продолжить прямо сейчас.',
+    'Без давления: когда будет настроение строить — твой курс на том же месте. Продолжим?',
+    'Маленький шаг сегодня двигает дело. Открыть следующий модуль?',
+    'Ты остановился на интересном. Готов вернуться к сборке?',
+  ],
+  en: [
+    "Hey! Let's keep the momentum — you've got an unfinished module. Continue?",
+    'Got a couple of minutes? Your next module is right where you left it — pick it up now?',
+    'No pressure: whenever you feel like building, the course is in the same spot. Continue?',
+    'A small step today moves the work. Open the next module?',
+    'You stopped at a good part. Ready to get back to building?',
+  ],
+}
+
+/** Deterministic daily rotation. seed = nowSec; the epoch-day index keeps consecutive
+ *  daily nudges different and is stable for tests. */
+export function pickNudge(locale: BotLocale, seed: number): string {
+  const variants = NUDGE_VARIANTS[locale]
+  const i = Math.floor(seed / 86400) % variants.length
+  return variants[i]
+}
