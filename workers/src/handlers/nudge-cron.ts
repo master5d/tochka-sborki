@@ -1,7 +1,7 @@
 import type { Env } from '../lib/types'
 import { nextLesson, lessonUrl } from '../lib/course-order'
 import { shouldNudge, THROTTLE_SEC } from '../lib/nudge-policy'
-import { botCopy, pickLocale } from '../lib/bot-copy'
+import { botCopy, pickLocale, pickNudge } from '../lib/bot-copy'
 import { sendMessage } from '../lib/telegram-api'
 
 interface Candidate {
@@ -47,7 +47,7 @@ export async function runDailyNudge(env: Env, nowSec: number = Math.floor(Date.n
 
       const locale = pickLocale(c.language)
       const copy = botCopy(locale)
-      await sendMessage(env, Number(c.telegram_id), copy.nudgeIntro, { text: copy.nudgeLabel, url: lessonUrl(next.slug, locale) })
+      await sendMessage(env, Number(c.telegram_id), pickNudge(locale, nowSec), { text: copy.nudgeLabel, url: lessonUrl(next.slug, locale) })
       await env.DB.prepare('UPDATE users SET last_nudge_at = ? WHERE id = ?').bind(nowSec, c.id).run()
       sent++
     } catch (e) {

@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { runDailyNudge } from './nudge-cron'
 import { MODULE_ORDER } from '../lib/course-order'
+import { NUDGE_VARIANTS } from '../lib/bot-copy'
 import type { Env } from '../lib/types'
 
 const NOW = 1_800_000_000
@@ -71,5 +72,18 @@ describe('runDailyNudge', () => {
       NOW
     )
     expect(res.sent).toBe(0)
+  })
+
+  it('sends one of the de-guru nudge variants as the message text', async () => {
+    const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{"ok":true}', { status: 200 }))
+    const res = await runDailyNudge(
+      makeEnv({ candidates: [candidate()], progress: [{ lesson_slug: '00-kickstart', viewed_at: NOW - TWO_DAYS, completed_at: NOW - TWO_DAYS }] }),
+      NOW
+    )
+    expect(res.sent).toBe(1)
+    const body = JSON.parse((spy.mock.calls[0][1] as RequestInit).body as string)
+    const { pickNudge } = await import('../lib/bot-copy')
+    expect(body.text).toBe(pickNudge('ru', NOW))
+    expect(NUDGE_VARIANTS.ru).toContain(body.text)
   })
 })
