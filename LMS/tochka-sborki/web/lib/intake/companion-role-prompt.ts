@@ -4,6 +4,7 @@
 // The memory layer; the per-unit handoff (LearnWithAI dock) is the session layer.
 import type { Locale } from './types'
 import { profileToCharter } from './charter'
+import { mentorFirmness } from '../mentor-persona'
 
 const COURSE = 'Точка Сборки'
 
@@ -27,6 +28,8 @@ export function buildCompanionRolePrompt(profile: any | null, locale: Locale): s
           ``,
           `Законы: co-thinking, не «сделай за меня»; решение и голос всегда за мной; меньше помощи — больше рост.`,
           ``,
+          mentorFirmness(locale),
+          ``,
           `Начни с одного вопроса: над чем я сейчас работаю.`,
         ].join('\n')
       : [
@@ -37,6 +40,8 @@ export function buildCompanionRolePrompt(profile: any | null, locale: Locale): s
           `When I bring you a lesson or a task, lead me through the loop: intent → systems thinking → design thinking → step → todo. One focus per turn, briefly.`,
           ``,
           `Laws: co-thinking, not "do it for me"; the decision and the voice always stay with me; less help — more growth.`,
+          ``,
+          mentorFirmness(locale),
           ``,
           `Start with one question: what I'm working on right now.`,
         ].join('\n')
@@ -52,6 +57,8 @@ export function buildCompanionRolePrompt(profile: any | null, locale: Locale): s
         charter,
         ``,
         `---`,
+        mentorFirmness(locale),
+        ``,
         `Когда я приношу урок или задачу — веди по циклу: намерение → системное мышление → дизайн → шаг → todo. Держи устав между сессиями; начни с вопроса, над чем я сейчас работаю.`,
       ].join('\n')
     : [
@@ -62,6 +69,8 @@ export function buildCompanionRolePrompt(profile: any | null, locale: Locale): s
         charter,
         ``,
         `---`,
+        mentorFirmness(locale),
+        ``,
         `When I bring a lesson or task, lead me through the loop: intent → systems thinking → design → step → todo. Keep the charter across sessions; start by asking what I'm working on now.`,
       ].join('\n')
 }

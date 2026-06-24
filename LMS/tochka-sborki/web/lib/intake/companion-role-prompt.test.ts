@@ -36,3 +36,15 @@ describe('buildCompanionRolePrompt', () => {
     expect(en).toContain('Точка Сборки')
   })
 })
+
+describe('anti-sycophancy contract', () => {
+  it('carries the firmness contract in the profile branch (ru + en)', () => {
+    expect(buildCompanionRolePrompt(profile, 'ru')).toMatch(/льст/)
+    expect(buildCompanionRolePrompt(profile, 'en')).toMatch(/flatter/)
+  })
+
+  it('carries the firmness contract in the guest branch (ru + en)', () => {
+    expect(buildCompanionRolePrompt(null, 'ru')).toMatch(/льст/)
+    expect(buildCompanionRolePrompt(null, 'en')).toMatch(/flatter/)
+  })
+})
