@@ -11,6 +11,7 @@ import { AnnotatedExample } from './annotated-example'
 import { PromptAnatomy } from './prompt-anatomy'
 import { WillWont } from './will-wont'
 import { ModuleSurvey } from './module-survey'
+import { CaptureFormBlock } from './capture-form-block'
 
 export const mdxComponents: MDXComponents = {
   h1: ({ children }) => (
@@ -86,4 +87,5 @@ export const mdxComponents: MDXComponents = {
   PromptAnatomy,
   WillWont,
   ModuleSurvey,
+  CaptureFormBlock,
 }
