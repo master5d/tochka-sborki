@@ -3097,7 +3097,7 @@
       "text": "✨ Event/retreat interest-capture form (consent-first: name/email/optional-phone/city -> CRM)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
