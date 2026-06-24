@@ -121,6 +121,16 @@ export type Dictionary = {
     surveyHeading: string
     surveySkipHint: string
   }
+  capture: {
+    nameLabel: string
+    emailLabel: string
+    phoneLabel: string
+    cityLabel: string
+    cityPlaceholder: string
+    messageLabel: string
+    submitting: string
+    errorMessage: string
+  }
   wizard: {
     unit: (i: number, total: number) => string
     back: string
@@ -358,6 +368,16 @@ export const dictionaries: Record<Locale, Dictionary> = {
       pageDescription: 'Обратная связь по курсу',
       surveyHeading: 'Как прошёл модуль?',
       surveySkipHint: 'Любой вопрос можно пропустить — по желанию.',
+    },
+    capture: {
+      nameLabel: 'Имя',
+      emailLabel: 'Email',
+      phoneLabel: 'Телефон / WhatsApp (по желанию)',
+      cityLabel: 'Город',
+      cityPlaceholder: 'Выбери город...',
+      messageLabel: 'Вопрос или комментарий (по желанию)',
+      submitting: 'Отправляем...',
+      errorMessage: 'Что-то пошло не так, попробуй снова.',
     },
     mobileGate: {
       title: '💻 Этот урок — для десктопа',
@@ -607,6 +627,16 @@ export const dictionaries: Record<Locale, Dictionary> = {
       pageDescription: 'Feedback on the course',
       surveyHeading: 'How was this module?',
       surveySkipHint: "You can skip any question — it's optional.",
+    },
+    capture: {
+      nameLabel: 'Name',
+      emailLabel: 'Email',
+      phoneLabel: 'Phone / WhatsApp (optional)',
+      cityLabel: 'City',
+      cityPlaceholder: 'Choose a city...',
+      messageLabel: 'Question or comment (optional)',
+      submitting: 'Sending...',
+      errorMessage: 'Something went wrong, please try again.',
     },
     mobileGate: {
       title: '💻 This lesson is for desktop',
