@@ -20,8 +20,6 @@ function makeEnv(opts: { existing?: boolean; calls?: DbCall[]; language?: string
     DB,
     WORKER_JWT_SECRET: 'test-secret-32-characters-minimum!!',
     RESEND_API_KEY: 'resend_key',
-    N8N_WEBHOOK_URL: '',
-    N8N_WEBHOOK_SECRET: '',
   } as Env
 }
 

@@ -29,8 +29,6 @@ function makeEnv(): Env {
     } as unknown as D1Database,
     WORKER_JWT_SECRET: SECRET,
     RESEND_API_KEY: '',
-    N8N_WEBHOOK_URL: '',
-    N8N_WEBHOOK_SECRET: '',
   }
 }
 

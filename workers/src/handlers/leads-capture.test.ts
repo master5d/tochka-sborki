@@ -20,8 +20,6 @@ function makeEnv(opts: { existing?: boolean; calls?: DbCall[] } = {}): Env {
     DB,
     WORKER_JWT_SECRET: 'test-secret',
     RESEND_API_KEY: '', // empty → addResendContact no-ops, no network in tests
-    N8N_WEBHOOK_URL: '',
-    N8N_WEBHOOK_SECRET: '',
   } as Env
 }
 
