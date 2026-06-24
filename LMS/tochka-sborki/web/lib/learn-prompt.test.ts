@@ -92,3 +92,19 @@ describe('agentUrl', () => {
     expect(agentUrl('claude', 'a b')).toBe('https://claude.ai/new?q=a%20b')
   })
 })
+
+describe('anti-sycophancy contract', () => {
+  it('buildLearnPrompt carries the firmness contract (ru + en)', () => {
+    expect(buildLearnPrompt(base)).toMatch(/льст/)
+    expect(buildLearnPrompt({ ...base, locale: 'en' })).toMatch(/flatter/)
+  })
+
+  it('buildBootstrapDeepLink carries the compact clause and stays within the cap', () => {
+    const ru = buildBootstrapDeepLink(base)
+    const en = buildBootstrapDeepLink({ ...base, locale: 'en' })
+    expect(ru).toMatch(/льст/)
+    expect(en).toMatch(/flatter/)
+    expect(ru.length).toBeLessThanOrEqual(1500)
+    expect(en.length).toBeLessThanOrEqual(1500)
+  })
+})

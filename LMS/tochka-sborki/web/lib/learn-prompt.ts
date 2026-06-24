@@ -6,6 +6,7 @@
 import type { Mode } from './cs/types'
 import type { Locale } from './dictionaries'
 import type { RelationalStyle } from './intake/types'
+import { mentorFirmness, mentorFirmnessCompact } from './mentor-persona'
 
 export interface LearnPromptInput {
   locale: Locale
@@ -95,13 +96,13 @@ export function buildBootstrapDeepLink(i: LearnPromptInput): string {
     : (ru ? 'Ты — мой наставник-напарник' : 'You are my mentor-partner')
 
   const text = ru
-    ? `${persona}, мой наставник со-мышления (не пиши и не решай за меня — веди меня думать). ` +
+    ? `${persona}, мой наставник со-мышления (не пиши и не решай за меня — веди меня думать; ${mentorFirmnessCompact(i.locale)}). ` +
       `Я прохожу курс «Точка Сборки»${niche ? `, моя сфера — ${niche}` : ''}. ` +
       `Сейчас я на материале: модуль «${i.moduleTitle}», юнит ${unitNo} из ${i.totalUnits}.` +
       (outcome ? ` Мой запрос: «${outcome}».` : '') +
       ` Веди по циклу: намерение → системное мышление → дизайн → шаг → todo. ` +
       `Говори как персонаж своего мира, один вопрос за ход. Сначала спроси, что я уже понял и где затык.`
-    : `${persona}, my co-thinking mentor (don't write or decide for me — guide me to think). ` +
+    : `${persona}, my co-thinking mentor (don't write or decide for me — guide me to think; ${mentorFirmnessCompact(i.locale)}). ` +
       `I'm taking the "Точка Сборки" course${niche ? `, my field is ${niche}` : ''}. ` +
       `I'm currently on: module "${i.moduleTitle}", unit ${unitNo} of ${i.totalUnits}.` +
       (outcome ? ` My goal: "${outcome}".` : '') +
@@ -127,6 +128,8 @@ export function buildLearnPrompt(i: LearnPromptInput): string {
     const lines = [
       'Ты — мой со-мыслящий партнёр по обучению, не репетитор и не «сделай за меня». Мы co-thinking и co-working: инструмент и роль человека разделены — ты держишь рамку и задаёшь вопросы, а смысл, выбор и решения остаются за мной.',
       '',
+      mentorFirmness(i.locale),
+      '',
       'Контекст: я прохожу курс «Точка Сборки» — про способы со-мышления и со-работы с агентами (vibe coding, agentic AI).' +
         (i.skinName ? ` Мой обучающий мир — «${i.skinName}»${i.mentorName ? `, наставник в нём — ${i.mentorName}` : ''}.` : '') +
         (niche ? ` Моя сфера — ${niche}.` : '') +
@@ -149,6 +152,8 @@ export function buildLearnPrompt(i: LearnPromptInput): string {
 
   const lines = [
     'You are my co-thinking learning partner — not a tutor and not a "do-it-for-me." We co-think and co-work: tool and human role are separate — you hold the frame and ask questions, while meaning, choices, and decisions stay with me.',
+    '',
+    mentorFirmness(i.locale),
     '',
     'Context: I am taking the "Точка Сборки" course — about the ways of co-thinking and co-working with agents (vibe coding, agentic AI).' +
       (i.skinName ? ` My learning world is "${i.skinName}"${i.mentorName ? `, my mentor in it is ${i.mentorName}` : ''}.` : '') +
