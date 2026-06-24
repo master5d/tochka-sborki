@@ -10,6 +10,7 @@ import { handleView, handleComplete, handleList } from './handlers/progress'
 import { handleMe as handleIntakeMe, handleProgress as handleIntakeProgress, handleSubmit as handleIntakeSubmit } from './handlers/intake'
 import { runDemandRadar, listBriefs, listSignals, decideBrief } from './handlers/demand'
 import { listLeads, syncContacts } from './handlers/leads'
+import { handleLeadCapture } from './handlers/leads-capture'
 import { handleAlumniList, handleAlumniMe, handleAlumniOptin } from './handlers/alumni'
 import { requireAuth, requireOwner } from './middleware'
 
@@ -47,6 +48,8 @@ export default {
 
       if (path === '/api/feedback' && method === 'POST') {
         response = await handleFeedback(request, env)
+      } else if (path === '/api/leads/capture' && method === 'POST') {
+        response = await handleLeadCapture(request, env)
       } else if (path === '/api/auth/send-link' && method === 'POST') {
         response = await handleSendLink(request, env, ctx)
       } else if (path === '/api/auth/verify' && method === 'POST') {
