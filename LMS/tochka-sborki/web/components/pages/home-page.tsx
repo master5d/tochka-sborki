@@ -4,6 +4,8 @@ import { getDictionary, type Locale } from '@/lib/dictionaries'
 import { Nav } from '@/components/nav'
 import { Footer } from '@/components/footer'
 import { ProgramVenn } from '@/components/program-venn'
+import { EcosystemDiagram } from '@/components/ecosystem-diagram'
+import { getEcosystem } from '@/lib/course/ecosystem'
 import { FaqAccordion } from '@/components/faq-accordion'
 import { HeroSecondaryCta } from '@/components/hero-secondary-cta'
 import { ChatVsSystem } from '@/components/chat-vs-system'
@@ -205,6 +207,7 @@ export function HomePage({ locale }: Props) {
       <BeforeAfter locale={locale} />
 
       <ProgramVenn locale={locale} />
+      <EcosystemDiagram data={getEcosystem(locale)} locale={locale} />
 
       {/* ── ПРОГРАММА ────────────────────────────────────────── */}
       <section id="program" className="home-program-section" style={{ padding: 'var(--section-gap) 2rem', scrollMarginTop: '2rem' }}>
