@@ -15,7 +15,7 @@ interface LeadCaptureBody {
   locale?: string
 }
 
-export async function handleLeadCapture(request: Request, env: Env): Promise<Response> {
+export async function handleLeadCapture(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   let body: LeadCaptureBody
   try {
     body = await request.json()
@@ -69,7 +69,7 @@ export async function handleLeadCapture(request: Request, env: Env): Promise<Res
   }
 
   // Resend mirror is best-effort (it swallows its own errors and no-ops without a key).
-  await addResendContact(env, { email, language, source })
+  ctx.waitUntil(addResendContact(env, { email, language, source }))
 
   return Response.json({ ok: true })
 }

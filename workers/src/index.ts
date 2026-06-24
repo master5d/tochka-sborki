@@ -49,7 +49,7 @@ export default {
       if (path === '/api/feedback' && method === 'POST') {
         response = await handleFeedback(request, env)
       } else if (path === '/api/leads/capture' && method === 'POST') {
-        response = await handleLeadCapture(request, env)
+        response = await handleLeadCapture(request, env, ctx)
       } else if (path === '/api/auth/send-link' && method === 'POST') {
         response = await handleSendLink(request, env, ctx)
       } else if (path === '/api/auth/verify' && method === 'POST') {

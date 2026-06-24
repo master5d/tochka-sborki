@@ -41,25 +41,36 @@ const validBody = {
   city: 'Nashville', event: 'retreat-inner-evolution', message: 'interested', consent: true,
 }
 
+const ctx = { waitUntil: (_p: Promise<unknown>) => {} } as unknown as ExecutionContext
+
 describe('handleLeadCapture', () => {
   it('400 on missing email', async () => {
-    const res = await handleLeadCapture(req({ consent: true }), makeEnv())
+    const calls: DbCall[] = []
+    const res = await handleLeadCapture(req({ consent: true }), makeEnv({ calls }), ctx)
     expect(res.status).toBe(400)
+    expect(eventLeadsInsert(calls)).toBeUndefined()
+    expect(usersInsert(calls)).toBeUndefined()
   })
 
   it('400 on malformed email', async () => {
-    const res = await handleLeadCapture(req({ email: 'nope', consent: true }), makeEnv())
+    const calls: DbCall[] = []
+    const res = await handleLeadCapture(req({ email: 'nope', consent: true }), makeEnv({ calls }), ctx)
     expect(res.status).toBe(400)
+    expect(eventLeadsInsert(calls)).toBeUndefined()
+    expect(usersInsert(calls)).toBeUndefined()
   })
 
   it('400 on missing consent', async () => {
-    const res = await handleLeadCapture(req({ email: 'a@b.co' }), makeEnv())
+    const calls: DbCall[] = []
+    const res = await handleLeadCapture(req({ email: 'a@b.co' }), makeEnv({ calls }), ctx)
     expect(res.status).toBe(400)
+    expect(eventLeadsInsert(calls)).toBeUndefined()
+    expect(usersInsert(calls)).toBeUndefined()
   })
 
   it('honeypot filled → 200 with no DB writes', async () => {
     const calls: DbCall[] = []
-    const res = await handleLeadCapture(req({ ...validBody, company: 'spam-bot' }), makeEnv({ calls }))
+    const res = await handleLeadCapture(req({ ...validBody, company: 'spam-bot' }), makeEnv({ calls }), ctx)
     expect(res.status).toBe(200)
     expect(eventLeadsInsert(calls)).toBeUndefined()
     expect(usersInsert(calls)).toBeUndefined()
@@ -67,7 +78,7 @@ describe('handleLeadCapture', () => {
 
   it('valid new lead → 200, inserts event_leads + upserts users (normalized email)', async () => {
     const calls: DbCall[] = []
-    const res = await handleLeadCapture(req(validBody), makeEnv({ existing: false, calls }))
+    const res = await handleLeadCapture(req(validBody), makeEnv({ existing: false, calls }), ctx)
     expect(res.status).toBe(200)
     const el = eventLeadsInsert(calls)
     expect(el).toBeDefined()
@@ -77,7 +88,7 @@ describe('handleLeadCapture', () => {
 
   it('existing user → 200, inserts event_leads but NOT a second users row', async () => {
     const calls: DbCall[] = []
-    const res = await handleLeadCapture(req(validBody), makeEnv({ existing: true, calls }))
+    const res = await handleLeadCapture(req(validBody), makeEnv({ existing: true, calls }), ctx)
     expect(res.status).toBe(200)
     expect(eventLeadsInsert(calls)).toBeDefined()
     expect(usersInsert(calls)).toBeUndefined()
