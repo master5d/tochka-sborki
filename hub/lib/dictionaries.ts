@@ -20,6 +20,7 @@ export interface Dictionary {
   name: string
   bio: string
   pitch: { eyebrow: string; body: string; cta: string }
+  founder: { eyebrow: string; heading: string; paragraphs: string[] }
   projectsLabel: string
   contactsLabel: string
   projects: Project[]
@@ -78,6 +79,15 @@ export const dictionaries: Record<Locale, Dictionary> = {
       eyebrow: 'замена залипанию',
       body: 'Бинж-вотчинг и бесконечная лента дают дофамин, после которого пусто. Vibe coding даёт тот же заряд — но к утру у тебя в руках работающая штука, а не разряженная батарея.',
       cta: 'Поменять скролл на сборку →',
+    },
+    founder: {
+      eyebrow: '// путь',
+      heading: 'Усиливать голос, не заменять',
+      paragraphs: [
+        'Раньше я был учителем кундалини-йоги — с духовным именем (Рави Ангад Синх), мантрами, линией передачи, тренингами для учителей. Это был мир преданности гуру.',
+        'Я намеренно ушёл из модели зависимости от учителя. Не потому что путь был плохим — а потому что сильный учитель растит не последователя, а другого учителя.',
+        'Тот же принцип теперь в инструментах, которые я строю: AI усиливает твой голос, а не заменяет. Суверенность и агентность вместо зависимости — этому учит Точка Сборки, и так я живу сам.',
+      ],
     },
     projectsLabel: '// проекты',
     contactsLabel: '// контакты',
@@ -149,6 +159,15 @@ export const dictionaries: Record<Locale, Dictionary> = {
       eyebrow: 'a swap for the scroll',
       body: "Binge-watching and the endless feed give you a dopamine hit that leaves you empty. Vibe coding gives the same charge — but by morning you're holding a working thing, not a drained battery.",
       cta: 'Trade the scroll for building →',
+    },
+    founder: {
+      eyebrow: '// the path',
+      heading: "Amplify the voice, don't replace it",
+      paragraphs: [
+        'I used to be a Kundalini-yoga teacher — with a spiritual name (Ravi Angad Singh), mantras, a lineage, teacher trainings. It was a world of devotion to the guru.',
+        'I deliberately left the teacher-dependency model. Not because the path was bad — but because a strong teacher raises another teacher, not a follower.',
+        "The same principle now lives in the tools I build: AI amplifies your voice, it doesn't replace it. Sovereignty and agency over dependency — that's what Tochka Sborki teaches, and how I live.",
+      ],
     },
     projectsLabel: '// projects',
     contactsLabel: '// contacts',
