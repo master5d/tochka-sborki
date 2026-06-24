@@ -2679,7 +2679,7 @@
       "text": "✨ Tochka Sborki drip schedule + daily-message copy (course data)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
