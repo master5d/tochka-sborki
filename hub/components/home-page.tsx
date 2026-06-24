@@ -122,6 +122,47 @@ export function HomePage({ locale }: Props) {
         </div>
       </section>
 
+      {/* ── FOUNDER STORY (lived transformation) ───────────────── */}
+      <section className="hub-section" style={{
+        padding: 'var(--section-gap) 2rem',
+        borderTop: '1px solid var(--border-color)',
+      }}>
+        <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
+          <div style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--section-label-size)',
+            color: 'var(--text-accent)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.15em',
+            marginBottom: '1.25rem',
+          }}>
+            {t.founder.eyebrow}
+          </div>
+          <h2 style={{
+            fontFamily: 'var(--font-display), system-ui, sans-serif',
+            fontSize: 'clamp(1.75rem, 4vw, 3rem)',
+            fontWeight: 900,
+            lineHeight: 1.0,
+            color: 'var(--text-primary)',
+            letterSpacing: '-0.03em',
+            margin: '0 0 1.75rem',
+          }}>
+            {t.founder.heading}
+          </h2>
+          {t.founder.paragraphs.map((p, i) => (
+            <p key={i} style={{
+              fontSize: '1.1rem',
+              color: 'var(--text-secondary)',
+              maxWidth: '720px',
+              lineHeight: 1.7,
+              margin: '0 0 1.25rem',
+            }}>
+              {p}
+            </p>
+          ))}
+        </div>
+      </section>
+
       {/* ── PROJECTS ───────────────────────────────────────────── */}
       <section className="hub-section" style={{
         padding: 'var(--section-gap) 2rem',
