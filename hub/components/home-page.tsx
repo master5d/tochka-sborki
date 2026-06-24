@@ -61,7 +61,7 @@ export function HomePage({ locale }: Props) {
         }}>
           {t.bio}
         </p>
-        <p style={{ marginTop: '2rem' }}>
+        <p style={{ marginTop: '2rem', display: 'flex', gap: '1.5rem' }}>
           <a href="/blog/" style={{
             fontFamily: 'var(--font-mono)',
             fontSize: '0.9rem',
@@ -70,6 +70,15 @@ export function HomePage({ locale }: Props) {
             letterSpacing: '0.04em',
           }}>
             → Блог
+          </a>
+          <a href={locale === 'en' ? '/en/events/' : '/events/'} style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.9rem',
+            color: 'var(--text-accent)',
+            textDecoration: 'none',
+            letterSpacing: '0.04em',
+          }}>
+            {locale === 'en' ? '→ Events' : '→ События'}
           </a>
         </p>
       </section>
