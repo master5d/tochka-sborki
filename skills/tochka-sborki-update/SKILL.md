@@ -50,6 +50,39 @@ These conventions keep the course consistent. Follow them for all content you wr
 - **File naming**: `XX-topic.md` where XX is zero-padded number (01, 02, ... 09, 10)
 - **Section separators**: Use `---` between major sections
 
+## Content-Design Review Lens
+
+Apply this lens whenever you write or review a lesson, section, or exercise — for any course under `LMS/`. These three principles (from the Google Facilitation Bootcamp, de-funneled) are the pedagogical guardrails that turn "is this good content?" into concrete checks. Each cross-reference points to the mechanism that already carries the principle, so the lens is actionable, not abstract.
+
+### 1. Curse of knowledge — design from the novice's seat
+
+The author knows too much; the learner does not. (Live-validated by a test-user: "if it's clear to you, you assume it's clear to everyone — but it isn't.") Write from the beginner's point of view and show the menu before the meal.
+
+- [ ] Jargon is defined on first use (or linked to the Kickstart minimal vocabulary). No undefined LLM / токен / MCP / agent / deploy assumed.
+- [ ] The lesson opens by orienting — a map or menu of what's coming — before diving into detail. The Kolb `activation` phase carries this; the coverage guard `lib/content/kolb-coverage.test.ts` enforces that every unit has it.
+- [ ] Expectations are honest and explicit — use `<WillWont>` (what this will / won't give).
+- [ ] RPG and domain jargon is disarmed for non-gamers (`onboarding-bridge`), and a plain reading path exists (clarity-first, `fb_39f6ccee8c5e`).
+
+### 2. Must / Should / Could — prioritize against cognitive overload
+
+Not everything is equally important. MoSCoW keeps the core path lean so an overloaded learner isn't drowned.
+
+- [ ] The **Must** (core takeaway) of each unit is unmistakable — one clear idea, not ten.
+- [ ] **Should / Could** material is marked optional and movable off the core path (electives — "выбирай в любом порядке"; the optional exercise tracks; bonus sections; the opt-in Kickstart).
+- [ ] No unit front-loads Could-level depth before the Must has landed.
+- [ ] Cognitive load per phase is bounded — if a `concept` phase sprawls, split it or demote material.
+
+### 3. Andragogy — adults learn differently
+
+Adults are self-directed, bring prior experience, and learn what's relevant to a real problem now.
+
+- [ ] **Self-directed**: order is flexible where possible (electives); the learner chooses depth (modes commander / copilot / archmage).
+- [ ] **Experience-first**: concrete experience precedes abstraction (Kolb `activation` → `reflection` → `concept` → `practice` — never concept-first).
+- [ ] **Problem-centered & relevant**: tied to the learner's real goal or niche (intake profile, applied-challenge personalization), not theory for its own sake.
+- [ ] **Respects prior knowledge**: no condescension; offer skip / accelerate paths.
+
+> Use this lens as a review pass, not a rigid gate — if a lesson violates a check, fix the lesson or note why the exception holds.
+
 ## Operations
 
 ### 1. Add a New Meeting
