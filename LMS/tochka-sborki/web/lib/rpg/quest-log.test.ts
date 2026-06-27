@@ -1,6 +1,7 @@
 // web/lib/rpg/quest-log.test.ts
 import { describe, it, expect } from 'vitest'
 import { buildQuestLog } from './quest-log'
+import { getTransformation } from './transformations'
 import type { SkinPack } from './types'
 
 const modules = {
@@ -37,5 +38,14 @@ describe('buildQuestLog', () => {
     const vm = buildQuestLog(profile, modules, ['00-kickstart'], (s) => s === '00-kickstart' ? 'completed' : 'none', pack, 'ru')
     expect(vm.summary.completedCount).toBe(1)
     expect(vm.summary.total).toBe(9)
+  })
+  it('populates each zone with its micro-transformation (ru)', () => {
+    const vm = buildQuestLog(profile, modules, [], () => 'none', pack, 'ru')
+    const intro = vm.zones.find(z => z.slug === '01-introduction')
+    expect(intro?.transform).toEqual(getTransformation('01-introduction', 'ru'))
+    // every zone whose slug is a known module has a transform
+    for (const z of vm.zones) {
+      if (getTransformation(z.slug, 'ru')) expect(z.transform).toBeTruthy()
+    }
   })
 })

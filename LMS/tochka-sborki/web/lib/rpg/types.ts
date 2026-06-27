@@ -37,6 +37,7 @@ export interface ZoneVM {
   status: QuestStatus
   isNiche: boolean
   href: string
+  transform?: { from: string; to: string } // module micro-transformation, localized
 }
 
 export interface QuestLogVM {

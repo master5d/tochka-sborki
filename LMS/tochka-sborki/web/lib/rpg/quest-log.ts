@@ -3,6 +3,7 @@ import type { CharacterClass, WorldSkin } from '@/lib/intake/types'
 import { MODULE_SLUGS } from './modules'
 import { QUEST_LINES } from './quest-lines'
 import { NICHE_MODULE } from '@/lib/course/niche-map'
+import { getTransformation } from './transformations'
 import type { SkinPack, QuestLogVM, ZoneVM, QuestStatus } from './types'
 
 type GetState = (slug: string) => 'completed' | 'viewed' | 'none'
@@ -34,6 +35,7 @@ export function buildQuestLog(
     status: statuses[i],
     isNiche: slug === nicheSlug,
     href: `${base}/lessons/${slug}/`,
+    transform: getTransformation(slug, locale) ?? undefined,
   }))
 
   return {
