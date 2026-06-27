@@ -9,6 +9,7 @@ import { WorldMap } from '@/components/rpg/world-map'
 import { TransformationArc } from '@/components/rpg/transformation-arc'
 import { CharacterSheet } from '@/components/character-sheet'
 import { CharterCard } from '@/components/intake/charter-card'
+import { LearningPlanCard } from '@/components/intake/learning-plan-card'
 import { CompanionSetup } from '@/components/intake/companion-setup'
 import { useNicheDungeonCleared } from '@/lib/dungeon/use-dungeon'
 import wandererPack from '@/lib/rpg/skins/wanderer.json'
@@ -60,6 +61,7 @@ export function ProfileClient({ modules, locale }: Props) {
           </div>
         </div>
       </main>
+      <LearningPlanCard profile={profile} zones={vm.zones} locale={locale} />
       <CharterCard profile={profile} locale={locale} />
       <CompanionSetup profile={profile} locale={locale} />
     </>
