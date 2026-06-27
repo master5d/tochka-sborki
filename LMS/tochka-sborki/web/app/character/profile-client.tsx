@@ -6,6 +6,7 @@ import { useProgress } from '@/components/progress-provider'
 import { buildQuestLog } from '@/lib/rpg/quest-log'
 import { SKINS_META } from '@/lib/rpg/skins-meta'
 import { WorldMap } from '@/components/rpg/world-map'
+import { TransformationArc } from '@/components/rpg/transformation-arc'
 import { CharacterSheet } from '@/components/character-sheet'
 import { CharterCard } from '@/components/intake/charter-card'
 import { CompanionSetup } from '@/components/intake/companion-setup'
@@ -45,6 +46,7 @@ export function ProfileClient({ modules, locale }: Props) {
   const glyph = SKINS_META[profile.world_skin as keyof typeof SKINS_META]?.glyph ?? '⬡'
   const completed = Object.keys(modules).filter(s => getState(s) === 'completed')
   const vm = buildQuestLog(profile, modules, completed, getState as any, pack, locale)
+  const currentSlug = vm.zones.find(z => z.status === 'current')?.slug ?? null
 
   return (
     <>
@@ -52,7 +54,10 @@ export function ProfileClient({ modules, locale }: Props) {
       <CharacterSheet locale={locale} profile={profile} />
       <main style={{ maxWidth: 660, margin: '0 auto', padding: '0 1.5rem' }}>
         <div style={{ margin: '1.5rem 0' }}>
-          <WorldMap zones={vm.zones} accent={accent} glyph={glyph} locale={locale} nicheDungeonCleared={nicheDungeonCleared} />
+          <TransformationArc currentSlug={currentSlug} locale={locale} accent={accent} />
+          <div style={{ marginTop: '1rem' }}>
+            <WorldMap zones={vm.zones} accent={accent} glyph={glyph} locale={locale} nicheDungeonCleared={nicheDungeonCleared} />
+          </div>
         </div>
       </main>
       <CharterCard profile={profile} locale={locale} />
