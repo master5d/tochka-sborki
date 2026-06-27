@@ -2818,7 +2818,7 @@
       "text": "💡 Content-design principles: curse-of-knowledge, Must/Should/Could prioritization, andragogy",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
