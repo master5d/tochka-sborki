@@ -1,7 +1,7 @@
 'use client'
 
 import { useUnitWizard } from './unit-wizard-context'
-import { PHASE_META, phaseLabel, phaseMarker, type PhaseType } from './phase-chrome'
+import { PHASE_META, phaseLabel, phaseMarker, phaseKolb, type PhaseType } from './phase-chrome'
 
 const PHASE_ORDER: PhaseType[] = ['activation', 'reflection', 'concept', 'practice']
 
@@ -19,10 +19,11 @@ export function Phase({ type, children }: Props) {
   const { icon, color } = PHASE_META[type]
   const label = phaseLabel(type, locale)
   const marker = phaseMarker(type, locale)
+  const kolb = phaseKolb(type, locale)
 
   return (
     <div>
-      <div style={{
+      <div title={kolb} style={{
         display: 'inline-flex',
         alignItems: 'center',
         gap: '0.5rem',
