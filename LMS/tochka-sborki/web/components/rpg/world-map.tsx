@@ -10,6 +10,7 @@ export function WorldMap({ zones, accent, glyph, locale, nicheDungeonCleared = f
   const pts = nodePositions(zones.length, VB, VB, COLS)
   const path = snakePath(pts)
   const loc = buildLocator(zones, locale)
+  const current = zones.find(z => z.status === 'current')
   const mapLabel = locale === 'en'
     ? (loc.finished ? 'Learning map — course complete' : `Learning map — you are here: ${loc.zoneName}`)
     : (loc.finished ? 'Карта обучения — курс пройден' : `Карта обучения — Вы тут: ${loc.zoneName}`)
@@ -41,6 +42,9 @@ export function WorldMap({ zones, accent, glyph, locale, nicheDungeonCleared = f
               {cur && (
                 <text x={p.x} y={p.y - 9} textAnchor="middle" fontSize={5.5} fill={accent} aria-hidden="true">✦</text>
               )}
+              {z.transform && (
+                <title>{`${z.zoneName}: ${locale === 'en' ? 'from' : 'из'} ${z.transform.from} ${locale === 'en' ? 'to' : 'в'} ${z.transform.to}`}</title>
+              )}
             </g>
           )
         })}
@@ -48,6 +52,13 @@ export function WorldMap({ zones, accent, glyph, locale, nicheDungeonCleared = f
       <p style={{ marginTop: '0.5rem', textAlign: 'center', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', fontSize: '0.8rem' }}>
         {loc.caption}
       </p>
+      {current?.transform && (
+        <p style={{ marginTop: '0.25rem', textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.8rem' }}>
+          {locale === 'en'
+            ? `Now: from ${current.transform.from} → to ${current.transform.to}`
+            : `Сейчас: из ${current.transform.from} → в ${current.transform.to}`}
+        </p>
+      )}
     </div>
   )
 }
