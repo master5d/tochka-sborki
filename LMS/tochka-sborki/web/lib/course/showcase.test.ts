@@ -104,3 +104,34 @@ describe('filterByCategory', () => {
   it('key → only that category', () => expect(filterByCategory(sample, 'launch').map(x => x.id)).toEqual(['a', 'c']))
   it('unused key → empty', () => expect(filterByCategory(sample, 'knowledge')).toEqual([]))
 })
+
+describe('possibility-menu (dream cases)', () => {
+  const dream = getShowcase('ru').dream.cases
+  const dreamEn = getShowcase('en').dream.cases
+
+  it('is an expanded curated menu (>=10) covering all categories', () => {
+    expect(dream.length).toBeGreaterThanOrEqual(10)
+    expect(new Set(dream.map(c => c.category))).toEqual(new Set(CATEGORY_KEYS))
+  })
+
+  it('every dream case is bilingual non-empty', () => {
+    for (const arr of [dream, dreamEn]) for (const c of arr) {
+      expect(c.title.trim().length).toBeGreaterThan(0)
+      expect(c.blurb.trim().length).toBeGreaterThan(0)
+      expect(c.tag.trim().length).toBeGreaterThan(0)
+    }
+  })
+
+  it('is de-hustled — no money-promise framing', () => {
+    const banned = /(зараб|доход|деньг|прибыл|earn|income|\bmoney\b|profit|passive)/i
+    for (const arr of [dream, dreamEn]) for (const c of arr) {
+      expect(banned.test(c.title), `money framing in title: ${c.title}`).toBe(false)
+      expect(banned.test(c.blurb), `money framing in blurb: ${c.blurb}`).toBe(false)
+    }
+  })
+
+  it('dream case ids are unique', () => {
+    const ids = dream.map(c => c.id)
+    expect(new Set(ids).size).toBe(ids.length)
+  })
+})
