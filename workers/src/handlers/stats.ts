@@ -5,7 +5,7 @@ export async function getStats(db: D1Database): Promise<Response> {
 
   const total = await count('SELECT COUNT(*) AS c FROM users')
   const learners = await count('SELECT COUNT(DISTINCT user_id) AS c FROM progress')
-  const intakeCompleted = await count('SELECT COUNT(*) AS c FROM intake_profiles')
+  const intakeCompleted = await count("SELECT COUNT(*) AS c FROM intake_profiles WHERE status = 'completed'")
 
   return Response.json({ total, learners, intakeCompleted })
 }
