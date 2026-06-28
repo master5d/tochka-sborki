@@ -1929,7 +1929,7 @@
       "text": "✨ Blog knowledge-graph Phase B: evergreen atomic notes",
       "metadata": {
         "sovern:layer": "blog",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 5,
         "sovern:urgency": 2,
