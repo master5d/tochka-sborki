@@ -29,4 +29,11 @@ describe('buildGraph', () => {
   it('returns empty edges when there are no related links', () => {
     expect(buildGraph([p('a', []), p('b', [])]).edges).toEqual([])
   })
+
+  it('carries kind onto nodes, defaulting to post', () => {
+    const note: Post = { slug: 'n', title: 'n', description: '', date: '2026-01-01', author: 'x', readingTime: '1', tags: ['AI'], related: [], kind: 'note' }
+    const g = buildGraph([p('a', []), note])
+    expect(g.nodes.find(n => n.slug === 'a')?.kind).toBe('post')
+    expect(g.nodes.find(n => n.slug === 'n')?.kind).toBe('note')
+  })
 })

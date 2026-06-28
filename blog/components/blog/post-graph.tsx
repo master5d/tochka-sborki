@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getAllPosts, localizedPost, stripOrigin, postUrl, type Locale } from '@/lib/posts'
+import { getGraphEntries, localizedPost, stripOrigin, postUrl, type Locale } from '@/lib/posts'
 import { buildGraph } from '@/lib/graph'
 import { BlogFooter } from './blog-footer'
 
@@ -17,7 +17,7 @@ function tagColor(tag: string): string {
 }
 
 export function PostGraph({ locale }: { locale: Locale }) {
-  const posts = getAllPosts(locale)
+  const posts = getGraphEntries(locale)
   const { nodes, edges } = buildGraph(posts)
 
   // Position every node on a circle, indexed by registry order — deterministic across builds.
@@ -52,7 +52,7 @@ export function PostGraph({ locale }: { locale: Locale }) {
           const right = Math.cos(pt.angle) >= 0
           return (
             <a key={n.slug} href={stripOrigin(postUrl(n.slug, locale))}>
-              <circle cx={pt.x} cy={pt.y} r={9} fill={tagColor(n.tag)} stroke="var(--bg-primary)" strokeWidth={2} />
+              <circle cx={pt.x} cy={pt.y} r={n.kind === 'note' ? 6 : 9} fill={tagColor(n.tag)} stroke="var(--bg-primary)" strokeWidth={2} />
               <text
                 x={pt.x + (right ? 14 : -14)} y={pt.y + 4}
                 textAnchor={right ? 'start' : 'end'}
