@@ -22,6 +22,13 @@ import type { Mode } from '@/lib/cs/types'
 import type { RelationalStyle } from '@/lib/intake/types'
 import { HelpTip } from '@/components/help/help-tip'
 import { IntroCard } from '@/components/help/intro-card'
+import { BreakInterstitial } from '@/components/break-interstitial'
+import { resolveBreaks } from '@/lib/breaks/data'
+import { shouldBreak } from '@/lib/breaks/should-break'
+import type { ResolvedBreak } from '@/lib/breaks/types'
+import { todayCount, currentStreak, recentDowngrade } from '@/lib/pacing/derive'
+import { REST_DAILY, REST_STREAK } from '@/lib/pacing/thresholds'
+import { localDate } from '@/lib/quests/daily-store'
 
 const PHASE_COLORS = ['var(--phase-1)', 'var(--phase-2)', 'var(--phase-3)', 'var(--phase-4)']
 const TOTAL_STEPS = 4
@@ -67,6 +74,21 @@ export function UnitWizard({
   const { award, setMode, getMode, ready: shardsReady } = useShards()
   const chosenMode: Mode | undefined = getMode(unitKey)
   const { state: pacingState, logCompletion: logPacing } = usePacing()
+
+  // Dopamine-break (pattern-interrupt) trigger state — session-scoped, in-memory.
+  const breaks = resolveBreaks(locale)
+  const [breaksShown, setBreaksShown] = useState(0)
+  const [lastBreakStep, setLastBreakStep] = useState(-Infinity)
+  const [pendingBreak, setPendingBreak] = useState<ResolvedBreak | null>(null)
+
+  function restModeNow(): boolean {
+    const today = localDate()
+    return (
+      todayCount(pacingState, today) >= REST_DAILY ||
+      currentStreak(pacingState, today) >= REST_STREAK ||
+      recentDowngrade(pacingState)
+    )
+  }
 
   useEffect(() => {
     fetch('/api/intake/me', { credentials: 'include' })
@@ -120,9 +142,31 @@ export function UnitWizard({
     topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  function handleNext() {
+  function advanceStep() {
     setCurrentStep(s => Math.min(s + 1, TOTAL_STEPS - 1))
     scrollToTop()
+  }
+
+  function handleNext() {
+    const decision = shouldBreak({
+      availableCount: breaks.length,
+      currentStep,
+      stepsSinceLastBreak: currentStep - lastBreakStep,
+      breaksShownThisSession: breaksShown,
+      restMode: restModeNow(),
+    })
+    if (decision) {
+      setPendingBreak(breaks[breaksShown % breaks.length])
+      return // hold the step; advance after the learner taps continue
+    }
+    advanceStep()
+  }
+
+  function dismissBreak() {
+    setBreaksShown(n => n + 1)
+    setLastBreakStep(currentStep)
+    setPendingBreak(null)
+    advanceStep()
   }
 
   function handleBack() {
@@ -147,6 +191,7 @@ export function UnitWizard({
 
   return (
     <UnitWizardContext.Provider value={{ currentStep, totalSteps: TOTAL_STEPS, locale }}>
+      <BreakInterstitial activity={pendingBreak} onContinue={dismissBreak} />
       {/* Module + unit breadcrumb */}
       <div ref={topRef} style={{
         scrollMarginTop: '4rem',
