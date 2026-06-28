@@ -28,11 +28,19 @@ export function HomePage({ locale }: Props) {
         padding: '6rem 2rem 3rem',
         maxWidth: 'var(--content-max)',
         margin: '0 auto',
+        position: 'relative',
+        overflow: 'hidden',
       }}>
+        <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'var(--hero-glow)', pointerEvents: 'none', zIndex: 0 }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
         <div style={{
           fontFamily: 'var(--font-mono)',
           fontSize: 'var(--section-label-size)',
-          color: 'var(--text-accent)',
+          background: 'var(--accent-gradient)',
+          WebkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+          color: 'transparent',
+          WebkitTextFillColor: 'transparent',
           textTransform: 'uppercase',
           letterSpacing: '0.15em',
           marginBottom: '1.5rem',
@@ -61,6 +69,20 @@ export function HomePage({ locale }: Props) {
         }}>
           {t.bio}
         </p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginTop: '1.75rem' }}>
+          {t.heroBadges.map(b => (
+            <span key={b} style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.75rem',
+              color: 'var(--text-secondary)',
+              background: 'var(--bg-secondary)',
+              border: '1px solid var(--border-color)',
+              borderRadius: 'var(--radius)',
+              padding: '0.4rem 0.8rem',
+              letterSpacing: '0.04em',
+            }}>{b}</span>
+          ))}
+        </div>
         <p style={{ marginTop: '2rem', display: 'flex', gap: '1.5rem' }}>
           <a href="/blog/" style={{
             fontFamily: 'var(--font-mono)',
@@ -81,6 +103,7 @@ export function HomePage({ locale }: Props) {
             {locale === 'en' ? '→ Events' : '→ События'}
           </a>
         </p>
+        </div>
       </section>
 
       {/* ── PITCH (doom-scroll → vibe coding) ──────────────────── */}
@@ -211,7 +234,7 @@ export function HomePage({ locale }: Props) {
                   left: 0,
                   width: '3px',
                   height: '100%',
-                  background: p.color,
+                  background: `linear-gradient(180deg, ${p.color}, transparent)`,
                 }} />
 
                 <div style={{
