@@ -3208,7 +3208,7 @@
       "text": "✨ Personal Learning Plan generator from intake (goal/status/steps/experiential/accountability/review)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
