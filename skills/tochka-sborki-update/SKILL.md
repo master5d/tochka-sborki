@@ -83,6 +83,32 @@ Adults are self-directed, bring prior experience, and learn what's relevant to a
 
 > Use this lens as a review pass, not a rigid gate — if a lesson violates a check, fix the lesson or note why the exception holds.
 
+## Anti-Dependency Review Lens
+
+Apply this lens to anything shaping the learner's relationship with the course — lessons, the companion, progression, CTAs. The course graduates people into agency (teach-to-fish, "the teacher makes teachers"); it does not retain them. Optimize every choice for the learner's eventual independence.
+
+### 1. Design for graduation, not retention
+
+- [ ] Success is the learner becoming able and leaving — not staying engaged. No retention dark-patterns: no streak guilt, no manufactured FOMO, no countdowns, no "you'll lose progress" pressure.
+- [ ] If a feature raises "time on site" but not the learner's capability, cut it.
+
+### 2. Teach to fish — build agency
+
+- [ ] The learner does the thinking; the companion assists, never replaces (charter: "co-thinking partner, not do-it-for-me", "never take the decision").
+- [ ] Lessons hand over transferable skill, not dependence on this platform's UI.
+
+### 3. The learner owns the resources
+
+- [ ] Artifacts are portable and copy-out, not locked in our DB (the Personal Learning Plan and the Companion Charter are both copyable).
+- [ ] No key or vendor lock-in — bring-your-own-AI (the learn-with-AI handoff), no walled garden.
+
+### 4. Honest progression, not a funnel
+
+- [ ] free → builder → academy → mentor is an honest ladder of value; the free tier is genuinely complete, never crippled to force an upgrade.
+- [ ] No manipulative sales — no scarcity, no fake deadlines, no "last spots" (matches the optional tracks' framing and the clarity-first stance).
+
+> When a choice trades the learner's independence for our retention, choose independence. A graduate who no longer needs us is the success metric.
+
 ## Operations
 
 ### 1. Add a New Meeting
