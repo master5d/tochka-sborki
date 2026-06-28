@@ -17,6 +17,7 @@ export type Post = {
   tags: string[]          // graph-ready (not rendered as UI yet)
   related: string[]       // related post slugs (empty for now)
   draft?: boolean         // editorial control: drafts never appear in getAllPosts
+  kind?: 'note' | 'post'  // default 'post'; 'note' = atomic evergreen note (graph-only, excluded from index/RSS/manifest)
   ogImage?: string        // absolute URL; defaults to the post's own OG route
   en?: Localized          // present ⇒ translated; shown on EN surfaces
 }
@@ -114,19 +115,24 @@ export const posts: Post[] = [
   },
 ]
 
+const byDateDesc = (a: Post, b: Post) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0)
+const visible = (p: Post, locale: Locale) => !p.draft && (locale === 'ru' || p.en != null)
+
 /**
- * Published posts, newest-first. Drafts excluded.
- * Locale defaults to 'ru' (the site canon): `getAllPosts()` returns every
- * non-draft post. For 'en' it additionally restricts to posts that carry an
- * `en` block — so it is NOT locale-neutral; pass 'ru' explicitly when you mean
- * "all posts regardless of translation status".
- * `source` defaults to the registry; the param exists so the draft-filter +
- * sort logic can be tested against fixtures without polluting the real registry.
+ * Published ESSAYS (kind !== 'note'), newest-first. Drafts and notes excluded.
+ * Feeds the blog index, RSS, and the SEO manifest — the essay "publication".
+ * `source` defaults to the registry; the param exists for fixture-testing.
  */
 export function getAllPosts(locale: Locale = 'ru', source: Post[] = posts): Post[] {
-  return source
-    .filter(p => !p.draft && (locale === 'ru' || p.en != null))
-    .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
+  return source.filter(p => visible(p, locale) && p.kind !== 'note').sort(byDateDesc)
+}
+
+/**
+ * All published entries — posts AND notes — newest-first. The knowledge graph's input,
+ * so atomic notes thicken its edges. Drafts excluded; locale-gated like getAllPosts.
+ */
+export function getGraphEntries(locale: Locale = 'ru', source: Post[] = posts): Post[] {
+  return source.filter(p => visible(p, locale)).sort(byDateDesc)
 }
 
 /** Any post by slug (including drafts, for preview). */

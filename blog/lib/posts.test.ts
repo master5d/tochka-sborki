@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { getAllPosts, getPost, formatDate, postUrl, localizedPost, stripOrigin, langTag, posts, type Post, type Locale } from './posts'
+import { getAllPosts, getGraphEntries, getPost, formatDate, postUrl, localizedPost, stripOrigin, langTag, posts, type Post, type Locale } from './posts'
 
 describe('posts registry', () => {
   it('getAllPosts excludes drafts', () => {
@@ -118,5 +118,29 @@ describe('posts registry', () => {
     expect(Array.isArray(p.related)).toBe(true)
     expect(p.en).toBeTruthy()
     expect(p.en!.title.length).toBeGreaterThan(0)
+  })
+
+  it('getAllPosts excludes notes (essays only)', () => {
+    const f = (slug: string, kind?: 'note' | 'post'): Post => ({
+      slug, title: slug, description: 'x', date: '2026-01-01', author: 'X', readingTime: '1', tags: [], related: [], kind,
+    })
+    const set = [f('essay'), f('atom', 'note')]
+    expect(getAllPosts('ru', set).map(p => p.slug)).toEqual(['essay'])
+  })
+
+  it('getGraphEntries includes both posts and notes (newest-first)', () => {
+    const f = (slug: string, date: string, kind?: 'note' | 'post'): Post => ({
+      slug, title: slug, description: 'x', date, author: 'X', readingTime: '1', tags: [], related: [], kind,
+    })
+    const set = [f('essay', '2026-01-01'), f('atom', '2026-02-01', 'note')]
+    expect(getGraphEntries('ru', set).map(p => p.slug)).toEqual(['atom', 'essay'])
+  })
+
+  it('getGraphEntries drops drafts and respects the en locale', () => {
+    const f = (slug: string, en?: { title: string; description: string; readingTime: string }, draft?: boolean): Post => ({
+      slug, title: slug, description: 'x', date: '2026-01-01', author: 'X', readingTime: '1', tags: [], related: [], kind: 'note', en, draft,
+    })
+    const set = [f('a', { title: 'A', description: 'd', readingTime: '1' }), f('b'), f('c', undefined, true)]
+    expect(getGraphEntries('en', set).map(p => p.slug)).toEqual(['a'])
   })
 })
