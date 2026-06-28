@@ -26,6 +26,8 @@
   --phase-2: #5e5ce6;
   --phase-3: #ff9900;
   --phase-4: #ff44aa;
+  --accent-gradient: linear-gradient(120deg, var(--phase-1), var(--phase-2));
+  --hero-glow: radial-gradient(55% 45% at 18% 0%, rgba(0, 209, 255, 0.13), transparent 70%);
 }
 
 [data-theme="light"] {
@@ -45,4 +47,6 @@
   --phase-2: #4a48d1;
   --phase-3: #8f5400;
   --phase-4: #b51d6e;
+  --accent-gradient: linear-gradient(120deg, var(--phase-1), var(--phase-2));
+  --hero-glow: radial-gradient(55% 45% at 18% 0%, rgba(0, 119, 204, 0.08), transparent 70%);
 }
