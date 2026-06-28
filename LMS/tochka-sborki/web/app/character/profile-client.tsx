@@ -11,6 +11,7 @@ import { CharacterSheet } from '@/components/character-sheet'
 import { CharterCard } from '@/components/intake/charter-card'
 import { LearningPlanCard } from '@/components/intake/learning-plan-card'
 import { CompanionSetup } from '@/components/intake/companion-setup'
+import { OfficeHoursCard } from '@/components/office-hours-card'
 import { useNicheDungeonCleared } from '@/lib/dungeon/use-dungeon'
 import wandererPack from '@/lib/rpg/skins/wanderer.json'
 import type { SkinPack } from '@/lib/rpg/types'
@@ -64,6 +65,7 @@ export function ProfileClient({ modules, locale }: Props) {
       <LearningPlanCard profile={profile} zones={vm.zones} locale={locale} />
       <CharterCard profile={profile} locale={locale} />
       <CompanionSetup profile={profile} locale={locale} />
+      <OfficeHoursCard locale={locale} />
     </>
   )
 }
