@@ -27,4 +27,10 @@ describe('getEcosystem', () => {
   it('is bilingual (ru and en headings differ)', () => {
     expect(getEcosystem('ru').heading).not.toBe(getEcosystem('en').heading)
   })
+
+  it('Connect pillar surfaces the AMA office-hours node', () => {
+    const connect = getEcosystem('ru').pillars.find((p) => p.key === 'connect')!
+    const labels = connect.nodes.map((n) => n.label)
+    expect(labels).toContain('AMA office-hours')
+  })
 })

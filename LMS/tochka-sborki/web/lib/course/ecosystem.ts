@@ -36,6 +36,8 @@ const RAW: RawEco = {
       nodes: [
         { label: { ru: 'Сообщество S.A.S.H.A', en: 'S.A.S.H.A community' }, status: 'planned' },
         { label: { ru: 'Кросс-курс companion', en: 'Cross-course companion' }, status: 'planned' },
+        { label: { ru: 'AMA office-hours', en: 'AMA office-hours' }, status: 'planned' },
+        { label: { ru: '1:1 наставничество', en: '1:1 mentorship' }, status: 'live' },
       ],
     },
     {
