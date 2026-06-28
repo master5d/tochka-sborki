@@ -100,6 +100,18 @@ export const posts: Post[] = [
     related: ['horizons', 'prologue'],
     en: { title: "The barrier isn't imagination: why a hundred ideas never get done", description: "You're not stopped by \"no imagination\" — the image of the result is there. You're stopped by imagination that was never translated into a task. Three stages: imagination → task → automation, and the order matters.", readingTime: '~6 min' },
   },
+  {
+    slug: 'nervous-strength',
+    title: 'Пророчество 1996 года: знание по кнопке — и сила, чтобы себя удержать',
+    description:
+      'Тридцать лет назад предсказали мир, где знание — по нажатию кнопки, и предупредили: без внутренней опоры оно не освобождает, а накрывает. Ответ — не больше знания, а нервная сила и практика.',
+    date: '2026-06-28',
+    author: 'Александр Мамаев',
+    readingTime: '~5 мин',
+    tags: ['AI', 'суверенность', 'практика', 'Точка Сборки', 'нарратив'],
+    related: ['prologue', 'imagination'],
+    en: { title: "A 1996 prophecy: knowledge at the press of a button — and the strength to hold yourself", description: "Thirty years ago someone predicted a world where knowledge sits one button away — and warned that without inner footing it doesn't free you, it buries you. The answer isn't more knowledge; it's nervous strength and practice.", readingTime: '~5 min' },
+  },
 ]
 
 /**

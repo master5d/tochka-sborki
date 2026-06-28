@@ -108,4 +108,15 @@ describe('posts registry', () => {
     expect(langTag('en')).toBe('en-US')
     expect(langTag('ru')).toBe('ru-RU')
   })
+
+  it('the nervous-strength post exists with required metadata', () => {
+    const p = getPost('nervous-strength')!
+    expect(p.title.length).toBeGreaterThan(0)
+    expect(p.description.length).toBeGreaterThan(0)
+    expect(p.author).toBe('Александр Мамаев')
+    expect(Array.isArray(p.tags)).toBe(true)
+    expect(Array.isArray(p.related)).toBe(true)
+    expect(p.en).toBeTruthy()
+    expect(p.en!.title.length).toBeGreaterThan(0)
+  })
 })
