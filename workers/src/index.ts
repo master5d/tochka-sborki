@@ -10,6 +10,7 @@ import { handleView, handleComplete, handleList } from './handlers/progress'
 import { handleMe as handleIntakeMe, handleProgress as handleIntakeProgress, handleSubmit as handleIntakeSubmit } from './handlers/intake'
 import { runDemandRadar, listBriefs, listSignals, decideBrief } from './handlers/demand'
 import { listLeads, syncContacts } from './handlers/leads'
+import { getStats } from './handlers/stats'
 import { handleLeadCapture } from './handlers/leads-capture'
 import { handleAlumniList, handleAlumniMe, handleAlumniOptin } from './handlers/alumni'
 import { requireAuth, requireOwner } from './middleware'
@@ -121,6 +122,9 @@ export default {
       } else if (path === '/api/admin/leads/sync-resend' && method === 'POST') {
         const auth = await requireOwner(request, env)
         response = auth instanceof Response ? auth : await syncContacts(env)
+      } else if (path === '/api/admin/stats' && method === 'GET') {
+        const auth = await requireOwner(request, env)
+        response = auth instanceof Response ? auth : await getStats(env.DB)
       } else if (path === '/api/admin/content-demand/briefs' && method === 'GET') {
         const auth = await requireOwner(request, env)
         response = auth instanceof Response ? auth : await listBriefs(env.DB, url.searchParams.get('status') ?? undefined)

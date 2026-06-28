@@ -15,6 +15,7 @@ export function LeadsClient() {
   const [error, setError] = useState<string | null>(null)
   const [q, setQ] = useState('')
   const [syncMsg, setSyncMsg] = useState<string | null>(null)
+  const [stats, setStats] = useState<{ total: number; learners: number; intakeCompleted: number } | null>(null)
 
   useEffect(() => {
     fetch('/api/admin/leads?limit=2000', { credentials: 'include' })
@@ -24,6 +25,13 @@ export function LeadsClient() {
       })
       .then(d => { if (d) setLeads(d) })
       .catch(() => setError('Не удалось загрузить.'))
+  }, [])
+
+  useEffect(() => {
+    fetch('/api/admin/stats', { credentials: 'include' })
+      .then(r => (r.ok ? r.json() : null))
+      .then(d => { if (d) setStats(d) })
+      .catch(() => {})
   }, [])
 
   const filtered = useMemo(
@@ -59,6 +67,20 @@ export function LeadsClient() {
 
   return (
     <main style={wrap}>
+      {stats && (
+        <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
+          {[
+            { label: 'Студентов (начали курс)', value: stats.learners },
+            { label: 'Всего зарегистрировано', value: stats.total },
+            { label: 'Прошли интейк', value: stats.intakeCompleted },
+          ].map(s => (
+            <div key={s.label} style={{ padding: '1rem 1.25rem', border: '1px solid var(--border-color)', borderRadius: 10, background: 'var(--bg-surface)', minWidth: 160 }}>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-primary)' }}>{s.value}</div>
+              <div style={{ fontSize: '.8rem', color: 'var(--text-secondary)', marginTop: 4 }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+      )}
       <h1 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '1rem' }}>Лиды ({leads.length})</h1>
       <div style={{ display: 'flex', gap: 12, marginBottom: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
         <input value={q} onChange={e => setQ(e.target.value)} placeholder="поиск по email…"
