@@ -3844,7 +3844,7 @@
       "text": "✨ A11y: color-contrast audit + broad ARIA pass",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
