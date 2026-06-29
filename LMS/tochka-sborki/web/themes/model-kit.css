@@ -34,7 +34,7 @@
   --bg-surface: #fbf9f4;
   --text-primary: #15151a;
   --text-secondary: #5a5a6a;
-  --text-accent: #0077cc;       /* Deep blue for light mode contrast */
+  --text-accent: #0070c0;       /* Deep blue, AA-tuned (4.56:1 on paper bg) */
   --border-color: #d8d2c6;
   --border-accent: #0077cc40;
   --text-on-accent: #ffffff;
