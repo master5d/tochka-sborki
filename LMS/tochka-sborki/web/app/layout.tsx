@@ -7,6 +7,7 @@ import { LangSuggestBanner } from '@/components/lang-suggest-banner'
 import { PwaRegister } from '@/components/pwa/pwa-register'
 import { InstallPrompt } from '@/components/pwa/install-prompt'
 import { ThemeProvider } from '@/components/theme-provider'
+import { LiteProvider } from '@/components/lite-provider'
 import { TelegramAuthBridge } from '@/components/telegram/telegram-auth-bridge'
 import Script from 'next/script'
 import { COURSE } from '@/lib/course'
@@ -27,6 +28,16 @@ const themeScript = `(function(){try{` +
   // Only an explicit light/dark wins; 'system' and any junk value fall back to sys.
   `document.documentElement.setAttribute('data-theme',(p==='light'||p==='dark')?p:sys);` +
   `}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`
+
+// Keep the 'lite-pref' key + 'auto' default in sync with lib/lite-pref.ts.
+// Runs before paint so [data-lite] CSS applies with no flash.
+const liteScript = `(function(){try{` +
+  `var p=localStorage.getItem('lite-pref');` +
+  `var c=(navigator.connection||{});` +
+  `var slow=c.saveData===true||c.effectiveType==='2g'||c.effectiveType==='slow-2g';` +
+  `var on=(p==='on')||((p==='auto'||p==null)&&slow);` +
+  `document.documentElement.setAttribute('data-lite',on?'on':'off');` +
+  `}catch(e){document.documentElement.setAttribute('data-lite','off');}})();`
 
 // Static export uses a single root layout, so <html lang> can't be set per route at build.
 // Correct it pre-paint from the path: /en/* → 'en', everything else → 'ru'. This removes the
@@ -57,23 +68,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="ru"
       data-theme="dark"
+      data-lite="off"
       suppressHydrationWarning
       className={`${GeistSans.variable} ${GeistMono.variable} ${unbounded.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: liteScript }} />
         <script dangerouslySetInnerHTML={{ __html: langScript }} />
         <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
       </head>
       <body>
         <ThemeProvider>
-          <TelegramAuthBridge />
-          <ProgressProvider>
-            <LangSuggestBanner />
-            <PwaRegister />
-            <InstallPrompt />
-            {children}
-          </ProgressProvider>
+          <LiteProvider>
+            <TelegramAuthBridge />
+            <ProgressProvider>
+              <LangSuggestBanner />
+              <PwaRegister />
+              <InstallPrompt />
+              {children}
+            </ProgressProvider>
+          </LiteProvider>
         </ThemeProvider>
       </body>
     </html>
