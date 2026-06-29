@@ -506,7 +506,7 @@
       "text": "✨ Добавить микро-паззл игры как перерывы внутри курса",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "pending",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 5,
         "sovern:urgency": 3,
