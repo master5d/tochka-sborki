@@ -8,6 +8,7 @@ import { detectOs, readStoredOs, storeOs } from '@/lib/os-pref'
 import { activeEasterEgg, type EasterEgg } from '@/lib/easter-eggs'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { RpgModeToggle } from '@/components/rpg-mode-toggle'
+import { LiteToggle } from '@/components/lite-toggle'
 import { useRpgMode } from '@/lib/use-rpg-mode'
 import { SkipLink } from '@/components/skip-link'
 
@@ -128,6 +129,8 @@ export function Nav({ locale: localeProp }: Props = {}) {
         <ThemeToggle locale={locale} />
 
         <RpgModeToggle locale={locale} />
+
+        <LiteToggle locale={locale} />
 
         {os && (
           <button

@@ -58,3 +58,13 @@ pre, code {
     scroll-behavior: auto !important;
   }
 }
+
+/* Lite mode (data-saver): cut decorative animation/transition CPU + paint cost.
+   Distinct from prefers-reduced-motion (both may apply). Layout/images untouched. */
+[data-lite="on"] *,
+[data-lite="on"] *::before,
+[data-lite="on"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
