@@ -9,8 +9,8 @@ import type { Locale } from '@/lib/dictionaries'
 const COPY = {
   ru: {
     label: '/ сертификат',
-    heading: 'Твой сертификат',
-    sub: 'Скачай SVG или поделись в соцсетях.\nVibe coder — это новая базовая грамотность.',
+    heading: 'Твой золотой билет',
+    sub: 'Скачай SVG или поделись.\nТочка сборки пройдена — впереди следующий виток.',
     nameLabel: 'Имя на сертификате',
     namePlaceholder: 'Введи имя…',
     download: '↓ Скачать SVG',
@@ -18,12 +18,12 @@ const COPY = {
     shareLI: 'Поделиться в LinkedIn',
     copyLink: 'Скопировать ссылку',
     copied: '✓ Скопировано',
-    shareText: 'Прошёл курс по vibe-кодингу @ Точка Сборки. Claude Code, MCP, агенты, автоматизация.',
+    shareText: 'Получил золотой билет «Точки Сборки» — vibe coding, Claude Code, агенты, автоматизация.',
   },
   en: {
     label: '/ certificate',
-    heading: 'Your certificate',
-    sub: 'Download the SVG or share on social media.\nVibe coding is the new basic literacy.',
+    heading: 'Your golden ticket',
+    sub: 'Download the SVG or share.\nThe assembly point is set — the next turn is ahead.',
     nameLabel: 'Name on certificate',
     namePlaceholder: 'Enter name…',
     download: '↓ Download SVG',
@@ -31,7 +31,7 @@ const COPY = {
     shareLI: 'Share on LinkedIn',
     copyLink: 'Copy link',
     copied: '✓ Copied',
-    shareText: 'Just finished the vibe-coding course @ Tochka Sborki. Claude Code, MCP, agents, automation.',
+    shareText: 'Earned my Tochka Sborki golden ticket — vibe coding, Claude Code, agents, automation.',
   },
 }
 
