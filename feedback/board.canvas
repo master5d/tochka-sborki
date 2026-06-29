@@ -1856,7 +1856,7 @@
       "text": "🔁 📌 LMS-embed: Walkthrough-компонент для self-contained Learn-mode HTML (sovern-mindmap)",
       "metadata": {
         "sovern:layer": "infra",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": true,
         "sovern:impact": 5,
         "sovern:urgency": 5,
@@ -3733,7 +3733,7 @@
       "text": "✨ LMS-embed Part 2: land first Learn-mode walkthrough in a course unit (handoff ready)",
       "metadata": {
         "sovern:layer": "web",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 5,
         "sovern:urgency": 3,
