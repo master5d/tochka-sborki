@@ -112,7 +112,7 @@ export function CertificatePage({ locale }: Props) {
   return (
     <>
       <Nav locale={locale} />
-      <main style={{ maxWidth: 'var(--content-max)', margin: '0 auto', padding: '4rem 2rem' }}>
+      <main id="main-content" tabIndex={-1} style={{ maxWidth: 'var(--content-max)', margin: '0 auto', padding: '4rem 2rem' }}>
         <div style={{
           fontFamily: 'var(--font-mono)',
           fontSize: '0.7rem',

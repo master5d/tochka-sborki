@@ -42,7 +42,7 @@ export function LessonLayout({ meta, navItems, children, locale = 'ru' }: Lesson
       <Nav locale={locale} />
       <div style={{ display: 'flex', minHeight: 'calc(100vh - 3rem)' }}>
         <Sidebar navItems={navItems} currentSlug={meta.slug} locale={locale} />
-        <main style={{ flex: 1, padding: '2rem 3rem', maxWidth: '860px' }}>
+        <main id="main-content" tabIndex={-1} style={{ flex: 1, padding: '2rem 3rem', maxWidth: '860px' }}>
           <div style={{
             marginBottom: '0.5rem',
             fontFamily: 'var(--font-mono)',

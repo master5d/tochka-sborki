@@ -39,7 +39,7 @@ export function HomePage({ locale }: Props) {
           .home-section { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
         }
       `}</style>
-      <main>
+      <main id="main-content" tabIndex={-1}>
 
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="home-hero" style={{

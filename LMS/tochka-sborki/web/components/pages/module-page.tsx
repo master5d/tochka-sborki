@@ -30,7 +30,7 @@ export function ModulePage({ slug, locale }: Props) {
         <Nav locale={locale} />
         <div style={{ display: 'flex', minHeight: 'calc(100vh - 3rem)' }}>
           <Sidebar navItems={navItems} currentSlug={slug} locale={locale} />
-          <main style={{ flex: 1, padding: '2rem 3rem' }}>
+          <main id="main-content" tabIndex={-1} style={{ flex: 1, padding: '2rem 3rem' }}>
             <ModuleRedirect moduleSlug={slug} units={moduleMeta.units} locale={locale} />
           </main>
         </div>

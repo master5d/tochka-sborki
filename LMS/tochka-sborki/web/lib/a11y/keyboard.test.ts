@@ -28,4 +28,17 @@ describe('keyboard-nav a11y foundations', () => {
     expect(c).toContain('Перейти к содержимому')
     expect(c).toContain('Skip to content')
   })
+  it('the six core learner shells expose the #main-content target', () => {
+    const shells = [
+      'components/pages/mdx-page.tsx',
+      'components/pages/module-page.tsx',
+      'components/pages/unit-page.tsx',
+      'components/pages/home-page.tsx',
+      'components/pages/certificate-page.tsx',
+      'components/lesson-layout.tsx',
+    ]
+    for (const f of shells) {
+      expect(read(f), `${f} should have id="main-content"`).toContain('id="main-content"')
+    }
+  })
 })

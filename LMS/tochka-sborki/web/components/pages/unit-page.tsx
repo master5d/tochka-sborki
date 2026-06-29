@@ -32,7 +32,7 @@ export function UnitPage({ moduleSlug, unitSlug, locale }: Props) {
       <Nav locale={locale} />
       <div style={{ display: 'flex', minHeight: 'calc(100vh - 3rem)' }}>
         <Sidebar navItems={navItems} currentSlug={moduleSlug} currentUnit={unitSlug} locale={locale} />
-        <main style={{ flex: 1, padding: '2rem 3rem', maxWidth: '860px' }}>
+        <main id="main-content" tabIndex={-1} style={{ flex: 1, padding: '2rem 3rem', maxWidth: '860px' }}>
           <UnitWizard
             moduleSlug={moduleSlug}
             unitSlug={unitSlug}
