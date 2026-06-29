@@ -18,7 +18,9 @@ export function LiteProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const p = readStoredPref() ?? 'auto'
     setPrefState(p)
-    setLite(resolveLite(p, detectSaveData()))
+    const next = resolveLite(p, detectSaveData())
+    setLite(next)
+    document.documentElement.setAttribute('data-lite', next ? 'on' : 'off')
   }, [])
 
   const setPref = useCallback((p: LitePref) => {

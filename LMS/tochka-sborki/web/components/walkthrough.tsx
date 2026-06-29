@@ -44,7 +44,7 @@ export function Walkthrough({ slug, title, minHeight = 480 }: { slug: string; ti
             onClick={() => setLoad(true)}
             style={{
               background: 'var(--text-accent)', color: 'var(--text-on-accent)', border: 'none',
-              borderRadius: 8, padding: '0.5rem 1.1rem', fontWeight: 600, cursor: 'pointer',
+              borderRadius: 'var(--radius)', padding: '0.5rem 1.1rem', fontWeight: 600, cursor: 'pointer',
             }}
           >
             {cta}

@@ -37,6 +37,7 @@ describe('detectSaveData', () => {
   it('false when no connection API', () => { vi.stubGlobal('navigator', {}); expect(detectSaveData()).toBe(false) })
   it('true on saveData', () => { vi.stubGlobal('navigator', { connection: { saveData: true } }); expect(detectSaveData()).toBe(true) })
   it('true on 2g effectiveType', () => { vi.stubGlobal('navigator', { connection: { effectiveType: '2g' } }); expect(detectSaveData()).toBe(true) })
+  it('true on slow-2g effectiveType', () => { vi.stubGlobal('navigator', { connection: { effectiveType: 'slow-2g' } }); expect(detectSaveData()).toBe(true) })
   it('false on 4g', () => { vi.stubGlobal('navigator', { connection: { effectiveType: '4g' } }); expect(detectSaveData()).toBe(false) })
 })
 
