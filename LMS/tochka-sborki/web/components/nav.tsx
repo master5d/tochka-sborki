@@ -9,6 +9,7 @@ import { activeEasterEgg, type EasterEgg } from '@/lib/easter-eggs'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { RpgModeToggle } from '@/components/rpg-mode-toggle'
 import { useRpgMode } from '@/lib/use-rpg-mode'
+import { SkipLink } from '@/components/skip-link'
 
 interface Props { locale?: Locale }
 
@@ -70,7 +71,9 @@ export function Nav({ locale: localeProp }: Props = {}) {
   }
 
   return (
-    <nav style={{
+    <>
+      <SkipLink locale={locale} />
+      <nav style={{
       borderBottom: '1px solid var(--border-color)',
       background: 'var(--bg-secondary)',
       padding: '0 1.5rem',
@@ -182,5 +185,6 @@ export function Nav({ locale: localeProp }: Props = {}) {
         )}
       </div>
     </nav>
+    </>
   )
 }
