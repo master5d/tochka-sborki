@@ -3566,7 +3566,7 @@
       "text": "✨ Блогпост на каждый showcase-кейс (развёрнутый use-case под демо-витриной)",
       "metadata": {
         "sovern:layer": "blog",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 4,
