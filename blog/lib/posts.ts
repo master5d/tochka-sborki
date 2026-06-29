@@ -113,6 +113,18 @@ export const posts: Post[] = [
     related: ['prologue', 'imagination'],
     en: { title: "A 1996 prophecy: knowledge at the press of a button — and the strength to hold yourself", description: "Thirty years ago someone predicted a world where knowledge sits one button away — and warned that without inner footing it doesn't free you, it buries you. The answer isn't more knowledge; it's nervous strength and practice.", readingTime: '~5 min' },
   },
+  {
+    slug: 'echo',
+    title: 'Echo: голос вместо клавиатуры — и как я собрал его сам',
+    description:
+      'Печать всегда отставала от мысли. Я собрал офлайн-диктовку, которая понимает русский и английский вперемешку и даже сидит со мной на встречах — без команды разработки.',
+    date: '2026-06-29',
+    author: 'Александр Мамаев',
+    readingTime: '~6 мин',
+    tags: ['AI', 'Echo', 'диктовка', 'кейсы', 'Точка Сборки'],
+    related: ['horizons', 'prologue'],
+    en: { title: 'Echo: voice instead of keyboard — and how I built it myself', description: "Typing always lagged behind the thought. I built an offline dictation app that understands Russian and English mixed together — and even sits in on my meetings. Without a dev team.", readingTime: '~6 min' },
+  },
 ]
 
 const byDateDesc = (a: Post, b: Post) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0)

@@ -144,3 +144,18 @@ describe('posts registry', () => {
     expect(getGraphEntries('en', set).map(p => p.slug)).toEqual(['a'])
   })
 })
+
+describe('showcase deep-dive contract', () => {
+  const CONTRACT_SLUGS = ['echo']
+  for (const slug of CONTRACT_SLUGS) {
+    it(`${slug}: published bilingual post exists`, () => {
+      const p = getPost(slug)
+      expect(p, slug).toBeTruthy()
+      expect(p!.draft, `${slug} must not be draft`).toBeFalsy()
+      expect(p!.author).toBe('Александр Мамаев')
+      expect(p!.en, `${slug} needs an en block`).toBeTruthy()
+      expect(getAllPosts('ru').some(x => x.slug === slug), `${slug} in ru index`).toBe(true)
+      expect(getAllPosts('en').some(x => x.slug === slug), `${slug} in en index`).toBe(true)
+    })
+  }
+})
