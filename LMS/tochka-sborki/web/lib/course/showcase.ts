@@ -42,7 +42,8 @@ export interface RealCase {
   id: string; icon: string; title: Bi; blurb: Bi; tag: Bi; category: CategoryKey
   result: Bi      // the "обернул во благо" payoff line
   author: Bi      // attribution
-  href?: string   // → blog deep-dive; omitted until the post exists
+  deepDive?: string // blog slug → resolved to a locale-correct deep-dive URL in getShowcase
+  href?: string   // escape hatch / legacy; deepDive takes precedence
 }
 
 interface ResolvedDream { id: string; icon: string; title: string; blurb: string; tag: string; category: CategoryKey; href?: string }
@@ -127,28 +128,32 @@ const REAL_CASES: RealCase[] = [
     tag: { ru: 'Диктовка', en: 'Dictation' },
     category: 'dictation',
     result: { ru: 'Письма, заметки и код теперь надиктовываю — печать ушла на второй план.', en: 'I now dictate emails, notes and code — typing took a back seat.' },
-    author: { ru: 'Александр', en: 'Alexander' } },
+    author: { ru: 'Александр', en: 'Alexander' },
+    deepDive: 'echo' },
   { id: 'lms', icon: '🧭',
     title: { ru: 'Точка Сборки — этот самый сайт', en: 'Tochka Sborki — this very site' },
     blurb: { ru: 'RPG-платформа курса с AI-ментором, картой мира и квестами — собрана тем же vibe-кодингом, которому учит.', en: 'The course RPG platform with an AI mentor, world map and quests — built with the same vibe-coding it teaches.' },
     tag: { ru: 'Платформа', en: 'Platform' },
     category: 'platform',
     result: { ru: 'Целый обучающий продукт собран в одиночку, без классической команды разработки.', en: 'A whole learning product built solo, without a classic dev team.' },
-    author: { ru: 'Александр', en: 'Alexander' } },
+    author: { ru: 'Александр', en: 'Alexander' },
+    deepDive: 'the-site-itself' },
   { id: 'canvas', icon: '🗺️',
     title: { ru: 'Канвас AI-диаграмм', en: 'AI diagramming canvas' },
     blurb: { ru: 'Один холст, где идея превращается в схему: генераторы работают в фоне, ты двигаешь смысл, а не рисуешь прямоугольники.', en: 'One canvas where an idea becomes a diagram: generators run in the background, you move meaning instead of drawing rectangles.' },
     tag: { ru: 'Запуск', en: 'Launch' },
     category: 'launch',
     result: { ru: 'Схемы, на которые уходил час в редакторе, рождаются за минуты.', en: 'Diagrams that took an hour in an editor now appear in minutes.' },
-    author: { ru: 'Александр', en: 'Alexander' } },
+    author: { ru: 'Александр', en: 'Alexander' },
+    deepDive: 'diagram-canvas' },
   { id: 'brain', icon: '🧠',
     title: { ru: 'Граф знаний — второй мозг', en: 'Knowledge graph — a second brain' },
     blurb: { ru: 'Заметки, источники и опыт собраны в граф, который отвечает на вопросы и находит связи между ними.', en: 'Notes, sources and experience gathered into a graph that answers questions and finds connections between them.' },
     tag: { ru: 'Знание', en: 'Knowledge' },
     category: 'knowledge',
     result: { ru: 'Перестал терять идеи — спрашиваю собственный архив как живого собеседника.', en: 'Stopped losing ideas — I query my own archive like a living interlocutor.' },
-    author: { ru: 'Александр', en: 'Alexander' } },
+    author: { ru: 'Александр', en: 'Alexander' },
+    deepDive: 'second-brain' },
 ]
 
 export function videoEmbedUrl(url: string | null): string | null {
@@ -173,6 +178,11 @@ export function withAutoplay(embedUrl: string): string {
   return embedUrl + (embedUrl.includes('?') ? '&' : '?') + 'autoplay=1'
 }
 
+export function deepDiveUrl(slug: string, locale: Locale): string {
+  const prefix = locale === 'en' ? '/en/blog/' : '/blog/'
+  return `https://mamaev.coach${prefix}${slug}/`
+}
+
 export function getShowcase(locale: Locale): ShowcaseVM {
   const L: 'ru' | 'en' = locale === 'en' ? 'en' : 'ru'
   const used = new Set<CategoryKey>([...REAL_CASES, ...DREAM_CASES].map(c => c.category))
@@ -181,7 +191,7 @@ export function getShowcase(locale: Locale): ShowcaseVM {
     video: { source: resolveVideoSource(VIDEO.url), poster: VIDEO.poster, caption: VIDEO.caption[L] },
     real: {
       heading: REAL_HEADING[L],
-      cases: REAL_CASES.map(c => ({ id: c.id, icon: c.icon, title: c.title[L], blurb: c.blurb[L], tag: c.tag[L], category: c.category, result: c.result[L], author: c.author[L], href: c.href })),
+      cases: REAL_CASES.map(c => ({ id: c.id, icon: c.icon, title: c.title[L], blurb: c.blurb[L], tag: c.tag[L], category: c.category, result: c.result[L], author: c.author[L], href: c.deepDive ? deepDiveUrl(c.deepDive, L) : c.href })),
     },
     dream: {
       heading: DREAM_HEADING[L],

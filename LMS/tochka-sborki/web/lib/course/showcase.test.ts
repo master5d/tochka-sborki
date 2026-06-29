@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { getShowcase, videoEmbedUrl, resolveVideoSource, withAutoplay, filterByCategory, CATEGORY_KEYS } from './showcase'
+import { getShowcase, videoEmbedUrl, resolveVideoSource, withAutoplay, filterByCategory, CATEGORY_KEYS, deepDiveUrl } from './showcase'
 
 describe('getShowcase', () => {
   for (const loc of ['ru', 'en'] as const) {
@@ -133,5 +133,31 @@ describe('possibility-menu (dream cases)', () => {
   it('dream case ids are unique', () => {
     const ids = dream.map(c => c.id)
     expect(new Set(ids).size).toBe(ids.length)
+  })
+})
+
+describe('showcase deep-dive wiring', () => {
+  const CONTRACT_SLUGS = ['echo', 'diagram-canvas', 'the-site-itself', 'second-brain']
+
+  it('deepDiveUrl builds canonical ru/en blog URLs', () => {
+    expect(deepDiveUrl('echo', 'ru')).toBe('https://mamaev.coach/blog/echo/')
+    expect(deepDiveUrl('echo', 'en')).toBe('https://mamaev.coach/en/blog/echo/')
+  })
+
+  it('every real case links to a contract deep-dive (ru)', () => {
+    const cases = getShowcase('ru').real.cases
+    expect(cases.length).toBeGreaterThanOrEqual(4)
+    for (const c of cases) {
+      expect(c.href, c.id).toBeTruthy()
+      const m = c.href!.match(/^https:\/\/mamaev\.coach\/blog\/([a-z-]+)\/$/)
+      expect(m, c.href).toBeTruthy()
+      expect(CONTRACT_SLUGS, c.id).toContain(m![1])
+    }
+  })
+
+  it('en real cases use the /en/blog/ prefix', () => {
+    for (const c of getShowcase('en').real.cases) {
+      expect(c.href!).toMatch(/^https:\/\/mamaev\.coach\/en\/blog\/[a-z-]+\/$/)
+    }
   })
 })
