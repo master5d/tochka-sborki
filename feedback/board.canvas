@@ -2123,7 +2123,7 @@
       "text": "✨ LMS accessibility baseline (captions, keyboard nav, screen-reader, low-bandwidth)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
@@ -3776,6 +3776,90 @@
           "reason": "Latent breakage: shipped ModuleSurvey+FeedbackForm POST /api/feedback -> handleFeedback -> n8n (retired? only legacy ref, not in wrangler.toml, crm.ts says D1+Resend is live model) -> 502 + silent data loss. Migrate to direct-D1+Resend like new /api/leads/capture. MUST verify n8n truly dead before removing (could be live via CF secret)."
         }
       }
+    },
+    {
+      "id": "fb_9563271d9ca6",
+      "type": "text",
+      "x": 1140,
+      "y": 6140,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ A11y: captions/transcripts on showcase & lesson videos",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 6,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-29T08:11:10.723Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "lms_target": "engine",
+          "impact": 6,
+          "urgency": 3,
+          "confidence": 0.7,
+          "reason": "follow-on от a11y-baseline fb_a2c667a36a64 (slice 1 keyboard-foundations shipped); субтитры/транскрипты к видео, owner-media-gated тёмный движок"
+        }
+      }
+    },
+    {
+      "id": "fb_731d3ee7f748",
+      "type": "text",
+      "x": 300,
+      "y": 6320,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ A11y: low-bandwidth / low-spec mode",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 6,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-06-29T08:11:10.818Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "lms_target": "engine",
+          "impact": 6,
+          "urgency": 2,
+          "confidence": 0.65,
+          "reason": "follow-on от a11y-baseline fb_a2c667a36a64; lite-режим для слабых сетей/устройств, mode-toggle + conditional rendering, infra-слайс"
+        }
+      }
+    },
+    {
+      "id": "fb_8cac8d78f49c",
+      "type": "text",
+      "x": 580,
+      "y": 6320,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "✨ A11y: color-contrast audit + broad ARIA pass",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 6,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-06-29T08:11:10.981Z",
+        "feedback": {
+          "category": "feature",
+          "severity": "low",
+          "area": "lms",
+          "lms_target": "engine",
+          "impact": 6,
+          "urgency": 3,
+          "confidence": 0.7,
+          "reason": "follow-on от a11y-baseline fb_a2c667a36a64; WCAG-AA контраст-аудит токенов model-kit + расширенный ARIA-проход; общий theme → риск визуальных регрессий"
+        }
+      }
     }
   ],
   "edges": [
@@ -4453,6 +4537,21 @@
       "id": "e_fb_df698341da2a",
       "fromNode": "area_workers",
       "toNode": "fb_df698341da2a"
+    },
+    {
+      "id": "e_fb_9563271d9ca6",
+      "fromNode": "area_lms",
+      "toNode": "fb_9563271d9ca6"
+    },
+    {
+      "id": "e_fb_731d3ee7f748",
+      "fromNode": "area_lms",
+      "toNode": "fb_731d3ee7f748"
+    },
+    {
+      "id": "e_fb_8cac8d78f49c",
+      "fromNode": "area_lms",
+      "toNode": "fb_8cac8d78f49c"
     }
   ]
 }
