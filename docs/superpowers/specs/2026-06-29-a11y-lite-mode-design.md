@@ -47,10 +47,16 @@ A small pill toggle in `nav.tsx` beside `ThemeToggle` / `RpgModeToggle`. Cycles 
 
 ### 5. `app/globals.css` — `[data-lite="on"]` heavy-drop
 
-Conservative, decorative-only:
-- Neutralize large background gradients/images (fall back to a flat token color, e.g. `--bg-primary`).
-- Disable non-essential animations/transitions (`[data-lite="on"] * { animation: none !important; transition: none !important; }`), scoped so it doesn't break focus outlines.
-Does not touch layout, text, or interactive affordances. Distinct from the `prefers-reduced-motion` block (both may apply).
+Conservative, decorative-only. **Audit finding:** `globals.css` (60 lines) has **no** gradients / `background-image` / `@keyframes` — decorative gradients live inline in components / `model-kit.css`, not here. So a blanket `background-image: none` would risk breaking meaningful images (e.g. the showcase video poster) for no clear gain. Lite CSS therefore limits itself to the certain, safe win:
+- Disable decorative animations/transitions site-wide by shrinking their duration (mirrors the existing `prefers-reduced-motion` block's `0.01ms` technique), so focus outlines and layout are untouched:
+  ```css
+  [data-lite="on"] *, [data-lite="on"] *::before, [data-lite="on"] *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  ```
+Does not touch layout, text, images, or interactive affordances. Distinct from the `prefers-reduced-motion` block (both may apply). The headline bandwidth win is the Walkthrough defer (§6), not CSS.
 
 ### 6. `components/walkthrough.tsx` — lite-aware click-to-load facade
 
