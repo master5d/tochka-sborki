@@ -125,6 +125,18 @@ export const posts: Post[] = [
     related: ['horizons', 'prologue'],
     en: { title: 'Echo: voice instead of keyboard — and how I built it myself', description: "Typing always lagged behind the thought. I built an offline dictation app that understands Russian and English mixed together — and even sits in on my meetings. Without a dev team.", readingTime: '~6 min' },
   },
+  {
+    slug: 'diagram-canvas',
+    title: 'Канвас, который рисует схемы за меня',
+    description:
+      'Диаграммы съедали по часу: перетаскивать прямоугольники, воевать с выравниванием — и идея остывала. Я собрал холст, где двигаешь смысл, а схему рисуют генераторы в фоне.',
+    date: '2026-06-29',
+    author: 'Александр Мамаев',
+    readingTime: '~5 мин',
+    tags: ['AI', 'диаграммы', 'кейсы', 'инструменты', 'Точка Сборки'],
+    related: ['horizons', 'prologue'],
+    en: { title: 'A canvas that draws the diagrams for me', description: "Diagrams used to eat an hour each: dragging rectangles, fighting alignment — and the idea went cold. I built a canvas where you move meaning and generators draw the diagram in the background.", readingTime: '~5 min' },
+  },
 ]
 
 const byDateDesc = (a: Post, b: Post) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0)
