@@ -146,7 +146,7 @@ describe('posts registry', () => {
 })
 
 describe('showcase deep-dive contract', () => {
-  const CONTRACT_SLUGS = ['echo', 'diagram-canvas', 'the-site-itself']
+  const CONTRACT_SLUGS = ['echo', 'diagram-canvas', 'the-site-itself', 'second-brain']
   for (const slug of CONTRACT_SLUGS) {
     it(`${slug}: published bilingual post exists`, () => {
       const p = getPost(slug)

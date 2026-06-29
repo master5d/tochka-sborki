@@ -149,6 +149,18 @@ export const posts: Post[] = [
     related: ['prologue', 'horizons'],
     en: { title: 'This site is my main proof', description: "A learning product usually needs a team: developers, designers, content. The platform you're on right now I built solo — with the very vibe-coding it teaches.", readingTime: '~5 min' },
   },
+  {
+    slug: 'second-brain',
+    title: 'Второй мозг: я спрашиваю свой архив как собеседника',
+    description:
+      'Заметки копятся, но ты их больше не перечитываешь — идеи тонут в архиве. Я собрал граф знаний, который отвечает на вопросы по моим же записям и находит связи между ними.',
+    date: '2026-06-29',
+    author: 'Александр Мамаев',
+    readingTime: '~5 мин',
+    tags: ['AI', 'знание', 'граф', 'кейсы', 'Точка Сборки'],
+    related: ['horizons', 'prologue'],
+    en: { title: 'A second brain: I query my own archive like a person', description: "Notes pile up but you never reread them — ideas drown in the archive. I built a knowledge graph that answers questions from my own notes and finds the connections between them.", readingTime: '~5 min' },
+  },
 ]
 
 const byDateDesc = (a: Post, b: Post) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0)
