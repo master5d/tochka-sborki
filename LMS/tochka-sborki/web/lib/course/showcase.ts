@@ -1,4 +1,5 @@
 import type { Locale } from '@/lib/intake/types'
+import { resolveCaptionTrack, resolveTranscript, type CaptionTrack } from '@/lib/a11y/media'
 
 interface Bi { ru: string; en: string }
 
@@ -51,7 +52,7 @@ interface ResolvedReal extends ResolvedDream { result: string; author: string }
 
 export interface ShowcaseVM {
   label: string
-  video: { source: VideoSource | null; poster: string | null; caption: string }
+  video: { source: VideoSource | null; poster: string | null; caption: string; captionTrack: CaptionTrack | null; transcript: string | null }
   real: { heading: string; cases: ResolvedReal[] }
   dream: { heading: string; cases: ResolvedDream[] }
   categories: ResolvedCategory[]
@@ -62,10 +63,12 @@ const LABEL: Bi = { ru: 'Возможности', en: 'Possibilities' }
 const REAL_HEADING: Bi = { ru: 'Реальные истории', en: 'Real stories' }
 const DREAM_HEADING: Bi = { ru: 'О чём можно мечтать', en: 'What you can dream about' }
 const CTA: Bi = { ru: 'Начать свой путь →', en: 'Start your path →' }
-const VIDEO: { url: string | null; poster: string | null; caption: Bi } = {
+const VIDEO: { url: string | null; poster: string | null; caption: Bi; captions: string | null; transcript: Bi | null } = {
   url: null,    // впиши YouTube/Vimeo watch-URL или путь к .mp4 — встроится автоматически
   poster: null, // путь к постеру в /public, например '/showcase-poster.jpg'
   caption: { ru: 'Короткий ролик о сути — скоро', en: 'A short film about the essence — coming soon' },
+  captions: null,   // путь к .vtt в /public для self-hosted .mp4 (для embed субтитры — на стороне платформы)
+  transcript: null, // { ru, en } полная расшифровка ролика — показывается раскрывающимся блоком
 }
 
 const DREAM_CASES: ShowcaseCase[] = [
@@ -188,7 +191,14 @@ export function getShowcase(locale: Locale): ShowcaseVM {
   const used = new Set<CategoryKey>([...REAL_CASES, ...DREAM_CASES].map(c => c.category))
   return {
     label: LABEL[L],
-    video: { source: resolveVideoSource(VIDEO.url), poster: VIDEO.poster, caption: VIDEO.caption[L] },
+    video: (() => {
+      const source = resolveVideoSource(VIDEO.url)
+      return {
+        source, poster: VIDEO.poster, caption: VIDEO.caption[L],
+        captionTrack: resolveCaptionTrack(source?.kind ?? 'embed', VIDEO.captions, L),
+        transcript: resolveTranscript(VIDEO.transcript, L),
+      }
+    })(),
     real: {
       heading: REAL_HEADING[L],
       cases: REAL_CASES.map(c => ({ id: c.id, icon: c.icon, title: c.title[L], blurb: c.blurb[L], tag: c.tag[L], category: c.category, result: c.result[L], author: c.author[L], href: c.deepDive ? deepDiveUrl(c.deepDive, L) : c.href })),

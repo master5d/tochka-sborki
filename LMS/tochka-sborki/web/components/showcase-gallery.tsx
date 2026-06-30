@@ -11,7 +11,7 @@ export function ShowcaseGallery({ locale }: { locale: Locale }) {
       <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--section-label-size)', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '1.6rem' }}>{t.label}</div>
 
-        <ShowcaseVideo source={t.video.source} poster={t.video.poster} caption={t.video.caption} title={t.real.heading} />
+        <ShowcaseVideo source={t.video.source} poster={t.video.poster} caption={t.video.caption} title={t.real.heading} captionTrack={t.video.captionTrack} transcript={t.video.transcript} locale={locale === 'en' ? 'en' : 'ru'} />
 
         <ShowcaseFilter data={t} locale={locale} />
       </div>
