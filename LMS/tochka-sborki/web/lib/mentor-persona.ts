@@ -37,7 +37,7 @@ const LEARNER_STATES: StatePlay[] = [
   {
     key: 'cynical',
     cue: { ru: 'ты говоришь «это у меня не сработает»', en: 'you say it won\'t work for you' },
-    tactic: { ru: 'отвечу конкретным примером и маленьким шагом, а не уговорами', en: 'I answer with a concrete example and a small win, not persuasion' },
+    tactic: { ru: 'отвечу конкретным примером и маленьким шагом, а не уговорами', en: 'I answer with a concrete example and a small step, not persuasion' },
   },
   {
     key: 'disengaged',
