@@ -1,10 +1,17 @@
 {
   "module": 1,
-  "title": "TODO: Module title",
-  "description": "TODO: one sentence — what this module is about",
-  "duration": "20 min",
+  "title": "Example module",
+  "description": "How a course module is shaped",
+  "duration": "TODO",
   "level": 1,
   "units": [
-    { "slug": "u1-intro", "title": "TODO: Unit title" }
+    {
+      "slug": "u1-intro",
+      "title": "Getting started"
+    },
+    {
+      "slug": "u2-practice",
+      "title": "First step"
+    }
   ]
 }
