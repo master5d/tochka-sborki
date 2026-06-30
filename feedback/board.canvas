@@ -3788,7 +3788,7 @@
       "text": "✨ A11y: captions/transcripts on showcase & lesson videos",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
@@ -3816,7 +3816,7 @@
       "text": "✨ A11y: low-bandwidth / low-spec mode",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 2,
