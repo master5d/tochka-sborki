@@ -6,7 +6,7 @@
 import type { Mode } from './cs/types'
 import type { Locale } from './dictionaries'
 import type { RelationalStyle } from './intake/types'
-import { mentorFirmness, mentorFirmnessCompact } from './mentor-persona'
+import { mentorFirmness, mentorFirmnessCompact, mentorStateAdaptation } from './mentor-persona'
 
 export interface LearnPromptInput {
   locale: Locale
@@ -130,6 +130,8 @@ export function buildLearnPrompt(i: LearnPromptInput): string {
       '',
       mentorFirmness(i.locale),
       '',
+      mentorStateAdaptation(i.locale),
+      '',
       'Контекст: я прохожу курс «Точка Сборки» — про способы со-мышления и со-работы с агентами (vibe coding, agentic AI).' +
         (i.skinName ? ` Мой обучающий мир — «${i.skinName}»${i.mentorName ? `, наставник в нём — ${i.mentorName}` : ''}.` : '') +
         (niche ? ` Моя сфера — ${niche}.` : '') +
@@ -154,6 +156,8 @@ export function buildLearnPrompt(i: LearnPromptInput): string {
     'You are my co-thinking learning partner — not a tutor and not a "do-it-for-me." We co-think and co-work: tool and human role are separate — you hold the frame and ask questions, while meaning, choices, and decisions stay with me.',
     '',
     mentorFirmness(i.locale),
+    '',
+    mentorStateAdaptation(i.locale),
     '',
     'Context: I am taking the "Точка Сборки" course — about the ways of co-thinking and co-working with agents (vibe coding, agentic AI).' +
       (i.skinName ? ` My learning world is "${i.skinName}"${i.mentorName ? `, my mentor in it is ${i.mentorName}` : ''}.` : '') +
