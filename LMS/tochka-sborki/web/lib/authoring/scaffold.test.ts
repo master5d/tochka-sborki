@@ -16,14 +16,14 @@ describe('SAMPLE_OUTLINE', () => {
 
 describe('scaffoldCourse', () => {
   it('emits both locales for each module + unit', () => {
-    expect(byPath('content/ru/01-example/_meta.json')).toBeDefined()
-    expect(byPath('content/en/01-example/_meta.json')).toBeDefined()
-    expect(byPath('content/ru/01-example/u1-intro.mdx')).toBeDefined()
-    expect(byPath('content/en/01-example/u2-practice.mdx')).toBeDefined()
+    expect(byPath('content/ru/01-sample/_meta.json')).toBeDefined()
+    expect(byPath('content/en/01-sample/_meta.json')).toBeDefined()
+    expect(byPath('content/ru/01-sample/u1-intro.mdx')).toBeDefined()
+    expect(byPath('content/en/01-sample/u2-practice.mdx')).toBeDefined()
   })
 
   it('_meta.json parses to the right shape with localized fields', () => {
-    const meta = JSON.parse(byPath('content/ru/01-example/_meta.json')!.content)
+    const meta = JSON.parse(byPath('content/ru/01-sample/_meta.json')!.content)
     expect(meta.module).toBe(1)
     expect(meta.level).toBe(1)
     expect(meta.title).toBe('Пример модуля')
