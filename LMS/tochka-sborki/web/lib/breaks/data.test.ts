@@ -31,8 +31,9 @@ describe('resolveBreaks', () => {
     expect(resolveBreaks('en', sample)[0]).toEqual({
       kind: 'passive', key: 'breathe', title: 'Pause', prompt: 'Take a breath', cta: 'Continue',
     })
-    expect(resolveBreaks('ru', sample)[0].title).toBe('Пауза')
-    expect(resolveBreaks('ru', sample)[0].prompt).toBe('Сделай вдох')
+    const ru0 = resolveBreaks('ru', sample)[0]
+    expect(ru0.title).toBe('Пауза')
+    expect(ru0.kind === 'passive' && ru0.prompt).toBe('Сделай вдох')
   })
 
   it('applies default cta only when cta is omitted (passive)', () => {
