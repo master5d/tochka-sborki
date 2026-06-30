@@ -1,4 +1,5 @@
 import { videoEmbedUrl } from '@/lib/course/showcase'
+import { MediaTranscript } from '@/components/media-transcript'
 
 /**
  * Lightweight interactive video: embeds a video and pins a reflection checkpoint beside it —
@@ -6,11 +7,15 @@ import { videoEmbedUrl } from '@/lib/course/showcase'
  * The checkpoint is a MENTAL prompt (reflection-first; don't phrase it as "write/type").
  *
  * MDX usage:
- *   <VideoCheckpoint src="https://youtu.be/XXXX" title="...">
+ *   <VideoCheckpoint src="https://youtu.be/XXXX" title="..." transcript="Полная расшифровка…" locale="ru">
  *   Прокрути в голове: где это уже встречалось тебе?
  *   </VideoCheckpoint>
+ *
+ * `transcript` is a plain locale-correct string (lesson files are per-locale); it
+ * renders below the figure as a disclosure, dark when absent. Embeds use the
+ * platform's native captions, so there is no caption <track> here.
  */
-export function VideoCheckpoint({ src, title, children }: { src: string; title?: string; children?: React.ReactNode }) {
+export function VideoCheckpoint({ src, title, children, transcript, locale }: { src: string; title?: string; children?: React.ReactNode; transcript?: string; locale?: 'ru' | 'en' }) {
   const embed = videoEmbedUrl(src)
   return (
     <figure style={{ margin: '1.5rem 0' }}>
@@ -37,6 +42,7 @@ export function VideoCheckpoint({ src, title, children }: { src: string; title?:
           <span style={{ fontSize: '0.92rem', lineHeight: 1.6, color: 'var(--text-secondary)' }}>{children}</span>
         </figcaption>
       )}
+      <MediaTranscript text={transcript ?? null} locale={locale ?? 'ru'} />
     </figure>
   )
 }
