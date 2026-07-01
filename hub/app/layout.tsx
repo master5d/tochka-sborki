@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={`${GeistSans.variable} ${GeistMono.variable} ${unbounded.variable}`}
     >
-      <body>
+      <body className="bg-background text-on-background min-h-screen">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <MaterialThemeProvider sourceColor="#00D1FF">
             <LangSuggestBanner />
