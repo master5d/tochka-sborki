@@ -3,6 +3,8 @@
 // as an executable gate) + (Task 2) a polish PROMPT the author's agent uses to tighten prose.
 // No live LLM. Pure. Run alongside S3's validateDraftMdx.
 
+import type { Locale } from '@/lib/dictionaries'
+
 const MAX_SENTENCE_WORDS = 25
 const MIN_PRACTICE_CHARS = 20
 const PHASES = ['activation', 'reflection', 'concept', 'practice'] as const
@@ -42,4 +44,37 @@ export function lintReadability(mdx: string): string[] {
     }
   }
   return findings
+}
+
+/** A bilingual, de-hustled prompt handing the agent the draft + review findings for a
+ *  tightened rewrite. The author re-runs the result through validateDraftMdx + lintReadability. */
+export function buildPolishPrompt(mdx: string, findings: string[], locale: Locale): string {
+  if (locale === 'en') {
+    const f = findings.length
+      ? 'Address these review findings:\n' + findings.map(x => `- ${x}`).join('\n')
+      : 'No automated findings — just tighten the prose.'
+    return [
+      `Here is a draft lesson from my course — honest, calm, no selling.`,
+      `Tighten it: conversational tone, sentences under 25 words, plain language.`,
+      `Keep the frontmatter and the four phases in order (activation, reflection, concept, practice). Keep activation and reflection mental — never ask the learner to write or type. Keep the practice step concrete.`,
+      f,
+      `Return only the revised MDX, nothing else.`,
+      ``,
+      `--- DRAFT ---`,
+      mdx,
+    ].join('\n')
+  }
+  const f = findings.length
+    ? 'Устрани эти замечания ревью:\n' + findings.map(x => `- ${x}`).join('\n')
+    : 'Автоматических замечаний нет — просто подтяни текст.'
+  return [
+    `Вот черновик урока моего курса — честно, спокойно, без продаж.`,
+    `Подтяни: разговорный тон, предложения короче 25 слов, простой язык.`,
+    `Сохрани фронтматтер и четыре фазы по порядку (activation, reflection, concept, practice). Активацию и рефлексию оставь мысленными — не проси ученика писать или печатать. Практический шаг оставь конкретным.`,
+    f,
+    `Верни только исправленный MDX, ничего лишнего.`,
+    ``,
+    `--- DRAFT ---`,
+    mdx,
+  ].join('\n')
 }
