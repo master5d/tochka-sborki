@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { draftLesson, SAMPLE_NOTES, type DraftInput } from './draft'
+import { draftLesson, validateDraftMdx, SAMPLE_NOTES, type DraftInput } from './draft'
 import { lintDehustle } from './dehustle'
 
 const base: Omit<DraftInput, 'locale'> = {
@@ -33,5 +33,24 @@ describe('draftLesson', () => {
     const mdx = draftLesson({ ...base, locale: 'ru' })
     expect(mdx).toContain('Представь:')
     expect(mdx).toContain('Мысленно')
+  })
+})
+
+describe('validateDraftMdx', () => {
+  const valid = draftLesson({ ...base, locale: 'en' })
+  it('accepts a well-formed draft', () => {
+    expect(validateDraftMdx(valid)).toEqual([])
+  })
+  it('flags a missing/reordered phase', () => {
+    const noReflection = valid.replace(/<Phase type="reflection">[\s\S]*?<\/Phase>\n\n/, '')
+    expect(validateDraftMdx(noReflection).some(e => /phase/i.test(e))).toBe(true)
+  })
+  it('flags a write/type imperative in activation', () => {
+    const dirty = valid.replace('Run it in your head', 'Write it down and run it')
+    expect(validateDraftMdx(dirty).some(e => /activation/.test(e))).toBe(true)
+  })
+  it('flags a de-hustle term', () => {
+    const dirty = valid.replace('Do this:', 'Do this for passive income:')
+    expect(validateDraftMdx(dirty).some(e => /passive income/.test(e))).toBe(true)
   })
 })

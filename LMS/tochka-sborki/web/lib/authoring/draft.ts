@@ -3,6 +3,7 @@
 // into a valid 4-Phase MDX lesson draft (S4 polishes the prose later). Pure, no LLM/I/O.
 import type { Locale } from '@/lib/dictionaries'
 import type { ResearchNotes } from './research'
+import { lintDehustle } from './dehustle'
 
 export interface DraftInput {
   unitTitle: string
@@ -106,4 +107,28 @@ export function draftLesson(i: DraftInput): string {
     ``,
     `</Phase>`,
   ].join('\n') + sources
+}
+
+/** Reusable MDX conformance check (also validates S4's polished output later).
+ *  [] = conforms. */
+export function validateDraftMdx(mdx: string): string[] {
+  const errors: string[] = []
+  if (!/^---\ntitle: "/.test(mdx)) errors.push('frontmatter: missing title')
+
+  const phases = [...mdx.matchAll(/<Phase type="(\w+)">/g)].map(m => m[1])
+  const expected = ['activation', 'reflection', 'concept', 'practice']
+  if (phases.join(',') !== expected.join(',')) {
+    errors.push(`phases must be ${expected.join(' -> ')} (got ${phases.join(' -> ') || 'none'})`)
+  }
+
+  const block = (type: string) =>
+    new RegExp(`<Phase type="${type}">([\\s\\S]*?)</Phase>`).exec(mdx)?.[1] ?? ''
+  for (const type of ['activation', 'reflection']) {
+    if (/\b(напиши|запиши|type|write)\b/i.test(block(type))) {
+      errors.push(`${type}: contains a write/type imperative (must be mental)`)
+    }
+  }
+
+  for (const term of lintDehustle(mdx)) errors.push(`de-hustle: banned term "${term}"`)
+  return errors
 }
