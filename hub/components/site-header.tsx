@@ -1,4 +1,4 @@
-import { ThemeToggle } from '@/components/theme-toggle'
+import { ThemeToggle } from '@desops/ui-kit'
 import { HeaderLangSwitch } from '@/components/header-lang-switch'
 
 /** Thin top bar: wordmark home-link + EN/RU switch + theme toggle. */

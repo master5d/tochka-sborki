@@ -1,0 +1,29 @@
+:root {
+  --color-primary: #00D1FF;
+  --color-secondary: #5E5CE6;
+  --color-accent: #FF2A6D;
+  --color-background: #F2F2F7;
+  --color-surface: #FFFFFF;
+  --color-text-primary: #1A1A24;
+  --color-text-secondary: #8A8A9E;
+  --typography-font-family-heading: Inter, system-ui, sans-serif;
+  --typography-font-family-body: Inter, system-ui, sans-serif;
+  --typography-font-family-mono: JetBrains Mono, monospace;
+  --rounded-sm: 4px;
+  --rounded-md: 8px;
+  --rounded-lg: 12px;
+  --rounded-full: 9999px;
+  --spacing-unit: 4px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+}
+
+.dark {
+  --color-background: #07070A;
+  --color-surface: #0C0C14;
+  --color-text-primary: #E8E8F0;
+  --color-text-secondary: #8A8A9E;
+}

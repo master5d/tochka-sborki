@@ -9,3 +9,6 @@ docs/**/*.png
 
 # Архив исходников/référence-материалов курса (docx-опросники и т.п.) — не для VCS
 LMS/tochka-sborki/_archive/
+
+# Stray tool caches at repo root
+node_modules/
