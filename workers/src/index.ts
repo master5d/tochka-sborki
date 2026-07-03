@@ -13,6 +13,7 @@ import { listLeads, syncContacts } from './handlers/leads'
 import { getStats } from './handlers/stats'
 import { handleLeadCapture } from './handlers/leads-capture'
 import { handleAlumniList, handleAlumniMe, handleAlumniOptin } from './handlers/alumni'
+import { handleAdmission, handleAcademyMe } from './handlers/academy'
 import { requireAuth, requireOwner } from './middleware'
 
 const ALLOWED_ORIGINS = [
@@ -112,6 +113,10 @@ export default {
           try { body = await request.json() } catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }) }
           response = await handleAlumniOptin(env.DB, auth.sub, body)
         }
+      } else if (path === '/api/academy/admission' && method === 'POST') {
+        response = await handleAdmission(request, env)
+      } else if (path === '/api/academy/me' && method === 'GET') {
+        response = await handleAcademyMe(request, env)
       } else if (path === '/api/admin/leads' && method === 'GET') {
         const auth = await requireOwner(request, env)
         response = auth instanceof Response ? auth
