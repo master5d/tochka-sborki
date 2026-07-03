@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'LMS/tochka-sborki/web/**'
+      - 'LMS/registry.json'
       - 'hub/**'
       - 'blog/**'
       - 'mentor/**'
