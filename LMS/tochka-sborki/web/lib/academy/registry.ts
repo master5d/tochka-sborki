@@ -67,3 +67,22 @@ export function validateRegistry(r: AcademyRegistry): string[] {
   }
   return errors
 }
+
+export interface ResolvedCourse {
+  slug: string
+  name: string
+  tagline: string
+  url: string
+  status: CourseStatus
+}
+
+/** Localized course list (registry order preserved) — what the catalog/switcher renders. */
+export function resolveCourses(locale: Locale, r: AcademyRegistry = REGISTRY): ResolvedCourse[] {
+  return r.courses.map((c) => ({
+    slug: c.slug,
+    name: c.name[locale],
+    tagline: c.tagline[locale],
+    url: c.url,
+    status: c.status,
+  }))
+}

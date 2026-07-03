@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { REGISTRY, validateRegistry, type AcademyRegistry } from './registry'
+import { COURSE } from '@/lib/course'
+import { resolveCourses } from './registry'
 
 /** Fresh valid registry per test — mutate freely. */
 function sample(): AcademyRegistry {
@@ -103,5 +105,43 @@ describe('validateRegistry', () => {
 describe('REGISTRY (committed LMS/registry.json)', () => {
   it('round-trips validation cleanly', () => {
     expect(validateRegistry(REGISTRY)).toEqual([])
+  })
+})
+
+describe('resolveCourses', () => {
+  it('localizes ru', () => {
+    const [c] = resolveCourses('ru', sample())
+    expect(c).toEqual({
+      slug: 'tochka-sborki',
+      name: 'Точка Сборки',
+      tagline: 'курс по vibe-кодингу',
+      url: 'https://ai.mamaev.coach',
+      status: 'live',
+    })
+  })
+
+  it('localizes en', () => {
+    const [c] = resolveCourses('en', sample())
+    expect(c.name).toBe('Tochka Sborki')
+    expect(c.tagline).toBe('a course on vibe coding')
+  })
+
+  it('defaults to REGISTRY and preserves order', () => {
+    const list = resolveCourses('ru')
+    expect(list.map((c) => c.slug)).toEqual(REGISTRY.courses.map((c) => c.slug))
+  })
+})
+
+describe('COURSE ↔ registry drift-guard', () => {
+  const entry = REGISTRY.courses.find((c) => c.slug === 'tochka-sborki')
+
+  it('this course is registered', () => {
+    expect(entry).toBeDefined()
+  })
+
+  it('registry entry matches lib/course COURSE', () => {
+    expect(entry!.url).toBe(COURSE.domain)
+    expect(entry!.name.ru).toBe(COURSE.name)
+    expect([...entry!.locales]).toEqual([...COURSE.locales])
   })
 })
