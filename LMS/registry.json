@@ -1,0 +1,20 @@
+{
+  "academy": {
+    "name": "S.A.S.H.A",
+    "fullName": {
+      "ru": "Synergema Authentica Starseed Holon Academy",
+      "en": "Synergema Authentica Starseed Holon Academy"
+    },
+    "url": null
+  },
+  "courses": [
+    {
+      "slug": "tochka-sborki",
+      "name": { "ru": "Точка Сборки", "en": "Tochka Sborki" },
+      "tagline": { "ru": "курс по vibe-кодингу", "en": "a course on vibe coding" },
+      "url": "https://ai.mamaev.coach",
+      "status": "live",
+      "locales": ["ru", "en"]
+    }
+  ]
+}
