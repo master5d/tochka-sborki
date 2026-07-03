@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { REGISTRY, validateRegistry, type AcademyRegistry } from './registry'
+import { REGISTRY, validateRegistry, resolveCourses, type AcademyRegistry } from './registry'
 import { COURSE } from '@/lib/course'
-import { resolveCourses } from './registry'
 
 /** Fresh valid registry per test — mutate freely. */
 function sample(): AcademyRegistry {
