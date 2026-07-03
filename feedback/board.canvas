@@ -2400,7 +2400,7 @@
       "text": "✨ S.A.S.H.A #3: multi-course catalog + course-switcher UI",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
