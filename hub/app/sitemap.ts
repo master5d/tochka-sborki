@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [
     { url: `${SITE.url}/`, lastModified: today, alternates: { languages: { en: `${SITE.url}/en/` } } },
     { url: `${SITE.url}/blog/`, lastModified: ruPosts[0]?.date ?? today, alternates: { languages: { en: `${SITE.url}/en/blog/` } } },
+    { url: `${SITE.url}/academy/`, lastModified: today, alternates: { languages: { en: `${SITE.url}/en/academy/` } } },
   ]
   for (const p of ruPosts) {
     entries.push({
