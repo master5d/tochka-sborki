@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getDictionary, type Locale } from '@/lib/dictionaries'
+import { CourseSwitcher } from '@/components/academy/course-switcher'
 
 interface Props {
   locale?: Locale
@@ -195,6 +196,8 @@ export function Footer({ locale = 'ru', topics = [], showCertificateCta = true }
               mamaev.coach ↗
             </a>
           </div>
+
+          <CourseSwitcher locale={locale} />
         </div>
 
         {/* ── Bottom strip ───────────────────────────────────────── */}
