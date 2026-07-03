@@ -11,8 +11,8 @@ export async function handleAdmission(request: Request, env: Env): Promise<Respo
   if (auth instanceof Response) return auth
 
   const { results } = await env.DB.prepare(
-    'SELECT lesson_slug FROM progress WHERE user_id = ? AND completed_at IS NOT NULL'
-  ).bind(auth.sub).all<{ lesson_slug: string }>()
+    'SELECT lesson_slug FROM progress WHERE user_id = ? AND course = ? AND completed_at IS NOT NULL'
+  ).bind(auth.sub, COURSE).all<{ lesson_slug: string }>()
 
   const completed = new Set(results.map(r => r.lesson_slug))
   const missing = COURSE_CATALOG.map(m => m.slug).filter(slug => !completed.has(slug))
