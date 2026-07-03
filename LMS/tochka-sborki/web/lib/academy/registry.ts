@@ -86,3 +86,15 @@ export function resolveCourses(locale: Locale, r: AcademyRegistry = REGISTRY): R
     status: c.status,
   }))
 }
+
+/** Live courses of the academy other than this app (self identified by url === selfUrl).
+ *  What the CourseSwitcher renders; [] with a single-course registry (dark-ship). */
+export function resolveOtherCourses(
+  locale: Locale,
+  selfUrl: string,
+  r: AcademyRegistry = REGISTRY,
+): ResolvedCourse[] {
+  return resolveCourses(locale, r).filter(
+    (c) => c.status === 'live' && c.url !== selfUrl,
+  )
+}

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { REGISTRY, validateRegistry, resolveCourses, type AcademyRegistry } from './registry'
+import { REGISTRY, validateRegistry, resolveCourses, resolveOtherCourses, type AcademyRegistry } from './registry'
 import { COURSE } from '@/lib/course'
+import { getDictionary } from '@/lib/dictionaries'
 
 /** Fresh valid registry per test — mutate freely. */
 function sample(): AcademyRegistry {
@@ -142,5 +143,50 @@ describe('COURSE ↔ registry drift-guard', () => {
     expect(entry!.url).toBe(COURSE.domain)
     expect(entry!.name.ru).toBe(COURSE.name)
     expect([...entry!.locales]).toEqual([...COURSE.locales])
+  })
+})
+
+describe('resolveOtherCourses', () => {
+  it('returns [] on the single-course REGISTRY (dark-ship)', () => {
+    expect(resolveOtherCourses('ru', COURSE.domain)).toEqual([])
+  })
+
+  it('filters self by url', () => {
+    const r = sample()
+    r.courses.push({
+      slug: 'second-course',
+      name: { ru: 'Второй курс', en: 'Second Course' },
+      tagline: { ru: 'о чём-то ещё', en: 'about something else' },
+      url: 'https://second.example.com',
+      status: 'live',
+      locales: ['ru', 'en'],
+    })
+    const others = resolveOtherCourses('en', 'https://ai.mamaev.coach', r)
+    expect(others.map((c) => c.slug)).toEqual(['second-course'])
+    expect(others[0].name).toBe('Second Course')
+  })
+
+  it('excludes coming-soon courses', () => {
+    const r = sample()
+    r.courses.push({
+      slug: 'second-course',
+      name: { ru: 'Второй курс', en: 'Second Course' },
+      tagline: { ru: 'о чём-то ещё', en: 'about something else' },
+      url: 'https://second.example.com',
+      status: 'coming-soon',
+      locales: ['ru', 'en'],
+    })
+    expect(resolveOtherCourses('ru', 'https://ai.mamaev.coach', r)).toEqual([])
+  })
+})
+
+describe('dictionary academy section', () => {
+  it('has all keys filled in both locales', () => {
+    for (const locale of ['ru', 'en'] as const) {
+      const a = getDictionary(locale).academy
+      expect(a.switcherLabel.trim()).not.toBe('')
+      expect(a.catalogTitle.trim()).not.toBe('')
+      expect(a.comingSoon.trim()).not.toBe('')
+    }
   })
 })

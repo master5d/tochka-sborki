@@ -142,6 +142,11 @@ export type Dictionary = {
     phases: string[]
     appliedChallenge: string
   }
+  academy: {
+    switcherLabel: string
+    catalogTitle: string
+    comingSoon: string
+  }
   footer: {
     tagline: string
     topicsLabel: string
@@ -403,6 +408,11 @@ export const dictionaries: Record<Locale, Dictionary> = {
       phases: ['Активация', 'Рефлексия', 'Концепция', 'Практика'],
       appliedChallenge: 'Твой прикладной вызов',
     },
+    academy: {
+      switcherLabel: 'академия',
+      catalogTitle: 'Курсы академии',
+      comingSoon: 'скоро',
+    },
     footer: {
       tagline: 'Курс о со-мышлении и со-работе с agentic AI: инструмент — отдельно, твоя роль — отдельно. 9 элективных тем, твой стек на выбор.',
       topicsLabel: '// темы',
@@ -661,6 +671,11 @@ export const dictionaries: Record<Locale, Dictionary> = {
       moduleComplete: 'Topic complete →',
       phases: ['Activation', 'Reflection', 'Concept', 'Practice'],
       appliedChallenge: 'Your applied challenge',
+    },
+    academy: {
+      switcherLabel: 'academy',
+      catalogTitle: 'Academy courses',
+      comingSoon: 'coming soon',
     },
     footer: {
       tagline: 'A course in co-thinking and co-working with agentic AI — the tool stays separate from your role. 9 elective topics, pick your stack.',
