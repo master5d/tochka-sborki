@@ -11,6 +11,7 @@ import { LiteProvider } from '@/components/lite-provider'
 import { TelegramAuthBridge } from '@/components/telegram/telegram-auth-bridge'
 import Script from 'next/script'
 import { COURSE } from '@/lib/course'
+import { REGISTRY } from '@/lib/academy/registry'
 import './globals.css'
 
 const unbounded = Unbounded({
@@ -48,8 +49,8 @@ const langScript =
 export const metadata: Metadata = {
   metadataBase: new URL(COURSE.domain),
   title: 'Точка Сборки — курс по vibe-кодингу',
-  description: 'Открытый курс по AI-разработке и агентному программированию. Presented by Mamaev Institute for AI.',
-  publisher: 'Mamaev Institute for AI',
+  description: `Открытый курс по AI-разработке и агентному программированию. Presented by ${REGISTRY.academy.org.name}.`,
+  publisher: REGISTRY.academy.org.name,
   authors: [{ name: 'Alexander Mamaev' }],
   manifest: '/manifest.webmanifest',
   appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: 'Точка Сборки' },

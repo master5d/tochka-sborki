@@ -16,5 +16,4 @@ export const COURSE = {
   // Single source of truth for SEO (sitemap/robots) and the PWA manifest. No trailing slash.
   domain: 'https://ai.mamaev.coach',
   locales: ['ru', 'en'] as const,
-  publisher: 'Mamaev Institute for AI',
 } as const

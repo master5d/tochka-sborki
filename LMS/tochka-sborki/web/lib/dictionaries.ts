@@ -1,3 +1,7 @@
+import { REGISTRY } from './academy/registry'
+
+const ORG = REGISTRY.academy.org.name
+
 export type Locale = 'ru' | 'en'
 
 export type Dictionary = {
@@ -427,7 +431,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       licenseFull: 'MIT License',
       rights: 'Открытый курс. Используй, форкай, делись.',
       builtWith: 'Собрано с Claude Code',
-      presentedBy: 'Курс представлен Mamaev Institute for AI',
+      presentedBy: `Курс представлен ${ORG}`,
     },
     notFound: {
       code: '404',
@@ -691,7 +695,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       licenseFull: 'MIT License',
       rights: 'Open course. Use it, fork it, share it.',
       builtWith: 'Built with Claude Code',
-      presentedBy: 'Presented by Mamaev Institute for AI',
+      presentedBy: `Presented by ${ORG}`,
     },
     notFound: {
       code: '404',
