@@ -109,7 +109,7 @@ export default {
         if (auth instanceof Response) {
           response = auth
         } else {
-          let body: { optin?: boolean; contact?: string; blurb?: string }
+          let body: { optin?: boolean; contact?: string; blurb?: string; effort?: string }
           try { body = await request.json() } catch { return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } }) }
           response = await handleAlumniOptin(env.DB, auth.sub, body)
         }
