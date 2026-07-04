@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { Nav } from '@/components/nav'
 import type { Locale } from '@/lib/dictionaries'
 import { clusterAlumni, type AlumniEntry as Entry } from '@/lib/synergem'
+import { EFFORT_INTENTS, resolveEffort } from '@/lib/effort'
 import { IgiRitual } from '@/components/igi-ritual'
 
 const NICHE_LABEL: Record<string, { ru: string; en: string }> = {
@@ -31,13 +32,14 @@ export function AlumniClient({ locale }: { locale: Locale }) {
   const [optin, setOptin] = useState(false)
   const [contact, setContact] = useState('')
   const [blurb, setBlurb] = useState('')
+  const [effort, setEffort] = useState<string>('')
   const [loaded, setLoaded] = useState(false)
   const [saved, setSaved] = useState(false)
 
   useEffect(() => {
     fetch('/api/alumni/me', { credentials: 'include' })
       .then(r => { if (r.status === 401) { router.replace(en ? '/en/login/' : '/login/'); return null } return r.ok ? r.json() : null })
-      .then(me => { if (me) { setOptin(!!me.optin); setContact(me.contact ?? ''); setBlurb(me.blurb ?? '') } })
+      .then(me => { if (me) { setOptin(!!me.optin); setContact(me.contact ?? ''); setBlurb(me.blurb ?? ''); setEffort(me.effort ?? '') } })
       .catch(() => {})
     fetch('/api/alumni', { credentials: 'include' })
       .then(r => r.ok ? r.json() : { alumni: [] })
@@ -46,19 +48,20 @@ export function AlumniClient({ locale }: { locale: Locale }) {
   }, [router, en])
 
   const t = en
-    ? { title: 'Synergems', sub: 'Opt-in clusters of fellow learners forming around a shared interest and effort. Find the people building near you and gather into a synergem — an autonomous group where you amplify each other. Your email is never shown. Every learner here is also a teacher — sharing what you learn is how the synergem grows.', optinLabel: 'List me in the academy synergems', contact: 'How to reach you (handle / link)', blurb: "One line — what you're building or want to gather a synergem around", save: 'Save', saved: 'Saved ✓', empty: 'No one has opted in yet. Be the first to start a synergem.', other: 'Other', invite: (n: number) => `${n} ${n === 1 ? 'person' : 'people'} building nearby — reach out and gather.` }
-    : { title: 'Синергемы', sub: 'Opt-in кластеры соучеников, что собираются вокруг общего интереса и усилия. Найди тех, кто строит рядом, и собирайтесь в синергему — автономную группу, где вы усиливаете друг друга. Твой email никогда не показывается. Каждый ученик здесь — ещё и учитель: делясь тем, что осваиваешь, ты растишь синергему.', optinLabel: 'Показывать меня в синергемах академии', contact: 'Как с тобой связаться (ник / ссылка)', blurb: 'Одна строка — что строишь или вокруг чего хочешь собрать синергему', save: 'Сохранить', saved: 'Сохранено ✓', empty: 'Пока никто не открылся. Начни синергему первым.', other: 'Другое', invite: (n: number) => `${n} ${plural(n, 'человек строит', 'человека строят', 'человек строят')} рядом — напиши и собирайтесь.` }
+    ? { title: 'Synergems', sub: 'Opt-in clusters of fellow learners, gathered by the type of shared effort you choose. Find the people building near you and gather into a synergem — an autonomous group where you amplify each other. Your email is never shown. Every learner here is also a teacher — sharing what you learn is how the synergem grows.', optinLabel: 'List me in the academy synergems', contact: 'How to reach you (handle / link)', blurb: "One line — what you're building or want to gather a synergem around", save: 'Save', saved: 'Saved ✓', empty: 'No one has opted in yet. Be the first to start a synergem.', other: 'Other', effortLegend: 'What do you want to gather a synergem around?', invite: (n: number) => `${n} ${n === 1 ? 'person' : 'people'} building nearby — reach out and gather.` }
+    : { title: 'Синергемы', sub: 'Opt-in кластеры соучеников, собранные по выбранному типу общего усилия. Найди тех, кто строит рядом, и собирайтесь в синергему — автономную группу, где вы усиливаете друг друга. Твой email никогда не показывается. Каждый ученик здесь — ещё и учитель: делясь тем, что осваиваешь, ты растишь синергему.', optinLabel: 'Показывать меня в синергемах академии', contact: 'Как с тобой связаться (ник / ссылка)', blurb: 'Одна строка — что строишь или вокруг чего хочешь собрать синергему', save: 'Сохранить', saved: 'Сохранено ✓', empty: 'Пока никто не открылся. Начни синергему первым.', other: 'Другое', effortLegend: 'Вокруг чего хочешь собрать синергему?', invite: (n: number) => `${n} ${plural(n, 'человек строит', 'человека строят', 'человек строят')} рядом — напиши и собирайтесь.` }
 
   async function save() {
     const r = await fetch('/api/alumni/optin', {
       method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ optin, contact, blurb }),
+      body: JSON.stringify({ optin, contact, blurb, effort: effort || undefined }),
     })
     if (r.ok) { setSaved(true); setTimeout(() => setSaved(false), 2000); const d = await fetch('/api/alumni', { credentials: 'include' }).then(x => x.json()).catch(() => null); if (d) setList(d.alumni ?? []) }
   }
 
   const clusters = clusterAlumni(list)
-  const nicheLabel = (k: string) => k === 'other' ? t.other : (NICHE_LABEL[k]?.[en ? 'en' : 'ru'] ?? k)
+  const effortLabel = (k: string) => k === 'other' ? t.other : (resolveEffort(locale, k)?.label ?? k)
+  const nicheTag = (k: string | null) => k ? (NICHE_LABEL[k]?.[en ? 'en' : 'ru'] ?? k) : null
 
   const input: React.CSSProperties = { width: '100%', padding: '0.6rem', borderRadius: 8, border: '1px solid var(--border-color)', background: 'var(--bg-surface)', color: 'var(--text-primary)', fontFamily: 'inherit', fontSize: 14 }
 
@@ -77,6 +80,21 @@ export function AlumniClient({ locale }: { locale: Locale }) {
           <div style={{ display: 'grid', gap: '0.7rem' }}>
             <input style={input} value={contact} onChange={e => setContact(e.target.value)} placeholder={t.contact} maxLength={120} />
             <input style={input} value={blurb} onChange={e => setBlurb(e.target.value)} placeholder={t.blurb} maxLength={200} />
+            <fieldset style={{ border: 'none', padding: 0, margin: 0, display: 'grid', gap: '0.4rem' }}>
+              <legend style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.3rem' }}>{t.effortLegend}</legend>
+              {EFFORT_INTENTS.map(i => {
+                const r = resolveEffort(locale, i.key)!
+                return (
+                  <label key={i.key} style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', cursor: 'pointer' }}>
+                    <input type="radio" name="effort" checked={effort === i.key} onChange={() => setEffort(i.key)} style={{ marginTop: '0.2rem' }} />
+                    <span>
+                      <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>{r.label}</span>
+                      <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}> — {r.line}</span>
+                    </span>
+                  </label>
+                )
+              })}
+            </fieldset>
             <button onClick={save} style={{ ...input, width: 'auto', cursor: 'pointer', fontWeight: 700, color: 'var(--text-on-accent)', background: 'var(--text-accent)', border: 'none' }}>{saved ? t.saved : t.save}</button>
           </div>
         </section>
@@ -87,7 +105,7 @@ export function AlumniClient({ locale }: { locale: Locale }) {
         {clusters.map(({ key: k, entries, count }) => (
           <div key={k} style={{ marginBottom: '1.75rem' }}>
             <h2 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-accent)', marginBottom: '0.3rem' }}>
-              <span aria-hidden="true">⬡ </span>{nicheLabel(k)} · {count}
+              <span aria-hidden="true">⬡ </span>{effortLabel(k)} · {count}
             </h2>
             <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginBottom: '0.6rem' }}>{t.invite(count)}</p>
             <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: '0.6rem' }}>
@@ -95,6 +113,7 @@ export function AlumniClient({ locale }: { locale: Locale }) {
                 <li key={i} style={{ borderLeft: '3px solid var(--border-color)', paddingLeft: '0.8rem' }}>
                   {e.blurb && <div style={{ color: 'var(--text-primary)', fontSize: '0.92rem' }}>{e.blurb}</div>}
                   {e.contact && <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--text-accent)' }}>{e.contact}</div>}
+                  {nicheTag(e.niche) && <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '0.15rem' }}>⬡ {nicheTag(e.niche)}</div>}
                 </li>
               ))}
             </ul>
