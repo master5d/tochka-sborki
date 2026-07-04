@@ -1,6 +1,6 @@
 import type { Env } from '../lib/types'
 import { parseUpdate } from '../lib/telegram-update'
-import { nextLesson, lessonUrl, homeUrl, supportUrl } from '../lib/course-order'
+import { nextLesson, lessonUrl, homeUrl, supportUrl, storeUrl } from '../lib/course-order'
 import { botCopy, pickLocale, type BotLocale } from '../lib/bot-copy'
 import { sendMessage, sendForceReply } from '../lib/telegram-api'
 import { notifyOwnerQuestion } from '../lib/owner-notify'
@@ -54,6 +54,8 @@ export async function handleTelegramWebhook(request: Request, env: Env): Promise
       await sendMessage(env, intent.chatId, copy.stopAck)
     } else if (intent.kind === 'support') {
       await sendMessage(env, intent.chatId, copy.supportIntro, { text: copy.supportButton, url: supportUrl(locale) })
+    } else if (intent.kind === 'store') {
+      await sendMessage(env, intent.chatId, copy.storeIntro, { text: copy.storeButton, url: storeUrl(locale) })
     } else if (intent.kind === 'ask') {
       const question = intent.text?.trim()
       if (!question) {
