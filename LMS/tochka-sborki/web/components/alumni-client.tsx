@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { Nav } from '@/components/nav'
 import type { Locale } from '@/lib/dictionaries'
 import { clusterAlumni, type AlumniEntry as Entry } from '@/lib/synergem'
+import { IgiRitual } from '@/components/igi-ritual'
 
 const NICHE_LABEL: Record<string, { ru: string; en: string }> = {
   coach: { ru: 'Коучинг и психотерапия', en: 'Coaching & therapy' },
@@ -79,6 +80,8 @@ export function AlumniClient({ locale }: { locale: Locale }) {
             <button onClick={save} style={{ ...input, width: 'auto', cursor: 'pointer', fontWeight: 700, color: 'var(--text-on-accent)', background: 'var(--text-accent)', border: 'none' }}>{saved ? t.saved : t.save}</button>
           </div>
         </section>
+
+        <IgiRitual locale={locale} />
 
         {loaded && list.length === 0 && <p style={{ color: 'var(--text-secondary)' }}>{t.empty}</p>}
         {clusters.map(({ key: k, entries, count }) => (
