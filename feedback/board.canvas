@@ -3860,6 +3860,61 @@
           "reason": "follow-on от a11y-baseline fb_a2c667a36a64; WCAG-AA контраст-аудит токенов model-kit + расширенный ARIA-проход; общий theme → риск визуальных регрессий"
         }
       }
+    },
+    {
+      "id": "fb_015e518dc797",
+      "type": "text",
+      "x": 860,
+      "y": 6320,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "💡 Reference: 4brain «Ораторское мастерство» — каркас speech/voice-трека (6 уроков + 30 упр + тест + кейс)",
+      "metadata": {
+        "sovern:layer": "course",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 6,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-07-04T17:56:51.108Z",
+        "feedback": {
+          "category": "idea",
+          "severity": "low",
+          "area": "course",
+          "lms_target": "content",
+          "impact": 6,
+          "urgency": 3,
+          "confidence": 0.7,
+          "reason": "структура-референс для speech/oratory трека Точки Сборки; брать методологический каркас (модуль→упражнения→тест→кейс) + таксономию техник как rubric/AI-коуч-промпт, НЕ текст 4brain; первоисточники Карнеги/Леммерман → ebook-pipeline. Связь с Echo voice-cloning (readback/narration как тренажёр произнесения)."
+        }
+      }
+    },
+    {
+      "id": "fb_8adc4e0490a9",
+      "type": "text",
+      "x": 1140,
+      "y": 6320,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "💡 Разбор кейса монетизации: IndigoGo B2B 56-дн «речь-под-продажи» → упаковка для mentor + Echo",
+      "metadata": {
+        "sovern:layer": "hub",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 7,
+        "sovern:urgency": 4,
+        "sovern:created": "2026-07-04T17:56:51.193Z",
+        "feedback": {
+          "category": "idea",
+          "severity": "medium",
+          "area": "hub",
+          "impact": 7,
+          "urgency": 4,
+          "confidence": 0.8,
+          "reason": "конкурент-B2B как шаблон монетизации: речь-как-ROI фрейм (метрики продаж/NPS, диагностика→daily→применение, −50%/installment хуки) → applicable к mentor.mamaev.coach agent-engineering B2B и к Echo Meeting Copilot go-to-market; их слабость (ручной фидбэк, 0 AI-анализа) = дельта Echo. Кросс-усилие Точка Сборки + Echo."
+        }
+      }
     }
   ],
   "edges": [
@@ -4552,6 +4607,16 @@
       "id": "e_fb_8cac8d78f49c",
       "fromNode": "area_lms",
       "toNode": "fb_8cac8d78f49c"
+    },
+    {
+      "id": "e_fb_015e518dc797",
+      "fromNode": "area_course",
+      "toNode": "fb_015e518dc797"
+    },
+    {
+      "id": "e_fb_8adc4e0490a9",
+      "fromNode": "area_hub",
+      "toNode": "fb_8adc4e0490a9"
     }
   ]
 }
