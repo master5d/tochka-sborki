@@ -187,6 +187,8 @@ export type Dictionary = {
     networkError: string
     footnote: string
     pageTitle: string
+    google: string
+    or: string
   }
   onboarding: {
     step: string
@@ -453,6 +455,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
       networkError: 'Ошибка сети. Проверь подключение.',
       footnote: 'Без паролей. Получишь ссылку на почту — один клик и ты внутри.',
       pageTitle: 'Вход — Точка Сборки',
+      google: 'Войти через Google',
+      or: 'или',
     },
     onboarding: {
       step: '⬡ Шаг 1 из 1',
@@ -717,6 +721,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
       networkError: 'Network error. Check your connection.',
       footnote: 'No passwords. You get a link in your inbox — one click and you are in.',
       pageTitle: 'Sign in — Tochka Sborki',
+      google: 'Continue with Google',
+      or: 'or',
     },
     onboarding: {
       step: '⬡ Step 1 of 1',

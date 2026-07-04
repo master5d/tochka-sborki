@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Nav } from '@/components/nav'
 import { getDictionary, type Locale } from '@/lib/dictionaries'
 
@@ -24,6 +24,12 @@ export function LoginForm({ locale }: Props) {
   const [telegram, setTelegram] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'sent' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
+  const [oauthHref, setOauthHref] = useState('/api/auth/oauth/google/start')
+
+  useEffect(() => {
+    const redirect = new URLSearchParams(window.location.search).get('redirect')
+    setOauthHref(redirect ? `/api/auth/oauth/google/start?redirect=${encodeURIComponent(redirect)}` : '/api/auth/oauth/google/start')
+  }, [])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -98,7 +104,32 @@ export function LoginForm({ locale }: Props) {
             {t.sentConfirm(email)}
           </div>
         ) : (
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <>
+            <a
+              href={oauthHref}
+              style={{
+                display: 'block',
+                textAlign: 'center',
+                padding: '0.875rem 2rem',
+                background: 'var(--bg-surface)',
+                color: 'var(--text-primary)',
+                fontWeight: 700,
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.875rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                borderRadius: 'var(--radius)',
+                border: '1px solid var(--border-color)',
+                textDecoration: 'none',
+                marginBottom: '1rem',
+              }}
+            >
+              {t.google}
+            </a>
+            <div style={{ textAlign: 'center', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', marginBottom: '1rem' }}>
+              {t.or}
+            </div>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <input
               type="email"
               value={email}
@@ -137,6 +168,7 @@ export function LoginForm({ locale }: Props) {
               {status === 'loading' ? t.sending : t.submit}
             </button>
           </form>
+          </>
         )}
 
         <p style={{ marginTop: '2rem', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
