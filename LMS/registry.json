@@ -5,7 +5,8 @@
       "ru": "Synergema Authentica Starseed Holon Academy",
       "en": "Synergema Authentica Starseed Holon Academy"
     },
-    "url": "https://mamaev.coach/academy"
+    "url": "https://mamaev.coach/academy",
+    "org": { "name": "Synergify Institute for AI" }
   },
   "courses": [
     {

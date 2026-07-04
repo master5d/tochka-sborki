@@ -18,7 +18,7 @@ export interface CourseEntry {
 }
 
 export interface AcademyRegistry {
-  academy: { name: string; fullName: Bi; url: string | null }
+  academy: { name: string; fullName: Bi; url: string | null; org: { name: string } }
   courses: CourseEntry[]
 }
 
@@ -46,6 +46,7 @@ export function validateRegistry(r: AcademyRegistry): string[] {
   if (r.academy.url !== null && !isValidUrl(r.academy.url)) {
     errors.push('academy.url must be null or https:// without trailing slash')
   }
+  if (r.academy.org.name.trim().length === 0) errors.push('academy.org.name is empty')
   const seen = new Set<string>()
   for (const c of r.courses) {
     const at = `courses[${c.slug}]`

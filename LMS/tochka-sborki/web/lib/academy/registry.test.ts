@@ -10,6 +10,7 @@ function sample(): AcademyRegistry {
       name: 'S.A.S.H.A',
       fullName: { ru: 'Академия', en: 'Academy' },
       url: null,
+      org: { name: 'Synergify Institute for AI' },
     },
     courses: [
       {
@@ -45,6 +46,12 @@ describe('validateRegistry', () => {
     const r = sample()
     r.academy.url = 'https://academy.example.com/'
     expect(validateRegistry(r)).toContain('academy.url must be null or https:// without trailing slash')
+  })
+
+  it('flags empty academy.org.name', () => {
+    const r = sample()
+    r.academy.org.name = '  '
+    expect(validateRegistry(r)).toContain('academy.org.name is empty')
   })
 
   it('flags a bad slug', () => {
@@ -105,6 +112,13 @@ describe('validateRegistry', () => {
 describe('REGISTRY (committed LMS/registry.json)', () => {
   it('round-trips validation cleanly', () => {
     expect(validateRegistry(REGISTRY)).toEqual([])
+  })
+})
+
+describe('academy.org sacred shape', () => {
+  it('carries a name only — no nonprofit/legal-status keys', () => {
+    expect(Object.keys(REGISTRY.academy.org)).toEqual(['name'])
+    expect(REGISTRY.academy.org.name).toBe('Synergify Institute for AI')
   })
 })
 
