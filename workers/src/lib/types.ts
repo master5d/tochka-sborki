@@ -8,6 +8,8 @@ export interface Env {
   TELEGRAM_WEBHOOK_SECRET: string
   STRIPE_SECRET_KEY: string
   STRIPE_WEBHOOK_SECRET: string
+  GOOGLE_OAUTH_CLIENT_ID: string
+  GOOGLE_OAUTH_CLIENT_SECRET: string
 }
 
 export interface JWTPayload {
