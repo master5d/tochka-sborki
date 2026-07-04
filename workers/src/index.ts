@@ -2,6 +2,7 @@ import type { Env } from './lib/types'
 import { handleFeedback } from './handlers/feedback'
 import { handleSendLink, handleVerify, handleMe, handleLogout } from './handlers/auth'
 import { handleTelegramAuth } from './handlers/telegram-auth'
+import { handleOAuthStart, handleOAuthCallback } from './handlers/oauth'
 import { handleTelegramWebhook } from './handlers/telegram-webhook'
 import { runDailyNudge } from './handlers/nudge-cron'
 import { handleSupportCheckout, handleProductCheckout } from './handlers/checkout'
@@ -58,6 +59,10 @@ export default {
         response = await handleVerify(request, env)
       } else if (path === '/api/auth/telegram' && method === 'POST') {
         response = await handleTelegramAuth(request, env)
+      } else if (path === '/api/auth/oauth/google/start' && method === 'GET') {
+        response = await handleOAuthStart(request, env)
+      } else if (path === '/api/auth/oauth/google/callback' && method === 'GET') {
+        response = await handleOAuthCallback(request, env)
       } else if (path === '/api/telegram/webhook' && method === 'POST') {
         response = await handleTelegramWebhook(request, env)
       } else if (path === '/api/checkout/support' && method === 'POST') {
