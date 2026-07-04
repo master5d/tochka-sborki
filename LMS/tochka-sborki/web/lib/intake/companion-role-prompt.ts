@@ -5,6 +5,7 @@
 import type { Locale } from './types'
 import { profileToCharter } from './charter'
 import { mentorFirmness, mentorStateAdaptation } from '../mentor-persona'
+import { academyCompanionLayer } from '../academy/companion'
 
 const COURSE = 'Точка Сборки'
 
@@ -32,6 +33,8 @@ export function buildCompanionRolePrompt(profile: any | null, locale: Locale): s
           ``,
           mentorStateAdaptation(locale),
           ``,
+          academyCompanionLayer(locale),
+          ``,
           `Начни с одного вопроса: над чем я сейчас работаю.`,
         ].join('\n')
       : [
@@ -46,6 +49,8 @@ export function buildCompanionRolePrompt(profile: any | null, locale: Locale): s
           mentorFirmness(locale),
           ``,
           mentorStateAdaptation(locale),
+          ``,
+          academyCompanionLayer(locale),
           ``,
           `Start with one question: what I'm working on right now.`,
         ].join('\n')
@@ -65,6 +70,8 @@ export function buildCompanionRolePrompt(profile: any | null, locale: Locale): s
         ``,
         mentorStateAdaptation(locale),
         ``,
+        academyCompanionLayer(locale),
+        ``,
         `Когда я приношу урок или задачу — веди по циклу: намерение → системное мышление → дизайн → шаг → todo. Держи устав между сессиями; начни с вопроса, над чем я сейчас работаю.`,
       ].join('\n')
     : [
@@ -78,6 +85,8 @@ export function buildCompanionRolePrompt(profile: any | null, locale: Locale): s
         mentorFirmness(locale),
         ``,
         mentorStateAdaptation(locale),
+        ``,
+        academyCompanionLayer(locale),
         ``,
         `When I bring a lesson or task, lead me through the loop: intent → systems thinking → design → step → todo. Keep the charter across sessions; start by asking what I'm working on now.`,
       ].join('\n')
