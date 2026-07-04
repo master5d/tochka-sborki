@@ -2512,7 +2512,7 @@
       "text": "✨ Rename publisher 'Mamaev Institute for AI' -> 'Synergify Institute for AI' (academy org)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 5,
