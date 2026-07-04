@@ -4,6 +4,9 @@
 // Admission is granted server-side on verified completion (S4, fb_97517f307a46);
 // the certificate page requests it fire-and-forget.
 import type { Locale } from '@/lib/dictionaries'
+import { REGISTRY } from '@/lib/academy/registry'
+
+const ORG = REGISTRY.academy.org.name
 
 interface Bi { ru: string; en: string }
 
@@ -61,8 +64,8 @@ export const CERTIFICATE: CertificateData = {
   founderName: { ru: 'Саша Мамаев', en: 'Sasha Mamaev' },
   founderTitle: { ru: 'основатель · Точка Сборки', en: 'Founder · Tochka Sborki' },
   publisher: {
-    ru: 'представлено · Mamaev Institute for AI',
-    en: 'presented by · Mamaev Institute for AI',
+    ru: `представлено · ${ORG}`,
+    en: `presented by · ${ORG}`,
   },
   url: 'ai.mamaev.coach/certificate',
 }

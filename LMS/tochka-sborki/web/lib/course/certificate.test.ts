@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { resolveCertificate, CERTIFICATE, CERT_PALETTE } from './certificate'
 import type { ResolvedCertificate } from './certificate'
+import { REGISTRY } from '@/lib/academy/registry'
 
 const FIELDS: (keyof ResolvedCertificate)[] = [
   'brand', 'ticketLabel', 'heading', 'presentedTo', 'forCompleting',
@@ -33,9 +34,11 @@ describe('resolveCertificate', () => {
     expect(resolveCertificate('en', fake).heading).toBe('EN')
   })
 
-  it('keeps the publisher referencing the current institute (rename is a separate ticket)', () => {
-    expect(resolveCertificate('en').publisher).toContain('Mamaev Institute for AI')
-    expect(resolveCertificate('ru').publisher).toContain('Mamaev Institute for AI')
+  it('derives the publisher from the academy org registry in both locales', () => {
+    const org = REGISTRY.academy.org.name
+    expect(org).toBe('Synergify Institute for AI')
+    expect(resolveCertificate('en').publisher).toContain(org)
+    expect(resolveCertificate('ru').publisher).toContain(org)
   })
 
   it('uses a single gold accent', () => {
