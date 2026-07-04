@@ -29,3 +29,7 @@ export function homeUrl(locale: 'ru' | 'en'): string {
 export function supportUrl(locale: 'ru' | 'en'): string {
   return locale === 'en' ? 'https://ai.mamaev.coach/en/support/' : 'https://ai.mamaev.coach/support/'
 }
+
+export function storeUrl(locale: 'ru' | 'en'): string {
+  return locale === 'en' ? 'https://ai.mamaev.coach/en/store/' : 'https://ai.mamaev.coach/store/'
+}

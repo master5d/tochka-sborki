@@ -17,6 +17,8 @@ export interface BotCopy {
   askButton: string
   supportIntro: string
   supportButton: string
+  storeIntro: string
+  storeButton: string
 }
 
 const RU: BotCopy = {
@@ -36,6 +38,8 @@ const RU: BotCopy = {
   askButton: '▶️ Открыть курс',
   supportIntro: 'Курс бесплатный и таким останется. Если хочешь поддержать автора — вот здесь:',
   supportButton: '❤️ Поддержать',
+  storeIntro: 'Мерч и цифровые наборы проекта. Если что-то пригодится — вот витрина:',
+  storeButton: '🛍 Магазин',
 }
 
 const EN: BotCopy = {
@@ -55,6 +59,8 @@ const EN: BotCopy = {
   askButton: '▶️ Open course',
   supportIntro: 'The course is free and stays free. If you’d like to support the creator — here:',
   supportButton: '❤️ Support',
+  storeIntro: 'Project merch and digital kits. If something’s useful — here’s the store:',
+  storeButton: '🛍 Store',
 }
 
 // The force_reply prompts, locale-free — so the update parser can recognize a reply to "ask".

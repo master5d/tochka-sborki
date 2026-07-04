@@ -65,4 +65,14 @@ describe('parseUpdate', () => {
     const r = parseUpdate({ message: { text: '/support', from: { id: 4 }, chat: { id: 4 } } })
     expect(r.kind).toBe('support')
   })
+
+  it('parses /store', () => {
+    const r = parseUpdate({ message: { text: '/store', from: { id: 4 }, chat: { id: 4 } } })
+    expect(r.kind).toBe('store')
+  })
+
+  it('parses /store@botname', () => {
+    const r = parseUpdate({ message: { text: '/store@tochka_sborki_lms_bot', from: { id: 4 }, chat: { id: 4 } } })
+    expect(r.kind).toBe('store')
+  })
 })
