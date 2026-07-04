@@ -67,3 +67,47 @@ describe('handleList', () => {
     expect(Array.isArray(data)).toBe(true)
   })
 })
+
+function makeCaptureEnv() {
+  const calls: unknown[][] = []
+  const run = vi.fn().mockResolvedValue({ success: true })
+  const env = {
+    DB: {
+      prepare: (_sql: string) => ({
+        bind: (...args: unknown[]) => {
+          calls.push(args)
+          return { run, all: vi.fn().mockResolvedValue({ results: [] }), first: vi.fn().mockResolvedValue(null) }
+        },
+      }),
+    } as unknown as D1Database,
+    WORKER_JWT_SECRET: SECRET,
+    RESEND_API_KEY: '',
+  } as unknown as Env
+  return { env, calls }
+}
+
+describe('course keying (S4)', () => {
+  it('view defaults course to tochka-sborki', async () => {
+    const req = await makeAuthRequest('https://ai.mamaev.coach/api/progress/view', 'POST', { lesson_slug: '01-introduction' })
+    const { env, calls } = makeCaptureEnv()
+    const res = await handleView(req, env)
+    expect(res.status).toBe(200)
+    expect(calls[0]).toContain('tochka-sborki')
+  })
+
+  it('view passes an explicit course through', async () => {
+    const req = await makeAuthRequest('https://ai.mamaev.coach/api/progress/view', 'POST', { lesson_slug: 'x/u1-intro', course: 'x' })
+    const { env, calls } = makeCaptureEnv()
+    await handleView(req, env)
+    expect(calls[0]).toContain('x')
+    expect(calls[0]).not.toContain('tochka-sborki')
+  })
+
+  it('complete defaults course to tochka-sborki', async () => {
+    const req = await makeAuthRequest('https://ai.mamaev.coach/api/progress/complete', 'POST', { lesson_slug: '01-introduction' })
+    const { env, calls } = makeCaptureEnv()
+    const res = await handleComplete(req, env)
+    expect(res.status).toBe(200)
+    expect(calls[0]).toContain('tochka-sborki')
+  })
+})
