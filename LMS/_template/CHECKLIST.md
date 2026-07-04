@@ -7,6 +7,7 @@ Everything a new course must provide. Engine code is reused unchanged; the items
 - [ ] `COURSE.name`, `fullName` (ru+en), `domain` (https, no trailing slash), `locales`, `publisher`.
 - Single source for SEO (`sitemap.ts`/`robots.ts`) + PWA manifest. Start from `course.config.template.ts`.
 - [ ] Register the course in `LMS/registry.json` (slug / name / tagline / url / status / locales). Values must match `COURSE` — the engine's registry drift-guard test (`lib/academy/registry.test.ts`) enforces url, name.ru and locales.
+- [ ] Progress API: send your `course` slug in `/api/progress/*` bodies and namespace lesson slugs (e.g. `<course>/<lesson>`) — the `progress` PK is `(user_id, lesson_slug)` without course, so bare-slug collisions across courses are prevented by convention.
 
 ## 2. UI copy — `web/lib/dictionaries.ts`
 - [ ] Replace every value in the `ru` and `en` objects (nav labels, page copy, feedback, …). **32 components read this** — keep the interface shape, swap the strings.

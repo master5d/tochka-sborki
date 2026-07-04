@@ -1,7 +1,8 @@
 // lib/course/certificate.ts
 // Golden-ticket certificate course-data (fb_6ded7b0b7980). The SVG component is the
 // engine; this file holds the Tochka-Sborki golden-ticket copy + palette.
-// Framing is SYMBOLIC — no promise of access to the (unbuilt) S.A.S.H.A academy.
+// Admission is granted server-side on verified completion (S4, fb_97517f307a46);
+// the certificate page requests it fire-and-forget.
 import type { Locale } from '@/lib/dictionaries'
 
 interface Bi { ru: string; en: string }

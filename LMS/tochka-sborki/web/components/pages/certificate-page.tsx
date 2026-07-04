@@ -67,6 +67,12 @@ export function CertificatePage({ locale }: Props) {
     }
   }, [name])
 
+  // S4 (fb_97517f307a46): request the academy admission fire-and-forget — the
+  // server verifies completion; the ticket renders the same either way.
+  useEffect(() => {
+    fetch('/api/academy/admission', { method: 'POST', credentials: 'include' }).catch(() => {})
+  }, [])
+
   const date = new Date().toISOString().slice(0, 10)
   const displayName = name.trim() || (locale === 'en' ? 'Anonymous Vibe Coder' : 'Анонимный Vibe Coder')
 
