@@ -4,7 +4,7 @@ import { resolveCaptionTrack, resolveTranscript, type CaptionTrack } from '@/lib
 interface Bi { ru: string; en: string }
 
 export type CategoryKey =
-  | 'co-thinking' | 'launch' | 'flow' | 'knowledge' | 'dictation' | 'platform'
+  | 'co-thinking' | 'launch' | 'flow' | 'knowledge' | 'dictation' | 'platform' | 'for-good'
 
 export type CatFilter = 'all' | CategoryKey
 
@@ -20,6 +20,7 @@ const CATEGORIES: CategoryDef[] = [
   { key: 'knowledge',   label: { ru: 'Знание',       en: 'Knowledge' } },
   { key: 'dictation',   label: { ru: 'Диктовка',     en: 'Dictation' } },
   { key: 'platform',    label: { ru: 'Платформа',    en: 'Platform' } },
+  { key: 'for-good',    label: { ru: 'Во благо',      en: 'For good' } },
 ]
 
 export const CATEGORY_KEYS: CategoryKey[] = CATEGORIES.map(c => c.key)
@@ -122,6 +123,26 @@ const DREAM_CASES: ShowcaseCase[] = [
     blurb: { ru: 'Источники, которые ты читаешь, сами приносят тебе суть — без ручного перелопачивания.', en: 'The sources you read bring you the essence themselves — no manual digging.' },
     tag: { ru: 'Поток', en: 'Flow' },
     category: 'flow' },
+  { id: 'eco', icon: '🌱',
+    title: { ru: 'Эко-дозор своего места', en: 'An eco-watch for your place' },
+    blurb: { ru: 'Собери данные о среде вокруг — воздух, вода, свалки — в живую картину, которая двигает соседей к действию.', en: 'Gather data about your surroundings — air, water, dumping — into a living picture that moves your neighbours to act.' },
+    tag: { ru: 'Во благо', en: 'For good' },
+    category: 'for-good' },
+  { id: 'rescue', icon: '🐾',
+    title: { ru: 'Сеть спасения животных', en: 'An animal-rescue network' },
+    blurb: { ru: 'В морозы координируй волонтёров: карта точек, быстрые оповещения, никто не потерян.', en: 'In a cold snap, coordinate volunteers: a map of spots, fast alerts, no one lost.' },
+    tag: { ru: 'Во благо', en: 'For good' },
+    category: 'for-good' },
+  { id: 'pattern-shield', icon: '🛡️',
+    title: { ru: 'Увидеть паттерн — назвать его', en: 'See the pattern — name it' },
+    blurb: { ru: 'Помощник, который помогает человеку распознать разрушительный паттерн в отношениях и увидеть его со стороны.', en: 'A helper that lets a person recognize a destructive pattern in a relationship and see it from the outside.' },
+    tag: { ru: 'Во благо', en: 'For good' },
+    category: 'for-good' },
+  { id: 'safe-path', icon: '🕊️',
+    title: { ru: 'Навигатор помощи', en: 'A help navigator' },
+    blurb: { ru: 'Для того, кто в трудной ситуации: куда обратиться рядом с домом, шаг за шагом, без осуждения.', en: 'For someone in a hard situation: where to turn near home, step by step, without judgment.' },
+    tag: { ru: 'Во благо', en: 'For good' },
+    category: 'for-good' },
 ]
 
 const REAL_CASES: RealCase[] = [

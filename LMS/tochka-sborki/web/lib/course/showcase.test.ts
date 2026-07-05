@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { getShowcase, videoEmbedUrl, resolveVideoSource, withAutoplay, filterByCategory, CATEGORY_KEYS, deepDiveUrl } from './showcase'
+import { lintDehustle } from '@/lib/authoring/dehustle'
 
 describe('getShowcase', () => {
   for (const loc of ['ru', 'en'] as const) {
@@ -159,5 +160,37 @@ describe('showcase deep-dive wiring', () => {
     for (const c of getShowcase('en').real.cases) {
       expect(c.href!).toMatch(/^https:\/\/mamaev\.coach\/en\/blog\/[a-z-]+\/$/)
     }
+  })
+})
+
+describe('for-good dream cases (fb_650d16d2)', () => {
+  for (const loc of ['ru', 'en'] as const) {
+    it(`for-good tab appears in categories (${loc})`, () => {
+      const s = getShowcase(loc)
+      expect(s.categories.some(c => c.key === 'for-good')).toBe(true)
+    })
+    it(`>=4 for-good dream cases, fully populated (${loc})`, () => {
+      const s = getShowcase(loc)
+      const fg = s.dream.cases.filter(c => c.category === 'for-good')
+      expect(fg.length).toBeGreaterThanOrEqual(4)
+      for (const c of fg) {
+        expect(c.title.length).toBeGreaterThan(0)
+        expect(c.blurb.length).toBeGreaterThan(0)
+        expect(c.tag.length).toBeGreaterThan(0)
+        expect(c.icon.length).toBeGreaterThan(0)
+      }
+    })
+    it(`ALL showcase copy is de-hustle clean (${loc})`, () => {
+      const s = getShowcase(loc)
+      const strings = [
+        ...s.dream.cases.flatMap(c => [c.title, c.blurb, c.tag]),
+        ...s.real.cases.flatMap(c => [c.title, c.blurb, c.tag, c.result]),
+      ]
+      for (const str of strings) expect(lintDehustle(str)).toEqual([])
+    })
+  }
+  it('for-good ids are the 4 canonical ones', () => {
+    const ids = getShowcase('ru').dream.cases.filter(c => c.category === 'for-good').map(c => c.id)
+    expect(ids).toEqual(['eco', 'rescue', 'pattern-shield', 'safe-path'])
   })
 })
