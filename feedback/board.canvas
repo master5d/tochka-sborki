@@ -3927,7 +3927,7 @@
       "text": "🎨 Guardrail: ясность первична для всех — профилирование-по-стилю поверх, не вместо",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
