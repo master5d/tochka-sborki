@@ -27,9 +27,12 @@ export function RsvpReader({ locale }: { locale: Locale }) {
   const [index, setIndex] = useState(0)
   const [playing, setPlaying] = useState(false)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const seeded = useRef(false)
 
   // seed the textarea with the sample once (after persisted state is ready)
-  useEffect(() => { if (ready && text === '') setText(resolveRsvpSample(locale)) }, [ready, locale, text])
+  useEffect(() => {
+    if (ready && !seeded.current) { seeded.current = true; setText(resolveRsvpSample(locale)) }
+  }, [ready, locale])
 
   const tokens = useMemo(() => tokenize(text), [text])
   const schedule = useMemo(
@@ -41,7 +44,7 @@ export function RsvpReader({ locale }: { locale: Locale }) {
     if (!playing) return
     if (index >= schedule.length) {
       setPlaying(false)
-      if (tokens.length > 0) logSession(state.wpm, tokens.length)
+      if (index === schedule.length && tokens.length > 0) logSession(state.wpm, tokens.length)
       return
     }
     timer.current = setTimeout(() => setIndex(i => i + 1), schedule[index].ms)
