@@ -15,7 +15,6 @@ const { name, fullName } = registry.academy
 const courses = registry.courses
   .map((c) => `- ${c.name.ru} / ${c.name.en} (${c.status})`)
   .join('\n')
-const { origin } = model
 const frames = model.frames
   .map((f, i) => `${i + 1}. [${f.id}] ${f.label.ru} / ${f.label.en}\n   RU: ${f.ru}\n   EN: ${f.en}`)
   .join('\n')
