@@ -3621,7 +3621,7 @@
       "text": "✨ Синергема: синтетический наставник (AI-ментор на кластер)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 6,
         "sovern:urgency": 3,
