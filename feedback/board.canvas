@@ -4008,7 +4008,7 @@
       "text": "📌 Hero-header: синтез из 3 рамок (чат-против-системы / о-чём-мечтать / что-изменится)",
       "metadata": {
         "sovern:layer": "lms",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 5,
         "sovern:urgency": 2,
