@@ -3915,6 +3915,114 @@
           "reason": "конкурент-B2B как шаблон монетизации: речь-как-ROI фрейм (метрики продаж/NPS, диагностика→daily→применение, −50%/installment хуки) → applicable к mentor.mamaev.coach agent-engineering B2B и к Echo Meeting Copilot go-to-market; их слабость (ручной фидбэк, 0 AI-анализа) = дельта Echo. Кросс-усилие Точка Сборки + Echo."
         }
       }
+    },
+    {
+      "id": "fb_a1a446f5030b",
+      "type": "text",
+      "x": 300,
+      "y": 6500,
+      "width": 240,
+      "height": 140,
+      "color": "#eab308",
+      "text": "🎨 Guardrail: ясность первична для всех — профилирование-по-стилю поверх, не вместо",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 6,
+        "sovern:urgency": 3,
+        "sovern:created": "2026-07-05T11:55:39.496Z",
+        "feedback": {
+          "category": "ux",
+          "severity": "medium",
+          "area": "lms",
+          "impact": 6,
+          "urgency": 3,
+          "confidence": 0.85,
+          "reason": "зафиксировать напряжение clarity-vs-personalization как design-guardrail; контр-сигнал реального ICP к ядру методологии"
+        }
+      }
+    },
+    {
+      "id": "fb_650d16d24f16",
+      "type": "text",
+      "x": 580,
+      "y": 6500,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "📌 AI-for-good dream-cases для conscious-ЦА (экология, животные, детект абьюза)",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 5,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-07-05T11:55:40.067Z",
+        "feedback": {
+          "category": "content",
+          "severity": "low",
+          "area": "lms",
+          "impact": 5,
+          "urgency": 2,
+          "confidence": 0.85,
+          "reason": "контент-сид: dream-cases от реального ICP для галереи возможностей под conscious-аудиторию"
+        }
+      }
+    },
+    {
+      "id": "fb_29839abc8549",
+      "type": "text",
+      "x": 860,
+      "y": 6500,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "📌 Reference: Глеб Калинин (Берлин, mental-health×AI) — peer-модель монетизации, 3 потока",
+      "metadata": {
+        "sovern:layer": "hub",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 4,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-07-05T11:55:40.795Z",
+        "feedback": {
+          "category": "research",
+          "severity": "low",
+          "area": "hub",
+          "impact": 4,
+          "urgency": 2,
+          "confidence": 0.8,
+          "reason": "peer-reference в целевой нише; борд системно ведёт такие досье (IndigoGo, 4brain, Manus)"
+        }
+      }
+    },
+    {
+      "id": "fb_3c88df7942ce",
+      "type": "text",
+      "x": 1140,
+      "y": 6500,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "📌 Hero-header: синтез из 3 рамок (чат-против-системы / о-чём-мечтать / что-изменится)",
+      "metadata": {
+        "sovern:layer": "lms",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 5,
+        "sovern:urgency": 2,
+        "sovern:created": "2026-07-05T11:55:41.536Z",
+        "feedback": {
+          "category": "marketing",
+          "severity": "low",
+          "area": "lms",
+          "impact": 5,
+          "urgency": 2,
+          "confidence": 0.8,
+          "reason": "копи-задача синтеза hero из трёх уже-построенных рамок; держать грани вместе при работе над лендингом"
+        }
+      }
     }
   ],
   "edges": [
@@ -4617,6 +4725,26 @@
       "id": "e_fb_8adc4e0490a9",
       "fromNode": "area_hub",
       "toNode": "fb_8adc4e0490a9"
+    },
+    {
+      "id": "e_fb_a1a446f5030b",
+      "fromNode": "area_lms",
+      "toNode": "fb_a1a446f5030b"
+    },
+    {
+      "id": "e_fb_650d16d24f16",
+      "fromNode": "area_lms",
+      "toNode": "fb_650d16d24f16"
+    },
+    {
+      "id": "e_fb_29839abc8549",
+      "fromNode": "area_hub",
+      "toNode": "fb_29839abc8549"
+    },
+    {
+      "id": "e_fb_3c88df7942ce",
+      "fromNode": "area_lms",
+      "toNode": "fb_3c88df7942ce"
     }
   ]
 }
