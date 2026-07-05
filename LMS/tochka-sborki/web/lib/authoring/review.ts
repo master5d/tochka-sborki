@@ -56,6 +56,7 @@ export function buildPolishPrompt(mdx: string, findings: string[], locale: Local
     return [
       `Here is a draft lesson from my course — honest, calm, no selling.`,
       `Tighten it: conversational tone, sentences under 25 words, plain language.`,
+      `Write so any beginner understands it without tuning to their perception style: clarity comes first, personalization sits on top — never instead.`,
       `Keep the frontmatter and the four phases in order (activation, reflection, concept, practice). Keep activation and reflection mental — never ask the learner to write or type. Keep the practice step concrete.`,
       f,
       `Return only the revised MDX, nothing else.`,
@@ -70,6 +71,7 @@ export function buildPolishPrompt(mdx: string, findings: string[], locale: Local
   return [
     `Вот черновик урока моего курса — честно, спокойно, без продаж.`,
     `Подтяни: разговорный тон, предложения короче 25 слов, простой язык.`,
+    `Пиши так, чтобы понял любой новичок без подстройки под его стиль восприятия: ясность первична, персонализация — поверх, не вместо.`,
     `Сохрани фронтматтер и четыре фазы по порядку (activation, reflection, concept, practice). Активацию и рефлексию оставь мысленными — не проси ученика писать или печатать. Практический шаг оставь конкретным.`,
     f,
     `Верни только исправленный MDX, ничего лишнего.`,

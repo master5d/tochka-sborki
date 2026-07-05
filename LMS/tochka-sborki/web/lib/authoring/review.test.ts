@@ -46,4 +46,8 @@ describe('buildPolishPrompt', () => {
     expect(lintDehustle(en)).toEqual([])
     expect(lintDehustle(ru)).toEqual([])
   })
+  it('carries the clarity-first guardrail in both locales (fb_a1a446f5)', () => {
+    expect(buildPolishPrompt('<Phase type="activation">x</Phase>', [], 'en')).toContain('clarity comes first')
+    expect(buildPolishPrompt('<Phase type="activation">x</Phase>', [], 'ru')).toContain('ясность первична')
+  })
 })
