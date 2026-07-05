@@ -6,6 +6,7 @@ import type { Locale } from '@/lib/dictionaries'
 import { clusterAlumni, type AlumniEntry as Entry } from '@/lib/synergem'
 import { EFFORT_INTENTS, resolveEffort } from '@/lib/effort'
 import { IgiRitual } from '@/components/igi-ritual'
+import { SynergemMentor } from '@/components/synergem-mentor'
 
 const NICHE_LABEL: Record<string, { ru: string; en: string }> = {
   coach: { ru: 'Коучинг и психотерапия', en: 'Coaching & therapy' },
@@ -100,6 +101,8 @@ export function AlumniClient({ locale }: { locale: Locale }) {
         </section>
 
         <IgiRitual locale={locale} />
+
+        <SynergemMentor locale={locale} />
 
         {loaded && list.length === 0 && <p style={{ color: 'var(--text-secondary)' }}>{t.empty}</p>}
         {clusters.map(({ key: k, entries, count }) => (
