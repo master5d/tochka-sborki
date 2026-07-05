@@ -69,7 +69,7 @@ export function SchulteTable({ locale }: { locale: Locale }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '.75rem', fontSize: '.9rem', color: 'var(--text-secondary)' }}>
         <span>
           {running
-            ? <><b style={{ color: 'var(--text-primary)' }}>{t.find}: {target}</b></>
+            ? <b style={{ color: 'var(--text-primary)' }}>{t.find}: {target}</b>
             : finished
               ? <b style={{ color: 'var(--text-primary)' }}>{t.done} — {seconds} {t.sec}</b>
               : <button style={btn} onClick={start}>{t.start}</button>}
@@ -81,7 +81,7 @@ export function SchulteTable({ locale }: { locale: Locale }) {
       <div style={{ position: 'relative', margin: '0 auto', width: 'fit-content' }}>
         <div style={{ display: 'grid', gridTemplateColumns: `repeat(${size}, 1fr)`, gap: 4 }}>
           {grid.map((v) => {
-            const done = running && v < target
+            const done = v < target
             return (
               <button key={v} onClick={() => click(v)} disabled={!running || done}
                 style={{
