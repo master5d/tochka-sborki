@@ -43,14 +43,17 @@ export function WpmTest({ locale }: { locale: Locale }) {
   const [result, setResult] = useState<Result | null>(null)
   const startAt = useRef(0)
   const msRef = useRef(0)
+  const seededRun = useRef(false)
+  const recorded = useRef(false)
 
-  // seed the run index from prior-test count once persisted state is ready
-  useEffect(() => { if (ready) setRunIndex(state.results.length) }, [ready, state.results.length])
+  // seed the run index once from prior-test count, then advance monotonically per run (survives the 50-cap)
+  useEffect(() => { if (ready && !seededRun.current) { seededRun.current = true; setRunIndex(state.results.length) } }, [ready, state.results.length])
 
   const passage = useMemo(() => resolvePassage(pickPassage(runIndex), locale), [runIndex, locale])
   const words = useMemo(() => wordCount(passage.text), [passage])
 
   const startReading = () => {
+    recorded.current = false
     setPicks(passage.questions.map(() => null))
     setResult(null)
     startAt.current = Date.now()
@@ -63,6 +66,8 @@ export function WpmTest({ locale }: { locale: Locale }) {
   const allAnswered = picks.length > 0 && picks.every(p => p !== null)
 
   const seeResult = () => {
+    if (recorded.current) return
+    recorded.current = true
     const correct = passage.questions.reduce((n, q, i) => n + (picks[i] === q.answer ? 1 : 0), 0)
     const total = passage.questions.length
     const wpm = computeWpm(words, msRef.current)
@@ -73,7 +78,7 @@ export function WpmTest({ locale }: { locale: Locale }) {
     setResult({ wpm, frac, eff, correct, total, prevEff })
     setStep('result')
   }
-  const again = () => { setRunIndex(state.results.length); setStep('intro'); setResult(null); setPicks([]) }
+  const again = () => { setRunIndex(i => i + 1); setStep('intro'); setResult(null); setPicks([]) }
 
   if (step === 'intro') {
     return (

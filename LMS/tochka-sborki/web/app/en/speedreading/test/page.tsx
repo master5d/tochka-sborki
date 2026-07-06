@@ -4,7 +4,7 @@ import { WpmTest } from '@/components/speedreading/wpm-test'
 
 export const metadata: Metadata = {
   title: 'Reading-speed test — Speed Reading',
-  description: 'Measure your reading speed adjusted for comprehension (in preparation).',
+  description: 'Measure your reading speed adjusted for comprehension.',
   robots: { index: false, follow: false },
 }
 
