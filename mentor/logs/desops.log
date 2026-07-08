@@ -1,0 +1,2 @@
+# desops audit log
+2026-07-07 reconcile: baseline lint = clean, gate=staged-only
