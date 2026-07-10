@@ -15,7 +15,7 @@ describe("buildAnalyticsConfig", () => {
     expect(cfg!.options.persistence).toBe("memory");
     expect(cfg!.options.respect_dnt).toBe(true);
     expect(cfg!.options.autocapture).toBe(false);
-    expect(cfg!.options.capture_pageview).toBe(true);
+    expect(cfg!.options.capture_pageview).toBe(false);
   });
 
   it("honors a custom host", () => {

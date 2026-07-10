@@ -6,7 +6,7 @@ export type AnalyticsConfig = {
   options: {
     persistence: 'memory'
     autocapture: false
-    capture_pageview: true
+    capture_pageview: false
     respect_dnt: true
   }
 }
@@ -17,7 +17,7 @@ export function buildAnalyticsConfig(key: string | undefined, host?: string): An
   return {
     key,
     apiHost: host ?? 'https://us.i.posthog.com',
-    options: { persistence: 'memory', autocapture: false, capture_pageview: true, respect_dnt: true },
+    options: { persistence: 'memory', autocapture: false, capture_pageview: false, respect_dnt: true },
   }
 }
 
