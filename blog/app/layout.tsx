@@ -6,6 +6,7 @@ import { Unbounded } from 'next/font/google'
 import { LangSuggestBanner } from '../components/lang-suggest-banner'
 import { ThemeProvider } from '../components/theme-provider'
 import { SiteHeader } from '../components/site-header'
+import { AnalyticsProvider } from '../components/analytics-provider'
 import './globals.css'
 
 const unbounded = Unbounded({
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <ThemeProvider>
+          <AnalyticsProvider />
           <LangSuggestBanner />
           <SiteHeader />
           {children}
