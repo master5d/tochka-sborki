@@ -66,6 +66,10 @@ jobs:
       - name: Build blog
         working-directory: blog
         run: npm run build
+        env:
+          # PUBLIC ingestion key (phc_…) — inlined into client JS by Next at build time.
+          # Empty ⇒ posthog stays dark-ship (blog/lib/analytics.ts no-op). Set via repo variable.
+          NEXT_PUBLIC_POSTHOG_KEY: ${{ vars.NEXT_PUBLIC_POSTHOG_KEY }}
       - name: Install hub
         working-directory: hub
         run: npm ci
