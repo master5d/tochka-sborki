@@ -15,7 +15,7 @@ Modules that extend the existing agentic-AI course.
 | Module | Source | Scope | Status |
 |---|---|---|---|
 | **Vibe Hacking** | `fb_9f32d5648608` | Security-minded vibe coding: recon, dual-use tooling, responsible disclosure framing within the agentic workflow. | 🧪 |
-| **NotebookLM — sources from notes** | `fb_e54f96f71700` | Working with your own notes/sources as grounded context; NotebookLM-style source-grounded Q&A and synthesis. | 🔭 |
+| **NotebookLM — sources from notes** | `fb_e54f96f71700` | Working with your own notes/sources as grounded context; NotebookLM-style source-grounded Q&A and synthesis. **Enriched 2026-07-11:** add an infographic-generation unit — the style-descriptor technique (one base prompt × style descriptor = totally different visual language; 17 reusable style templates: blueprint/chalkboard/risograph/isometric/manga/…) from pimenov.ai/articles/notebooklm-visual-styles-infographic-collection/. Teaches learners to turn their sources into styled infographics, not just Q&A. | 🔭 |
 | **Meta Notetaking — note-making playbook** | `fb_891a71e43477` | Playbook for note-making/PKM that feeds the agent (evergreen notes, capture→distill→link); pairs with NotebookLM module. | 🔭 |
 | **Telegram management** | `fb_26c4558588a9` | Agentic channel/bot management — the managed-bot + ingest patterns already used in SOVERN, taught as a module. | 🔭 |
 | **Media Production** | `fb_d71cdb099093` | Content creation with AI (audio/video/visual pipeline) — extends the existing audio-pipeline module. | 🧪 |
@@ -41,6 +41,7 @@ scaffold (`fb_31371f4dfd19`, done). Each becomes its own `LMS/<course>/`.
 
 ## Deferred — RPG-layer / visual (need product+visual direction)
 
+- **Module visual synthesis — styled infographics per module** (added 2026-07-11, from DesOps-v5 intake) — generate a per-module infographic/visual for the LMS using the NotebookLM style-descriptor technique (pimenov.ai article: consistent base prompt describing the module's workflow × ONE chosen style descriptor across all 9 modules → coherent visual identity). Blocked on owner art direction: pick the one style that matches the LMS identity (candidates from the 17: Engineering Blueprint / Chalkboard Educational / Playful Isometric fit the course register; NO style-per-module — that's drift). Generation is owner-driven (NotebookLM has no API) or via nanobanana-mcp; assets land as static images in module pages. Pairs with the Burning Man World Map direction decision — one art-direction session should settle both.
 - **Burning Man World Map** (`fb_d4e6d92333f0`) — visual redesign of the existing `WorldMap`: geometric festival grounds, modules as camps, navigation via figures/pets. A larger visual effort needing the owner's art direction (palette, layout, asset style). Companion familiars (`skinCompanion`) shipped as the navigable "pets"; the festival-map visual is deferred until a visual direction is set. Promote via a design spec + the visual companion in brainstorming.
 
 ## Deferred — engagement flavor (need owner assets / direction)
