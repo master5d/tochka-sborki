@@ -1,0 +1,146 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import worker from './index'
+
+const LISTMONK_URL = 'https://mail.mamaev.coach/api/public/subscription'
+const LIST_UUID = 'cf27c05a-a3e2-4ba4-94b8-17a485b8ea95'
+
+const env = {} as never
+const ctx = { waitUntil: (_p: Promise<unknown>) => {} } as unknown as ExecutionContext
+
+type FetchCall = { url: string; init?: RequestInit }
+let fetchCalls: FetchCall[] = []
+
+function stubListmonk(status: number, body: unknown = { data: true }) {
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async (url: RequestInfo | URL, init?: RequestInit) => {
+      fetchCalls.push({ url: String(url), init })
+      return new Response(JSON.stringify(body), { status })
+    }),
+  )
+}
+
+beforeEach(() => {
+  fetchCalls = []
+  stubListmonk(200)
+})
+
+afterEach(() => {
+  vi.unstubAllGlobals()
+})
+
+function subscribeReq(body: unknown, method = 'POST') {
+  return new Request('https://synergify.com/api/subscribe', {
+    method,
+    body: method === 'POST' ? JSON.stringify(body) : undefined,
+    headers: { 'Content-Type': 'application/json' },
+  })
+}
+
+describe('GET /', () => {
+  it('200 text/html with Synergify heading and a form', async () => {
+    const res = await worker.fetch(new Request('https://synergify.com/'), env, ctx)
+    expect(res.status).toBe(200)
+    expect(res.headers.get('Content-Type')).toContain('text/html')
+    const html = await res.text()
+    expect(html).toContain('Synergify')
+    expect(html).toContain('<form')
+    // honeypot input present and named website
+    expect(html).toContain('name="website"')
+    // RU primary + subtitle mentions the ecosystem
+    expect(html).toContain('S.A.S.H.A.')
+    expect(html).toContain('Точк')
+  })
+})
+
+describe('POST /api/subscribe', () => {
+  it('honeypot non-empty → 200 {ok:true} WITHOUT calling listmonk', async () => {
+    const res = await worker.fetch(subscribeReq({ email: 'bot@spam.io', website: 'http://spam' }), env, ctx)
+    expect(res.status).toBe(200)
+    expect(await res.json()).toEqual({ ok: true })
+    expect(fetchCalls.length).toBe(0)
+  })
+
+  it('invalid email (no @) → 400 {ok:false}, no forward', async () => {
+    const res = await worker.fetch(subscribeReq({ email: 'not-an-email' }), env, ctx)
+    expect(res.status).toBe(400)
+    const body = (await res.json()) as { ok: boolean }
+    expect(body.ok).toBe(false)
+    expect(fetchCalls.length).toBe(0)
+  })
+
+  it('non-JSON body → 400, no forward', async () => {
+    const req = new Request('https://synergify.com/api/subscribe', { method: 'POST', body: 'garbage' })
+    const res = await worker.fetch(req, env, ctx)
+    expect(res.status).toBe(400)
+    expect(fetchCalls.length).toBe(0)
+  })
+
+  it('valid email → forwards to listmonk with list_uuids, returns {ok:true} + CORS origin', async () => {
+    const res = await worker.fetch(subscribeReq({ email: ' User@Example.COM ' }), env, ctx)
+    expect(res.status).toBe(200)
+    expect(await res.json()).toEqual({ ok: true })
+    expect(res.headers.get('Access-Control-Allow-Origin')).toBe('https://mamaev.coach')
+
+    expect(fetchCalls.length).toBe(1)
+    expect(fetchCalls[0].url).toBe(LISTMONK_URL)
+    const forwarded = JSON.parse(String(fetchCalls[0].init?.body))
+    expect(forwarded).toEqual({
+      email: 'user@example.com',
+      name: '',
+      list_uuids: [LIST_UUID],
+    })
+  })
+
+  it('listmonk 409 / already-subscribed → {ok:true, already:true}', async () => {
+    stubListmonk(409, { message: 'already subscribed' })
+    const res = await worker.fetch(subscribeReq({ email: 'dup@example.com' }), env, ctx)
+    expect(res.status).toBe(200)
+    expect(await res.json()).toEqual({ ok: true, already: true })
+  })
+
+  it('listmonk 200 with "already" in body → {ok:true, already:true}', async () => {
+    stubListmonk(200, { message: 'You are already subscribed to this list.' })
+    const res = await worker.fetch(subscribeReq({ email: 'dup2@example.com' }), env, ctx)
+    expect(res.status).toBe(200)
+    expect(await res.json()).toEqual({ ok: true, already: true })
+  })
+
+  it('listmonk 500 → 502 {ok:false}', async () => {
+    stubListmonk(500, { message: 'boom' })
+    const res = await worker.fetch(subscribeReq({ email: 'ok@example.com' }), env, ctx)
+    expect(res.status).toBe(502)
+    const body = (await res.json()) as { ok: boolean }
+    expect(body.ok).toBe(false)
+  })
+
+  it('listmonk network error → 502 {ok:false}', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => { throw new TypeError('network down') }))
+    const res = await worker.fetch(subscribeReq({ email: 'ok@example.com' }), env, ctx)
+    expect(res.status).toBe(502)
+    const body = (await res.json()) as { ok: boolean }
+    expect(body.ok).toBe(false)
+  })
+})
+
+describe('OPTIONS /api/subscribe', () => {
+  it('204 preflight with CORS headers', async () => {
+    const res = await worker.fetch(subscribeReq(undefined, 'OPTIONS'), env, ctx)
+    expect(res.status).toBe(204)
+    expect(res.headers.get('Access-Control-Allow-Origin')).toBe('https://mamaev.coach')
+    expect(res.headers.get('Access-Control-Allow-Methods')).toContain('POST')
+    expect(res.headers.get('Access-Control-Allow-Headers')).toContain('Content-Type')
+  })
+})
+
+describe('fallback', () => {
+  it('unknown path → 404', async () => {
+    const res = await worker.fetch(new Request('https://synergify.com/nope'), env, ctx)
+    expect(res.status).toBe(404)
+  })
+
+  it('GET /api/subscribe → 404 (POST-only route)', async () => {
+    const res = await worker.fetch(new Request('https://synergify.com/api/subscribe'), env, ctx)
+    expect(res.status).toBe(404)
+  })
+})
