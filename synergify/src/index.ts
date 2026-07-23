@@ -7,6 +7,18 @@ const LISTMONK_URL = 'https://mail.mamaev.coach/api/public/subscription'
 const LIST_UUID_RU = 'cf27c05a-a3e2-4ba4-94b8-17a485b8ea95'
 const LIST_UUID_EN = '9c837884-ddcb-44be-8df6-db98d589b3f7'
 
+// BIMI-логотип: SVG Tiny PS (единственный профиль, который принимает BIMI/Gmail).
+// Три восходящих штриха на индиго = синергия/рост. <title> обязателен, квадрат, без скриптов.
+const BIMI_LOGO_SVG =
+  '<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny-ps" ' +
+  'viewBox="0 0 512 512" width="512" height="512">' +
+  '<title>Synergify</title>' +
+  '<rect x="0" y="0" width="512" height="512" rx="96" fill="#4f46e5"/>' +
+  '<rect x="120" y="288" width="64" height="104" rx="20" fill="#ffffff"/>' +
+  '<rect x="224" y="216" width="64" height="176" rx="20" fill="#ffffff"/>' +
+  '<rect x="328" y="128" width="64" height="264" rx="20" fill="#ffffff"/>' +
+  '</svg>'
+
 // Блог-форма на mamaev.coach ходит на этот же эндпоинт кросс-доменно.
 const CORS_HEADERS: Record<string, string> = {
   'Access-Control-Allow-Origin': 'https://mamaev.coach',
@@ -135,6 +147,18 @@ export default {
 
     if (request.method === 'POST' && path === '/api/subscribe') {
       return handleSubscribe(request)
+    }
+
+    // BIMI-логотип (SVG Tiny PS) — ссылка из default._bimi.mail.synergify.com.
+    if (request.method === 'GET' && path === '/bimi-logo.svg') {
+      return new Response(BIMI_LOGO_SVG, {
+        status: 200,
+        headers: {
+          'Content-Type': 'image/svg+xml',
+          'Cache-Control': 'public, max-age=86400',
+          'X-Content-Type-Options': 'nosniff',
+        },
+      })
     }
 
     return new Response('Not found', {
