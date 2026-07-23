@@ -42,10 +42,12 @@ const DICT: Record<Locale, {
 /**
  * Pure submit path (тестируется напрямую — в blog/ нет DOM-окружения для vitest).
  * Honeypot заполнен → тихий «успех» без запроса, боту не сигналим.
+ * lang маршрутизирует подписку в RU/EN-список listmonk (воркер fail-closed к RU).
  */
 export async function submitSubscribe(
   email: string,
   website: string,
+  lang: Locale,
   fetchFn: typeof fetch = fetch,
   timeoutMs: number = SUBSCRIBE_TIMEOUT_MS,
 ): Promise<Outcome> {
@@ -56,7 +58,7 @@ export async function submitSubscribe(
     const res = await fetchFn(SUBSCRIBE_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, website }),
+      body: JSON.stringify({ email, website, lang }),
       signal: controller.signal,
     })
     if (!res.ok) return 'error'
@@ -87,7 +89,7 @@ export function SubscribeBlock({ locale }: { locale: Locale }) {
     e.preventDefault()
     if (phase === 'busy') return
     setPhase('busy')
-    setPhase(await submitSubscribe(email.trim(), website))
+    setPhase(await submitSubscribe(email.trim(), website, locale))
   }
 
   const settled = phase === 'done' || phase === 'already'
@@ -108,6 +110,8 @@ export function SubscribeBlock({ locale }: { locale: Locale }) {
         </p>
       ) : (
         <form onSubmit={onSubmit} style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', alignItems: 'center' }}>
+          {/* Язык поверхности → RU/EN-список listmonk (submit читает locale, input фиксирует контракт) */}
+          <input type="hidden" name="lang" value={locale} />
           {/* Honeypot: off-screen, не в tab-порядке; люди его не видят, боты заполняют */}
           <input
             type="text"

@@ -3,7 +3,9 @@ import { PAGE_HTML } from './page'
 // Public constants — listmonk public subscription API (no secrets; Гейт №0: CORS
 // отсутствует у listmonk, поэтому воркер обязан проксировать подписку).
 const LISTMONK_URL = 'https://mail.mamaev.coach/api/public/subscription'
-const LIST_UUID = 'cf27c05a-a3e2-4ba4-94b8-17a485b8ea95'
+// RU/EN маршрутизация: два публичных списка listmonk — кампании идут на языке юзера.
+const LIST_UUID_RU = 'cf27c05a-a3e2-4ba4-94b8-17a485b8ea95'
+const LIST_UUID_EN = '9c837884-ddcb-44be-8df6-db98d589b3f7'
 
 // Блог-форма на mamaev.coach ходит на этот же эндпоинт кросс-доменно.
 const CORS_HEADERS: Record<string, string> = {
@@ -19,7 +21,12 @@ function json(body: unknown, status = 200): Response {
   })
 }
 
-type SubscribeBody = { email?: unknown; website?: unknown }
+type SubscribeBody = { email?: unknown; website?: unknown; lang?: unknown }
+
+// Fail-closed к RU: всё, что не строго "en" (мусор, отсутствие, "EN") → RU-список.
+function resolveListUuid(lang: unknown): string {
+  return lang === 'en' ? LIST_UUID_EN : LIST_UUID_RU
+}
 
 type SubscribeOutcome = 'ok' | 'already' | 'honeypot' | 'invalid_email' | 'upstream_error'
 
@@ -41,7 +48,7 @@ async function subscribeCore(body: SubscribeBody): Promise<SubscribeOutcome> {
     upstream = await fetch(LISTMONK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, name: '', list_uuids: [LIST_UUID] }),
+      body: JSON.stringify({ email, name: '', list_uuids: [resolveListUuid(body.lang)] }),
     })
     upstreamText = await upstream.text()
   } catch {
@@ -63,7 +70,7 @@ async function handleSubscribe(request: Request): Promise<Response> {
     let body: SubscribeBody
     try {
       const form = await request.formData()
-      body = { email: form.get('email'), website: form.get('website') }
+      body = { email: form.get('email'), website: form.get('website'), lang: form.get('lang') }
     } catch {
       body = {}
     }

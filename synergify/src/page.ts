@@ -75,6 +75,8 @@ export const PAGE_HTML = `<!doctype html>
   <p class="subtitle">Экосистема <strong>S.A.S.H.A.</strong> и открытого курса <strong>«Точка Сборки»</strong>.<br>Скоро здесь появится больше. Оставьте почту — напишем, когда откроемся.</p>
   <form id="subscribe" method="post" action="/api/subscribe">
     <input type="email" name="email" placeholder="ваш@email" required autocomplete="email" aria-label="Email">
+    <!-- RU-центричная страница: подписка уходит в RU-список listmonk -->
+    <input type="hidden" name="lang" value="ru">
     <div class="hp" aria-hidden="true">
       <label>Не заполняйте это поле<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
     </div>
@@ -104,13 +106,14 @@ export const PAGE_HTML = `<!doctype html>
     var btn = form.querySelector('button');
     var email = form.querySelector('input[name="email"]').value.trim();
     var website = form.querySelector('input[name="website"]').value;
+    var lang = form.querySelector('input[name="lang"]').value;
     btn.disabled = true;
     msg.className = '';
     msg.textContent = '…';
     fetch('/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, website: website })
+      body: JSON.stringify({ email: email, website: website, lang: lang })
     }).then(function (r) { return r.json().then(function (d) { return { status: r.status, data: d }; }); })
       .then(function (res) {
         if (res.data && res.data.ok) {

@@ -2,7 +2,8 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import worker from './index'
 
 const LISTMONK_URL = 'https://mail.mamaev.coach/api/public/subscription'
-const LIST_UUID = 'cf27c05a-a3e2-4ba4-94b8-17a485b8ea95'
+const LIST_UUID = 'cf27c05a-a3e2-4ba4-94b8-17a485b8ea95' // RU (default)
+const LIST_UUID_EN = '9c837884-ddcb-44be-8df6-db98d589b3f7'
 
 const env = {} as never
 const ctx = { waitUntil: (_p: Promise<unknown>) => {} } as unknown as ExecutionContext
@@ -47,6 +48,9 @@ describe('GET /', () => {
     expect(html).toContain('<form')
     // honeypot input present and named website
     expect(html).toContain('name="website"')
+    // RU-центричная страница шлёт lang=ru (hidden input, читается и fetch-путём)
+    expect(html).toContain('name="lang"')
+    expect(html).toContain('value="ru"')
     // RU primary + subtitle mentions the ecosystem
     expect(html).toContain('S.A.S.H.A.')
     expect(html).toContain('Точк')
@@ -90,6 +94,30 @@ describe('POST /api/subscribe', () => {
       name: '',
       list_uuids: [LIST_UUID],
     })
+  })
+
+  it('lang="en" → forwards to the EN list uuid', async () => {
+    const res = await worker.fetch(subscribeReq({ email: 'reader@example.com', lang: 'en' }), env, ctx)
+    expect(res.status).toBe(200)
+    expect(fetchCalls.length).toBe(1)
+    const forwarded = JSON.parse(String(fetchCalls[0].init?.body))
+    expect(forwarded.list_uuids).toEqual([LIST_UUID_EN])
+  })
+
+  it('lang missing → RU list uuid (default)', async () => {
+    await worker.fetch(subscribeReq({ email: 'reader@example.com' }), env, ctx)
+    const forwarded = JSON.parse(String(fetchCalls[0].init?.body))
+    expect(forwarded.list_uuids).toEqual([LIST_UUID])
+  })
+
+  it('lang garbage ("EN", "de", 5) → fail-closed to RU list uuid', async () => {
+    for (const lang of ['EN', 'de', 5]) {
+      fetchCalls = []
+      await worker.fetch(subscribeReq({ email: 'reader@example.com', lang }), env, ctx)
+      expect(fetchCalls.length).toBe(1)
+      const forwarded = JSON.parse(String(fetchCalls[0].init?.body))
+      expect(forwarded.list_uuids).toEqual([LIST_UUID])
+    }
   })
 
   it('listmonk 409 / already-subscribed → {ok:true, already:true}', async () => {
@@ -140,6 +168,20 @@ describe('POST /api/subscribe — native form-encoded fallback (no-JS)', () => {
     expect(fetchCalls[0].url).toBe(LISTMONK_URL)
     const forwarded = JSON.parse(String(fetchCalls[0].init?.body))
     expect(forwarded).toEqual({ email: 'user@example.com', name: '', list_uuids: [LIST_UUID] })
+  })
+
+  it('form-encoded lang=en → forwards to the EN list uuid', async () => {
+    const res = await worker.fetch(formReq({ email: 'reader@example.com', website: '', lang: 'en' }), env, ctx)
+    expect(res.status).toBe(303)
+    expect(fetchCalls.length).toBe(1)
+    const forwarded = JSON.parse(String(fetchCalls[0].init?.body))
+    expect(forwarded.list_uuids).toEqual([LIST_UUID_EN])
+  })
+
+  it('form-encoded without lang → RU list uuid (default)', async () => {
+    await worker.fetch(formReq({ email: 'reader@example.com', website: '' }), env, ctx)
+    const forwarded = JSON.parse(String(fetchCalls[0].init?.body))
+    expect(forwarded.list_uuids).toEqual([LIST_UUID])
   })
 
   it('honeypot non-empty → 303 success WITHOUT calling listmonk', async () => {
