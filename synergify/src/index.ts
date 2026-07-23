@@ -21,22 +21,18 @@ function json(body: unknown, status = 200): Response {
 
 type SubscribeBody = { email?: unknown; website?: unknown }
 
-async function handleSubscribe(request: Request): Promise<Response> {
-  let body: SubscribeBody
-  try {
-    body = (await request.json()) as SubscribeBody
-  } catch {
-    return json({ ok: false, error: 'bad_json' }, 400)
-  }
+type SubscribeOutcome = 'ok' | 'already' | 'honeypot' | 'invalid_email' | 'upstream_error'
 
+// Общая логика honeypot/валидации/форварда — общая для JSON- и form-путей.
+async function subscribeCore(body: SubscribeBody): Promise<SubscribeOutcome> {
   // Honeypot: боты заполняют скрытое поле — молча съедаем без форварда.
   if (typeof body.website === 'string' && body.website.trim() !== '') {
-    return json({ ok: true })
+    return 'honeypot'
   }
 
   const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : ''
-  if (!email.includes('@') || email.length < 3 || email.length > 254) {
-    return json({ ok: false, error: 'invalid_email' }, 400)
+  if (!email.includes('@') || email.length > 254) {
+    return 'invalid_email'
   }
 
   let upstream: Response
@@ -49,14 +45,62 @@ async function handleSubscribe(request: Request): Promise<Response> {
     })
     upstreamText = await upstream.text()
   } catch {
-    return json({ ok: false, error: 'upstream_unreachable' }, 502)
+    return 'upstream_error'
   }
 
   // listmonk отвечает 409/"already subscribed"-стилем на дубликат — для UX это успех.
-  const already = upstream.status === 409 || /already/i.test(upstreamText)
-  if (already) return json({ ok: true, already: true })
-  if (upstream.ok) return json({ ok: true })
-  return json({ ok: false, error: 'upstream_error' }, 502)
+  if (upstream.status === 409 || /already/i.test(upstreamText)) return 'already'
+  if (upstream.ok) return 'ok'
+  return 'upstream_error'
+}
+
+async function handleSubscribe(request: Request): Promise<Response> {
+  const contentType = request.headers.get('Content-Type') || ''
+
+  // Нативный no-JS фолбэк: браузерный form-encoded сабмит → 303-редирект на страницу,
+  // статус в query-параметре ?subscribed=… (страница показывает сообщение).
+  if (contentType.includes('application/x-www-form-urlencoded')) {
+    let body: SubscribeBody
+    try {
+      const form = await request.formData()
+      body = { email: form.get('email'), website: form.get('website') }
+    } catch {
+      body = {}
+    }
+    const outcome = await subscribeCore(body)
+    const param: Record<SubscribeOutcome, string> = {
+      ok: '1',
+      honeypot: '1', // бота не отличаем — тот же «успех»
+      already: 'already',
+      invalid_email: 'invalid',
+      upstream_error: 'error',
+    }
+    return new Response(null, {
+      status: 303,
+      headers: { Location: `/?subscribed=${param[outcome]}` },
+    })
+  }
+
+  // JSON-путь (fetch со страницы и блог-форма mamaev.coach).
+  let body: SubscribeBody
+  try {
+    body = (await request.json()) as SubscribeBody
+  } catch {
+    return json({ ok: false, error: 'bad_json' }, 400)
+  }
+  const outcome = await subscribeCore(body)
+  switch (outcome) {
+    case 'honeypot':
+      return json({ ok: true })
+    case 'ok':
+      return json({ ok: true })
+    case 'already':
+      return json({ ok: true, already: true })
+    case 'invalid_email':
+      return json({ ok: false, error: 'invalid_email' }, 400)
+    case 'upstream_error':
+      return json({ ok: false, error: 'upstream_error' }, 502)
+  }
 }
 
 export default {
@@ -86,6 +130,9 @@ export default {
       return handleSubscribe(request)
     }
 
-    return new Response('Not found', { status: 404 })
+    return new Response('Not found', {
+      status: 404,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+    })
   },
 }

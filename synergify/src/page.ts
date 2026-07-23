@@ -87,6 +87,18 @@ export const PAGE_HTML = `<!doctype html>
 (function () {
   var form = document.getElementById('subscribe');
   var msg = document.getElementById('msg');
+
+  // Нативный no-JS фолбэк: после form-encoded сабмита воркер 303-редиректит
+  // сюда с ?subscribed=… — показываем тот же статус, что и fetch-путь.
+  var subscribed = new URLSearchParams(location.search).get('subscribed');
+  if (subscribed) {
+    if (subscribed === '1') { msg.className = 'ok'; msg.textContent = 'Готово! Проверьте почту.'; }
+    else if (subscribed === 'already') { msg.className = 'ok'; msg.textContent = 'Вы уже подписаны — спасибо!'; }
+    else if (subscribed === 'invalid') { msg.className = 'err'; msg.textContent = 'Проверьте адрес почты.'; }
+    else { msg.className = 'err'; msg.textContent = 'Не получилось. Попробуйте позже.'; }
+    history.replaceState(null, '', '/');
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var btn = form.querySelector('button');

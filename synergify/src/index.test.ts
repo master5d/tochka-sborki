@@ -123,6 +123,60 @@ describe('POST /api/subscribe', () => {
   })
 })
 
+describe('POST /api/subscribe — native form-encoded fallback (no-JS)', () => {
+  function formReq(fields: Record<string, string>) {
+    return new Request('https://synergify.com/api/subscribe', {
+      method: 'POST',
+      body: new URLSearchParams(fields).toString(),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    })
+  }
+
+  it('valid email → 303 to /?subscribed=1, forwards to listmonk', async () => {
+    const res = await worker.fetch(formReq({ email: ' User@Example.COM ', website: '' }), env, ctx)
+    expect(res.status).toBe(303)
+    expect(res.headers.get('Location')).toBe('/?subscribed=1')
+    expect(fetchCalls.length).toBe(1)
+    expect(fetchCalls[0].url).toBe(LISTMONK_URL)
+    const forwarded = JSON.parse(String(fetchCalls[0].init?.body))
+    expect(forwarded).toEqual({ email: 'user@example.com', name: '', list_uuids: [LIST_UUID] })
+  })
+
+  it('honeypot non-empty → 303 success WITHOUT calling listmonk', async () => {
+    const res = await worker.fetch(formReq({ email: 'bot@spam.io', website: 'http://spam' }), env, ctx)
+    expect(res.status).toBe(303)
+    expect(res.headers.get('Location')).toBe('/?subscribed=1')
+    expect(fetchCalls.length).toBe(0)
+  })
+
+  it('invalid email → 303 to /?subscribed=invalid, no forward', async () => {
+    const res = await worker.fetch(formReq({ email: 'not-an-email' }), env, ctx)
+    expect(res.status).toBe(303)
+    expect(res.headers.get('Location')).toBe('/?subscribed=invalid')
+    expect(fetchCalls.length).toBe(0)
+  })
+
+  it('listmonk 409 → 303 to /?subscribed=already', async () => {
+    stubListmonk(409, { message: 'already subscribed' })
+    const res = await worker.fetch(formReq({ email: 'dup@example.com' }), env, ctx)
+    expect(res.status).toBe(303)
+    expect(res.headers.get('Location')).toBe('/?subscribed=already')
+  })
+
+  it('listmonk 500 → 303 to /?subscribed=error', async () => {
+    stubListmonk(500, { message: 'boom' })
+    const res = await worker.fetch(formReq({ email: 'ok@example.com' }), env, ctx)
+    expect(res.status).toBe(303)
+    expect(res.headers.get('Location')).toBe('/?subscribed=error')
+  })
+
+  it('page script handles the subscribed query param statuses', async () => {
+    const res = await worker.fetch(new Request('https://synergify.com/'), env, ctx)
+    const html = await res.text()
+    expect(html).toContain('subscribed')
+  })
+})
+
 describe('OPTIONS /api/subscribe', () => {
   it('204 preflight with CORS headers', async () => {
     const res = await worker.fetch(subscribeReq(undefined, 'OPTIONS'), env, ctx)
