@@ -3,6 +3,7 @@ import { signJWT, generateToken } from '../lib/jwt'
 import { requireAuth } from '../middleware'
 import { addResendContact } from '../lib/crm'
 import { sendWelcomeEmail } from '../lib/welcome-email'
+import { sendEmailSES } from '../lib/ses'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -85,38 +86,22 @@ export async function handleSendLink(request: Request, env: Env, ctx: ExecutionC
 
   // Транзакционное письмо: plain-text + минимальный HTML, одна ссылка, без маркетинговых стилей —
   // чтобы Gmail клал его в Inbox/Primary, а не в Promotions.
-  let resendRes: Response
-  try {
-    resendRes = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'Точка Сборки <noreply@mamaev.coach>',
-        to: [email],
-        subject: mail.subject,
-        text: mail.text,
-        html: mail.html,
-        // уникальный ref → Gmail не группирует/не обрезает одноразовые письма
-        headers: { 'X-Entity-Ref-ID': token },
-      }),
-    })
-  } catch (e) {
-    console.error('Resend email send threw', e)
-    return Response.json({ error: 'Failed to send email', details: e instanceof Error ? e.message : String(e) }, { status: 502 })
+  const sendRes = await sendEmailSES(env, {
+    from: 'Точка Сборки <noreply@mamaev.coach>',
+    to: email,
+    subject: mail.subject,
+    text: mail.text,
+    html: mail.html,
+    // уникальный ref → Gmail не группирует/не обрезает одноразовые письма
+    headers: { 'X-Entity-Ref-ID': token },
+  })
+  if (!sendRes.ok) {
+    console.error('magic-link SES send failed', sendRes.status, sendRes.error)
+    return Response.json({ error: 'Failed to send email', status: sendRes.status, details: sendRes.error }, { status: 502 })
   }
 
-  if (!resendRes.ok) {
-    const errorText = await resendRes.text()
-    console.error('Resend email send non-OK', resendRes.status, errorText)
-    return Response.json({ error: 'Failed to send email', status: resendRes.status, details: errorText }, { status: 502 })
-  }
-
-  // observability: message-id принятого письма — чтобы сверять статус доставки в Resend-дэшборде
-  const sent = (await resendRes.json().catch(() => ({}))) as { id?: string }
-  console.log('magic-link email accepted', JSON.stringify({ email, resend_id: sent.id ?? null, new_user: isNewUser }))
+  // observability: письмо принято SES
+  console.log('magic-link email accepted', JSON.stringify({ email, new_user: isNewUser }))
 
   // CRM-контакт — best-effort, после критичного письма; waitUntil чтобы рантайм не оборвал после ответа
   if (newLead) {
