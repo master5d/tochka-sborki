@@ -4,6 +4,8 @@ compatibility_date = "2025-01-01"
 
 [vars]
 OWNER_EMAIL = "mamaev.sasha@gmail.com"
+# set to real listmonk CRM list id at infra step I4
+LISTMONK_CRM_LIST_ID = "0"
 
 # Логи воркера (Resend message-id/статус) — чтобы отлаживать доставку magic-link, а не вслепую
 [observability]

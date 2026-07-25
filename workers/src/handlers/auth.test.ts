@@ -29,9 +29,14 @@ function makeEnv(opts: { existing?: boolean; calls?: DbCall[]; language?: string
   return {
     DB,
     WORKER_JWT_SECRET: 'test-secret-32-characters-minimum!!',
-    RESEND_API_KEY: 'resend_key',
     SES_ACCESS_KEY_ID: 'AKIATEST',
     SES_SECRET_ACCESS_KEY: 'secret',
+    LISTMONK_URL: 'https://listmonk.mamaev.coach',
+    LISTMONK_API_USER: 'user',
+    LISTMONK_API_TOKEN: 'tok',
+    CF_ACCESS_CLIENT_ID: 'cf-id',
+    CF_ACCESS_CLIENT_SECRET: 'cf-secret',
+    LISTMONK_CRM_LIST_ID: '3',
   } as Env
 }
 
@@ -93,11 +98,11 @@ describe('handleSendLink enrichment (persisted to D1 users)', () => {
   })
 })
 
-describe('handleSendLink Resend contact', () => {
-  it('adds a new user as a Resend contact', async () => {
+describe('handleSendLink listmonk CRM contact', () => {
+  it('adds a new user as a listmonk contact', async () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{}', { status: 200 }))
     await handleSendLink(sendLinkReq({ email: 'new@example.com' }), makeEnv(), ctx)
-    const contactCall = (fetchSpy.mock.calls as [string][]).find(([url]) => url === 'https://api.resend.com/contacts')
+    const contactCall = (fetchSpy.mock.calls as [string][]).find(([url]) => (url as string).endsWith('/api/subscribers'))
     expect(contactCall).toBeDefined()
     fetchSpy.mockRestore()
   })
@@ -105,14 +110,14 @@ describe('handleSendLink Resend contact', () => {
   it('does not add an existing user as a contact', async () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{}', { status: 200 }))
     await handleSendLink(sendLinkReq({ email: 'existing@example.com' }), makeEnv({ existing: true }), ctx)
-    const contactCall = (fetchSpy.mock.calls as [string][]).find(([url]) => (url as string).endsWith('/contacts'))
+    const contactCall = (fetchSpy.mock.calls as [string][]).find(([url]) => (url as string).endsWith('/api/subscribers'))
     expect(contactCall).toBeUndefined()
     fetchSpy.mockRestore()
   })
 
   it('still returns 200 when the contact add fails', async () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (url) => {
-      if ((url as string).endsWith('/contacts')) throw new Error('resend down')
+      if ((url as string).endsWith('/api/subscribers')) throw new Error('listmonk down')
       return new Response('{}', { status: 200 })
     })
     const res = await handleSendLink(sendLinkReq({ email: 'test@example.com' }), makeEnv(), ctx)

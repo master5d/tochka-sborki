@@ -1,7 +1,7 @@
 import type { Env } from '../lib/types'
 import { signJWT, generateToken } from '../lib/jwt'
 import { requireAuth } from '../middleware'
-import { addResendContact } from '../lib/crm'
+import { addCrmContact } from '../lib/crm'
 import { sendWelcomeEmail } from '../lib/welcome-email'
 import { sendEmailSES } from '../lib/ses'
 
@@ -106,8 +106,8 @@ export async function handleSendLink(request: Request, env: Env, ctx: ExecutionC
   // CRM-контакт — best-effort, после критичного письма; waitUntil чтобы рантайм не оборвал после ответа
   if (newLead) {
     ctx.waitUntil(
-      addResendContact(env, newLead)
-        .catch(e => console.error('Resend contact add failed', e))
+      addCrmContact(env, newLead)
+        .catch(e => console.error('listmonk contact add failed', e))
     )
     ctx.waitUntil(
       sendWelcomeEmail(env, { email, lang, verifyUrl })

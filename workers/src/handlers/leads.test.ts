@@ -31,9 +31,17 @@ describe('listLeads', () => {
 })
 
 describe('syncContacts', () => {
-  it('pushes every user to Resend and returns counts', async () => {
+  it('pushes every user to listmonk and returns counts', async () => {
     const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{}', { status: 200 }))
-    const env = { DB: fakeDb([{ email: 'a@b.com' }, { email: 'c@d.com' }]), RESEND_API_KEY: 'rk' } as any
+    const env = {
+      DB: fakeDb([{ email: 'a@b.com' }, { email: 'c@d.com' }]),
+      LISTMONK_URL: 'https://listmonk.mamaev.coach',
+      LISTMONK_API_USER: 'user',
+      LISTMONK_API_TOKEN: 'tok',
+      CF_ACCESS_CLIENT_ID: 'cf-id',
+      CF_ACCESS_CLIENT_SECRET: 'cf-secret',
+      LISTMONK_CRM_LIST_ID: '3',
+    } as any
     const res = await syncContacts(env)
     const body = await res.json()
     expect(body.total).toBe(2)

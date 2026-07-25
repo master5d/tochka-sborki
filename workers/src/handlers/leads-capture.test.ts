@@ -19,7 +19,7 @@ function makeEnv(opts: { existing?: boolean; calls?: DbCall[] } = {}): Env {
   return {
     DB,
     WORKER_JWT_SECRET: 'test-secret',
-    RESEND_API_KEY: '', // empty → addResendContact no-ops, no network in tests
+    LISTMONK_URL: '', // empty → addCrmContact no-ops, no network in tests
   } as Env
 }
 

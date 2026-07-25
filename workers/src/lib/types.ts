@@ -13,6 +13,12 @@ export interface Env {
   STRIPE_WEBHOOK_SECRET: string
   GOOGLE_OAUTH_CLIENT_ID: string
   GOOGLE_OAUTH_CLIENT_SECRET: string
+  LISTMONK_URL: string
+  LISTMONK_API_USER: string
+  LISTMONK_API_TOKEN: string
+  CF_ACCESS_CLIENT_ID: string
+  CF_ACCESS_CLIENT_SECRET: string
+  LISTMONK_CRM_LIST_ID: string
 }
 
 export interface JWTPayload {
