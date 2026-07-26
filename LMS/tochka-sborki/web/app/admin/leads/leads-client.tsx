@@ -55,9 +55,9 @@ export function LeadsClient() {
   async function syncAll() {
     setSyncMsg('Синхронизация…')
     try {
-      const r = await fetch('/api/admin/leads/sync-resend', { method: 'POST', credentials: 'include' })
+      const r = await fetch('/api/admin/leads/sync-crm', { method: 'POST', credentials: 'include' })
       const d = await r.json()
-      setSyncMsg(`Готово: ${d.synced}/${d.total} в Resend (ошибок: ${d.failed}).`)
+      setSyncMsg(`Готово: ${d.synced}/${d.total} в CRM (ошибок: ${d.failed}).`)
     } catch { setSyncMsg('Не удалось синхронизировать.') }
   }
 

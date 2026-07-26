@@ -1,8 +1,17 @@
 // workers/src/handlers/stripe-webhook.test.ts
-import { describe, it, expect, vi, afterEach } from 'vitest'
+import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest'
 import { handleStripeWebhook } from './stripe-webhook'
 import { PRODUCTS } from '../lib/products'
+import { sendEmailSES } from '../lib/ses'
 import type { Env } from '../lib/types'
+
+vi.mock('../lib/ses', () => ({ sendEmailSES: vi.fn() }))
+const sesMock = vi.mocked(sendEmailSES)
+
+beforeEach(() => {
+  sesMock.mockReset()
+  sesMock.mockResolvedValue({ ok: true, status: 200 })
+})
 
 const SECRET = 'whsec_test'
 
@@ -15,7 +24,7 @@ async function sign(payload: string, t = Math.floor(Date.now() / 1000), secret =
 }
 
 type DbCall = { sql: string; binds: unknown[] }
-function makeEnv(opts: { inserted?: boolean; calls?: DbCall[]; resendKey?: string } = {}): Env {
+function makeEnv(opts: { inserted?: boolean; calls?: DbCall[] } = {}): Env {
   const DB = {
     prepare: (sql: string) => ({
       bind: (...binds: unknown[]) => {
@@ -26,7 +35,12 @@ function makeEnv(opts: { inserted?: boolean; calls?: DbCall[]; resendKey?: strin
       },
     }),
   } as unknown as D1Database
-  return { DB, STRIPE_WEBHOOK_SECRET: SECRET, RESEND_API_KEY: opts.resendKey ?? 're_x' } as Env
+  return {
+    DB,
+    STRIPE_WEBHOOK_SECRET: SECRET,
+    SES_ACCESS_KEY_ID: 'AKIATEST',
+    SES_SECRET_ACCESS_KEY: 'secret',
+  } as Env
 }
 
 function evt(over: Record<string, unknown> = {}): string {
@@ -53,12 +67,11 @@ describe('handleStripeWebhook', () => {
     PRODUCTS.push(seeded)
     try {
       const calls: DbCall[] = []
-      const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{}', { status: 200 }))
       const body = evt()
       const res = await handleStripeWebhook(req(body, await sign(body)), makeEnv({ inserted: true, calls }))
       expect(res.status).toBe(200)
       // emailed
-      expect((spy.mock.calls[0][0] as string)).toBe('https://api.resend.com/emails')
+      expect(sesMock).toHaveBeenCalled()
       // stamped delivered_at
       expect(calls.find(c => /UPDATE purchases SET delivered_at/.test(c.sql))).toBeDefined()
     } finally { PRODUCTS.splice(PRODUCTS.indexOf(seeded), 1) }
@@ -67,20 +80,18 @@ describe('handleStripeWebhook', () => {
   it('is idempotent: a duplicate session sends no second email', async () => {
     PRODUCTS.push(seeded)
     try {
-      const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{}', { status: 200 }))
       const body = evt()
       const res = await handleStripeWebhook(req(body, await sign(body)), makeEnv({ inserted: false }))
       expect(res.status).toBe(200)
-      expect(spy).not.toHaveBeenCalled()
+      expect(sesMock).not.toHaveBeenCalled()
     } finally { PRODUCTS.splice(PRODUCTS.indexOf(seeded), 1) }
   })
 
   it('acks (200) and does nothing for a non-matching event type', async () => {
-    const spy = vi.spyOn(globalThis, 'fetch')
     const body = JSON.stringify({ type: 'payment_intent.created', data: { object: { id: 'pi_1' } } })
     const res = await handleStripeWebhook(req(body, await sign(body)), makeEnv())
     expect(res.status).toBe(200)
-    expect(spy).not.toHaveBeenCalled()
+    expect(sesMock).not.toHaveBeenCalled()
   })
 
   it('returns 400 for a bad signature', async () => {

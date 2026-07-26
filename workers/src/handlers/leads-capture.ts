@@ -1,5 +1,5 @@
 import type { Env } from '../lib/types'
-import { addResendContact } from '../lib/crm'
+import { addCrmContact } from '../lib/crm'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -68,8 +68,8 @@ export async function handleLeadCapture(request: Request, env: Env, ctx: Executi
     ).bind(crypto.randomUUID(), email, now, language, source, null).run()
   }
 
-  // Resend mirror is best-effort (it swallows its own errors and no-ops without a key).
-  ctx.waitUntil(addResendContact(env, { email, language, source }))
+  // listmonk mirror is best-effort (it swallows its own errors and no-ops without config).
+  ctx.waitUntil(addCrmContact(env, { email, language, source }))
 
   return Response.json({ ok: true })
 }

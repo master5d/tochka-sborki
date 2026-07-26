@@ -129,7 +129,7 @@ export default {
               q: url.searchParams.get('q') ?? undefined,
               limit: Number(url.searchParams.get('limit')) || undefined,
             })
-      } else if (path === '/api/admin/leads/sync-resend' && method === 'POST') {
+      } else if (path === '/api/admin/leads/sync-crm' && method === 'POST') {
         const auth = await requireOwner(request, env)
         response = auth instanceof Response ? auth : await syncContacts(env)
       } else if (path === '/api/admin/stats' && method === 'GET') {

@@ -1,4 +1,5 @@
 import type { Env } from './types'
+import { sendEmailSES } from './ses'
 
 const strip = (s: string | undefined) => (s ?? '').replace(/^﻿/, '').trim()
 
@@ -112,26 +113,16 @@ export async function sendWelcomeEmail(
   env: Env,
   p: { email: string; lang: string; verifyUrl: string },
 ): Promise<boolean> {
-  const apiKey = strip(env.RESEND_API_KEY)
-  if (!apiKey) return false
+  if (!strip(env.SES_ACCESS_KEY_ID)) return false
   const mail = buildWelcomeEmail(p.lang, { verifyUrl: p.verifyUrl, ownerEmail: strip(env.OWNER_EMAIL) })
-  try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        from: 'Точка Сборки <noreply@mamaev.coach>',
-        to: [p.email],
-        subject: mail.subject,
-        text: mail.text,
-        html: mail.html,
-        headers: { 'List-Unsubscribe': mail.listUnsubscribe },
-      }),
-    })
-    if (!res.ok) { console.error('welcome-email non-OK', res.status, await res.text()); return false }
-    return true
-  } catch (e) {
-    console.error('welcome-email failed', e)
-    return false
-  }
+  const res = await sendEmailSES(env, {
+    from: 'Точка Сборки <noreply@mamaev.coach>',
+    to: p.email,
+    subject: mail.subject,
+    text: mail.text,
+    html: mail.html,
+    headers: { 'List-Unsubscribe': mail.listUnsubscribe },
+  })
+  if (!res.ok) { console.error('welcome-email non-OK', res.status, res.error); return false }
+  return true
 }

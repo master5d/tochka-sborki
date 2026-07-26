@@ -39,7 +39,6 @@ function makeEnv(data: MockData = {}) {
       }),
     } as unknown as D1Database,
     WORKER_JWT_SECRET: SECRET,
-    RESEND_API_KEY: '',
   } as unknown as Env
   return { env, run }
 }

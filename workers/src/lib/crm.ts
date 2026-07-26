@@ -2,22 +2,37 @@ import type { Env } from './types'
 
 const strip = (s: string | undefined) => (s ?? '').replace(/^﻿/, '').trim()
 
-// Resend Audiences устарели (→ Segments); контакты теперь глобальные: POST /contacts.
-// Источник правды лидов — D1 users; это вторичное зеркало для email-кампаний.
-export async function addResendContact(
+// Зеркало лида в listmonk CRM-список (single opt-in, unconfirmed). D1 users = источник правды.
+// best-effort: никогда не роняет вызывающий signup.
+export async function addCrmContact(
   env: Env,
   lead: { email: string; language?: string; source?: string },
 ): Promise<void> {
-  const apiKey = strip(env.RESEND_API_KEY)
-  if (!apiKey) return
+  const url = strip(env.LISTMONK_URL)
+  const user = strip(env.LISTMONK_API_USER)
+  const token = strip(env.LISTMONK_API_TOKEN)
+  const listId = Number(strip(env.LISTMONK_CRM_LIST_ID))
+  if (!url || !user || !token || !listId) return
   try {
-    const res = await fetch('https://api.resend.com/contacts', {
+    const res = await fetch(`${url}/api/subscribers`, {
       method: 'POST',
-      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: lead.email, unsubscribed: false }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `token ${user}:${token}`,
+        'CF-Access-Client-Id': strip(env.CF_ACCESS_CLIENT_ID),
+        'CF-Access-Client-Secret': strip(env.CF_ACCESS_CLIENT_SECRET),
+      },
+      body: JSON.stringify({
+        email: lead.email,
+        name: '',
+        status: 'enabled',
+        lists: [listId],
+        preconfirm_subscriptions: false, // single opt-in: подписка остаётся unconfirmed
+      }),
     })
-    if (!res.ok) console.error('Resend contact add non-OK', res.status, await res.text())
+    // 409 = уже существует → noop; прочие non-ok → лог, не бросаем
+    if (!res.ok && res.status !== 409) console.error('listmonk contact add non-OK', res.status, await res.text())
   } catch (e) {
-    console.error('Resend contact add failed', e)
+    console.error('listmonk contact add failed', e)
   }
 }

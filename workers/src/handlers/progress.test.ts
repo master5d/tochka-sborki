@@ -28,7 +28,6 @@ function makeEnv(): Env {
       }),
     } as unknown as D1Database,
     WORKER_JWT_SECRET: SECRET,
-    RESEND_API_KEY: '',
   }
 }
 
@@ -81,7 +80,6 @@ function makeCaptureEnv() {
       }),
     } as unknown as D1Database,
     WORKER_JWT_SECRET: SECRET,
-    RESEND_API_KEY: '',
   } as unknown as Env
   return { env, calls }
 }

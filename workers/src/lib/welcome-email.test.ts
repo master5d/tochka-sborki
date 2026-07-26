@@ -43,36 +43,42 @@ describe('buildWelcomeEmail en', () => {
   })
 })
 
-import { vi, afterEach } from 'vitest'
+import { vi, afterEach, beforeEach } from 'vitest'
 import { sendWelcomeEmail } from './welcome-email'
+import { sendEmailSES } from './ses'
 import type { Env } from './types'
 
-afterEach(() => vi.restoreAllMocks())
+vi.mock('./ses', () => ({ sendEmailSES: vi.fn() }))
+const sesMock = vi.mocked(sendEmailSES)
 
-const env = { RESEND_API_KEY: 're_x', OWNER_EMAIL: 'owner@example.com' } as Env
+afterEach(() => vi.restoreAllMocks())
+beforeEach(() => sesMock.mockReset())
+
+const env = {
+  SES_ACCESS_KEY_ID: 'AKIATEST',
+  SES_SECRET_ACCESS_KEY: 'secret',
+  OWNER_EMAIL: 'owner@example.com',
+} as Env
 const p = { email: 'b@e.com', lang: 'ru', verifyUrl: 'https://ai.mamaev.coach/auth/verify?token=T' }
 
 describe('sendWelcomeEmail', () => {
-  it('sends via Resend with the welcome subject and List-Unsubscribe header, returns true', async () => {
-    const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{}', { status: 200 }))
+  it('sends via SES with the welcome subject and List-Unsubscribe header, returns true', async () => {
+    sesMock.mockResolvedValue({ ok: true, status: 200 })
     const ok = await sendWelcomeEmail(env, p)
     expect(ok).toBe(true)
-    const [url, init] = spy.mock.calls[0] as [string, RequestInit]
-    expect(url).toBe('https://api.resend.com/emails')
-    const body = JSON.parse(init.body as string)
-    expect(body.from).toBe('Точка Сборки <noreply@mamaev.coach>')
-    expect(body.to).toEqual(['b@e.com'])
-    expect(body.subject).toBe('Добро пожаловать в Точку Сборки')
-    expect(body.headers['List-Unsubscribe']).toBe('<mailto:owner@example.com?subject=unsubscribe>')
+    const [, msg] = sesMock.mock.calls[0]
+    expect(msg.from).toBe('Точка Сборки <noreply@mamaev.coach>')
+    expect(msg.to).toBe('b@e.com')
+    expect(msg.subject).toBe('Добро пожаловать в Точку Сборки')
+    expect(msg.headers?.['List-Unsubscribe']).toBe('<mailto:owner@example.com?subject=unsubscribe>')
   })
-  it('is a no-op (false) when RESEND_API_KEY is unset', async () => {
-    const spy = vi.spyOn(globalThis, 'fetch')
+  it('is a no-op (false) when SES_ACCESS_KEY_ID is unset', async () => {
     const ok = await sendWelcomeEmail({ OWNER_EMAIL: 'o@e.com' } as Env, p)
     expect(ok).toBe(false)
-    expect(spy).not.toHaveBeenCalled()
+    expect(sesMock).not.toHaveBeenCalled()
   })
-  it('returns false (never throws) when Resend responds non-OK', async () => {
-    vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('err', { status: 422 }))
+  it('returns false (never throws) when SES responds non-OK', async () => {
+    sesMock.mockResolvedValue({ ok: false, status: 422, error: 'err' })
     const ok = await sendWelcomeEmail(env, p)
     expect(ok).toBe(false)
   })
