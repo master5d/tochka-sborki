@@ -24,7 +24,7 @@ async function sign(payload: string, t = Math.floor(Date.now() / 1000), secret =
 }
 
 type DbCall = { sql: string; binds: unknown[] }
-function makeEnv(opts: { inserted?: boolean; calls?: DbCall[]; resendKey?: string } = {}): Env {
+function makeEnv(opts: { inserted?: boolean; calls?: DbCall[] } = {}): Env {
   const DB = {
     prepare: (sql: string) => ({
       bind: (...binds: unknown[]) => {
@@ -38,7 +38,6 @@ function makeEnv(opts: { inserted?: boolean; calls?: DbCall[]; resendKey?: strin
   return {
     DB,
     STRIPE_WEBHOOK_SECRET: SECRET,
-    RESEND_API_KEY: opts.resendKey ?? 're_x',
     SES_ACCESS_KEY_ID: 'AKIATEST',
     SES_SECRET_ACCESS_KEY: 'secret',
   } as Env

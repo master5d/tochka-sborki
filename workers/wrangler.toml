@@ -8,7 +8,7 @@ LISTMONK_URL = "https://listmonk.mamaev.coach"
 # listmonk CRM list «Точка Сборки CRM» (private, single opt-in) — создан на infra I4
 LISTMONK_CRM_LIST_ID = "7"
 
-# Логи воркера (Resend message-id/статус) — чтобы отлаживать доставку magic-link, а не вслепую
+# Логи воркера (SES статус отправки) — чтобы отлаживать доставку magic-link, а не вслепую
 [observability]
 enabled = true
 

@@ -62,7 +62,7 @@ export async function handleSendLink(request: Request, env: Env, ctx: ExecutionC
   // язык письма — по users.language; для нового юзера = свежедетектированный (он же и сохраняется)
   let lang = user?.language ?? 'unknown'
 
-  // лид для Resend-контакта добавляем ПОСЛЕ отправки письма (best-effort, не должен гонять с критичным письмом)
+  // лид для CRM-контакта (listmonk) добавляем ПОСЛЕ отправки письма (best-effort, не должен гонять с критичным письмом)
   let newLead: { email: string; language: string; source: string } | null = null
   if (isNewUser) {
     const id = crypto.randomUUID()

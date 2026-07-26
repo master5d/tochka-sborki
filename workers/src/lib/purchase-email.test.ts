@@ -14,7 +14,7 @@ const product: Product = {
   id: 'kit', priceCents: 1900, name: { ru: 'Набор', en: 'Kit' }, blurb: { ru: 'b', en: 'b' },
   delivery: { kind: 'url', href: 'https://x/y' },
 }
-const env = { RESEND_API_KEY: 're_x', SES_ACCESS_KEY_ID: 'AKIATEST', SES_SECRET_ACCESS_KEY: 'secret' } as Env
+const env = { SES_ACCESS_KEY_ID: 'AKIATEST', SES_SECRET_ACCESS_KEY: 'secret' } as Env
 
 describe('sendPurchaseEmail', () => {
   it('sends via SES with the asset link and returns true', async () => {

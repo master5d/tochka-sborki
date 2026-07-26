@@ -9,7 +9,7 @@ const sesMock = vi.mocked(sendEmailSES)
 afterEach(() => vi.restoreAllMocks())
 beforeEach(() => sesMock.mockReset())
 
-const fullEnv = { RESEND_API_KEY: 'rk', SES_ACCESS_KEY_ID: 'AKIATEST', SES_SECRET_ACCESS_KEY: 'secret', OWNER_EMAIL: 'owner@example.com' } as Env
+const fullEnv = { SES_ACCESS_KEY_ID: 'AKIATEST', SES_SECRET_ACCESS_KEY: 'secret', OWNER_EMAIL: 'owner@example.com' } as Env
 
 describe('notifyOwnerQuestion', () => {
   it('emails the owner with the question in the body', async () => {

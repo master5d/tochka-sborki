@@ -55,7 +55,6 @@ afterEach(() => vi.restoreAllMocks())
 beforeEach(() => sesMock.mockReset())
 
 const env = {
-  RESEND_API_KEY: 're_x',
   SES_ACCESS_KEY_ID: 'AKIATEST',
   SES_SECRET_ACCESS_KEY: 'secret',
   OWNER_EMAIL: 'owner@example.com',

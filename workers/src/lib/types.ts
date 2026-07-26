@@ -1,7 +1,6 @@
 export interface Env {
   DB: D1Database
   WORKER_JWT_SECRET: string
-  RESEND_API_KEY: string
   SES_ACCESS_KEY_ID: string
   SES_SECRET_ACCESS_KEY: string
   SES_REGION?: string

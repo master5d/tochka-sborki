@@ -16,7 +16,6 @@ function makeEnv(opts: { calls?: DbCall[] } = {}): Env {
   return {
     DB,
     WORKER_JWT_SECRET: 'test-secret',
-    RESEND_API_KEY: '',
   } as Env
 }
 
