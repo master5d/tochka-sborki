@@ -14,7 +14,7 @@ export function validateSupportAmount(raw: unknown): AmountResult {
   return { ok: true, cents: raw }
 }
 
-const BASE = 'https://ai.mamaev.coach'
+const BASE = 'https://ai.synergify.com'
 
 export function buildSupportSessionForm(opts: { cents: number; locale: 'ru' | 'en' }): URLSearchParams {
   const prefix = opts.locale === 'en' ? '/en' : ''

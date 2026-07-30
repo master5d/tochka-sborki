@@ -25,11 +25,11 @@ describe('nextLesson', () => {
 
 describe('lessonUrl / homeUrl', () => {
   it('builds ru and en lesson URLs', () => {
-    expect(lessonUrl('02-setup-guide', 'ru')).toBe('https://ai.mamaev.coach/lessons/02-setup-guide/')
-    expect(lessonUrl('02-setup-guide', 'en')).toBe('https://ai.mamaev.coach/en/lessons/02-setup-guide/')
+    expect(lessonUrl('02-setup-guide', 'ru')).toBe('https://ai.synergify.com/lessons/02-setup-guide/')
+    expect(lessonUrl('02-setup-guide', 'en')).toBe('https://ai.synergify.com/en/lessons/02-setup-guide/')
   })
   it('builds ru and en home URLs', () => {
-    expect(homeUrl('ru')).toBe('https://ai.mamaev.coach/')
-    expect(homeUrl('en')).toBe('https://ai.mamaev.coach/en/')
+    expect(homeUrl('ru')).toBe('https://ai.synergify.com/')
+    expect(homeUrl('en')).toBe('https://ai.synergify.com/en/')
   })
 })

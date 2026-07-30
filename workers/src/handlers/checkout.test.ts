@@ -6,7 +6,7 @@ import { PRODUCTS } from '../lib/products'
 afterEach(() => vi.restoreAllMocks())
 
 function req(body: unknown): Request {
-  return new Request('https://ai.mamaev.coach/api/checkout/support', {
+  return new Request('https://ai.synergify.com/api/checkout/support', {
     method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' },
   })
 }
@@ -41,7 +41,7 @@ describe('handleSupportCheckout', () => {
 })
 
 function preq(body: unknown): Request {
-  return new Request('https://ai.mamaev.coach/api/checkout/product', {
+  return new Request('https://ai.synergify.com/api/checkout/product', {
     method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' },
   })
 }

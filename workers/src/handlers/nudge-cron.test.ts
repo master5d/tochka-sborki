@@ -43,7 +43,7 @@ describe('runDailyNudge', () => {
     expect(res.sent).toBe(1)
     const body = JSON.parse((spy.mock.calls[0][1] as RequestInit).body as string)
     expect(body.chat_id).toBe(500)
-    expect(body.reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.mamaev.coach/lessons/01-introduction/')
+    expect(body.reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.synergify.com/lessons/01-introduction/')
     expect(calls.find(c => /UPDATE users SET last_nudge_at/.test(c.sql))).toBeDefined()
   })
 

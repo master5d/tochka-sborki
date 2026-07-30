@@ -25,7 +25,7 @@ function makeEnv(opts: { user?: Row | null; progress?: Row[]; calls?: DbCall[] }
 function req(update: unknown, secret: string | null = SECRET): Request {
   const headers: Record<string, string> = { 'Content-Type': 'application/json' }
   if (secret !== null) headers['X-Telegram-Bot-Api-Secret-Token'] = secret
-  return new Request('https://ai.mamaev.coach/api/telegram/webhook', {
+  return new Request('https://ai.synergify.com/api/telegram/webhook', {
     method: 'POST', body: JSON.stringify(update), headers,
   })
 }
@@ -48,7 +48,7 @@ describe('handleTelegramWebhook', () => {
       makeEnv({ user: null })
     )
     expect(res.status).toBe(200)
-    expect(lastBody(spy).reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.mamaev.coach/')
+    expect(lastBody(spy).reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.synergify.com/')
   })
 
   it('/continue from an unlinked user asks them to open the course first', async () => {
@@ -57,7 +57,7 @@ describe('handleTelegramWebhook', () => {
       req({ message: { text: '/continue', from: { id: 200 }, chat: { id: 200 } } }),
       makeEnv({ user: null })
     )
-    expect(lastBody(spy).reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.mamaev.coach/')
+    expect(lastBody(spy).reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.synergify.com/')
   })
 
   it('/continue from a linked user deep-links the next incomplete lesson', async () => {
@@ -67,7 +67,7 @@ describe('handleTelegramWebhook', () => {
       makeEnv({ user: { id: 'u-300', language: 'ru' }, progress: [{ lesson_slug: '00-kickstart', completed_at: 123 }] })
     )
     expect(lastBody(spy).reply_markup.inline_keyboard[0][0].web_app.url)
-      .toBe('https://ai.mamaev.coach/lessons/01-introduction/')
+      .toBe('https://ai.synergify.com/lessons/01-introduction/')
   })
 
   it('returns 200 even when the update is junk', async () => {
@@ -120,7 +120,7 @@ describe('handleTelegramWebhook', () => {
     expect(ins!.binds[1]).toBe('u-601')             // user_id
     const tgCall = (spy.mock.calls as [string, RequestInit][]).find(([u]) => /api\.telegram\.org/.test(u) && /sendMessage/.test(u))
     const ackBody = JSON.parse(tgCall![1].body as string)
-    expect(ackBody.reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.mamaev.coach/')
+    expect(ackBody.reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.synergify.com/')
   })
 
   it('captures a question from an unlinked user with user_id null', async () => {
@@ -143,7 +143,7 @@ describe('handleTelegramWebhook', () => {
       makeEnv({ user: { id: 'u-700', language: 'ru', nudge_optout: 0 } })
     )
     const body = JSON.parse((spy.mock.calls[0][1] as RequestInit).body as string)
-    expect(body.reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.mamaev.coach/support/')
+    expect(body.reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.synergify.com/support/')
   })
 
   it('/store sends a button to the store page', async () => {
@@ -153,6 +153,6 @@ describe('handleTelegramWebhook', () => {
       makeEnv({ user: { id: 'u-701', language: 'ru', nudge_optout: 0 } })
     )
     const body = JSON.parse((spy.mock.calls[0][1] as RequestInit).body as string)
-    expect(body.reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.mamaev.coach/store/')
+    expect(body.reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.synergify.com/store/')
   })
 })

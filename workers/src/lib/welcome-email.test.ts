@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { buildWelcomeEmail } from './welcome-email'
 
-const ctx = { verifyUrl: 'https://ai.mamaev.coach/auth/verify?token=TOK', ownerEmail: 'owner@example.com' }
+const ctx = { verifyUrl: 'https://ai.synergify.com/auth/verify?token=TOK', ownerEmail: 'owner@example.com' }
 
 describe('buildWelcomeEmail ru', () => {
   const m = buildWelcomeEmail('ru', ctx)
@@ -14,9 +14,9 @@ describe('buildWelcomeEmail ru', () => {
   })
   it('embeds verify, intake and cheatsheet urls (ru, no /en prefix)', () => {
     for (const body of [m.text, m.html]) {
-      expect(body).toContain('https://ai.mamaev.coach/auth/verify?token=TOK')
-      expect(body).toContain('https://ai.mamaev.coach/quest-intake/')
-      expect(body).toContain('https://ai.mamaev.coach/cheatsheet/')
+      expect(body).toContain('https://ai.synergify.com/auth/verify?token=TOK')
+      expect(body).toContain('https://ai.synergify.com/quest-intake/')
+      expect(body).toContain('https://ai.synergify.com/cheatsheet/')
     }
   })
   it('keeps the anti-fluff block and omits a community step', () => {
@@ -34,8 +34,8 @@ describe('buildWelcomeEmail en', () => {
     expect(m.subject).toBe('Welcome to Tochka Sborki')
   })
   it('uses the /en prefix on intake and cheatsheet urls', () => {
-    expect(m.text).toContain('https://ai.mamaev.coach/en/quest-intake/')
-    expect(m.text).toContain('https://ai.mamaev.coach/en/cheatsheet/')
+    expect(m.text).toContain('https://ai.synergify.com/en/quest-intake/')
+    expect(m.text).toContain('https://ai.synergify.com/en/cheatsheet/')
   })
   it('has the EN founder note and anti-fluff block, no {{', () => {
     expect(m.text).toContain("won't get")
@@ -59,7 +59,7 @@ const env = {
   SES_SECRET_ACCESS_KEY: 'secret',
   OWNER_EMAIL: 'owner@example.com',
 } as Env
-const p = { email: 'b@e.com', lang: 'ru', verifyUrl: 'https://ai.mamaev.coach/auth/verify?token=T' }
+const p = { email: 'b@e.com', lang: 'ru', verifyUrl: 'https://ai.synergify.com/auth/verify?token=T' }
 
 describe('sendWelcomeEmail', () => {
   it('sends via SES with the welcome subject and List-Unsubscribe header, returns true', async () => {

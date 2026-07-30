@@ -24,7 +24,7 @@ function makeEnv(opts: { existing?: boolean; calls?: DbCall[] } = {}): Env {
 }
 
 function req(body: unknown) {
-  return new Request('https://ai.mamaev.coach/api/leads/capture', {
+  return new Request('https://ai.synergify.com/api/leads/capture', {
     method: 'POST',
     body: JSON.stringify(body),
     headers: { 'Content-Type': 'application/json' },

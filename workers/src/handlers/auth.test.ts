@@ -44,7 +44,7 @@ function makeEnv(opts: { existing?: boolean; calls?: DbCall[]; language?: string
 const ctx = { waitUntil: (_p: Promise<unknown>) => {} } as unknown as ExecutionContext
 
 function sendLinkReq(body: Record<string, unknown>, headers: Record<string, string> = {}) {
-  return new Request('https://ai.mamaev.coach/api/auth/send-link', {
+  return new Request('https://ai.synergify.com/api/auth/send-link', {
     method: 'POST',
     body: JSON.stringify(body),
     headers: { 'Content-Type': 'application/json', ...headers },
@@ -151,7 +151,7 @@ describe('handleSendLink bilingual (по users.language)', () => {
 
 describe('handleLogout', () => {
   it('clears session cookie', async () => {
-    const req = new Request('https://ai.mamaev.coach/api/auth/logout', { method: 'POST' })
+    const req = new Request('https://ai.synergify.com/api/auth/logout', { method: 'POST' })
     const res = await handleLogout(req, makeEnv())
     expect(res.status).toBe(200)
     expect(res.headers.get('Set-Cookie')).toContain('session=;')

@@ -20,7 +20,10 @@ import { requireAuth, requireOwner } from './middleware'
 const ALLOWED_ORIGINS = [
   'https://ai.mamaev.coach',
   'https://mamaev.coach',
-  'https://mentor.mamaev.coach'
+  'https://mentor.mamaev.coach',
+  'https://ai.synergify.com',
+  'https://synergify.com',
+  'https://academy.synergify.com'
 ]
 
 function getCorsHeaders(request: Request) {

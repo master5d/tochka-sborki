@@ -25,5 +25,9 @@ zone_name = "mamaev.coach"
 pattern = "mamaev.coach/api/*"
 zone_name = "mamaev.coach"
 
+[[routes]]
+pattern = "ai.synergify.com/api/*"
+zone_name = "synergify.com"
+
 [triggers]
 crons = ["0 16 * * *"]

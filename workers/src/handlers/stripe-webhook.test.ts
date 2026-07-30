@@ -54,7 +54,7 @@ function evt(over: Record<string, unknown> = {}): string {
 function req(body: string, header: string | null): Request {
   const h: Record<string, string> = { 'Content-Type': 'application/json' }
   if (header) h['Stripe-Signature'] = header
-  return new Request('https://ai.mamaev.coach/api/stripe/webhook', { method: 'POST', body, headers: h })
+  return new Request('https://ai.synergify.com/api/stripe/webhook', { method: 'POST', body, headers: h })
 }
 
 const seeded = { id: 'wh-kit', priceCents: 1900, name: { ru: 'Набор', en: 'Kit' },

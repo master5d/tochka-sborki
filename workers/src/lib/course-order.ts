@@ -18,18 +18,18 @@ export function nextLesson(completed: Set<string>, viewed: Set<string>): NextLes
 }
 
 export function lessonUrl(slug: string, locale: 'ru' | 'en'): string {
-  const base = locale === 'en' ? 'https://ai.mamaev.coach/en' : 'https://ai.mamaev.coach'
+  const base = locale === 'en' ? 'https://ai.synergify.com/en' : 'https://ai.synergify.com'
   return `${base}/lessons/${slug}/`
 }
 
 export function homeUrl(locale: 'ru' | 'en'): string {
-  return locale === 'en' ? 'https://ai.mamaev.coach/en/' : 'https://ai.mamaev.coach/'
+  return locale === 'en' ? 'https://ai.synergify.com/en/' : 'https://ai.synergify.com/'
 }
 
 export function supportUrl(locale: 'ru' | 'en'): string {
-  return locale === 'en' ? 'https://ai.mamaev.coach/en/support/' : 'https://ai.mamaev.coach/support/'
+  return locale === 'en' ? 'https://ai.synergify.com/en/support/' : 'https://ai.synergify.com/support/'
 }
 
 export function storeUrl(locale: 'ru' | 'en'): string {
-  return locale === 'en' ? 'https://ai.mamaev.coach/en/store/' : 'https://ai.mamaev.coach/store/'
+  return locale === 'en' ? 'https://ai.synergify.com/en/store/' : 'https://ai.synergify.com/store/'
 }

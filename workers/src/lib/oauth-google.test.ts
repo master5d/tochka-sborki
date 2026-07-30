@@ -14,12 +14,12 @@ describe('pkceChallenge', () => {
 
 describe('buildAuthorizeUrl', () => {
   it('builds a Google authorize URL with all required params', () => {
-    const url = buildAuthorizeUrl({ clientId: 'cid', redirectUri: 'https://ai.mamaev.coach/api/auth/oauth/google/callback', state: 'st', codeChallenge: 'ch' })
+    const url = buildAuthorizeUrl({ clientId: 'cid', redirectUri: 'https://ai.synergify.com/api/auth/oauth/google/callback', state: 'st', codeChallenge: 'ch' })
     const u = new URL(url)
     expect(u.origin + u.pathname).toBe('https://accounts.google.com/o/oauth2/v2/auth')
     expect(u.searchParams.get('response_type')).toBe('code')
     expect(u.searchParams.get('client_id')).toBe('cid')
-    expect(u.searchParams.get('redirect_uri')).toBe('https://ai.mamaev.coach/api/auth/oauth/google/callback')
+    expect(u.searchParams.get('redirect_uri')).toBe('https://ai.synergify.com/api/auth/oauth/google/callback')
     expect(u.searchParams.get('scope')).toBe('openid email')
     expect(u.searchParams.get('state')).toBe('st')
     expect(u.searchParams.get('code_challenge')).toBe('ch')

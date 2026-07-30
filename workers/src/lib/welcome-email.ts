@@ -16,7 +16,7 @@ export function buildWelcomeEmail(
   ctx: { verifyUrl: string; ownerEmail: string },
 ): WelcomeEmail {
   const en = lang === 'en'
-  const base = 'https://ai.mamaev.coach'
+  const base = 'https://ai.synergify.com'
   const prefix = en ? '/en' : ''
   const intake = `${base}${prefix}/quest-intake/`
   const cheatsheet = `${base}${prefix}/cheatsheet/`

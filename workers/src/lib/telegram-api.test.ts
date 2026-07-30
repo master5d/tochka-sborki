@@ -20,9 +20,9 @@ describe('sendMessage', () => {
 
   it('attaches a web_app inline button when provided', async () => {
     const spy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{"ok":true}', { status: 200 }))
-    await sendMessage(env, 1, 'go', { text: 'Open', url: 'https://ai.mamaev.coach/' })
+    await sendMessage(env, 1, 'go', { text: 'Open', url: 'https://ai.synergify.com/' })
     const body = JSON.parse((spy.mock.calls[0][1] as RequestInit).body as string)
-    expect(body.reply_markup.inline_keyboard[0][0]).toEqual({ text: 'Open', web_app: { url: 'https://ai.mamaev.coach/' } })
+    expect(body.reply_markup.inline_keyboard[0][0]).toEqual({ text: 'Open', web_app: { url: 'https://ai.synergify.com/' } })
   })
 })
 

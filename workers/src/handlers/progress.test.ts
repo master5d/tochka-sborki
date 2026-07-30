@@ -33,7 +33,7 @@ function makeEnv(): Env {
 
 describe('handleView', () => {
   it('returns 401 without auth', async () => {
-    const req = new Request('https://ai.mamaev.coach/api/progress/view', {
+    const req = new Request('https://ai.synergify.com/api/progress/view', {
       method: 'POST',
       body: JSON.stringify({ lesson_slug: '01-introduction' }),
       headers: { 'Content-Type': 'application/json' },
@@ -43,7 +43,7 @@ describe('handleView', () => {
   })
 
   it('returns 200 with valid auth and lesson_slug', async () => {
-    const req = await makeAuthRequest('https://ai.mamaev.coach/api/progress/view', 'POST', { lesson_slug: '01-introduction' })
+    const req = await makeAuthRequest('https://ai.synergify.com/api/progress/view', 'POST', { lesson_slug: '01-introduction' })
     const res = await handleView(req, makeEnv())
     expect(res.status).toBe(200)
   })
@@ -51,7 +51,7 @@ describe('handleView', () => {
 
 describe('handleComplete', () => {
   it('returns 200 with valid auth and lesson_slug', async () => {
-    const req = await makeAuthRequest('https://ai.mamaev.coach/api/progress/complete', 'POST', { lesson_slug: '01-introduction' })
+    const req = await makeAuthRequest('https://ai.synergify.com/api/progress/complete', 'POST', { lesson_slug: '01-introduction' })
     const res = await handleComplete(req, makeEnv())
     expect(res.status).toBe(200)
   })
@@ -59,7 +59,7 @@ describe('handleComplete', () => {
 
 describe('handleList', () => {
   it('returns 200 with empty array when no progress', async () => {
-    const req = await makeAuthRequest('https://ai.mamaev.coach/api/progress/list', 'GET', null)
+    const req = await makeAuthRequest('https://ai.synergify.com/api/progress/list', 'GET', null)
     const res = await handleList(req, makeEnv())
     expect(res.status).toBe(200)
     const data = await res.json() as unknown[]
@@ -86,7 +86,7 @@ function makeCaptureEnv() {
 
 describe('course keying (S4)', () => {
   it('view defaults course to tochka-sborki', async () => {
-    const req = await makeAuthRequest('https://ai.mamaev.coach/api/progress/view', 'POST', { lesson_slug: '01-introduction' })
+    const req = await makeAuthRequest('https://ai.synergify.com/api/progress/view', 'POST', { lesson_slug: '01-introduction' })
     const { env, calls } = makeCaptureEnv()
     const res = await handleView(req, env)
     expect(res.status).toBe(200)
@@ -94,7 +94,7 @@ describe('course keying (S4)', () => {
   })
 
   it('view passes an explicit course through', async () => {
-    const req = await makeAuthRequest('https://ai.mamaev.coach/api/progress/view', 'POST', { lesson_slug: 'x/u1-intro', course: 'x' })
+    const req = await makeAuthRequest('https://ai.synergify.com/api/progress/view', 'POST', { lesson_slug: 'x/u1-intro', course: 'x' })
     const { env, calls } = makeCaptureEnv()
     await handleView(req, env)
     expect(calls[0]).toContain('x')
@@ -102,7 +102,7 @@ describe('course keying (S4)', () => {
   })
 
   it('complete defaults course to tochka-sborki', async () => {
-    const req = await makeAuthRequest('https://ai.mamaev.coach/api/progress/complete', 'POST', { lesson_slug: '01-introduction' })
+    const req = await makeAuthRequest('https://ai.synergify.com/api/progress/complete', 'POST', { lesson_slug: '01-introduction' })
     const { env, calls } = makeCaptureEnv()
     const res = await handleComplete(req, env)
     expect(res.status).toBe(200)

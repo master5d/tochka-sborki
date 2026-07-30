@@ -20,7 +20,7 @@ function makeEnv(opts: { calls?: DbCall[] } = {}): Env {
 }
 
 function req(body: unknown) {
-  return new Request('https://ai.mamaev.coach/api/feedback', {
+  return new Request('https://ai.synergify.com/api/feedback', {
     method: 'POST',
     body: JSON.stringify(body),
     headers: { 'Content-Type': 'application/json' },

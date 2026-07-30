@@ -29,13 +29,13 @@ function makeEnv(opts: { bySub?: unknown; byEmail?: unknown; calls?: DbCall[]; u
 }
 
 function startReq(redirect?: string): Request {
-  const u = new URL('https://ai.mamaev.coach/api/auth/oauth/google/start')
+  const u = new URL('https://ai.synergify.com/api/auth/oauth/google/start')
   if (redirect) u.searchParams.set('redirect', redirect)
   return new Request(u.toString(), { method: 'GET' })
 }
 
 function callbackReq(query: Record<string, string>, cookie: string): Request {
-  const u = new URL('https://ai.mamaev.coach/api/auth/oauth/google/callback')
+  const u = new URL('https://ai.synergify.com/api/auth/oauth/google/callback')
   for (const [k, v] of Object.entries(query)) u.searchParams.set(k, v)
   return new Request(u.toString(), { method: 'GET', headers: { Cookie: cookie } })
 }
@@ -96,7 +96,7 @@ describe('handleOAuthCallback', () => {
     expect(res.status).toBe(302)
     const joined = (res.headers.getSetCookie ? res.headers.getSetCookie() : [res.headers.get('Set-Cookie') ?? '']).join('\n')
     expect(joined).toContain('session=')
-    expect(res.headers.get('Location')!).toBe('https://ai.mamaev.coach/course/')
+    expect(res.headers.get('Location')!).toBe('https://ai.synergify.com/course/')
     expect(usersInsert(calls)).toBeUndefined()
   })
 

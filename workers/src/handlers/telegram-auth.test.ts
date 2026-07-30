@@ -40,7 +40,7 @@ function makeEnv(opts: { byId?: unknown; byHandle?: unknown; calls?: DbCall[]; n
 }
 
 function req(body: unknown): Request {
-  return new Request('https://ai.mamaev.coach/api/auth/telegram', {
+  return new Request('https://ai.synergify.com/api/auth/telegram', {
     method: 'POST',
     body: JSON.stringify(body),
     headers: { 'Content-Type': 'application/json' },
@@ -57,7 +57,7 @@ describe('handleTelegramAuth', () => {
   })
 
   it('returns 400 for invalid JSON', async () => {
-    const bad = new Request('https://ai.mamaev.coach/api/auth/telegram', { method: 'POST', body: 'not json' })
+    const bad = new Request('https://ai.synergify.com/api/auth/telegram', { method: 'POST', body: 'not json' })
     expect((await handleTelegramAuth(bad, makeEnv())).status).toBe(400)
   })
 

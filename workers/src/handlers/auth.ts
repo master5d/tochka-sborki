@@ -81,7 +81,7 @@ export async function handleSendLink(request: Request, env: Env, ctx: ExecutionC
   const expiresAt = Math.floor(Date.now() / 1000) + 900
   await env.DB.prepare('INSERT INTO magic_links (token, user_id, expires_at) VALUES (?, ?, ?)').bind(token, user!.id, expiresAt).run()
 
-  const verifyUrl = `https://ai.mamaev.coach/auth/verify?token=${token}`
+  const verifyUrl = `https://ai.synergify.com/auth/verify?token=${token}`
   const mail = buildMagicLinkEmail(lang, verifyUrl)
 
   // Транзакционное письмо: plain-text + минимальный HTML, одна ссылка, без маркетинговых стилей —
