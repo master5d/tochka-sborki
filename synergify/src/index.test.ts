@@ -51,9 +51,11 @@ describe('GET /', () => {
     // RU-центричная страница шлёт lang=ru (hidden input, читается и fetch-путём)
     expect(html).toContain('name="lang"')
     expect(html).toContain('value="ru"')
-    // RU primary + subtitle mentions the ecosystem
-    expect(html).toContain('S.A.S.H.A.')
-    expect(html).toContain('Точк')
+    // RU umbrella entries + subscription form
+    expect(html).toContain('Точка Сборки')
+    expect(html).toContain('ai.synergify.com')
+    expect(html).toContain('academy.synergify.com')
+    expect(html).toContain('Новости экосистемы')
   })
 })
 
