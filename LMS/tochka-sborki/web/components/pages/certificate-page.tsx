@@ -78,7 +78,7 @@ export function CertificatePage({ locale }: Props) {
 
   const certUrl = typeof window !== 'undefined'
     ? `${window.location.origin}${locale === 'en' ? '/en' : ''}/certificate/`
-    : 'https://ai.mamaev.coach/certificate/'
+    : 'https://ai.synergify.com/certificate/'
 
   function downloadSvg() {
     if (!svgRef.current) return

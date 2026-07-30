@@ -1,6 +1,6 @@
 # Точка Сборки — Web (LMS)
 
-Публичный сайт открытого курса «Точка Сборки» на [ai.mamaev.coach](https://ai.mamaev.coach).
+Публичный сайт открытого курса «Точка Сборки» на [ai.synergify.com](https://ai.synergify.com).
 **Bilingual**: русский (`/`) + английский (`/en/`). Часть мульти-сайтового репо
 (`web/` = курс, `hub/` = mamaev.coach, `mentor/` = mentor.mamaev.coach).
 
@@ -13,7 +13,7 @@
 | Локализация | `lib/dictionaries.ts` (RU+EN), компоненты принимают `locale` prop |
 | Стилизация | CSS Custom Properties + Tailwind 4 (`data-theme="light\|dark"`, дефолт = система) |
 | Шрифты | Geist / Geist Mono / Unbounded (display) |
-| Backend | CF Worker `workers/` на `ai.mamaev.coach/api/*` (auth, progress, feedback, CRM) |
+| Backend | CF Worker `workers/` на `ai.synergify.com/api/*` (auth, progress, feedback, CRM) |
 | Хостинг | Cloudflare Pages (проект `tochka-sborki`) |
 | CI/CD | GitHub Actions (`.github/workflows/deploy.yml`, job `deploy-web`) |
 | Тесты | Vitest |
@@ -151,7 +151,7 @@ duration, level, units[]) и `uX-*.mdx` файлами. Frontmatter unit-а: `ti
 
 ## Backend / API (`workers/`)
 
-CF Worker обслуживает `ai.mamaev.coach/api/*`:
+CF Worker обслуживает `ai.synergify.com/api/*`:
 - `auth/send-link`, `auth/verify`, `auth/me`, `auth/logout` — magic-link через Resend
 - `progress/*` — прогресс по урокам (D1 `tochka-sborki-db`)
 - `feedback` — приём формы фидбека

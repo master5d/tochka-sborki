@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { buildSitemap } from './sitemap'
 
-const BASE = 'https://ai.mamaev.coach'
+const BASE = 'https://ai.synergify.com'
 
 describe('buildSitemap', () => {
   it('pairs each path with ru / en / x-default hreflang alternates', () => {

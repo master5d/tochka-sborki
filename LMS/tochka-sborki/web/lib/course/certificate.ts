@@ -67,7 +67,7 @@ export const CERTIFICATE: CertificateData = {
     ru: `представлено · ${ORG}`,
     en: `presented by · ${ORG}`,
   },
-  url: 'ai.mamaev.coach/certificate',
+  url: 'ai.synergify.com/certificate',
 }
 
 export function resolveCertificate(

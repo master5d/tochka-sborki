@@ -8,8 +8,8 @@
 
 Нетехнический путь — одна команда ставит весь базовый стек (Node.js + Git + Claude Code) и проверяет результат:
 
-- **Mac / Linux:** `curl -fsSL https://ai.mamaev.coach/install.sh | bash`
-- **Windows:** `irm https://ai.mamaev.coach/install.ps1 | iex`
+- **Mac / Linux:** `curl -fsSL https://ai.synergify.com/install.sh | bash`
+- **Windows:** `irm https://ai.synergify.com/install.ps1 | iex`
 
 После установки открой **новый** терминал и запусти `claude`. Если установщик выдал ошибку — ниже пошаговый ручной путь.
 

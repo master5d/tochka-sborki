@@ -14,6 +14,6 @@ export const COURSE = {
     en: 'Tochka Sborki — a course on vibe coding',
   } as Bi,
   // Single source of truth for SEO (sitemap/robots) and the PWA manifest. No trailing slash.
-  domain: 'https://ai.mamaev.coach',
+  domain: 'https://ai.synergify.com',
   locales: ['ru', 'en'] as const,
 } as const
