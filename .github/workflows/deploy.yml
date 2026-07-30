@@ -9,6 +9,7 @@ on:
       - 'hub/**'
       - 'blog/**'
       - 'mentor/**'
+      - 'academy/**'
       - 'workers/**'
       - '.github/workflows/deploy.yml'
 
@@ -16,7 +17,7 @@ env:
   CF_ACCOUNT: '252b28b0ef2e1866c532e2622060c809'
 
 jobs:
-  # ── ai.mamaev.coach (course) ──────────────────────────────
+  # ── ai.synergify.com (course) ──────────────────────────────
   deploy-web:
     runs-on: ubuntu-latest
     permissions:
@@ -128,6 +129,42 @@ jobs:
         run: |
           npx wrangler pages deploy mentor/out \
             --project-name=mamaev-coach-mentor \
+            --branch=main \
+            --commit-message="${{ github.sha }}"
+
+  # ── academy.synergify.com (S.A.S.H.A academy) ──────────────
+  deploy-academy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: academy/package-lock.json
+      - name: Install
+        working-directory: academy
+        run: npm ci
+      - name: Build
+        working-directory: academy
+        run: npm run build
+      - name: Ensure project exists
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ env.CF_ACCOUNT }}
+        run: |
+          npx wrangler pages project create synergify-academy \
+            --production-branch=main || echo "Project already exists"
+      - name: Deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ env.CF_ACCOUNT }}
+        run: |
+          npx wrangler pages deploy academy/out \
+            --project-name=synergify-academy \
             --branch=main \
             --commit-message="${{ github.sha }}"
 

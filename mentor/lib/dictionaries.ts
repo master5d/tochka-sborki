@@ -120,7 +120,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     footerLeft: '© {YEAR} · mentor.mamaev.coach',
     footerLinks: [
       { label: '← mamaev.coach', href: 'https://mamaev.coach' },
-      { label: 'ai.mamaev.coach', href: 'https://ai.mamaev.coach' },
+      { label: 'ai.synergify.com', href: 'https://ai.synergify.com' },
       { label: 'github', href: 'https://github.com/master5d' },
     ],
     langSuggest: {
@@ -201,7 +201,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     footerLeft: '© {YEAR} · mentor.mamaev.coach',
     footerLinks: [
       { label: '← mamaev.coach', href: 'https://mamaev.coach/en/' },
-      { label: 'ai.mamaev.coach', href: 'https://ai.mamaev.coach/en/' },
+      { label: 'ai.synergify.com', href: 'https://ai.synergify.com/en/' },
       { label: 'github', href: 'https://github.com/master5d' },
     ],
     langSuggest: {

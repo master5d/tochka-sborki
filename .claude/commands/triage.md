@@ -30,7 +30,7 @@ description: >
 
 **severity:** critical = потеря данных, безопасность, падение для всех; high = сломан major flow; medium = частичная поломка / performance; low = косметика, идеи.
 
-**area** (словарь продуктов mc_hub): `lms` (ai.mamaev.coach, курс-приложение), `blog`, `hub` (mamaev.coach лендинг), `mentor`, `workers` (API), `course` (контент курса: уроки, упражнения), `infra` (CI, деплой, тулчейн).
+**area** (словарь продуктов mc_hub): `lms` (ai.synergify.com, курс-приложение), `blog`, `hub` (mamaev.coach лендинг), `mentor`, `workers` (API), `course` (контент курса: уроки, упражнения), `infra` (CI, деплой, тулчейн).
 
 **lms_target** (ТОЛЬКО для area `lms` или `course`; для прочих — опусти поле): куда тикет приземляется в разрезе мульти-курсовой платформы.
 - `engine` — переиспользуемый движок LMS (выгода для ВСЕХ будущих курсов): RPG-движок, intake/scoring-движок, learn-with-AI, PWA, SEO-baseline, auth/guards, content-loader, i18n, контракт `lib/course.ts`, generic-компоненты, `LMS/_template/`.

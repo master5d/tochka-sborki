@@ -40,7 +40,7 @@ export function BlogFooter({ locale }: { locale: Locale }) {
           </a>
           {d.blog.footerPractice}{' '}
           <a href={d.blog.courseUrl} style={linkStyle} onClick={() => track('course')}>
-            ai.mamaev.coach
+            ai.synergify.com
           </a>
           .
         </p>

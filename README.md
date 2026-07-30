@@ -23,7 +23,7 @@
 [![Workers](https://img.shields.io/badge/edge-CF_Workers-f38020?style=flat-square&logo=cloudflareworkers)](https://workers.cloudflare.com)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
-[Курс →](https://ai.mamaev.coach) · [Лендинг →](https://mamaev.coach) · [Блог →](https://mamaev.coach/blog/)
+[Курс →](https://ai.synergify.com) · [Лендинг →](https://mamaev.coach) · [Блог →](https://mamaev.coach/blog/)
 
 </div>
 
@@ -36,10 +36,12 @@
 | Папка | Что это | Деплой |
 |-------|---------|--------|
 | `LMS/` | Контейнер курсов. Первый — `LMS/tochka-sborki/` («Точка Сборки»), задел на следующие. | — |
-| `LMS/tochka-sborki/web/` | Next.js 16 LMS-сайт курса | `ai.mamaev.coach` (CF Pages `tochka-sborki`) |
+| `LMS/tochka-sborki/web/` | Next.js 16 LMS-сайт курса | `ai.synergify.com` (CF Pages `tochka-sborki`) |
 | `hub/` | Личный лендинг + блог | `mamaev.coach` (CF Pages `mamaev-coach-hub`) |
 | `mentor/` | B2B agent-engineering | `mentor.mamaev.coach` (CF Pages `mamaev-coach-mentor`) |
-| `workers/` | CF Worker API (auth / progress / feedback / CRM) | `ai.mamaev.coach/api/*` |
+| `synergify/` | Зонтик-лендинг Synergify (worker: два входа + подписка) | `synergify.com` (worker `synergify-home`) |
+| `academy/` | Академия S.A.S.H.A (вход после Точки Сборки) | `academy.synergify.com` (CF Pages `synergify-academy`) |
+| `workers/` | CF Worker API (auth / progress / feedback / CRM) | `ai.synergify.com/api/*` |
 | `docs/superpowers/` | Spec'ы и планы (brainstorming, writing-plans) | — |
 | `skills/` | Claude Code skills | — |
 

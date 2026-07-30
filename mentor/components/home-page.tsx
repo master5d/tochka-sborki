@@ -102,7 +102,7 @@ export function HomePage({ locale }: Props) {
                 {t.hero.ctaPrimary}
               </a>
               <a
-                href={locale === 'en' ? 'https://ai.mamaev.coach/en/' : 'https://ai.mamaev.coach'}
+                href={locale === 'en' ? 'https://ai.synergify.com/en/' : 'https://ai.synergify.com'}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
