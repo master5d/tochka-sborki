@@ -17,7 +17,7 @@ function sample(): AcademyRegistry {
         slug: 'tochka-sborki',
         name: { ru: 'Точка Сборки', en: 'Tochka Sborki' },
         tagline: { ru: 'курс по vibe-кодингу', en: 'a course on vibe coding' },
-        url: 'https://ai.mamaev.coach',
+        url: 'https://ai.synergify.com',
         status: 'live' as const,
         locales: ['ru', 'en'] as const,
       },
@@ -80,7 +80,7 @@ describe('validateRegistry', () => {
 
   it('flags a non-https course url', () => {
     const r = sample()
-    r.courses[0].url = 'http://ai.mamaev.coach'
+    r.courses[0].url = 'http://ai.synergify.com'
     expect(validateRegistry(r)).toContain('courses[tochka-sborki]: url must be https:// without trailing slash')
   })
 
@@ -129,7 +129,7 @@ describe('resolveCourses', () => {
       slug: 'tochka-sborki',
       name: 'Точка Сборки',
       tagline: 'курс по vibe-кодингу',
-      url: 'https://ai.mamaev.coach',
+      url: 'https://ai.synergify.com',
       status: 'live',
     })
   })
@@ -175,7 +175,7 @@ describe('resolveOtherCourses', () => {
       status: 'live',
       locales: ['ru', 'en'],
     })
-    const others = resolveOtherCourses('en', 'https://ai.mamaev.coach', r)
+    const others = resolveOtherCourses('en', 'https://ai.synergify.com', r)
     expect(others.map((c) => c.slug)).toEqual(['second-course'])
     expect(others[0].name).toBe('Second Course')
   })
@@ -190,7 +190,7 @@ describe('resolveOtherCourses', () => {
       status: 'coming-soon',
       locales: ['ru', 'en'],
     })
-    expect(resolveOtherCourses('ru', 'https://ai.mamaev.coach', r)).toEqual([])
+    expect(resolveOtherCourses('ru', 'https://ai.synergify.com', r)).toEqual([])
   })
 })
 

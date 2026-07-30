@@ -6,12 +6,12 @@ export function GET() {
   const posts = manifestPosts('en')
   const body = `# ${SITE.nameEn}
 
-Personal site: AI builder, vibe coder, coach. Landing, blog, and links to the course "Tochka Sborki" (ai.mamaev.coach).
+Personal site: AI builder, vibe coder, coach. Landing, blog, and links to the course "Tochka Sborki" (ai.synergify.com).
 
 ## Sections
 - Home: ${SITE.url}/en/
 - Blog: ${SITE.url}/en/blog/
-- Course "Tochka Sborki" (external): https://ai.mamaev.coach/en/
+- Course "Tochka Sborki" (external): https://ai.synergify.com/en/
 
 ## Posts
 ${posts.map(p => `- [${p.en!.title}](${postUrl(p.slug, 'en')}) — ${p.en!.description}`).join('\n')}

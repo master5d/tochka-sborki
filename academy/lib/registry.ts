@@ -1,8 +1,9 @@
 // Build-time reader for the academy course registry (LMS/registry.json).
-// fs-read, not a source import — mirrors lib/site.ts's blog-manifest bridge.
+// fs-read, not a source import: the academy app is independent from hub.
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import type { Locale } from './dictionaries'
+
+export type Locale = 'ru' | 'en'
 
 interface Bi { ru: string; en: string }
 

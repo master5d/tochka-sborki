@@ -1,5 +1,5 @@
 import { getDictionary, type Locale } from '../lib/dictionaries'
-import { getCourses } from '../lib/academy'
+import { getCourses } from '../lib/registry'
 
 interface Props { locale: Locale }
 
@@ -42,6 +42,12 @@ export function AcademyPage({ locale }: Props) {
           {t.positioning.map((p, i) => (
             <p key={i} style={{ color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, fontSize: '1rem' }}>{p}</p>
           ))}
+          <div style={{ border: `1px solid ${GOLD}`, borderRadius: '10px', marginTop: '1.6rem', padding: '1rem', background: 'rgba(217,169,92,0.08)' }}>
+            <p style={{ color: 'rgba(255,255,255,0.82)', lineHeight: 1.6, margin: '0 0 0.85rem' }}>{t.gate}</p>
+            <a href="https://ai.synergify.com" style={{ color: GOLD, fontFamily: 'var(--font-mono)', fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'lowercase' }}>
+              {t.gateCta}
+            </a>
+          </div>
         </div>
       </section>
 

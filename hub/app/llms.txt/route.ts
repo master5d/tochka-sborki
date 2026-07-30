@@ -6,12 +6,12 @@ export function GET() {
   const posts = manifestPosts('ru')
   const body = `# ${SITE.name}
 
-Личный сайт: AI builder, vibe coder, coach. Лендинг, блог и ссылки на курс «Точка Сборки» (ai.mamaev.coach).
+Личный сайт: AI builder, vibe coder, coach. Лендинг, блог и ссылки на курс «Точка Сборки» (ai.synergify.com).
 
 ## Разделы
 - Главная: ${SITE.url}/
 - Блог: ${SITE.url}/blog/
-- Курс «Точка Сборки» (внешний): https://ai.mamaev.coach/
+- Курс «Точка Сборки» (внешний): https://ai.synergify.com/
 
 ## Посты
 ${posts.map(p => `- [${p.title}](${postUrl(p.slug)}) — ${p.description}`).join('\n')}

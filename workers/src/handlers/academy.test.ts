@@ -47,14 +47,14 @@ const ALL_SLUGS = COURSE_CATALOG.map(m => m.slug)
 
 describe('handleAdmission', () => {
   it('returns 401 without auth', async () => {
-    const req = new Request('https://ai.mamaev.coach/api/academy/admission', { method: 'POST' })
+    const req = new Request('https://ai.synergify.com/api/academy/admission', { method: 'POST' })
     const { env } = makeEnv()
     const res = await handleAdmission(req, env)
     expect(res.status).toBe(401)
   })
 
   it('returns 403 with the missing module list when incomplete', async () => {
-    const req = await makeAuthRequest('https://ai.mamaev.coach/api/academy/admission', 'POST')
+    const req = await makeAuthRequest('https://ai.synergify.com/api/academy/admission', 'POST')
     const { env, run } = makeEnv({ completedSlugs: ['00-kickstart'] })
     const res = await handleAdmission(req, env)
     expect(res.status).toBe(403)
@@ -65,7 +65,7 @@ describe('handleAdmission', () => {
   })
 
   it('grants when completed progress covers every catalog module', async () => {
-    const req = await makeAuthRequest('https://ai.mamaev.coach/api/academy/admission', 'POST')
+    const req = await makeAuthRequest('https://ai.synergify.com/api/academy/admission', 'POST')
     const { env, run } = makeEnv({ completedSlugs: ALL_SLUGS, admissionRow: { granted_at: 12345 } })
     const res = await handleAdmission(req, env)
     expect(res.status).toBe(200)
@@ -79,14 +79,14 @@ describe('handleAdmission', () => {
 
 describe('handleAcademyMe', () => {
   it('returns 401 without auth', async () => {
-    const req = new Request('https://ai.mamaev.coach/api/academy/me')
+    const req = new Request('https://ai.synergify.com/api/academy/me')
     const { env } = makeEnv()
     const res = await handleAcademyMe(req, env)
     expect(res.status).toBe(401)
   })
 
   it('returns the unified profile shape', async () => {
-    const req = await makeAuthRequest('https://ai.mamaev.coach/api/academy/me', 'GET')
+    const req = await makeAuthRequest('https://ai.synergify.com/api/academy/me', 'GET')
     const { env } = makeEnv({
       admissions: [{ course: 'tochka-sborki', granted_at: 111 }],
       courses: [{ course: 'tochka-sborki', viewed: 12, completed: 9 }],

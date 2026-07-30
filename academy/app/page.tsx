@@ -1,5 +1,5 @@
-import { AcademyPage } from '../../components/academy-page'
-import { getDictionary } from '../../lib/dictionaries'
+import { AcademyPage } from '../components/academy-page'
+import { getDictionary } from '../lib/dictionaries'
 
 const t = getDictionary('ru').academy
 
