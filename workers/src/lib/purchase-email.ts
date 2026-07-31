@@ -17,7 +17,7 @@ export async function sendPurchaseEmail(
     ? `Thank you for your purchase — ${name}.\n\nDownload it here:\n${p.assetUrl}\n\nThis is a sale by the creator (a sole proprietor), not a nonprofit donation.`
     : `Спасибо за покупку — ${name}.\n\nСкачать можно здесь:\n${p.assetUrl}\n\nЭто покупка у автора (ИП), а не пожертвование в нонпрофит.`
 
-  const res = await sendEmailSES(env, { from: 'Точка Сборки <noreply@mamaev.coach>', to: p.email, subject, text })
+  const res = await sendEmailSES(env, { from: 'Точка Сборки <noreply@synergify.com>', to: p.email, subject, text })
   if (!res.ok) { console.error('purchase-email non-OK', res.status, res.error); return false }
   return true
 }

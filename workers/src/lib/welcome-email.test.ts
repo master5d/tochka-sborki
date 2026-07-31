@@ -67,7 +67,7 @@ describe('sendWelcomeEmail', () => {
     const ok = await sendWelcomeEmail(env, p)
     expect(ok).toBe(true)
     const [, msg] = sesMock.mock.calls[0]
-    expect(msg.from).toBe('Точка Сборки <noreply@mamaev.coach>')
+    expect(msg.from).toBe('Точка Сборки <noreply@synergify.com>')
     expect(msg.to).toBe('b@e.com')
     expect(msg.subject).toBe('Добро пожаловать в Точку Сборки')
     expect(msg.headers?.['List-Unsubscribe']).toBe('<mailto:owner@example.com?subject=unsubscribe>')

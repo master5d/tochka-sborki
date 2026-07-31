@@ -87,7 +87,7 @@ export async function handleSendLink(request: Request, env: Env, ctx: ExecutionC
   // Транзакционное письмо: plain-text + минимальный HTML, одна ссылка, без маркетинговых стилей —
   // чтобы Gmail клал его в Inbox/Primary, а не в Promotions.
   const sendRes = await sendEmailSES(env, {
-    from: 'Точка Сборки <noreply@mamaev.coach>',
+    from: 'Точка Сборки <noreply@synergify.com>',
     to: email,
     subject: mail.subject,
     text: mail.text,

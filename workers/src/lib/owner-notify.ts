@@ -11,7 +11,7 @@ export async function notifyOwnerQuestion(
   const owner = strip(env.OWNER_EMAIL)
   if (!strip(env.SES_ACCESS_KEY_ID) || !owner) return
   const res = await sendEmailSES(env, {
-    from: 'Точка Сборки <noreply@mamaev.coach>',
+    from: 'Точка Сборки <noreply@synergify.com>',
     to: owner,
     subject: 'Новый вопрос из Telegram-бота',
     text: `Вопрос от Telegram-пользователя ${q.asker ?? 'unknown'} (locale: ${q.locale}):\n\n${q.question}`,

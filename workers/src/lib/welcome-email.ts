@@ -116,7 +116,7 @@ export async function sendWelcomeEmail(
   if (!strip(env.SES_ACCESS_KEY_ID)) return false
   const mail = buildWelcomeEmail(p.lang, { verifyUrl: p.verifyUrl, ownerEmail: strip(env.OWNER_EMAIL) })
   const res = await sendEmailSES(env, {
-    from: 'Точка Сборки <noreply@mamaev.coach>',
+    from: 'Точка Сборки <noreply@synergify.com>',
     to: p.email,
     subject: mail.subject,
     text: mail.text,
