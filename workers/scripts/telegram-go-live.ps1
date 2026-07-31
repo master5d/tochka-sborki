@@ -19,10 +19,10 @@
 [CmdletBinding()]
 param(
   [switch]$RegisterWebhook,
-  [string]$WebhookUrl = 'https://ai.mamaev.coach/api/telegram/webhook',
-  [string]$MiniAppUrl = 'https://ai.mamaev.coach/',
+  [string]$WebhookUrl = 'https://ai.synergify.com/api/telegram/webhook',
+  [string]$MiniAppUrl = 'https://ai.synergify.com/',
   [string]$ButtonText = 'Открыть курс',
-  [string]$ProdRoute  = 'https://ai.mamaev.coach/api/auth/telegram'
+  [string]$ProdRoute  = 'https://ai.synergify.com/api/auth/telegram'
 )
 
 $ErrorActionPreference = 'Stop'
