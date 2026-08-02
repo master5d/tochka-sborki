@@ -21,10 +21,50 @@ const puzzle: BreakActivity = {
 }
 
 describe('resolveBreaks', () => {
-  it('returns [] when BREAKS is empty (dark-ship default)', () => {
-    expect(BREAKS).toEqual([])
-    expect(resolveBreaks('ru')).toEqual([])
-    expect(resolveBreaks('en')).toEqual([])
+  // Модуль зажжён 2026-08-02: BREAKS больше не пуст, поэтому гвард сторожит не
+  // «темноту», а целостность живого содержимого.
+  it('ships a non-empty catalogue resolvable in both locales', () => {
+    expect(BREAKS.length).toBeGreaterThan(0)
+    expect(resolveBreaks('ru')).toHaveLength(BREAKS.length)
+    expect(resolveBreaks('en')).toHaveLength(BREAKS.length)
+  })
+
+  it('keys are unique', () => {
+    const keys = BREAKS.map((b) => b.key)
+    expect(new Set(keys).size).toBe(keys.length)
+  })
+
+  it('every puzzle answer points at a real choice, and both locales are filled', () => {
+    for (const b of BREAKS) {
+      if (b.kind !== 'puzzle') continue
+      expect(b.choices.length).toBeGreaterThanOrEqual(2)
+      expect(b.answer).toBeGreaterThanOrEqual(0)
+      expect(b.answer).toBeLessThan(b.choices.length)
+      for (const c of b.choices) {
+        expect(c.ru.trim().length).toBeGreaterThan(0)
+        expect(c.en.trim().length).toBeGreaterThan(0)
+      }
+      expect(b.reveal.ru.trim().length).toBeGreaterThan(0)
+      expect(b.reveal.en.trim().length).toBeGreaterThan(0)
+    }
+  })
+
+  it('passive cards carry a prompt in both locales', () => {
+    for (const b of BREAKS) {
+      if (b.kind !== 'passive') continue
+      expect(b.prompt.ru.trim().length).toBeGreaterThan(0)
+      expect(b.prompt.en.trim().length).toBeGreaterThan(0)
+    }
+  })
+
+  // Пауза не должна превращаться в экзамен: пассивные карточки разбавляют вопросы.
+  it('mixes passive cards into the run so questions never stack too deep', () => {
+    let streak = 0
+    for (const b of BREAKS) {
+      streak = b.kind === 'puzzle' ? streak + 1 : 0
+      expect(streak).toBeLessThanOrEqual(3)
+    }
+    expect(BREAKS.some((b) => b.kind === 'passive')).toBe(true)
   })
 
   it('maps passive Bi fields to the active locale', () => {
