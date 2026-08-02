@@ -56,7 +56,7 @@ export interface Dictionary {
 
 const SOCIALS_COMMON: Social[] = [
   { label: 'GitHub', href: 'https://github.com/master5d' },
-  { label: 'Email', href: 'mailto:mamaev.sasha@gmail.com' },
+  { label: 'Email', href: 'mailto:sasha@mamaev.coach' },
 ]
 
 export const dictionaries: Record<Locale, Dictionary> = {

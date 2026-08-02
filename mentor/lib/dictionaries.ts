@@ -52,7 +52,7 @@ export interface Dictionary {
   }
 }
 
-export const CONTACT_EMAIL = 'mamaev.sasha@gmail.com'
+export const CONTACT_EMAIL = 'sasha@mamaev.coach'
 
 export const dictionaries: Record<Locale, Dictionary> = {
   ru: {

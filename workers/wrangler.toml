@@ -3,7 +3,7 @@ main = "src/index.ts"
 compatibility_date = "2025-01-01"
 
 [vars]
-OWNER_EMAIL = "mamaev.sasha@gmail.com"
+OWNER_EMAIL = "sasha@mamaev.coach"
 LISTMONK_URL = "https://listmonk.mamaev.coach"
 # listmonk CRM list «Точка Сборки CRM» (private, single opt-in) — создан на infra I4
 LISTMONK_CRM_LIST_ID = "7"
