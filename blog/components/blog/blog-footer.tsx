@@ -28,7 +28,7 @@ export function BlogFooter({ locale }: { locale: Locale }) {
           paddingTop: '1.5rem',
           borderTop: '1px solid var(--border-color)',
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.8rem',
+          fontSize: 'var(--text-xs)',
           lineHeight: 1.7,
           color: 'var(--text-secondary)',
         }}

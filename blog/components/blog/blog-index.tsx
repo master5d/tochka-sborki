@@ -11,7 +11,7 @@ export function BlogIndex({ locale }: { locale: Locale }) {
     <main style={{ maxWidth: 'var(--content-max)', margin: '0 auto', padding: '3rem 1.5rem 4rem' }}>
       <BlogLd posts={posts} locale={locale} />
 
-      <Link href={locale === 'en' ? '/en/' : '/'} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-accent)', textDecoration: 'none', opacity: 0.8 }}>
+      <Link href={locale === 'en' ? '/en/' : '/'} style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-accent)', textDecoration: 'none', opacity: 0.8 }}>
         {d.blog.backToSite}
       </Link>
 
@@ -27,7 +27,7 @@ export function BlogIndex({ locale }: { locale: Locale }) {
         {d.blog.indexHeading}
       </h1>
 
-      <Link href={locale === 'en' ? '/en/blog/graph/' : '/blog/graph/'} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--text-accent)', textDecoration: 'none', display: 'inline-block', marginBottom: '2rem' }}>
+      <Link href={locale === 'en' ? '/en/blog/graph/' : '/blog/graph/'} style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-accent)', textDecoration: 'none', display: 'inline-block', marginBottom: '2rem' }}>
         {locale === 'en' ? '⬡ Knowledge graph →' : '⬡ Граф знаний →'}
       </Link>
 
@@ -43,7 +43,7 @@ export function BlogIndex({ locale }: { locale: Locale }) {
               <Link href={stripOrigin(r.url)} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
                 <div style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.7rem',
+                  fontSize: 'var(--text-xs)',
                   color: 'var(--text-secondary)',
                   letterSpacing: '0.04em',
                   marginBottom: '0.25rem',
@@ -62,11 +62,11 @@ export function BlogIndex({ locale }: { locale: Locale }) {
                 }}>
                   {r.title}
                 </h2>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.5, margin: '0 0 0.75rem', maxWidth: '60ch' }}>
+                <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-base)', lineHeight: 1.5, margin: '0 0 0.75rem', maxWidth: '60ch' }}>
                   {r.description}
                 </p>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--text-accent)', fontWeight: 700 }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-accent)', fontWeight: 700 }}>
                     {d.blog.readCta}
                   </span>
                   <span style={{ color: 'var(--text-accent)', opacity: 0.5 }}>→</span>

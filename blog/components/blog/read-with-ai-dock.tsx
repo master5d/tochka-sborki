@@ -40,7 +40,7 @@ export function ReadWithAIDock({ url, title }: { url: string; title: string }) {
   }
 
   const link: React.CSSProperties = {
-    fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 700,
+    fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', fontWeight: 700,
     padding: '0.4rem 0.7rem', borderRadius: 'var(--radius)', textDecoration: 'none',
     background: 'var(--text-accent)', color: 'var(--text-on-accent)',
   }
@@ -61,12 +61,12 @@ export function ReadWithAIDock({ url, title }: { url: string; title: string }) {
         <button type="button" onClick={() => setOpen(o => !o)} aria-expanded={open}
           style={{ border: 'none', cursor: 'pointer', padding: '0.55rem 0.95rem',
             background: 'var(--bg-surface)', color: 'var(--text-primary)',
-            fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 700 }}>
+            fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', fontWeight: 700 }}>
           ✨ Прочитать с ИИ
         </button>
         <button type="button" onClick={close} aria-label="Скрыть"
           style={{ border: 'none', cursor: 'pointer', padding: '0.55rem 0.7rem',
-            background: 'var(--bg-surface)', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+            background: 'var(--bg-surface)', color: 'var(--text-secondary)', fontSize: 'var(--text-sm)' }}>
           ×
         </button>
       </div>

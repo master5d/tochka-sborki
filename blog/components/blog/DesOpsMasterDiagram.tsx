@@ -8,12 +8,12 @@ import React from 'react'
  * Focus: Systemic connectivity and information flow.
  */
 export function DesOpsEngineDiagram() {
-  const accent = '#00d1ff'
-  const text = '#e8e8f0'
+  const accent = 'var(--text-accent)'
+  const text = 'var(--text-primary)'
   const border = 'rgba(255, 255, 255, 0.1)'
   
   return (
-    <div style={{ margin: '3rem 0', padding: '3rem', background: '#0a0a0f', borderRadius: '4px', border: `1px solid ${border}`, backdropFilter: 'blur(20px)' }}>
+    <div style={{ margin: '3rem 0', padding: '3rem', background: 'var(--bg-primary)', borderRadius: 'var(--radius)', border: `1px solid ${border}`, backdropFilter: 'blur(20px)' }}>
       <svg viewBox="0 0 1000 600" fill="none" xmlns="http://www.w3.org/2000/svg">
         {/* Central Core: THE META-DESIGNER KERNEL */}
         <circle cx="500" cy="300" r="80" stroke={accent} strokeWidth="1" strokeDasharray="8 4" />
@@ -66,7 +66,7 @@ export function DesOpsEngineDiagram() {
         <path d="M200 300 Q500 100 800 300" stroke={accent} opacity="0.05" />
         <path d="M200 300 Q500 500 800 300" stroke={accent} opacity="0.05" />
       </svg>
-      <div style={{ textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: accent, letterSpacing: '0.2em', marginTop: '2rem' }}>
+      <div style={{ textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: accent, letterSpacing: '0.2em', marginTop: '2rem' }}>
         OPTION A // SYSTEMIC INTELLIGENCE ENGINE
       </div>
     </div>
@@ -79,8 +79,8 @@ export function DesOpsEngineDiagram() {
  * Focus: The "Zero-GUI" linear production chain.
  */
 export function DesOpsFactoryDiagram() {
-  const accent = '#00ff88' // Slight shift to emphasize "Action/Production"
-  const text = '#e8e8f0'
+  const accent = 'var(--text-accent)' // Slight shift to emphasize "Action/Production"
+  const text = 'var(--text-primary)'
   const border = 'rgba(255, 255, 255, 0.1)'
 
   const steps = [
@@ -92,16 +92,16 @@ export function DesOpsFactoryDiagram() {
   ]
 
   return (
-    <div style={{ margin: '3rem 0', padding: '3rem', background: '#0a0f0d', borderRadius: '4px', border: `1px solid ${border}`, backdropFilter: 'blur(20px)' }}>
+    <div style={{ margin: '3rem 0', padding: '3rem', background: 'var(--bg-secondary)', borderRadius: 'var(--radius)', border: `1px solid ${border}`, backdropFilter: 'blur(20px)' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {steps.map((step, i) => (
           <div key={step.id} style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
             <div style={{ width: '4rem', height: '4rem', border: `1px solid ${accent}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', color: accent, fontSize: '1.5rem', fontWeight: 900 }}>
               {step.id}
             </div>
-            <div style={{ flex: 1, padding: '1.5rem', border: `1px solid ${border}`, background: 'rgba(255,255,255,0.02)' }}>
-              <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem', fontWeight: 900, textTransform: 'uppercase', color: text, marginBottom: '0.25rem' }}>{step.name}</div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: text, opacity: 0.6 }}>{step.desc}</div>
+            <div style={{ flex: 1, padding: '1.5rem', border: `1px solid ${border}`, background: 'var(--bg-surface)' }}>
+              <div style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-lg)', fontWeight: 900, textTransform: 'uppercase', color: text, marginBottom: '0.25rem' }}>{step.name}</div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: text, opacity: 0.6 }}>{step.desc}</div>
             </div>
             {i < steps.length - 1 && (
               <div style={{ height: '2rem', width: '1px', background: accent, opacity: 0.3, margin: '0.5rem 0' }} />
@@ -109,7 +109,7 @@ export function DesOpsFactoryDiagram() {
           </div>
         ))}
       </div>
-      <div style={{ textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: accent, letterSpacing: '0.2em', marginTop: '3rem' }}>
+      <div style={{ textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: accent, letterSpacing: '0.2em', marginTop: '3rem' }}>
         OPTION B // THE PRODUCTION PIPELINE (ZERO-GUI)
       </div>
     </div>
@@ -122,15 +122,15 @@ export function DesOpsFactoryDiagram() {
  * Focus: High-density ecosystem nodes.
  */
 export function DesOpsConstellation() {
-  const accent = '#00d1ff'
+  const accent = 'var(--text-accent)'
   return (
-    <div style={{ margin: '3rem 0', padding: '3rem', background: '#050508', borderRadius: '4px', border: '1px solid rgba(0, 209, 255, 0.1)', position: 'relative', overflow: 'hidden' }}>
+    <div style={{ margin: '3rem 0', padding: '3rem', background: 'var(--bg-primary)', borderRadius: 'var(--radius)', border: '1px solid var(--border-accent)', position: 'relative', overflow: 'hidden' }}>
       {/* Background Star-field (Data Density) */}
-      <div style={{ position: 'absolute', inset: 0, opacity: 0.1, backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+      <div style={{ position: 'absolute', inset: 0, opacity: 0.1, backgroundImage: 'radial-gradient(circle, var(--text-primary) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
       
       <div style={{ position: 'relative', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ width: '120px', height: '120px', borderRadius: '50%', border: `2px solid ${accent}`, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '1rem', background: '#0a0a0f', zIndex: 10 }}>
-          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '0.8rem', color: '#fff' }}>DESOPS HUB MASTER</div>
+        <div style={{ width: '120px', height: '120px', borderRadius: '50%', border: `2px solid ${accent}`, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '1rem', background: 'var(--bg-primary)', zIndex: 10 }}>
+          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 'var(--text-xs)', color: 'var(--text-primary)' }}>DESOPS HUB MASTER</div>
         </div>
         
         {/* Orbital Nodes */}
@@ -143,10 +143,10 @@ export function DesOpsConstellation() {
               position: 'absolute', 
               transform: `translate(${x}px, ${y}px)`,
               padding: '0.5rem 1rem',
-              border: '1px solid rgba(255,255,255,0.2)',
+              border: '1px solid var(--border-color)',
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.7rem',
-              background: 'rgba(10, 10, 15, 0.9)',
+              fontSize: 'var(--text-xs)',
+              background: 'var(--bg-primary)',
               color: accent,
               letterSpacing: '0.1em'
             }}>
@@ -163,7 +163,7 @@ export function DesOpsConstellation() {
         </svg>
       </div>
 
-      <div style={{ textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: accent, letterSpacing: '0.2em', marginTop: '1rem' }}>
+      <div style={{ textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: accent, letterSpacing: '0.2em', marginTop: '1rem' }}>
         OPTION C // THE ECOSYSTEM CONSTELLATION
       </div>
     </div>

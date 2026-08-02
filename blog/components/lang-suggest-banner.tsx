@@ -72,7 +72,7 @@ export function LangSuggestBanner() {
         gap: '1.25rem',
         flexWrap: 'wrap',
         fontFamily: 'var(--font-mono)',
-        fontSize: '0.85rem',
+        fontSize: 'var(--text-sm)',
       }}
     >
       <style>{`
@@ -91,9 +91,9 @@ export function LangSuggestBanner() {
           background: 'var(--text-accent)',
           color: 'var(--text-on-accent)',
           border: '1px solid var(--text-accent)',
-          borderRadius: '3px',
+          borderRadius: 'var(--radius)',
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.8rem',
+          fontSize: 'var(--text-xs)',
           fontWeight: 700,
           cursor: 'pointer',
           letterSpacing: '0.04em',
@@ -109,9 +109,9 @@ export function LangSuggestBanner() {
           background: 'transparent',
           color: 'var(--text-secondary)',
           border: '1px solid var(--border-color)',
-          borderRadius: '3px',
+          borderRadius: 'var(--radius)',
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.8rem',
+          fontSize: 'var(--text-xs)',
           cursor: 'pointer',
         }}
       >

@@ -25,7 +25,7 @@ export function SiteHeader() {
         href="/"
         style={{
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.8rem',
+          fontSize: 'var(--text-xs)',
           letterSpacing: '0.04em',
           color: 'var(--text-primary)',
           textDecoration: 'none',

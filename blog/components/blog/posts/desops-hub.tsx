@@ -51,7 +51,7 @@ export function DesOpsHub({ locale }: Props) {
         <div className={styles.boundary} style={{ margin: '2rem 0' }}>
           <h3>Layer 1: Skills (Expertise as Code)</h3>
           <p>We "hardwire" the taste of top designers into AI agents. Commands like <code>/polish</code> force the AI to audit layouts for anti-patterns:</p>
-          <ul style={{ fontSize: '0.9rem', opacity: 0.9 }}>
+          <ul style={{ fontSize: 'var(--text-sm)', opacity: 0.9 }}>
             <li>❌ <b>No Pure Blacks:</b> <code>#000000</code> is banned. Use deep system-tinted darks.</li>
             <li>❌ <b>Contrast Check:</b> Automatic linting against WCAG compliance.</li>
             <li>❌ <b>Nested Cards:</b> Fighting excessive nesting that telegraphs "cheap AI design."</li>
@@ -128,8 +128,8 @@ export function DesOpsHub({ locale }: Props) {
         </ul>
 
         <div style={{ margin: '2.5rem 0', padding: '1.5rem', border: '1px solid var(--border-color)', borderRadius: 'var(--radius)', background: 'var(--bg-primary)' }}>
-          <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', textTransform: 'uppercase', marginBottom: '1.25rem', color: 'var(--text-accent)' }}>DesOps Efficiency Metrics</h3>
-          <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.9rem', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)' }}>
+          <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', textTransform: 'uppercase', marginBottom: '1.25rem', color: 'var(--text-accent)' }}>DesOps Efficiency Metrics</h3>
+          <ul style={{ listStyle: 'none', padding: 0, fontSize: 'var(--text-sm)', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)' }}>
             <li style={{ marginBottom: '0.5rem' }}>⚡ <b>Time to Market:</b> -40% (eliminating the design-code gap)</li>
             <li style={{ marginBottom: '0.5rem' }}>🎯 <b>Visual Consistency:</b> 100% (driven by Master Tokens)</li>
             <li style={{ marginBottom: '0.5rem' }}>🦾 <b>Agent Autonomy:</b> High (managed via MCP)</li>
@@ -198,7 +198,7 @@ export function DesOpsHub({ locale }: Props) {
           marginTop: '4rem',
           paddingTop: '1.5rem',
           borderTop: '1px solid var(--border-color)',
-          fontSize: '0.85rem',
+          fontSize: 'var(--text-sm)',
           color: 'var(--text-secondary)',
           fontStyle: 'italic'
         }}>
@@ -254,7 +254,7 @@ export function DesOpsHub({ locale }: Props) {
       <div className={styles.boundary} style={{ margin: '2rem 0' }}>
         <h3>Layer 1: Skills (Экспертиза как код)</h3>
         <p>Мы «прошиваем» вкус топ-дизайнеров в AI-агентов. Команды вроде `/polish` заставляют ИИ проверять вёрстку на анти-паттерны:</p>
-        <ul style={{ fontSize: '0.9rem', opacity: 0.9 }}>
+        <ul style={{ fontSize: 'var(--text-sm)', opacity: 0.9 }}>
           <li>❌ <b>No Pure Blacks:</b> Запрет на `#000000`. Используем глубокие системные оттенки.</li>
           <li>❌ <b>Contrast Check:</b> Автоматический линтинг на соответствие WCAG.</li>
           <li>❌ <b>Nested Cards:</b> Борьба con избыточной вложенностью, которая выдает «дешевый» ИИ-дизайн.</li>
@@ -331,8 +331,8 @@ export function DesOpsHub({ locale }: Props) {
       </ul>
 
       <div style={{ margin: '2.5rem 0', padding: '1.5rem', border: '1px solid var(--border-color)', borderRadius: 'var(--radius)', background: 'var(--bg-primary)' }}>
-        <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', textTransform: 'uppercase', marginBottom: '1.25rem', color: 'var(--text-accent)' }}>DesOps Efficiency Metrics</h3>
-        <ul style={{ listStyle: 'none', padding: 0, fontSize: '0.9rem', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)' }}>
+        <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', textTransform: 'uppercase', marginBottom: '1.25rem', color: 'var(--text-accent)' }}>DesOps Efficiency Metrics</h3>
+        <ul style={{ listStyle: 'none', padding: 0, fontSize: 'var(--text-sm)', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)' }}>
           <li style={{ marginBottom: '0.5rem' }}>⚡ <b>Time to Market:</b> -40% (устранение разрыва дизайн-код)</li>
           <li style={{ marginBottom: '0.5rem' }}>🎯 <b>Visual Consistency:</b> 100% (driven by Master Tokens)</li>
           <li style={{ marginBottom: '0.5rem' }}>🦾 <b>Agent Autonomy:</b> High (управление через MCP)</li>
@@ -401,7 +401,7 @@ export function DesOpsHub({ locale }: Props) {
         marginTop: '4rem', 
         paddingTop: '1.5rem', 
         borderTop: '1px solid var(--border-color)',
-        fontSize: '0.85rem',
+        fontSize: 'var(--text-sm)',
         color: 'var(--text-secondary)',
         fontStyle: 'italic'
       }}>

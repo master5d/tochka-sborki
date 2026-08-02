@@ -19,7 +19,7 @@ const theme: ThemeProps = {
   accent: '#00d1ff',
   text: '#e8e8f0',
   bg: 'rgba(10, 10, 15, 0.85)',
-  border: 'rgba(255, 255, 255, 0.1)'
+  border: 'var(--border-color)'
 }
 
 /** 1. The Mirror Paradox (Opening/Act III) */
@@ -70,7 +70,7 @@ export function MirrorParadox() {
           </marker>
         </defs>
       </svg>
-      <div style={{ marginTop: '1rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+      <div style={{ marginTop: '1rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
         Fig 1.0 // The Reflective Scaling Pattern
       </div>
     </div>
@@ -118,7 +118,7 @@ export function PhaseShiftDiagram() {
           </marker>
         </defs>
       </svg>
-      <div style={{ marginTop: '1rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+      <div style={{ marginTop: '1rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
         Fig 2.0 // Civilizational Phase Shift Axes
       </div>
     </div>
@@ -147,7 +147,7 @@ export function IntelligenceCurves() {
         <circle cx="530" cy="215" r="5" fill={theme.accent} />
         <text x="545" y="220" fill={theme.accent} fontFamily="var(--font-mono)" fontSize="12" fontWeight="700">THE ASSEMBLY POINT</text>
       </svg>
-      <div style={{ marginTop: '1rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+      <div style={{ marginTop: '1rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
         Fig 3.0 // The Intersection of Intelligence Economics
       </div>
     </div>
@@ -160,26 +160,26 @@ export function SovereigntyFormula() {
     <div style={{ margin: '3rem 0', padding: '2rem', background: theme.bg, borderRadius: '4px', border: `1px solid ${theme.border}`, backdropFilter: 'blur(12px)' }}>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '0.7rem', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>EXTERNAL</div>
+          <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>EXTERNAL</div>
           <div style={{ padding: '1rem', border: '1px solid var(--border-color)', borderRadius: '4px' }}>PHASE SHIFT</div>
         </div>
         <div style={{ fontSize: '1.5rem', color: theme.accent }}>+</div>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '0.7rem', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>TECHNOLOGICAL</div>
+          <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>TECHNOLOGICAL</div>
           <div style={{ padding: '1rem', border: '1px solid var(--border-color)', borderRadius: '4px' }}>PERSONAL NODE</div>
         </div>
         <div style={{ fontSize: '1.5rem', color: theme.accent }}>+</div>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '0.7rem', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>INTERNAL</div>
-          <div style={{ padding: '1rem', border: `1px solid ${theme.accent}`, borderRadius: '4px', background: 'rgba(0, 209, 255, 0.1)' }}>INTEGRITY</div>
+          <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>INTERNAL</div>
+          <div style={{ padding: '1rem', border: `1px solid ${theme.accent}`, borderRadius: '4px', background: 'var(--border-accent)' }}>INTEGRITY</div>
         </div>
         <div style={{ fontSize: '1.5rem', color: theme.accent }}>=</div>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '0.7rem', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>RESULT</div>
-          <div style={{ padding: '1rem 2rem', background: theme.accent, color: '#000', fontWeight: 900, borderRadius: '4px' }}>SOVEREIGNTY</div>
+          <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>RESULT</div>
+          <div style={{ padding: '1rem 2rem', background: theme.accent, color: 'var(--text-on-accent)', fontWeight: 900, borderRadius: '4px' }}>SOVEREIGNTY</div>
         </div>
       </div>
-      <div style={{ marginTop: '2rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+      <div style={{ marginTop: '2rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
         Fig 4.0 // The Sovereign Practice Formula
       </div>
     </div>
@@ -237,7 +237,7 @@ export function SystemicIntegrationMindmap() {
         <path d="M400 50 Q600 150 700 250 T400 450" stroke={theme.accent} opacity="0.1" strokeWidth="0.5" />
         <path d="M400 50 Q200 150 100 250 T400 450" stroke={theme.accent} opacity="0.1" strokeWidth="0.5" />
       </svg>
-      <div style={{ marginTop: '2rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>
+      <div style={{ marginTop: '2rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>
         Systemic Architecture 0.1 // Interlocking Nodes of Sovereignty
       </div>
     </div>
@@ -283,7 +283,7 @@ export function ReflectiveLoop() {
           </marker>
         </defs>
       </svg>
-      <div style={{ marginTop: '1rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+      <div style={{ marginTop: '1rem', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
         Fig 5.0 // The Reflective Refinement Cycle
       </div>
     </div>

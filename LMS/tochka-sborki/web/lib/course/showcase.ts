@@ -148,7 +148,7 @@ const DREAM_CASES: ShowcaseCase[] = [
 const REAL_CASES: RealCase[] = [
   { id: 'echo', icon: '🎙️',
     title: { ru: 'Echo — голос вместо клавиатуры', en: 'Echo — voice instead of keyboard' },
-    blurb: { ru: 'Десктоп-приложение локальной диктовки: говоришь — появляется текст, офлайн, RU/EN. Собрано vibe-кодингом на Tauri, Rust и Whisper.', en: 'A desktop dictation app: you speak, text appears — offline, RU/EN. Built by vibe-coding with Tauri, Rust and Whisper.' },
+    blurb: { ru: 'Десктоп-приложение локальной диктовки: говоришь — появляется текст, офлайн, RU/EN. Собрано vibe-кодингом: Tauri и Rust, распознавание локальными моделями.', en: 'A desktop dictation app: you speak, text appears — offline, RU/EN. Built by vibe-coding: Tauri and Rust, recognition by local models.' },
     tag: { ru: 'Диктовка', en: 'Dictation' },
     category: 'dictation',
     result: { ru: 'Письма, заметки и код теперь надиктовываю — печать ушла на второй план.', en: 'I now dictate emails, notes and code — typing took a back seat.' },

@@ -35,7 +35,7 @@ export function ReadWithAI({ url, title }: { url: string; title: string }) {
   }
   const btn: React.CSSProperties = {
     fontFamily: 'var(--font-mono)',
-    fontSize: '0.85rem',
+    fontSize: 'var(--text-sm)',
     padding: '0.6rem 1rem',
     borderRadius: 'var(--radius)',
     cursor: 'pointer',
@@ -62,7 +62,7 @@ export function ReadWithAI({ url, title }: { url: string; title: string }) {
       }}
     >
       <div style={label}>Прочитать с ИИ</div>
-      <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.55, margin: '0 0 1.1rem' }}>
+      <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-base)', lineHeight: 1.55, margin: '0 0 1.1rem' }}>
         Один клик — и агент разбирает статью, вытаскивает принципы и помогает применить их к твоей задаче.
       </p>
       <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>

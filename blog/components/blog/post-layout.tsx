@@ -11,7 +11,7 @@ import { SelectionAsk } from './selection-ask'
 
 const backLinkStyle: React.CSSProperties = {
   fontFamily: 'var(--font-mono)',
-  fontSize: '0.8rem',
+  fontSize: 'var(--text-xs)',
   color: 'var(--text-accent)',
   textDecoration: 'none',
   letterSpacing: '0.04em',
@@ -44,7 +44,7 @@ export function PostLayout({ post, locale, children }: { post: Post; locale: Loc
             </h1>
             <div style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.75rem',
+              fontSize: 'var(--text-xs)',
               color: 'var(--text-secondary)',
               letterSpacing: '0.04em',
               opacity: 0.8,
@@ -59,7 +59,7 @@ export function PostLayout({ post, locale, children }: { post: Post; locale: Loc
               border: '1px solid var(--border-color)',
               color: 'var(--text-secondary)',
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.65rem',
+              fontSize: 'var(--text-xs)',
               padding: '0.4rem 0.6rem',
               borderRadius: 'var(--radius)',
               cursor: 'pointer',
@@ -97,7 +97,7 @@ export function PostLayout({ post, locale, children }: { post: Post; locale: Loc
               const rr = localizedPost(rp, locale)
               return (
                 <li key={rp.slug}>
-                  <Link href={stripOrigin(rr.url)} style={{ color: 'var(--text-accent)', textDecoration: 'none', fontSize: '0.9rem' }}>
+                  <Link href={stripOrigin(rr.url)} style={{ color: 'var(--text-accent)', textDecoration: 'none', fontSize: 'var(--text-sm)' }}>
                     {rr.title}
                   </Link>
                 </li>

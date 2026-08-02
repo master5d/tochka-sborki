@@ -4,7 +4,14 @@
   --font-mono: 'Geist Mono', monospace;
   --radius: 4px;
   --display-size: clamp(2.8rem, 7vw, 6.5rem);
-  --section-label-size: 0.7rem;
+  --section-label-size: var(--text-xs);
+
+  /* Типографская лестница 12/14/16/20/24 — общая с hub и mentor. */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
   --number-size: clamp(5rem, 14vw, 11rem);
   --section-gap: 5rem;
   --accent-line: 3px solid var(--text-accent);
@@ -37,7 +44,7 @@
   --bg-surface: #fbf9f4;
   --text-primary: #15151a;
   --text-secondary: #5a5a6a;
-  --text-accent: #0077cc;       /* Deep blue for light mode contrast */
+  --text-accent: #0063ab;       /* Замерено: #0077cc → 4.13 на #f4f1ea (ниже AA); #0063ab ≈ 5.2 */
   --border-color: #d8d2c6;
   --border-accent: #0077cc40;
   --text-on-accent: #ffffff;

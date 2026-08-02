@@ -74,7 +74,7 @@ export async function submitSubscribe(
 
 const monoLabel: React.CSSProperties = {
   fontFamily: 'var(--font-mono)',
-  fontSize: '0.8rem',
+  fontSize: 'var(--text-xs)',
   color: 'var(--text-secondary)',
 }
 
@@ -134,7 +134,7 @@ export function SubscribeBlock({ locale }: { locale: Locale }) {
             disabled={phase === 'busy'}
             style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.85rem',
+              fontSize: 'var(--text-sm)',
               color: 'var(--text-primary)',
               background: 'transparent',
               border: '1px solid var(--border-color)',
@@ -150,7 +150,7 @@ export function SubscribeBlock({ locale }: { locale: Locale }) {
             disabled={phase === 'busy'}
             style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.85rem',
+              fontSize: 'var(--text-sm)',
               fontWeight: 700,
               color: 'var(--text-accent)',
               background: 'transparent',

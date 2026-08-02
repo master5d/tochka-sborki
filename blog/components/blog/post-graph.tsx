@@ -36,7 +36,7 @@ export function PostGraph({ locale }: { locale: Locale }) {
 
   return (
     <main style={{ maxWidth: 'var(--content-max)', margin: '0 auto', padding: '3rem 1.5rem 4rem' }}>
-      <Link href={locale === 'en' ? '/en/blog/' : '/blog/'} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-accent)', textDecoration: 'none', opacity: 0.8 }}>
+      <Link href={locale === 'en' ? '/en/blog/' : '/blog/'} style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-accent)', textDecoration: 'none', opacity: 0.8 }}>
         {t.back}
       </Link>
       <h1 style={{ fontSize: 'clamp(1.6rem, 4vw, 2.2rem)', fontWeight: 900, color: 'var(--text-primary)', margin: '1rem 0 0.4rem' }}>{t.heading}</h1>
