@@ -1,3 +1,36 @@
+/* Fallback-слой: страница ОБЯЗАНА быть читаемой до того, как ThemeProvider
+   проставит data-theme (статический экспорт отдаёт HTML без атрибута, плюс JS
+   может не выполниться вовсе). Без него --text-primary не определён и текст
+   падает в браузерный чёрный — на тёмном фоне это чёрное по чёрному.
+   Значения продублированы из блоков ниже; contrast.test.ts держит их в синхроне. */
+:root {
+  --bg-primary: #f4f1ea;
+  --bg-primary-rgb: 244, 241, 234;
+  --bg-secondary: #eae6dc;
+  --bg-surface: #fbf9f4;
+  --text-primary: #15151a;
+  --text-secondary: #5a5a6a;
+  --text-accent: #0070c0;
+  --border-color: #d8d2c6;
+  --border-accent: #0077cc40;
+  --text-on-accent: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg-primary: #0a0a0f;
+    --bg-primary-rgb: 10, 10, 15;
+    --bg-secondary: #111118;
+    --bg-surface: #16161f;
+    --text-primary: #f0f0f5;
+    --text-secondary: #8e8ea0;
+    --text-accent: #00d1ff;
+    --border-color: #242433;
+    --border-accent: #00d1ff30;
+    --text-on-accent: #000000;
+  }
+}
+
 :root {
   /* Theme-agnostic: layout, type scale, radius, fonts — identical in both themes */
   --font-mono: 'Geist Mono', monospace;

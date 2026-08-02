@@ -29,7 +29,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${GeistSans.variable} ${GeistMono.variable} ${unbounded.variable}`}
     >
       <body className="bg-background text-on-background min-h-screen">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        {/* attribute ОБЯЗАН быть data-theme: токены в themes/model-kit.css живут в
+            [data-theme="dark"]/[data-theme="light"]. С attribute="class" провайдер
+            ставил class="dark", селекторы не совпадали, переменные не применялись —
+            и лендинг рендерился чёрным по чёрному. */}
+        <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem disableTransitionOnChange>
           <MaterialThemeProvider sourceColor="#00D1FF">
             <LangSuggestBanner />
             <SiteHeader />
