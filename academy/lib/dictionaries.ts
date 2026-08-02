@@ -10,6 +10,7 @@ export interface AcademyDictionary {
     positioning: string[]
     gate: string
     gateCta: string
+    charterLabel: string
     coursesLabel: string
     comingSoon: string
     metaTitle: string
@@ -32,6 +33,7 @@ export const dictionaries: Record<Locale, AcademyDictionary> = {
       ],
       gate: 'Вход в академию открывается после прохождения «Точки Сборки».',
       gateCta: 'Пройти Точку Сборки →',
+      charterLabel: 'Правила дома — чем мы отвечаем →',
       coursesLabel: 'Курсы',
       comingSoon: 'скоро',
       metaTitle: 'S.A.S.H.A — школа синергемы',
@@ -52,6 +54,7 @@ export const dictionaries: Record<Locale, AcademyDictionary> = {
       ],
       gate: 'Admission opens after completing Tochka Sborki.',
       gateCta: 'Take Tochka Sborki →',
+      charterLabel: 'House rules — what we answer for →',
       coursesLabel: 'Courses',
       comingSoon: 'coming soon',
       metaTitle: 'S.A.S.H.A — the synergema school',

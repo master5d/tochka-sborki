@@ -51,6 +51,15 @@ export function AcademyPage({ locale }: Props) {
         </div>
       </section>
 
+      <section style={{ maxWidth: '52rem', margin: '0 auto', padding: '0 2rem 2.5rem', textAlign: 'center' }}>
+        <a
+          href={locale === 'en' ? '/en/pravila/' : '/pravila/'}
+          style={{ color: GOLD, fontFamily: 'var(--font-mono)', fontSize: '0.85rem', letterSpacing: '0.06em', textDecoration: 'none', borderBottom: `1px solid rgba(217,169,92,0.4)`, paddingBottom: '0.2rem' }}
+        >
+          {t.charterLabel}
+        </a>
+      </section>
+
       <section style={{ maxWidth: '52rem', margin: '0 auto', padding: '0 2rem 6rem' }}>
         <h2 style={{ fontFamily: 'var(--font-mono)', color: GOLD, textTransform: 'lowercase', letterSpacing: '0.12em', fontSize: '0.8rem', marginBottom: '1.25rem' }}>
           {t.coursesLabel}
