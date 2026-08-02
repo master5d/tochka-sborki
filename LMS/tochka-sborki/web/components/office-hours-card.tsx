@@ -16,7 +16,9 @@ export function OfficeHoursCard({ locale }: { locale: Locale }) {
         <p style={{ margin: '0 0 1rem', fontSize: '.9rem', lineHeight: 1.55, color: 'var(--text-secondary)' }}>{oh.intro}</p>
         {oh.ama.available && (
           <p style={{ margin: '0 0 1rem' }}>
-            <a href={oh.ama.registerUrl} target="_blank" rel="noopener noreferrer" style={linkBtn}>{oh.ama.ctaLabel} ↗</a>
+            {oh.ama.registerUrl.startsWith('/')
+              ? <a href={oh.ama.registerUrl} style={linkBtn}>{oh.ama.ctaLabel}</a>
+              : <a href={oh.ama.registerUrl} target="_blank" rel="noopener noreferrer" style={linkBtn}>{oh.ama.ctaLabel} ↗</a>}
             <span style={{ display: 'block', marginTop: '.5rem', fontSize: '.8rem', color: 'var(--text-secondary)' }}>{oh.ama.cadenceNote}</span>
           </p>
         )}

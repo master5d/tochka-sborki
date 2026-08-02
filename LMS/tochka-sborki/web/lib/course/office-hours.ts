@@ -6,7 +6,7 @@ import type { Locale } from '@/lib/intake/types'
 interface Bi { ru: string; en: string }
 
 export interface OfficeHoursData {
-  amaRegisterUrl: string            // '' until the owner creates the recurring AMA event
+  amaRegisterUrl: string            // '' скрывает CTA; своя страница записи — /ama/ (см. app/ama)
   mentorUrl: string                 // https://mentor.mamaev.coach
   eyebrow: Bi
   heading: Bi
@@ -28,7 +28,7 @@ export interface OfficeHoursVM {
 }
 
 export const OFFICE_HOURS: OfficeHoursData = {
-  amaRegisterUrl: '',
+  amaRegisterUrl: '/ama/',
   mentorUrl: 'https://mentor.mamaev.coach',
   eyebrow: { ru: 'За пределами курса', en: 'Beyond the course' },
   heading: {
@@ -63,7 +63,11 @@ export function resolveOfficeHours(data: OfficeHoursData, locale: Locale): Offic
     intro: data.intro[k],
     ama: {
       available: data.amaRegisterUrl.trim().length > 0,
-      registerUrl: data.amaRegisterUrl,
+      // Внутренний путь ('/ama/') локализуется; внешний URL остаётся как есть,
+      // чтобы owner мог в любой момент подменить его на сторонний сервис.
+      registerUrl: data.amaRegisterUrl.startsWith('/') && k === 'en'
+        ? `/en${data.amaRegisterUrl}`
+        : data.amaRegisterUrl,
       ctaLabel: data.amaCtaLabel[k],
       cadenceNote: data.cadenceNote[k],
     },

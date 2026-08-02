@@ -20,9 +20,26 @@ describe('office-hours', () => {
     })
   }
 
-  it('AMA is dark by default (no register url shipped)', () => {
-    expect(getOfficeHours('ru').ama.available).toBe(false)
-    expect(OFFICE_HOURS.amaRegisterUrl).toBe('')
+  // Зажжено 2026-08-02: регистрация живёт на своей странице /ama/, а не во внешнем
+  // сервисе. Гвард сторожит не «темноту», а сам факт живой ссылки и её локализацию.
+  it('AMA ships live and points at our own registration page', () => {
+    expect(OFFICE_HOURS.amaRegisterUrl).toBe('/ama/')
+    expect(getOfficeHours('ru').ama.available).toBe(true)
+    expect(getOfficeHours('ru').ama.registerUrl).toBe('/ama/')
+  })
+
+  it('localises the internal path for EN', () => {
+    expect(getOfficeHours('en').ama.registerUrl).toBe('/en/ama/')
+  })
+
+  it('leaves an external register url untouched in both locales', () => {
+    const ext = 'https://luma.example/ama'
+    expect(resolveOfficeHours({ ...OFFICE_HOURS, amaRegisterUrl: ext }, 'ru').ama.registerUrl).toBe(ext)
+    expect(resolveOfficeHours({ ...OFFICE_HOURS, amaRegisterUrl: ext }, 'en').ama.registerUrl).toBe(ext)
+  })
+
+  it('still goes dark if the url is cleared', () => {
+    expect(resolveOfficeHours({ ...OFFICE_HOURS, amaRegisterUrl: '' }, 'ru').ama.available).toBe(false)
   })
 
   it('AMA lights up when a register url is configured', () => {
