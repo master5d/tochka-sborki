@@ -5,7 +5,6 @@ import { SchulteTable } from '@/components/speedreading/schulte-table'
 export const metadata: Metadata = {
   title: 'Таблицы Шульте — Скорочтение',
   description: 'Тренажёр периферийного зрения: находи числа по порядку (готовится).',
-  robots: { index: false, follow: false },
 }
 
 export default function Page() {

@@ -5,7 +5,6 @@ import { WpmTest } from '@/components/speedreading/wpm-test'
 export const metadata: Metadata = {
   title: 'Тест скорости — Скорочтение',
   description: 'Замерь скорость чтения с поправкой на понимание.',
-  robots: { index: false, follow: false },
 }
 
 export default function Page() {

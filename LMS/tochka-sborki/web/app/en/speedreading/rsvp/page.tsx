@@ -5,7 +5,6 @@ import { RsvpReader } from '@/components/speedreading/rsvp-reader'
 export const metadata: Metadata = {
   title: 'RSVP reader — Speed Reading',
   description: 'A speed-reading trainer: words flashed at an adjustable rate (in preparation).',
-  robots: { index: false, follow: false },
 }
 
 export default function Page() {

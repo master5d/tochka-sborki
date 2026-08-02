@@ -5,8 +5,7 @@ import { SpeedreadingHub } from '@/components/speedreading/speedreading-hub'
 
 export const metadata: Metadata = {
   title: 'Speed Reading — Tochka Sborki',
-  description: 'A speed-reading course (in preparation).',
-  robots: { index: false, follow: false },
+  description: 'Speed-reading trainers: RSVP reader, Schulte tables, a speed test with comprehension check. Working now; lessons in progress.',
 }
 
 export default function Page() {

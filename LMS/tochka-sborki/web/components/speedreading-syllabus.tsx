@@ -5,8 +5,8 @@ export function SpeedreadingSyllabus({ locale }: { locale: Locale }) {
   const c = resolveSpeedreadingCourse(locale)
   const badge = locale === 'en' ? 'in preparation' : 'готовится'
   const intro = locale === 'en'
-    ? 'This course is in preparation. Here is the shape it will take.'
-    : 'Курс готовится. Вот структура, которую он примет.'
+    ? 'The trainers below work right now. The lessons are still being written — here is the shape they will take.'
+    : 'Тренажёры ниже уже работают. Уроки ещё пишутся — вот структура, которую они примут.'
   return (
     <section style={{ border: '1px solid var(--border-color)', borderRadius: 10, padding: '1.25rem', background: 'var(--bg-surface)', marginBottom: '2.5rem' }}>
       <h1 style={{ margin: '0 0 .5rem', fontSize: '1.4rem', color: 'var(--text-primary)' }}>{c.title}</h1>

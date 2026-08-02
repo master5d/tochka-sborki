@@ -5,8 +5,7 @@ import { SpeedreadingHub } from '@/components/speedreading/speedreading-hub'
 
 export const metadata: Metadata = {
   title: 'Скорочтение — Точка Сборки',
-  description: 'Курс скорочтения (готовится).',
-  robots: { index: false, follow: false },
+  description: 'Тренажёры скорочтения: RSVP-ридер, таблицы Шульте, замер скорости с проверкой понимания. Работают прямо сейчас, уроки в работе.',
 }
 
 export default function Page() {

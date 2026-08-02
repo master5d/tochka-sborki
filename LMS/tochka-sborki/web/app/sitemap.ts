@@ -9,7 +9,16 @@ const BASE = COURSE.domain
 
 // Public, indexable pages. Auth-gated / noindex routes (dashboard, character, login,
 // quest-intake, admin, dungeon, exercises, offline) are intentionally excluded.
-const STATIC_PATHS = ['/', '/roadmap/', '/cheatsheet/']
+const STATIC_PATHS = [
+  '/',
+  '/roadmap/',
+  '/cheatsheet/',
+  // Тренажёры скорочтения: самодостаточны и работают без уроков — индексируются.
+  '/speedreading/',
+  '/speedreading/rsvp/',
+  '/speedreading/schulte/',
+  '/speedreading/test/',
+]
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [...STATIC_PATHS]

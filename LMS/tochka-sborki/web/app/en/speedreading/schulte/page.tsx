@@ -5,7 +5,6 @@ import { SchulteTable } from '@/components/speedreading/schulte-table'
 export const metadata: Metadata = {
   title: 'Schulte tables — Speed Reading',
   description: 'A peripheral-vision trainer: find the numbers in order (in preparation).',
-  robots: { index: false, follow: false },
 }
 
 export default function Page() {
