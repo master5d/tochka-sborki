@@ -23,11 +23,11 @@ export function HeaderLangSwitch() {
       aria-label={isEn ? 'Switch to Russian' : 'Переключить на английский'}
       style={{
         fontFamily: 'var(--font-mono)',
-        fontSize: '0.72rem',
+        fontSize: 'var(--text-xs)',
         color: 'var(--text-secondary)',
         background: 'var(--bg-secondary)',
         border: '1px solid var(--border-color)',
-        borderRadius: '3px',
+        borderRadius: 'var(--radius)',
         padding: '0.3rem 0.55rem',
         textTransform: 'uppercase',
         letterSpacing: '0.1em',

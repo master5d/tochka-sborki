@@ -47,21 +47,26 @@ export function HomePage({ locale }: Props) {
         }}>
           {t.tagline}
         </div>
+        {/* Кегль берём из токена --display-size, а не из своего clamp: инлайновый
+            clamp(3rem, 11vw, 9rem) давал 144px на 1440px, и «АЛЕКСАНДР» не влезал
+            в --content-max (1141 > 1036 → буква срезалась). Токен рассчитан под
+            эту ширину. Длинные слова в кириллице дополнительно страхуем переносом. */}
         <h1 style={{
           fontFamily: 'var(--font-display), system-ui, sans-serif',
-          fontSize: 'clamp(3rem, 11vw, 9rem)',
+          fontSize: 'var(--display-size)',
           fontWeight: 900,
           lineHeight: 0.85,
           color: 'var(--text-primary)',
           textTransform: 'uppercase',
-          letterSpacing: '-0.06em',
+          letterSpacing: '-0.04em',
           marginBottom: '2rem',
           whiteSpace: 'pre-line',
+          overflowWrap: 'break-word',
         }}>
           {t.name}
         </h1>
         <p style={{
-          fontSize: '1.2rem',
+          fontSize: 'var(--text-lg)',
           color: 'var(--text-secondary)',
           maxWidth: '560px',
           lineHeight: 1.7,
@@ -73,7 +78,7 @@ export function HomePage({ locale }: Props) {
           {t.heroBadges.map(b => (
             <span key={b} style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.75rem',
+              fontSize: 'var(--text-xs)',
               color: 'var(--text-secondary)',
               background: 'var(--bg-secondary)',
               border: '1px solid var(--border-color)',
@@ -86,7 +91,7 @@ export function HomePage({ locale }: Props) {
         <p style={{ marginTop: '2rem', display: 'flex', gap: '1.5rem' }}>
           <a href="/blog/" style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.9rem',
+            fontSize: 'var(--text-sm)',
             color: 'var(--text-accent)',
             textDecoration: 'none',
             letterSpacing: '0.04em',
@@ -95,7 +100,7 @@ export function HomePage({ locale }: Props) {
           </a>
           <a href={locale === 'en' ? '/en/events/' : '/events/'} style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.9rem',
+            fontSize: 'var(--text-sm)',
             color: 'var(--text-accent)',
             textDecoration: 'none',
             letterSpacing: '0.04em',
@@ -135,7 +140,7 @@ export function HomePage({ locale }: Props) {
           </p>
           <a href={t.blog.courseUrl} style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.95rem',
+            fontSize: 'var(--text-base)',
             color: 'var(--text-accent)',
             textDecoration: 'none',
             letterSpacing: '0.04em',
@@ -174,7 +179,7 @@ export function HomePage({ locale }: Props) {
           </h2>
           {t.founder.paragraphs.map((p, i) => (
             <p key={i} style={{
-              fontSize: '1.1rem',
+              fontSize: 'var(--text-base)',
               color: 'var(--text-secondary)',
               maxWidth: '720px',
               lineHeight: 1.7,
@@ -239,7 +244,7 @@ export function HomePage({ locale }: Props) {
 
                 <div style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.7rem',
+                  fontSize: 'var(--text-xs)',
                   color: p.color,
                   letterSpacing: '0.15em',
                   marginBottom: '1.5rem',
@@ -259,7 +264,7 @@ export function HomePage({ locale }: Props) {
                   {p.title}
                 </h2>
                 <p style={{
-                  fontSize: '0.95rem',
+                  fontSize: 'var(--text-base)',
                   color: 'var(--text-secondary)',
                   lineHeight: 1.6,
                   marginBottom: '2rem',
@@ -276,7 +281,7 @@ export function HomePage({ locale }: Props) {
                 }}>
                   <span style={{
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '0.7rem',
+                    fontSize: 'var(--text-xs)',
                     color: 'var(--text-secondary)',
                     letterSpacing: '0.08em',
                   }}>
@@ -284,7 +289,7 @@ export function HomePage({ locale }: Props) {
                   </span>
                   <span style={{
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '0.85rem',
+                    fontSize: 'var(--text-sm)',
                     color: p.color,
                     fontWeight: 700,
                   }}>
@@ -327,7 +332,7 @@ export function HomePage({ locale }: Props) {
                 rel="noopener noreferrer"
                 style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.9rem',
+                  fontSize: 'var(--text-sm)',
                   color: 'var(--text-accent)',
                   padding: '0.75rem 1.25rem',
                   border: '1px solid var(--border-color)',
@@ -347,7 +352,7 @@ export function HomePage({ locale }: Props) {
         borderTop: '1px solid var(--border-color)',
         textAlign: 'center',
         fontFamily: 'var(--font-mono)',
-        fontSize: '0.7rem',
+        fontSize: 'var(--text-xs)',
         color: 'var(--text-secondary)',
         letterSpacing: '0.05em',
       }}>

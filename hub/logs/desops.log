@@ -1,2 +1,4 @@
 # desops audit log
 2026-07-07 design-new: onboarded; baseline lint = 7 violations, gate=staged-only
+2026-08-02 design-audit: FAIL (5 findings)
+2026-08-02 design-polish: PASS (6/6 findings fixed, lint 0, tests 24)

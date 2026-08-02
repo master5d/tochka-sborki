@@ -33,7 +33,7 @@ export function LangSwitcher({ locale }: Props) {
         color: 'var(--text-secondary)',
         background: 'var(--bg-secondary)',
         border: '1px solid var(--border-color)',
-        borderRadius: '3px',
+        borderRadius: 'var(--radius)',
         padding: '0.35rem 0.65rem',
         textTransform: 'uppercase',
         letterSpacing: '0.1em',

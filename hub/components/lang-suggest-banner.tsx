@@ -64,19 +64,19 @@ export function LangSuggestBanner() {
       style={{
         background: 'var(--bg-surface, var(--bg-secondary))',
         borderBottom: '1px solid var(--border-color)',
-        padding: '0.75rem 1.5rem',
+        padding: '0.5rem 1.5rem',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: '1.25rem',
+        gap: '0.75rem',
         flexWrap: 'wrap',
         fontFamily: 'var(--font-mono)',
-        fontSize: '0.85rem',
+        fontSize: 'var(--text-xs)',
       }}
     >
       <style>{`
         @media (max-width: 720px) {
-          .lang-suggest-message { font-size: 0.8rem !important; text-align: center; flex-basis: 100%; }
+          .lang-suggest-message { font-size: var(--text-xs) !important; text-align: center; flex-basis: 100%; }
         }
       `}</style>
       <span className="lang-suggest-message" style={{ color: 'var(--text-primary)' }}>
@@ -86,13 +86,13 @@ export function LangSuggestBanner() {
         type="button"
         onClick={handleSwitch}
         style={{
-          padding: '0.4rem 0.85rem',
+          padding: '0.3rem 0.7rem',
           background: 'var(--text-accent)',
           color: 'var(--text-on-accent)',
           border: '1px solid var(--text-accent)',
-          borderRadius: '3px',
+          borderRadius: 'var(--radius)',
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.8rem',
+          fontSize: 'var(--text-xs)',
           fontWeight: 700,
           cursor: 'pointer',
           letterSpacing: '0.04em',
@@ -108,9 +108,9 @@ export function LangSuggestBanner() {
           background: 'transparent',
           color: 'var(--text-secondary)',
           border: '1px solid var(--border-color)',
-          borderRadius: '3px',
+          borderRadius: 'var(--radius)',
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.8rem',
+          fontSize: 'var(--text-xs)',
           cursor: 'pointer',
         }}
       >
