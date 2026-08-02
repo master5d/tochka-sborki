@@ -5,7 +5,6 @@ import { SpeechSyllabus } from '@/components/speech-syllabus'
 export const metadata: Metadata = {
   title: 'The Art of Speaking — Tochka Sborki',
   description: 'A course on the art of speaking (in preparation).',
-  robots: { index: false, follow: false },
 }
 
 export default function Page() {

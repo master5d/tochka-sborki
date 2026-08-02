@@ -4,8 +4,7 @@ import { SpeechSyllabus } from '@/components/speech-syllabus'
 
 export const metadata: Metadata = {
   title: 'Ораторское мастерство — Точка Сборки',
-  description: 'Курс ораторского мастерства (готовится).',
-  robots: { index: false, follow: false },
+  description: 'Шесть уроков ораторского мастерства: подготовка, структура, приёмы, голос, запоминание, работа с залом. Служа, а не манипулируя.',
 }
 
 export default function Page() {
