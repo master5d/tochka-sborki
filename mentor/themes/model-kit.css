@@ -4,7 +4,15 @@
   --font-display: 'Unbounded', system-ui, sans-serif;
   --radius: 4px;
   --display-size: clamp(2.8rem, 7vw, 6.5rem);
-  --section-label-size: 0.7rem;
+  --section-label-size: var(--text-xs);
+
+  /* Типографская лестница 12/14/16/20/24 (DesOps-стандарт). До этого в разметке
+     жили 22 разных кегля, включая 8px и 8.8px — ниже читаемого минимума. */
+  --text-xs: 0.75rem;    /* 12px — микро-лейблы, mono-подписи */
+  --text-sm: 0.875rem;   /* 14px — вторичный текст */
+  --text-base: 1rem;     /* 16px — основной текст */
+  --text-lg: 1.25rem;    /* 20px — лид */
+  --text-xl: 1.5rem;     /* 24px — подзаголовок */
   --section-gap: 6rem;
   --content-max: 1100px;
   
@@ -40,8 +48,8 @@
   --bg-surface: #fbf9f4;
   --text-primary: #15151a;
   --text-secondary: #5a5a6a;
-  --text-accent: #0098bc;          /* Darker Cyber Blue for WCAG AA on paper */
-  --text-accent-rgb: 0, 152, 188;
+  --text-accent: #0063ab;          /* Замерено: #0098bc → 2.84, #0070c0 → 4.33 на плашке; #0063ab ≈ 5.2 */
+  --text-accent-rgb: 0, 99, 171;
   --text-accent-warm: #0b7a3a;
   --border-color: #d8d2c6;
   --border-accent: rgba(0, 152, 188, 0.25);

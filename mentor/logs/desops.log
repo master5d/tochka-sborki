@@ -1,2 +1,4 @@
 # desops audit log
 2026-07-07 reconcile: baseline lint = clean, gate=staged-only
+2026-08-02 design-audit: FAIL (6 findings)
+2026-08-02 design-polish: PASS (6/6 findings fixed; contrast 0/0, no overflow)

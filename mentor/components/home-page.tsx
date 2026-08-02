@@ -41,7 +41,7 @@ export function HomePage({ locale }: Props) {
           <div>
             <div style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.65rem',
+              fontSize: 'var(--text-xs)',
               color: 'var(--text-accent)',
               textTransform: 'uppercase',
               letterSpacing: '0.3em',
@@ -70,7 +70,7 @@ export function HomePage({ locale }: Props) {
               ))}
             </h1>
             <p style={{
-              fontSize: '1.25rem',
+              fontSize: 'var(--text-lg)',
               color: 'var(--text-secondary)',
               maxWidth: '540px',
               lineHeight: 'var(--line-height-prose)',
@@ -91,10 +91,10 @@ export function HomePage({ locale }: Props) {
                   color: 'var(--text-on-accent)',
                   fontWeight: 950,
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.9rem',
+                  fontSize: 'var(--text-sm)',
                   textTransform: 'uppercase',
                   letterSpacing: '0.15em',
-                  borderRadius: '2px',
+                  borderRadius: 'var(--radius)',
                   boxShadow: '0 0 40px rgba(var(--text-accent-rgb), 0.2)',
                   textDecoration: 'none'
                 }}
@@ -112,10 +112,10 @@ export function HomePage({ locale }: Props) {
                   color: 'var(--text-primary)',
                   border: '1px solid var(--border-color)',
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.9rem',
+                  fontSize: 'var(--text-sm)',
                   textTransform: 'uppercase',
                   letterSpacing: '0.15em',
-                  borderRadius: '2px',
+                  borderRadius: 'var(--radius)',
                   textDecoration: 'none',
                   backdropFilter: 'blur(10px)'
                 }}
@@ -141,7 +141,7 @@ export function HomePage({ locale }: Props) {
             <div style={{ maxWidth: '680px' }}>
               <div style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.65rem',
+                fontSize: 'var(--text-xs)',
                 color: 'var(--text-secondary)',
                 textTransform: 'uppercase',
                 letterSpacing: '0.3em',
@@ -165,7 +165,7 @@ export function HomePage({ locale }: Props) {
               padding: '1.5rem', 
               borderLeft: '1px solid var(--text-accent)', 
               fontFamily: 'var(--font-mono)', 
-              fontSize: '0.75rem', 
+              fontSize: 'var(--text-xs)', 
               color: 'var(--text-secondary)',
               lineHeight: 1.5,
               maxWidth: '320px',
@@ -185,7 +185,7 @@ export function HomePage({ locale }: Props) {
                 padding: '3rem',
                 background: 'var(--bg-primary)',
                 border: '1px solid var(--border-color)',
-                borderRadius: '2px',
+                borderRadius: 'var(--radius)',
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'relative',
@@ -193,7 +193,7 @@ export function HomePage({ locale }: Props) {
               }}>
                 <div style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.6rem',
+                  fontSize: 'var(--text-xs)',
                   fontWeight: 900,
                   color: 'var(--text-accent)',
                   marginBottom: '3rem',
@@ -233,7 +233,7 @@ export function HomePage({ locale }: Props) {
                   gridTemplateColumns: '1fr 1fr',
                   gap: '1rem',
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.6rem',
+                  fontSize: 'var(--text-xs)',
                   color: 'var(--text-secondary)',
                   textTransform: 'uppercase',
                   letterSpacing: '0.1em',
@@ -261,7 +261,7 @@ export function HomePage({ locale }: Props) {
         <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
           <div style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.65rem',
+            fontSize: 'var(--text-xs)',
             color: 'var(--text-secondary)',
             textTransform: 'uppercase',
             letterSpacing: '0.3em',
@@ -314,7 +314,7 @@ export function HomePage({ locale }: Props) {
                     </h3>
                     <div style={{
                       fontFamily: 'var(--font-mono)',
-                      fontSize: '0.65rem',
+                      fontSize: 'var(--text-xs)',
                       color: 'var(--text-accent)',
                       letterSpacing: '0.2em',
                       marginTop: '0.75rem',
@@ -325,7 +325,7 @@ export function HomePage({ locale }: Props) {
                   </div>
                 </div>
                 <p style={{
-                  fontSize: '1.05rem',
+                  fontSize: 'var(--text-base)',
                   color: 'var(--text-secondary)',
                   lineHeight: 'var(--line-height-prose)',
                   marginBottom: '2.5rem',
@@ -335,7 +335,7 @@ export function HomePage({ locale }: Props) {
                 </p>
                 <div style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.7rem',
+                  fontSize: 'var(--text-xs)',
                   color: 'var(--text-secondary)',
                   paddingTop: '1.5rem',
                   borderTop: '1px solid var(--border-color)',
@@ -360,7 +360,7 @@ export function HomePage({ locale }: Props) {
         <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
           <div style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.65rem',
+            fontSize: 'var(--text-xs)',
             color: 'var(--text-secondary)',
             textTransform: 'uppercase',
             letterSpacing: '0.3em',
@@ -387,7 +387,7 @@ export function HomePage({ locale }: Props) {
             gap: '1px',
             background: 'var(--border-color)',
             border: '1px solid var(--border-color)',
-            borderRadius: '2px',
+            borderRadius: 'var(--radius)',
             overflow: 'hidden'
           }}>
             {t.process.map(([num, text]) => (
@@ -401,7 +401,7 @@ export function HomePage({ locale }: Props) {
               }}>
                 <div style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.8rem',
+                  fontSize: 'var(--text-xs)',
                   fontWeight: 900,
                   color: 'var(--text-accent)',
                   opacity: 0.4
@@ -409,7 +409,7 @@ export function HomePage({ locale }: Props) {
                   STEP_{num}
                 </div>
                 <span style={{
-                  fontSize: '0.95rem',
+                  fontSize: 'var(--text-base)',
                   color: 'var(--text-primary)',
                   lineHeight: 1.4,
                   fontWeight: 600,
@@ -443,7 +443,7 @@ export function HomePage({ locale }: Props) {
             {t.contactHeading}
           </h2>
           <p style={{
-            fontSize: '1.4rem',
+            fontSize: 'var(--text-xl)',
             color: 'var(--text-secondary)',
             maxWidth: '580px',
             margin: '0 auto 4rem',
@@ -461,10 +461,10 @@ export function HomePage({ locale }: Props) {
               color: 'var(--text-on-accent)',
               fontWeight: 950,
               fontFamily: 'var(--font-mono)',
-              fontSize: '1.1rem',
+              fontSize: 'var(--text-base)',
               textTransform: 'uppercase',
               letterSpacing: '0.2em',
-              borderRadius: '2px',
+              borderRadius: 'var(--radius)',
               textDecoration: 'none',
               boxShadow: '0 0 50px rgba(var(--text-accent-rgb), 0.4)',
             }}
@@ -484,7 +484,7 @@ export function HomePage({ locale }: Props) {
         flexWrap: 'wrap',
         gap: '3rem',
         fontFamily: 'var(--font-mono)',
-        fontSize: '0.7rem',
+        fontSize: 'var(--text-xs)',
         color: 'var(--text-secondary)',
         letterSpacing: '0.1em',
         textTransform: 'uppercase'
