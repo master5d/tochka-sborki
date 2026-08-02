@@ -15,6 +15,9 @@ export function validateSupportAmount(raw: unknown): AmountResult {
 }
 
 const BASE = 'https://ai.synergify.com'
+// Магазин переехал на личный сайт владельца (mamaev.coach), поддержка осталась
+// на курсе — поэтому у product-чекаута своя база возврата.
+const STORE_BASE = 'https://mamaev.coach'
 
 export function buildSupportSessionForm(opts: { cents: number; locale: 'ru' | 'en' }): URLSearchParams {
   const prefix = opts.locale === 'en' ? '/en' : ''
@@ -43,7 +46,7 @@ export function buildProductSessionForm(opts: { product: Product; locale: 'ru' |
   f.set('line_items[0][price_data][unit_amount]', String(opts.product.priceCents))
   f.set('metadata[product_id]', opts.product.id)
   f.set('metadata[locale]', opts.locale)
-  f.set('success_url', `${BASE}${prefix}/store/thanks/`)
-  f.set('cancel_url', `${BASE}${prefix}/store/`)
+  f.set('success_url', `${STORE_BASE}${prefix}/store/thanks/`)
+  f.set('cancel_url', `${STORE_BASE}${prefix}/store/`)
   return f
 }

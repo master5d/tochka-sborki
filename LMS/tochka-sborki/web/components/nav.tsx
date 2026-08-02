@@ -106,7 +106,6 @@ export function Nav({ locale: localeProp }: Props = {}) {
         {(() => { const h = `${locale === 'en' ? '/en' : ''}/speedreading/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.speedreading}</Link> })()}
         {(() => { const h = `${locale === 'en' ? '/en' : ''}/feedback/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.feedback}</Link> })()}
         {(() => { const h = `${locale === 'en' ? '/en' : ''}/support/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.support}</Link> })()}
-        {(() => { const h = `${locale === 'en' ? '/en' : ''}/store/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.store}</Link> })()}
         {(() => { const h = `${locale === 'en' ? '/en' : ''}/certificate/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.certificate} <span aria-hidden="true">◆</span></Link> })()}
         </div>
 

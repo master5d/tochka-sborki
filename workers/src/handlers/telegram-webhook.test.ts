@@ -153,6 +153,6 @@ describe('handleTelegramWebhook', () => {
       makeEnv({ user: { id: 'u-701', language: 'ru', nudge_optout: 0 } })
     )
     const body = JSON.parse((spy.mock.calls[0][1] as RequestInit).body as string)
-    expect(body.reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://ai.synergify.com/store/')
+    expect(body.reply_markup.inline_keyboard[0][0].web_app.url).toBe('https://mamaev.coach/store/')
   })
 })

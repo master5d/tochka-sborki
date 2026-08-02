@@ -31,5 +31,6 @@ export function supportUrl(locale: 'ru' | 'en'): string {
 }
 
 export function storeUrl(locale: 'ru' | 'en'): string {
-  return locale === 'en' ? 'https://ai.synergify.com/en/store/' : 'https://ai.synergify.com/store/'
+  // Магазин живёт на личном сайте владельца, не на домене курса.
+  return locale === 'en' ? 'https://mamaev.coach/en/store/' : 'https://mamaev.coach/store/'
 }
