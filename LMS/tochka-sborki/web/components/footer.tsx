@@ -15,7 +15,7 @@ const REPO_URL = 'https://github.com/master5d/tochka-sborki'
 
 const labelStyle: React.CSSProperties = {
   fontFamily: 'var(--font-mono)',
-  fontSize: '0.7rem',
+  fontSize: 'var(--text-xs)',
   color: 'var(--text-accent)',
   textTransform: 'lowercase',
   letterSpacing: '0.12em',
@@ -82,7 +82,7 @@ export function Footer({ locale = 'ru', topics = [], showCertificateCta = true }
             </p>
             <p style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.75rem',
+              fontSize: 'var(--text-xs)',
               color: 'var(--text-secondary)',
               letterSpacing: '0.04em',
               margin: '1rem 0 0',
@@ -212,7 +212,7 @@ export function Footer({ locale = 'ru', topics = [], showCertificateCta = true }
         }}>
           <div style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.7rem',
+            fontSize: 'var(--text-xs)',
             color: 'var(--text-secondary)',
             letterSpacing: '0.05em',
           }}>

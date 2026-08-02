@@ -9,7 +9,7 @@ export default function VerifyPage() {
       <main style={{ maxWidth: '480px', margin: '0 auto', padding: '6rem 2rem' }}>
         <div style={{
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.7rem',
+          fontSize: 'var(--text-xs)',
           color: 'var(--text-accent)',
           textTransform: 'uppercase',
           letterSpacing: '0.12em',

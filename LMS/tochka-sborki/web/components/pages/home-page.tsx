@@ -116,7 +116,7 @@ export function HomePage({ locale }: Props) {
           {t.hero.stats.map(([val, label]) => (
             <div key={label}>
               <div style={{ fontSize: '1.75rem', fontWeight: 900, color: 'var(--text-accent)', lineHeight: 1 }}>{val}</div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{label}</div>
+              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{label}</div>
             </div>
           ))}
         </div>
@@ -263,7 +263,7 @@ export function HomePage({ locale }: Props) {
               }}>
                 <span style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.7rem',
+                  fontSize: 'var(--text-xs)',
                   color: 'var(--text-secondary)',
                   textTransform: 'uppercase',
                   letterSpacing: '0.1em',

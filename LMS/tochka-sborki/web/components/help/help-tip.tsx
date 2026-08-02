@@ -31,7 +31,7 @@ export function HelpTip({ id, locale, align = 'left' }: { id: string; locale: Lo
         style={{
           width: '1.1rem', height: '1.1rem', lineHeight: '1.1rem', padding: 0,
           borderRadius: '50%', border: '1px solid var(--border-color)', background: 'transparent',
-          color: 'var(--text-secondary)', fontSize: '0.7rem', cursor: 'pointer', fontFamily: 'var(--font-mono)',
+          color: 'var(--text-secondary)', fontSize: 'var(--text-xs)', cursor: 'pointer', fontFamily: 'var(--font-mono)',
         }}
       >
         <span aria-hidden="true">ⓘ</span>
@@ -46,7 +46,7 @@ export function HelpTip({ id, locale, align = 'left' }: { id: string; locale: Lo
             borderRadius: 8, padding: '0.7rem 0.85rem', boxShadow: '0 6px 24px rgba(0,0,0,0.35)', textAlign: 'left',
           }}
         >
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-accent)', marginBottom: '0.3rem' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--text-accent)', marginBottom: '0.3rem' }}>
             {entry.title[locale]}
           </div>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-primary)', lineHeight: 1.4 }}>

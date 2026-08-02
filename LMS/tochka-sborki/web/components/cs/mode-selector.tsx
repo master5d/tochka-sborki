@@ -35,7 +35,7 @@ export function ModeSelector({
     <div style={{ margin: '0 0 2rem' }}>
       <div style={{
         fontFamily: 'var(--font-mono)',
-        fontSize: '0.7rem',
+        fontSize: 'var(--text-xs)',
         color: 'var(--text-secondary)',
         marginBottom: '0.75rem',
         textTransform: 'uppercase',
@@ -67,12 +67,12 @@ export function ModeSelector({
                 <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: active ? accent : 'var(--text-primary)' }}>
                   {cfg.label[locale]}
                   {suggested === m && !active && (
-                    <span style={{ marginLeft: '0.5rem', fontSize: '0.6rem', fontWeight: 400, color: accent, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                    <span style={{ marginLeft: '0.5rem', fontSize: 'var(--text-xs)', fontWeight: 400, color: accent, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                       ◆ {REC[locale]}
                     </span>
                   )}
                 </span>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-secondary)' }}>
                   +{computeUnitCS(m)} <span aria-hidden="true">💎</span>
                 </span>
               </div>

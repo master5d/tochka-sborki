@@ -44,7 +44,7 @@ export function OsToggle({ label = 'Команды для:' }: { label?: string 
     >
       <span style={{
         fontFamily: 'var(--font-mono)',
-        fontSize: '0.75rem',
+        fontSize: 'var(--text-xs)',
         color: 'var(--text-secondary)',
         textTransform: 'uppercase',
         letterSpacing: '0.1em',

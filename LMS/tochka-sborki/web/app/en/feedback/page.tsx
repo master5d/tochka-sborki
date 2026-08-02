@@ -19,7 +19,7 @@ export default function FeedbackPage() {
       <main style={{ maxWidth: '640px', margin: '0 auto', padding: '4rem 2rem' }}>
         <div style={{
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.7rem',
+          fontSize: 'var(--text-xs)',
           color: 'var(--text-accent)',
           textTransform: 'uppercase',
           letterSpacing: '0.12em',

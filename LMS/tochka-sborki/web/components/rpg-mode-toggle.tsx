@@ -31,7 +31,7 @@ export function RpgModeToggle({ locale }: { locale: Locale }) {
       style={{
         display: 'flex', background: 'var(--bg-surface)', border: '1px solid var(--border-color)',
         borderRadius: '20px', overflow: 'hidden', cursor: 'pointer',
-        fontFamily: 'var(--font-mono)', fontSize: '0.7rem',
+        fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)',
       }}
     >
       {SEGMENTS.map(seg => {

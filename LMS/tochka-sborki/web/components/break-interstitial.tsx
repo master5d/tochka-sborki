@@ -40,7 +40,7 @@ export function BreakInterstitial({ activity, onContinue }: Props) {
         }}
       >
         <div style={{
-          fontFamily: 'var(--font-mono)', fontSize: '0.7rem', letterSpacing: '0.08em',
+          fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', letterSpacing: '0.08em',
           textTransform: 'uppercase', color: 'var(--text-accent)', marginBottom: '0.6rem',
         }}>
           ⏸

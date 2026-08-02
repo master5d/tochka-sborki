@@ -54,19 +54,19 @@ export function DungeonView({ view, locale, accent, moduleTitle, isCleared, onCl
           const done = isCleared(s.id)
           return (
             <div key={s.id} style={{ border: `1px solid ${done ? accent : 'var(--border-color)'}`, borderRadius: 10, padding: '0.9rem 1.1rem', opacity: done ? 0.7 : 1, background: 'var(--bg-surface)' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
                 {locale === 'en' ? `Stage ${i + 1}` : `Этап ${i + 1}`} · {TIER_LABEL[s.tier][locale]} · +{s.cs} <span aria-hidden="true">💎</span>
               </div>
               <div style={{ fontSize: '0.95rem', margin: '0.35rem 0 0.6rem' }}>{s.body}</div>
               {done
-                ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: accent }}>✓ {DONE[locale]}</span>
-                : <button type="button" onClick={() => onClear(s.id, s.cs)} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', padding: '0.4rem 0.8rem', borderRadius: 6, border: `1px solid ${accent}`, background: 'transparent', color: accent, cursor: 'pointer' }}>{MARK_DONE[locale]}</button>}
+                ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: accent }}>✓ {DONE[locale]}</span>
+                : <button type="button" onClick={() => onClear(s.id, s.cs)} style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', padding: '0.4rem 0.8rem', borderRadius: 6, border: `1px solid ${accent}`, background: 'transparent', color: accent, cursor: 'pointer' }}>{MARK_DONE[locale]}</button>}
             </div>
           )
         })}
 
         <div style={{ border: `2px solid ${bossDone ? accent : 'var(--text-accent)'}`, borderRadius: 10, padding: '1rem 1.1rem', background: 'var(--bg-surface)', opacity: bossDone ? 0.75 : 1 }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.06em', color: accent }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', letterSpacing: '0.06em', color: accent }}>
             <span aria-hidden="true">☠</span> {BOSS[locale]}: {view.boss.name} · +{view.boss.cs} <span aria-hidden="true">💎</span>
           </div>
           <div style={{ fontSize: '0.98rem', margin: '0.4rem 0 0.7rem' }}>{view.boss.body}</div>

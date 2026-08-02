@@ -56,7 +56,7 @@ export function ChatBubble({ text, side, maxWidth = 480 }: Props) {
             background: 'var(--bg-secondary)',
             padding: '0 6px',
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.6rem',
+            fontSize: 'var(--text-xs)',
             color: 'var(--text-accent)',
             letterSpacing: '0.1em',
           }}>

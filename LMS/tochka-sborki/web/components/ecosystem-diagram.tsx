@@ -83,7 +83,7 @@ export function EcosystemDiagram({ data, locale = 'ru' }: { data: EcosystemData;
                       {planned && (
                         <span style={{
                           fontFamily: 'var(--font-mono)',
-                          fontSize: '0.68rem',
+                          fontSize: 'var(--text-xs)',
                           textTransform: 'uppercase',
                           letterSpacing: '0.08em',
                           color: 'var(--text-secondary)',

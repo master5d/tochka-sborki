@@ -90,13 +90,38 @@ export function Nav({ locale: localeProp }: Props = {}) {
         @media (max-width: 720px) {
           .nav-secondary-links { display: none !important; }
           .nav-brand-glyph { display: none !important; }
+          /* Правая группа (язык + 4 переключателя + вход) занимала 522px при
+             экране 390 и распирала страницу горизонтальным скроллом. Даём ей
+             переноситься и снимаем фиксированную высоту шапки. */
+          nav { height: auto !important; flex-wrap: wrap; padding: 0.5rem 1rem !important; row-gap: 0.5rem; }
+          nav > div:last-of-type { flex-wrap: wrap; gap: 0.6rem !important; justify-content: flex-end; }
+          nav > div:last-of-type > span { max-width: 46vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        }
+        /* Средние экраны: пунктов стало больше, чем влезает (на 1200px шапка
+           переполнялась на 140px и добавляла странице горизонтальный скролл).
+           Ужимаем зазоры и кегль, а остаток отдаём в горизонтальную прокрутку
+           самой полосы ссылок — страница при этом не едет. */
+        @media (min-width: 721px) and (max-width: 1280px) {
+          .nav-secondary-links {
+            gap: 0.9rem !important;
+            font-size: var(--text-xs);
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+          }
+          .nav-secondary-links::-webkit-scrollbar { display: none; }
+          .nav-secondary-links a { white-space: nowrap; }
+          /* правая группа (язык + переключатели) тоже ужимается, иначе шапка
+             остаётся на ~27px шире вьюпорта */
+          nav { padding: 0 1rem !important; }
+          nav > div:last-of-type { gap: 0.6rem !important; }
         }
       `}</style>
       <Link href={homeHref} style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-accent)', fontWeight: 700, whiteSpace: 'nowrap' }}>
         <span className="nav-brand-glyph" aria-hidden="true" title={egg?.label[locale] ?? undefined}>{egg ? egg.glyph : '⬡'} </span>{t.nav.brand}
       </Link>
       <div style={{ display: 'flex', gap: '1rem', fontSize: '0.875rem', alignItems: 'center' }}>
-        <div className="nav-secondary-links" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+        <div className="nav-secondary-links" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', minWidth: 0 }}>
         {email && (() => { const h = `${locale === 'en' ? '/en' : ''}/dashboard/`; return <Link href={h} style={navLinkStyle(h)}>{plain('navQuestLog', t.nav.questLog)}</Link> })()}
         {email && (() => { const h = `${locale === 'en' ? '/en' : ''}/character/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.profile}</Link> })()}
         {email && (() => { const h = `${locale === 'en' ? '/en' : ''}/alumni/`; return <Link href={h} style={navLinkStyle(h)}>{t.nav.synergems}</Link> })()}
@@ -114,7 +139,7 @@ export function Nav({ locale: localeProp }: Props = {}) {
           href={otherHref}
           style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.7rem',
+            fontSize: 'var(--text-xs)',
             color: 'var(--text-secondary)',
             border: '1px solid var(--border-color)',
             borderRadius: '3px',
@@ -146,7 +171,7 @@ export function Nav({ locale: localeProp }: Props = {}) {
               cursor: 'pointer',
               padding: 0,
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.7rem',
+              fontSize: 'var(--text-xs)',
             }}
           >
             <span style={{
@@ -165,7 +190,7 @@ export function Nav({ locale: localeProp }: Props = {}) {
         )}
         {email ? (
           <>
-            <span style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', fontSize: '0.75rem' }}>
+            <span style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)' }}>
               {email}
             </span>
             <button

@@ -21,9 +21,9 @@ function LessonIcon({ state }: { state: 'completed' | 'viewed' | 'none' }) {
 }
 
 function UnitIcon({ state }: { state: 'completed' | 'current' | 'none' }) {
-  if (state === 'completed') return <span style={{ color: 'var(--text-accent)', fontSize: '0.7rem' }}>✓</span>
-  if (state === 'current') return <span style={{ color: 'var(--text-primary)', fontSize: '0.7rem' }}>→</span>
-  return <span style={{ color: 'var(--border-color)', fontSize: '0.7rem' }}>○</span>
+  if (state === 'completed') return <span style={{ color: 'var(--text-accent)', fontSize: 'var(--text-xs)' }}>✓</span>
+  if (state === 'current') return <span style={{ color: 'var(--text-primary)', fontSize: 'var(--text-xs)' }}>→</span>
+  return <span style={{ color: 'var(--border-color)', fontSize: 'var(--text-xs)' }}>○</span>
 }
 
 export function Sidebar({ navItems, currentSlug, currentUnit, locale = 'ru' }: SidebarProps) {
@@ -48,7 +48,7 @@ export function Sidebar({ navItems, currentSlug, currentUnit, locale = 'ru' }: S
     }}>
       <div style={{ padding: '0 1rem', marginBottom: '1rem' }}>
         <span style={{
-          fontSize: '0.7rem',
+          fontSize: 'var(--text-xs)',
           fontFamily: 'var(--font-mono)',
           color: 'var(--text-secondary)',
           textTransform: 'uppercase',
@@ -119,7 +119,7 @@ export function Sidebar({ navItems, currentSlug, currentUnit, locale = 'ru' }: S
                       margin: '1px 4px',
                     }}>
                       <UnitIcon state={unitState} />
-                      <span style={{ flex: 1, fontSize: '0.75rem' }}>{unit.title}</span>
+                      <span style={{ flex: 1, fontSize: 'var(--text-xs)' }}>{unit.title}</span>
                     </Link>
                   )
                 })}

@@ -12,7 +12,7 @@ export function LikertScale({ name, label, value, onChange, disagree, agree, req
         {label}
       </legend>
       <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', minWidth: '5rem' }}>{disagree}</span>
+        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', minWidth: '5rem' }}>{disagree}</span>
         {LIKERT.map(v => (
           <label key={v} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem', cursor: 'pointer' }}>
             <input
@@ -21,10 +21,10 @@ export function LikertScale({ name, label, value, onChange, disagree, agree, req
               onChange={() => onChange(v)}
               style={{ accentColor: 'var(--text-accent)' }}
             />
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{v}</span>
+            <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)' }}>{v}</span>
           </label>
         ))}
-        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', minWidth: '4rem' }}>{agree}</span>
+        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', minWidth: '4rem' }}>{agree}</span>
       </div>
     </fieldset>
   )

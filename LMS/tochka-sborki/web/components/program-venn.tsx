@@ -270,7 +270,7 @@ export function ProgramVenn({ locale = 'ru' }: Props = {}) {
             }}>
               <div style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.7rem',
+                fontSize: 'var(--text-xs)',
                 color: 'var(--text-secondary)',
                 textTransform: 'uppercase',
                 letterSpacing: '0.15em',

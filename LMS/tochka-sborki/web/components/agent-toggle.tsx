@@ -51,7 +51,7 @@ export function AgentToggle({ label = 'Стек:', compact = false }: Props) {
     >
       <span style={{
         fontFamily: 'var(--font-mono)',
-        fontSize: '0.75rem',
+        fontSize: 'var(--text-xs)',
         color: 'var(--text-secondary)',
         textTransform: 'uppercase',
         letterSpacing: '0.1em',
@@ -91,7 +91,7 @@ export function AgentToggle({ label = 'Стек:', compact = false }: Props) {
       {stack === null && (
         <span style={{
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.7rem',
+          fontSize: 'var(--text-xs)',
           color: 'var(--text-secondary)',
           opacity: 0.7,
         }}>

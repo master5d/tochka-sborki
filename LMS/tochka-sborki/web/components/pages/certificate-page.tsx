@@ -121,7 +121,7 @@ export function CertificatePage({ locale }: Props) {
       <main id="main-content" tabIndex={-1} style={{ maxWidth: 'var(--content-max)', margin: '0 auto', padding: '4rem 2rem' }}>
         <div style={{
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.7rem',
+          fontSize: 'var(--text-xs)',
           color: 'var(--text-accent)',
           textTransform: 'uppercase',
           letterSpacing: '0.15em',
@@ -168,7 +168,7 @@ export function CertificatePage({ locale }: Props) {
               <label style={{
                 display: 'block',
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.7rem',
+                fontSize: 'var(--text-xs)',
                 color: 'var(--text-secondary)',
                 textTransform: 'uppercase',
                 letterSpacing: '0.12em',

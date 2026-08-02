@@ -119,7 +119,7 @@ export function AlumniClient({ locale }: { locale: Locale }) {
                 <li key={i} style={{ borderLeft: '3px solid var(--border-color)', paddingLeft: '0.8rem' }}>
                   {e.blurb && <div style={{ color: 'var(--text-primary)', fontSize: '0.92rem' }}>{e.blurb}</div>}
                   {e.contact && <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--text-accent)' }}>{e.contact}</div>}
-                  {nicheTag(e.niche) && <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '0.15rem' }}>⬡ {nicheTag(e.niche)}</div>}
+                  {nicheTag(e.niche) && <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', marginTop: '0.15rem' }}>⬡ {nicheTag(e.niche)}</div>}
                 </li>
               ))}
             </ul>

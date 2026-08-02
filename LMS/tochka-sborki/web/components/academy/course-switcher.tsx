@@ -6,7 +6,7 @@ import { resolveOtherCourses } from '@/lib/academy/registry'
 // small style objects are duplicated here to stay visually identical.
 const labelStyle: React.CSSProperties = {
   fontFamily: 'var(--font-mono)',
-  fontSize: '0.7rem',
+  fontSize: 'var(--text-xs)',
   color: 'var(--text-accent)',
   textTransform: 'lowercase',
   letterSpacing: '0.12em',

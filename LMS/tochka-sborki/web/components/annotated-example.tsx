@@ -11,7 +11,7 @@ export function AnnotatedExample({ segments, caption, mono = true }: {
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
     minWidth: '1.25rem', height: '1.25rem', borderRadius: '999px',
     background: color.bg, color: color.text,
-    fontFamily: 'var(--font-mono)', fontSize: '0.7rem', fontWeight: 700,
+    fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', fontWeight: 700,
   })
 
   return (
@@ -24,7 +24,7 @@ export function AnnotatedExample({ segments, caption, mono = true }: {
 
       {caption && (
         <figcaption style={{
-          fontFamily: 'var(--font-mono)', fontSize: '0.72rem',
+          fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)',
           textTransform: 'uppercase', letterSpacing: '0.12em',
           color: 'var(--text-secondary)', marginBottom: '0.75rem',
         }}>{caption}</figcaption>

@@ -58,9 +58,9 @@ export function Vault({ activeSkin, locale, helpId }: { activeSkin: WorldSkin; l
                 <span style={{ fontSize: '0.9rem' }}>{meta.displayName[locale]}</span>
               </span>
               {isActive ? (
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: meta.accent }}>{OWNED[locale]}</span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: meta.accent }}>{OWNED[locale]}</span>
               ) : isUnlocked ? (
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: meta.accent }}>{UNLOCKED[locale]}</span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: meta.accent }}>{UNLOCKED[locale]}</span>
               ) : (
                 <button
                   type="button"
@@ -68,7 +68,7 @@ export function Vault({ activeSkin, locale, helpId }: { activeSkin: WorldSkin; l
                   disabled={!canAfford}
                   style={{
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '0.72rem',
+                    fontSize: 'var(--text-xs)',
                     padding: '0.4rem 0.7rem',
                     borderRadius: 6,
                     border: 'none',

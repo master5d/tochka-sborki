@@ -25,7 +25,7 @@ const taglineStyle: React.CSSProperties = {
 
 const badgeStyle: React.CSSProperties = {
   fontFamily: 'var(--font-mono)',
-  fontSize: '0.7rem',
+  fontSize: 'var(--text-xs)',
   color: 'var(--text-accent)',
   textTransform: 'lowercase',
   letterSpacing: '0.12em',

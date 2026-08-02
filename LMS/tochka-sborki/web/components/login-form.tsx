@@ -72,7 +72,7 @@ export function LoginForm({ locale }: Props) {
       <main style={{ maxWidth: '480px', margin: '0 auto', padding: '6rem 2rem' }}>
         <div style={{
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.7rem',
+          fontSize: 'var(--text-xs)',
           color: 'var(--text-accent)',
           textTransform: 'uppercase',
           letterSpacing: '0.12em',
@@ -126,7 +126,7 @@ export function LoginForm({ locale }: Props) {
             >
               {t.google}
             </a>
-            <div style={{ textAlign: 'center', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', marginBottom: '1rem' }}>
+            <div style={{ textAlign: 'center', color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', marginBottom: '1rem' }}>
               {t.or}
             </div>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

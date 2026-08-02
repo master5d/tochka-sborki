@@ -46,7 +46,7 @@ export function DailyPanel({ locale, skin, accent, cogTier, niche, outcome, unit
     <section style={{ border: `1px solid ${accent}`, borderRadius: 12, padding: '1.1rem 1.25rem', marginBottom: '1.5rem', background: 'var(--bg-surface)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.9rem' }}>
         <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: accent }}><span aria-hidden="true">☀</span> {HEADING[locale]} {helpId && <HelpTip id={helpId} locale={locale} />}</span>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-secondary)' }}>
           {questsLabel(set.quests.length, locale)}{totalCs > 0 ? ` · +${totalCs} 💎` : ''}
         </span>
       </div>
@@ -56,24 +56,24 @@ export function DailyPanel({ locale, skin, accent, cogTier, niche, outcome, unit
           const done = isDone(q)
           return (
             <div key={q.id} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.7rem', opacity: done ? 0.6 : 1 }}>
-              <span aria-hidden="true" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: accent, marginTop: '0.15rem' }}>
+              <span aria-hidden="true" style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: accent, marginTop: '0.15rem' }}>
                 {q.kind === 'advance' ? '▶' : q.kind === 'complete' ? '★' : '◇'}
               </span>
               <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)' }}>
                   {q.title}{q.cs > 0 ? ` · +${q.cs} 💎` : ''}
                 </div>
                 <div style={{ fontSize: '0.9rem', marginTop: '0.15rem' }}>{q.body}</div>
                 <div style={{ marginTop: '0.45rem' }}>
                   {q.kind === 'advance' && q.href && (
-                    <Link href={q.href} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: accent }}>
+                    <Link href={q.href} style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: accent }}>
                       {done ? `✓ ${DONE[locale]}` : `${OPEN[locale]} ↗`}
                     </Link>
                   )}
                   {q.cs > 0 && (
                     done
-                      ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: accent }}>✓ {DONE[locale]}</span>
-                      : <button type="button" onClick={() => complete(q)} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', padding: '0.35rem 0.7rem', borderRadius: 6, border: `1px solid ${accent}`, background: 'transparent', color: accent, cursor: 'pointer' }}>{MARK_DONE[locale]}</button>
+                      ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: accent }}>✓ {DONE[locale]}</span>
+                      : <button type="button" onClick={() => complete(q)} style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', padding: '0.35rem 0.7rem', borderRadius: 6, border: `1px solid ${accent}`, background: 'transparent', color: accent, cursor: 'pointer' }}>{MARK_DONE[locale]}</button>
                   )}
                 </div>
               </div>
@@ -83,7 +83,7 @@ export function DailyPanel({ locale, skin, accent, cogTier, niche, outcome, unit
       </div>
 
       {allDone && (
-        <div style={{ marginTop: '0.9rem', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: accent }}>
+        <div style={{ marginTop: '0.9rem', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: accent }}>
           {ALL_DONE[locale]}
         </div>
       )}

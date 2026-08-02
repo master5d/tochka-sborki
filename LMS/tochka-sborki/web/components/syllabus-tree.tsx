@@ -21,7 +21,7 @@ export function SyllabusTree({ modules, locale }: { modules: ModuleMeta[]; local
                 {m.title}
               </h2>
             </Link>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
               {m.duration ? `${m.duration} · ` : ''}{(m.units?.length ?? 0)} {unitsLabel}
             </span>
           </div>
@@ -37,7 +37,7 @@ export function SyllabusTree({ modules, locale }: { modules: ModuleMeta[]; local
                   display: 'flex', gap: '0.6rem', alignItems: 'baseline', textDecoration: 'none',
                   color: 'var(--text-secondary)', fontSize: '0.92rem', padding: '0.2rem 0',
                 }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-accent)' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-accent)' }}>
                     {String(mi).padStart(2, '0')}.{ui + 1}
                   </span>
                   <span>{u.title}</span>

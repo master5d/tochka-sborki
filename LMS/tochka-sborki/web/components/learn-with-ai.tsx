@@ -65,7 +65,7 @@ export function LearnWithAI({ prompt, bootstrap, locale = 'ru' }: { prompt: stri
       border: '1px solid var(--border-color)', borderRadius: 'var(--radius)',
       background: 'var(--bg-surface)',
     }}>
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '0.4rem' }}>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '0.4rem' }}>
         {t.label}
       </div>
       <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.55, margin: '0 0 1.1rem' }}>

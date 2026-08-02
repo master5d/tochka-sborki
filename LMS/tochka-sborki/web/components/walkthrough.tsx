@@ -20,7 +20,7 @@ export function Walkthrough({ slug, title, minHeight = 480 }: { slug: string; ti
   const showIframe = !lite || load
 
   const caption = title && (
-    <figcaption style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.5rem', textAlign: 'center' }}>
+    <figcaption style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', marginTop: '0.5rem', textAlign: 'center' }}>
       {title}
     </figcaption>
   )

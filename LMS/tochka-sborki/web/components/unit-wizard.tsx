@@ -197,7 +197,7 @@ export function UnitWizard({
         scrollMarginTop: '4rem',
         marginBottom: '0.5rem',
         fontFamily: 'var(--font-mono)',
-        fontSize: '0.7rem',
+        fontSize: 'var(--text-xs)',
         color: 'var(--text-secondary)',
       }}>
         {moduleTitle} · {t.unit(unitIndex + 1, totalUnits)}
@@ -246,7 +246,7 @@ export function UnitWizard({
             }} />
             <div style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.6rem',
+              fontSize: 'var(--text-xs)',
               color: i === currentStep ? PHASE_COLORS[i] : 'var(--text-secondary)',
               opacity: i > currentStep ? 0.4 : 1,
               transition: 'opacity 0.2s',
@@ -270,7 +270,7 @@ export function UnitWizard({
                 borderRadius: 10,
                 padding: '0.9rem 1.1rem',
               }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.35rem' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.35rem' }}>
                   {t.appliedChallenge}
                 </div>
                 <div style={{ fontSize: '0.92rem' }}>{appliedChallenge}</div>
@@ -289,7 +289,7 @@ export function UnitWizard({
               }}>
                 <span aria-hidden="true" style={{ fontSize: '1.3rem', lineHeight: 1 }}>{mentor.glyph}</span>
                 <div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-accent)' }}>{mentor.name[locale]}</div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-accent)' }}>{mentor.name[locale]}</div>
                   <div style={{ fontSize: '0.9rem' }}>«{framing.mentorHint[locale]}»</div>
                 </div>
               </div>

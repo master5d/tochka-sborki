@@ -33,7 +33,7 @@ export function Phase({ type, children }: Props) {
         borderRadius: '0 4px 4px 0',
         marginBottom: marker ? '0.5rem' : '1.5rem',
         fontFamily: 'var(--font-mono)',
-        fontSize: '0.65rem',
+        fontSize: 'var(--text-xs)',
         color,
         textTransform: 'uppercase' as const,
         letterSpacing: '0.12em',
@@ -43,7 +43,7 @@ export function Phase({ type, children }: Props) {
       {marker && (
         <div style={{
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.6rem',
+          fontSize: 'var(--text-xs)',
           color: 'var(--text-secondary)',
           marginBottom: '1.5rem',
         }}>

@@ -14,7 +14,7 @@ export function IntakeGate({ locale, onEnter }: { locale: Locale; onEnter: () =>
   return (
     <main style={{ maxWidth: 620, margin: '0 auto', padding: '2.5rem 1.25rem 4rem' }}>
       <div style={{
-        fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-accent)',
+        fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-accent)',
         textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '0.9rem',
       }}>
         {c.eyebrow}
@@ -26,7 +26,7 @@ export function IntakeGate({ locale, onEnter }: { locale: Locale; onEnter: () =>
         <div style={{
           display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', padding: '0.6rem 1rem',
           borderBottom: '1px solid var(--border-color)', background: 'var(--bg-surface)',
-          fontFamily: 'var(--font-mono)', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.08em',
+          fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', textTransform: 'uppercase', letterSpacing: '0.08em',
         }}>
           <span style={{ color: 'var(--text-secondary)' }}>{c.beforeLabel}</span>
           <span style={{ color: 'var(--text-accent)' }}>{c.afterLabel}</span>

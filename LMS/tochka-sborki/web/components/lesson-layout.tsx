@@ -46,7 +46,7 @@ export function LessonLayout({ meta, navItems, children, locale = 'ru' }: Lesson
           <div style={{
             marginBottom: '0.5rem',
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.75rem',
+            fontSize: 'var(--text-xs)',
             color: 'var(--text-accent)',
           }}>
             {meta.duration}

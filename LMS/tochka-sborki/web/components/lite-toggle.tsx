@@ -35,7 +35,7 @@ export function LiteToggle({ locale }: { locale: Locale }) {
         borderRadius: '20px',
         overflow: 'hidden',
         fontFamily: 'var(--font-mono)',
-        fontSize: '0.7rem',
+        fontSize: 'var(--text-xs)',
       }}
     >
       {SEGMENTS.map(seg => {

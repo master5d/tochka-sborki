@@ -71,10 +71,10 @@ export function ChatVsSystem({ locale }: Props) {
           {t.hook}
         </p>
         <div className="cvs-header">
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
             {t.chatColLabel}
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
             {t.systemColLabel}
           </div>
         </div>

@@ -193,7 +193,7 @@ export function MobileGate({ locale = 'ru', children }: Props) {
         {emailStatus === 'error' && (
           <div style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.75rem',
+            fontSize: 'var(--text-xs)',
             color: 'var(--crit)',
             padding: '0.25rem 0.5rem',
           }}>
@@ -238,7 +238,7 @@ export function MobileGate({ locale = 'ru', children }: Props) {
             />
             <div style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.75rem',
+              fontSize: 'var(--text-xs)',
               color: 'var(--text-secondary)',
               textAlign: 'center',
             }}>
@@ -267,7 +267,7 @@ export function MobileGate({ locale = 'ru', children }: Props) {
           {t.continueAction}
           <span style={{
             display: 'block',
-            fontSize: '0.7rem',
+            fontSize: 'var(--text-xs)',
             opacity: 0.7,
             marginTop: '0.25rem',
           }}>

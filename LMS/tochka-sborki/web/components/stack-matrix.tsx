@@ -146,7 +146,7 @@ export function StackMatrix({ interactive = true }: Props) {
                 {active && (
                   <span aria-label="выбранный стек" style={{
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '0.65rem',
+                    fontSize: 'var(--text-xs)',
                     color: colors.text,
                     textTransform: 'uppercase',
                     letterSpacing: '0.1em',
@@ -176,7 +176,7 @@ export function StackMatrix({ interactive = true }: Props) {
                 margin: 0,
                 padding: 0,
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.75rem',
+                fontSize: 'var(--text-xs)',
                 color: 'var(--text-secondary)',
                 lineHeight: 1.7,
                 marginBottom: '0.75rem',
@@ -190,7 +190,7 @@ export function StackMatrix({ interactive = true }: Props) {
               </ul>
               <div style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.7rem',
+                fontSize: 'var(--text-xs)',
                 color: colors.text,
                 textTransform: 'uppercase',
                 letterSpacing: '0.08em',
@@ -206,7 +206,7 @@ export function StackMatrix({ interactive = true }: Props) {
       {interactive && (
         <p style={{
           fontFamily: 'var(--font-mono)',
-          fontSize: '0.75rem',
+          fontSize: 'var(--text-xs)',
           color: 'var(--text-secondary)',
           margin: '0 0 1.5rem',
         }}>

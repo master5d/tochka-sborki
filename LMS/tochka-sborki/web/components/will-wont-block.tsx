@@ -7,7 +7,7 @@ export function WillWontBlock({ heading, willLabel, wontLabel, will, wont, punch
   punchline?: string
 }) {
   const colLabel: React.CSSProperties = {
-    fontFamily: 'var(--font-mono)', fontSize: '0.7rem', textTransform: 'uppercase',
+    fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', textTransform: 'uppercase',
     letterSpacing: '0.12em', marginBottom: '0.75rem',
   }
   const list: React.CSSProperties = { listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '0.6rem' }

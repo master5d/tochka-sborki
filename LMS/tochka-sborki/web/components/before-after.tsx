@@ -39,7 +39,7 @@ export function BeforeAfter({ locale }: Props) {
             <div key={item.before} style={{ paddingTop: '1rem', borderTop: 'var(--accent-line)' }}>
               <div style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.65rem',
+                fontSize: 'var(--text-xs)',
                 color: 'var(--text-secondary)',
                 textTransform: 'uppercase',
                 letterSpacing: '0.1em',
@@ -52,7 +52,7 @@ export function BeforeAfter({ locale }: Props) {
               </p>
               <div style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.65rem',
+                fontSize: 'var(--text-xs)',
                 color: 'var(--text-accent)',
                 textTransform: 'uppercase',
                 letterSpacing: '0.1em',
