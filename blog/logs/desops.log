@@ -1,2 +1,3 @@
 # desops audit log
 2026-07-07 design-new: onboarded; baseline lint = 10 violations, gate=staged-only
+2026-08-02 design-audit+polish: FAIL→PASS (25 узлов ниже AA → 0, шкала кеглей, диаграммы на токенах, добавлен contrast-гвард)

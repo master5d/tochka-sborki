@@ -121,8 +121,8 @@ mc_hub/                   — корень монорепо
     цена из каталога (НЕ от клиента), `submit_type=pay`, `metadata[product_id/locale]`. `POST /api/stripe/webhook`
     (`handlers/stripe-webhook.ts`) — `Stripe-Signature` HMAC-verify (`lib/stripe-webhook.ts`, WebCrypto, 300s replay),
     идемпотентность `purchases.stripe_session_id UNIQUE` + `meta.changes`, доставка asset-ссылки письмом
-    (`lib/purchase-email.ts`, Resend best-effort, `delivered_at` = retry-маркер). Web `/store` + `/en/store` (+thanks),
-    nav «Магазин». Доставка: `delivery {kind:'url'}` реализована; `{kind:'r2'}` (presigned) отложена в свой слайс.
+    (`lib/purchase-email.ts`, Resend best-effort, `delivered_at` = retry-маркер). **Магазин переехал на `mamaev.coach` (2026-08-02)**: страницы в `hub/`, из LMS и nav убраны;
+    у product-чекаута свой `STORE_BASE`, support остался на курсе. Доставка: `delivery {kind:'url'}` реализована; `{kind:'r2'}` (presigned) отложена в свой слайс.
     Go-live (owner): добавить товары в ОБА products-файла + зарегистрировать webhook-эндпоинт + set `STRIPE_WEBHOOK_SECRET`.
 
 ## RPG / геймификация (LMS/tochka-sborki/web/)
@@ -158,9 +158,31 @@ mc_hub/                   — корень монорепо
 - **acceleration SHIPPED** (fb_daa79c): `lib/synergem-acceleration.ts` `resolveAcceleration` engine+keyed-data (5 стадий роста `form→rhythm→output→outward→autonomous`, `AccelStage{key;name;milestone;readiness;move}` Bi) зеркало `lib/igi.ts`; render-only карта `components/synergem-acceleration.tsx` на /alumni после mentor. Ресурсы группа находит сама (НЕ owner-dispensed, НЕ финансовые продукты); финиш = автономность (anti-dependency). **3 /alumni-артефакта читаются gather→facilitate→grow (ИГИ/mentor/acceleration).**
 - Dormant far-pillar: только Web3/DAO fb_029568. Детали → [[reference_social_design_synergem]].
 - **Auth = провайдер-агностичный session-слой** (worker `workers/src/`): magic-link + Telegram + **Google OAuth** (fb_25d8fa04 SHIPPED) минтят ОДИН `session` JWT-cookie; `requireAuth`/`requireOwner` читают его. OAuth зеркалит `telegram-auth.ts` (verify→link по id-колонке→session): `handlers/oauth.ts` start+callback (state-CSRF + PKCE S256 + open-redirect guard + **email_verified gate** анти-takeover), `lib/oauth-google.ts` (WebCrypto, no libs), миграция `0016` (`google_sub` partial-unique) через MCP `/query`. Dark-ship 503 до `GOOGLE_OAUTH_CLIENT_ID/_SECRET` (owner via `wrangler secret`). Добавить 4-й провайдер = зеркалить паттерн, НЕ трогать session-слой. Детали → [[reference_mc_hub_auth]]. Checkout: bot `/store` deep-link (fb_c20c437f) достроил merch-путь (зеркало `/support`); чекаут-движок был ~95% зашиплен заранее.
-- **Speech-курс = ОТДЕЛЬНЫЙ изолированный курс** (fb_015e518d, эпик): S1 dark scaffold SHIPPED в `lib/speech/` + `app/speech/` (НЕ `content/` — иначе засорит AI-курс scanner/RPG/`MODULE_SLUGS`). `lib/speech/course.ts` engine+keyed-data (6 уроков + `resolveSpeechCourse`) + `/speech`+`/en/speech` dark syllabus («готовится» badge, noindex, НЕ в nav). S2-S6 (проза/упр/тест/кейс + §4-таксономия-рубрика) owner-corpus-gated (Карнеги/Леммерман). Детали → [[project_mc_hub_speech_course]].
-- **Скорочтение = ОТДЕЛЬНЫЙ изолированный hybrid-эпик COMPLETE (S1-S5)** (курс+интерактивные тренажёры, тот же isolation-паттерн что speech: всё под `lib/speedreading/`+`components/speedreading/`+`app/speedreading/`, вне `content/`/registry/nav, `noindex`; sovereign ноль backend/LLM/deps; вся копи `lintDehustle []`; метод public-domain — shaleny-ravlyk только структурно, ноль чужого копирайта). Паттерн каждого тренажёра: **pure-движок (юнит-тест) + localStorage-стор (зеркало `lib/pacing`) + тонкий `'use client'`**. LIVE `ai.synergify.com/speedreading/{,rsvp,schulte,test}`: **хаб** (course.ts syllabus 6 уроков + линки + `progress.ts` сводка + CS) · **rsvp** (RSVP+ORP Spritz-pivot) · **schulte** (mulberry32 grid + центр-точка) · **test** (WPM effective=raw×понимание + Δ до/после, 3 оригинальные пассажи). CS = **односторонний мост** (только `progress.ts` импортит `@/lib/cs applyCredit`; `sr:*` one-time idempotent). Хвосты owner-gated: un-noindex+nav-линк, проза уроков, персист `firstEffectiveWpm`. Детали → [[project_mc_hub_speedreading]].
+- **Speech-курс = ОТДЕЛЬНЫЙ изолированный курс** (fb_015e518d, эпик): S1 dark scaffold SHIPPED в `lib/speech/` + `app/speech/` (НЕ `content/` — иначе засорит AI-курс scanner/RPG/`MODULE_SLUGS`). `lib/speech/course.ts` engine+keyed-data (6 уроков + `resolveSpeechCourse`) + `/speech`+`/en/speech`. **ЗАЖЖЁН 2026-08-02:** noindex снят, 6 уроков прозы написаны (`lib/speech/lessons.ts`, ~600 слов RU / ~680 EN), страницы `[slug]` рендерит `LessonProse`. Копирайт: фундамент public-domain (Аристотель/Цицерон/Квинтилиан), из Карнеги и Леммермана НЕ взято ничего. Гвард `lessons.test.ts`: обе локали, ≥200 слов, lintDehustle, запрет приёмов давления («заставить аудиторию», manipulate the audience). Детали → [[project_mc_hub_speech_course]].
+- **Скорочтение = ОТДЕЛЬНЫЙ изолированный hybrid-эпик COMPLETE (S1-S5)** (курс+интерактивные тренажёры, тот же isolation-паттерн что speech: всё под `lib/speedreading/`+`components/speedreading/`+`app/speedreading/`, вне `content/`/registry/nav, `noindex`; sovereign ноль backend/LLM/deps; вся копи `lintDehustle []`; метод public-domain — shaleny-ravlyk только структурно, ноль чужого копирайта). Паттерн каждого тренажёра: **pure-движок (юнит-тест) + localStorage-стор (зеркало `lib/pacing`) + тонкий `'use client'`**. LIVE `ai.synergify.com/speedreading/{,rsvp,schulte,test}`: **хаб** (course.ts syllabus 6 уроков + линки + `progress.ts` сводка + CS) · **rsvp** (RSVP+ORP Spritz-pivot) · **schulte** (mulberry32 grid + центр-точка) · **test** (WPM effective=raw×понимание + Δ до/после, 3 оригинальные пассажи). CS = **односторонний мост** (только `progress.ts` импортит `@/lib/cs applyCredit`; `sr:*` one-time idempotent). **ЗАЖЖЁН 2026-08-02:** noindex снят с 8 страниц, пункт «Тренажёры»/«Trainers» в nav, 4 пути в sitemap, 6 уроков прозы (`lib/speedreading/lessons.ts`, ~500 слов RU / ~580 EN). Честный потолок вшит в содержание (Rayner 2016: выше ~500-600 wpm понимание падает; «фотографическое чтение» — миф), гвард `lessons.test.ts` запрещает обещать 1000+ wpm. Хвост owner-gated: персист `firstEffectiveWpm`. Детали → [[project_mc_hub_speedreading]].
 - **`/exercises` опц. треки** (content-track паттерн = append в `content/{ru,en}/exercises.mdx` intro+5 шагов+save-anchors + `lib/content/<x>-track.test.ts` presence-guard): «упакуй экспертизу» / «автоматизируй практику» / «поиск с ИИ» (research С ИИ + ВЕРИФИКАЦИЯ источников; fb_b5457149f581). De-hustle/learner-owned copy-out.
+
+## Дизайн-контур (проход 2026-08-02: hub, mentor, blog, academy, курс)
+- **Шкала кеглей — общая на всех поверхностях**: токены `--text-xs/sm/base/lg/xl`
+  (12/14/16/20/24) в каждом `themes/*.css`. Пол читаемости 12px; в разметке НЕ писать
+  дробные rem (в живом рендере было до 29 кеглей, включая 0.35rem).
+- **Акцент светлой темы = `#0063ab`** во всех копиях темы. Прежние `#0077cc`/`#0070c0`
+  проходили AA только против `--bg-primary`; на `--bg-secondary` и полупрозрачных
+  плашках давали 4.13-4.33. ⚠ Токен-гвард может быть зелёным при живых нарушениях —
+  он мерит ОДНУ пару, а рендер кладёт акцент на разные фоны.
+- **Тема ставится атрибутом `data-theme`.** hub раньше отдавал `class="dark"` из
+  ui-kit-провайдера → селекторы не совпадали, страница рендерилась чёрным по чёрному.
+  Гвард шва: `hub/lib/a11y/contrast.test.ts` (провайдер и CSS обязаны говорить об одном
+  атрибуте) + fallback-токены в голом `:root` для пре-гидрации.
+- **`identity.json` есть у hub / mentor / academy** (`test-identity.ps1` = ok);
+  у курса DesOps-контур не заведён — линт-гвардов там нет, только тесты.
+- Слепое пятно линта ЗАКРЫТО (2026-08-03): правило `no-hardcoded-colors-in-const`
+  (`NAUTILUS/core/desops/rules/no-hardcoded-colors.yaml`) ловит цвет в объявлении
+  переменной — раньше `const accent = '#00d1ff'` в панели mentor проходил чистым,
+  потому что линт смотрел только внутрь `style={{…}}`. Проверено на до-версии
+  `visuals.tsx`: 3 находки. OG-картинки из правила исключены по пути.
+- OG-картинки (`opengraph-image.tsx`) — Satori рендерит их в изоляции: CSS-переменные
+  там не работают, хардкод цветов обоснован и правилами не трогается.
 
 ## Инструкции для Claude Code
 - Контент пишется на **русском** (основной), затем зеркалится в **EN** (`content/en/`, `/en/` маршруты)

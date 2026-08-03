@@ -37,7 +37,7 @@
 |-------|---------|--------|
 | `LMS/` | Контейнер курсов. Первый — `LMS/tochka-sborki/` («Точка Сборки»), задел на следующие. | — |
 | `LMS/tochka-sborki/web/` | Next.js 16 LMS-сайт курса | `ai.synergify.com` (CF Pages `tochka-sborki`) |
-| `hub/` | Личный лендинг + блог | `mamaev.coach` (CF Pages `mamaev-coach-hub`) |
+| `hub/` | Личный лендинг + блог + магазин | `mamaev.coach` (CF Pages `mamaev-coach-hub`) |
 | `mentor/` | B2B agent-engineering | `mentor.mamaev.coach` (CF Pages `mamaev-coach-mentor`) |
 | `synergify/` | Зонтик-лендинг Synergify (worker: два входа + подписка) | `synergify.com` (worker `synergify-home`) |
 | `academy/` | Академия S.A.S.H.A (вход после Точки Сборки) | `academy.synergify.com` (CF Pages `synergify-academy`) |
@@ -47,7 +47,7 @@
 
 ## Деплой
 
-Автоматический через GitHub Actions (`.github/workflows/deploy.yml`): `git push main` → 4 job'а по path-фильтрам (web / hub / mentor / workers) → CF Pages / Workers. Все сборки на Node 24.
+Автоматический через GitHub Actions (`.github/workflows/deploy.yml`): `git push main` → 5 job'ов по path-фильтрам (web / hub+blog / mentor / academy / workers) → CF Pages / Workers. Все сборки на Node 24. Зонтик `synergify/` деплоится вручную (`npx wrangler deploy`) — CI-джоба у него нет.
 
 ## Курсы
 
