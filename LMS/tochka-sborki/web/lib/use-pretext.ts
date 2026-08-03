@@ -7,6 +7,26 @@ import {
   measureNaturalWidth,
 } from '@chenglou/pretext'
 
+/**
+ * Кегль из canvas-спеки шрифта («14px 'Geist Mono', monospace» → 14).
+ *
+ * Вынесено из эффекта, потому что это единственная арифметика в хуке — всё
+ * остальное меряет canvas, которого в тестах нет. Ошибка здесь тихая: подпись
+ * останется на экране, просто высота строки посчитается не от того кегля.
+ */
+export function fontSizeOf(font: string, fallback = 16): number {
+  // Знак обязан входить в матч: без него «-4px» читалось как «4px» —
+  // отрицательный кегль проходил проверку и давал отрицательную высоту строки.
+  const m = font.match(/(-?\d+(?:\.\d+)?)px/)
+  const px = m ? parseFloat(m[1]) : NaN
+  return Number.isFinite(px) && px > 0 ? px : fallback
+}
+
+/** Высота строки в пикселях: кегль × множитель. */
+export function lineHeightPx(font: string, lineHeight: number): number {
+  return fontSizeOf(font) * lineHeight
+}
+
 export type Measurement = {
   ready: boolean
   naturalWidth: number     // width on a single line (no wrap)
@@ -39,9 +59,7 @@ export function useTextMeasurement(
     const measure = () => {
       try {
         const prepared = prepareWithSegments(text, font)
-        const fontSizeMatch = font.match(/(\d+(?:\.\d+)?)px/)
-        const fontSize = fontSizeMatch ? parseFloat(fontSizeMatch[1]) : 16
-        const px = fontSize * lineHeight
+        const px = lineHeightPx(font, lineHeight)
         const natural = measureNaturalWidth(prepared)
         const stats = measureLineStats(prepared, maxWidth)
         if (!cancelled) {
