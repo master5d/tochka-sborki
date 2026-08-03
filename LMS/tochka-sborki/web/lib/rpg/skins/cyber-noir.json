@@ -608,6 +608,20 @@
         "ru": "Агент готов. Ты прошёл инициацию и стал архитектором синтетических разумов. Этот город — твой.",
         "en": "The agent is built. You've passed the initiation and become an architect of synthetic minds. The city is yours."
       }
+    },
+    "00-kickstart/u4-sources": {
+      "intro": {
+        "ru": "Каждый пакет данных в этом городе кем-то подписан. Вопрос всегда один: кем, когда и что тебе разрешено с ним делать.",
+        "en": "Every data packet in this city is signed by someone. The question is always the same: by whom, when, and what you are allowed to do with it."
+      },
+      "mentorHint": {
+        "ru": "Источник без лицензии — как документ без подписи. Красивый и бесполезный.",
+        "en": "A source with no licence is a document with no signature. Pretty and useless."
+      },
+      "outro": {
+        "ru": "Ты научился читать метаданные раньше рекламы. В этом городе это разница между оперативником и туристом.",
+        "en": "You have learned to read metadata before advertising. In this city that is the difference between an operative and a tourist."
+      }
     }
   }
 }

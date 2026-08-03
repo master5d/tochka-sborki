@@ -608,6 +608,20 @@
         "ru": "Свершилось. Твоё эхо ждёт приказа, свидетельствуя о твоём мастерстве в искусстве инженерии agent'ов. Используй эту силу мудро, ибо тень, которую ты отбрасываешь, теперь твоя собственная.",
         "en": "It is done. Your echo awaits your command, a testament to your mastery over the craft of agent engineering. Use this power wisely, for the shadow you cast is now your own."
       }
+    },
+    "00-kickstart/u4-sources": {
+      "intro": {
+        "ru": "Не всякий фолиант подлинен. Библиотеки полны копий, переписанных теми, кто не понимал написанного, — и они охотно продаются.",
+        "en": "Not every tome is genuine. Libraries are full of copies transcribed by those who never understood the text — and they sell briskly."
+      },
+      "mentorHint": {
+        "ru": "Смотри на печать создателя и на дату последней правки. Мёртвый гримуар опаснее пустого.",
+        "en": "Look for the maker mark and the date of the last emendation. A dead grimoire is more dangerous than an empty one."
+      },
+      "outro": {
+        "ru": "Ты отличаешь подлинник от списка. Знание, добытое так, останется твоим, даже если башня рухнет.",
+        "en": "You can tell an original from a copy. Knowledge won this way stays yours even if the tower falls."
+      }
     }
   }
 }

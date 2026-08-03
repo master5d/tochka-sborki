@@ -608,6 +608,20 @@
         "ru": "Поздравляю! Вы не просто создали agent'а, вы создали отражение своего интеллекта. Теперь вы готовы вести за собой не только людей, но и целые легионы искусственных разумов к новым горизонтам.",
         "en": "Congratulations! You have not just created an agent; you have created a reflection of your own intellect. You are now ready to lead not only humans but entire legions of artificial minds toward new horizons."
       }
+    },
+    "00-kickstart/u4-sources": {
+      "intro": {
+        "ru": "Перед приёмом груза на борт — судовой журнал: происхождение, дата последней проверки, кто отправитель. Иначе трюм наполнится хламом.",
+        "en": "Before any cargo comes aboard — the ship log: origin, date of last inspection, who sent it. Otherwise the hold fills with junk."
+      },
+      "mentorHint": {
+        "ru": "Сигнал без источника — просто шум, как бы громко он ни звучал.",
+        "en": "A signal with no source is just noise, however loud it sounds."
+      },
+      "outro": {
+        "ru": "Проверка груза в протоколе. Что взято на борт по правилам — останется с кораблём, даже если станция уйдёт с орбиты.",
+        "en": "Cargo inspection is in the protocol. What comes aboard by the rules stays with the ship, even if the station leaves orbit."
+      }
     }
   }
 }

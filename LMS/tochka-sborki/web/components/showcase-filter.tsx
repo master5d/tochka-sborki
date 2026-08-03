@@ -88,6 +88,25 @@ export function ShowcaseFilter({ data, locale }: { data: ShowcaseVM; locale: Loc
         </>
       )}
 
+      {/* Чужие проекты. Вне фильтра по категориям сознательно: категории описывают
+          замыслы учеников, а это соседний ландшафт — его не фильтруют, в него смотрят. */}
+      {data.others.cases.length > 0 && (
+        <>
+          <h2 style={{ ...subHeading, marginTop: '2.5rem', marginBottom: '0.6rem' }}>{data.others.heading}</h2>
+          <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '52ch', marginBottom: '1.6rem' }}>{data.others.note}</p>
+          <div style={grid}>
+            {data.others.cases.map(c => (
+              <a key={c.id} href={c.href} style={card} target="_blank" rel="noopener noreferrer">
+                <div style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }} aria-hidden="true">{c.icon}</div>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.4rem' }}>{c.title}</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '0.7rem' }}>{c.blurb}</p>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-secondary)' }}>{c.source}</span>
+              </a>
+            ))}
+          </div>
+        </>
+      )}
+
       <div style={{ marginTop: '2rem', textAlign: 'center' }}>
         <a href={intakeHref} style={{ display: 'inline-block', background: 'var(--text-accent)', color: 'var(--text-on-accent)', fontWeight: 700, padding: '12px 24px', borderRadius: 10, textDecoration: 'none' }}>{data.cta}</a>
       </div>

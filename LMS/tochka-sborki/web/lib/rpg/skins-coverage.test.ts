@@ -25,8 +25,8 @@ describe('skin pack unit-framing coverage', () => {
   const keys = expectedKeys()
   const files = readdirSync(skinsDir).filter(f => f.endsWith('.json'))
 
-  it('discovers 38 unit keys', () => {
-    expect(keys.length).toBe(38)
+  it('discovers 39 unit keys', () => {
+    expect(keys.length).toBe(39)
   })
 
   for (const file of files) {

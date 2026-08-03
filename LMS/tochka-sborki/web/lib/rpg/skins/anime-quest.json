@@ -608,6 +608,20 @@
         "ru": "Победа! Ты это сделал! Ты не просто создал agent'а, ты создал наследие! Мир ждёт твоих великих свершений, Легендарный Инженер!",
         "en": "Victory! You did it! You didn't just create an agent, you created a legacy! The world awaits your great deeds, Legendary Engineer!"
       }
+    },
+    "00-kickstart/u4-sources": {
+      "intro": {
+        "ru": "Стой! Прежде чем взять свиток у любого встречного мастера — проверь печать! Не всякий, кто громко обещает силу, ею владеет.",
+        "en": "Hold! Before you take a scroll from any passing master — check the seal! Not everyone who loudly promises power actually wields it."
+      },
+      "mentorHint": {
+        "ru": "Настоящая техника всегда открыта для проверки. Поддельная требует веры.",
+        "en": "A true technique is always open to inspection. A fake one demands faith."
+      },
+      "outro": {
+        "ru": "ВОТ ОНО! Теперь ты видишь подделку насквозь. Учитель, который исчезнет, не заберёт твою силу с собой!",
+        "en": "THAT IS IT! Now you see through a fake at a glance. A teacher who vanishes will not take your power with them!"
+      }
     }
   }
 }

@@ -608,6 +608,20 @@
         "ru": "Вы вдохнули жизнь в своего цифрового двойника — вершину мастерства создания agent'ов. Этот верный слуга теперь странствует по эфирным планам по вашему велению.",
         "en": "You have breathed life into your digital twin, the pinnacle of agent-craft. This loyal servant now walks the ethereal planes at your command."
       }
+    },
+    "00-kickstart/u4-sources": {
+      "intro": {
+        "ru": "Прежде чем довериться манускрипту, взгляни на его след в эфире: чья рука его вывела и когда касалась в последний раз.",
+        "en": "Before you trust a manuscript, look at its trace in the aether: whose hand drew it, and when it was last touched."
+      },
+      "mentorHint": {
+        "ru": "Подлинность оставляет следы. Пустое обещание не оставляет ничего, кроме блеска.",
+        "en": "Authenticity leaves traces. An empty promise leaves nothing but shine."
+      },
+      "outro": {
+        "ru": "Твой взор различает подлинное от наведённого. Это и есть первая ступень истинного различения.",
+        "en": "Your sight now parts the genuine from the glamoured. This is the first step of true discernment."
+      }
     }
   }
 }

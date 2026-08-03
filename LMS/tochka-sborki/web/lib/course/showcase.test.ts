@@ -185,10 +185,40 @@ describe('for-good dream cases (fb_650d16d2)', () => {
       const strings = [
         ...s.dream.cases.flatMap(c => [c.title, c.blurb, c.tag]),
         ...s.real.cases.flatMap(c => [c.title, c.blurb, c.tag, c.result]),
+        ...s.others.cases.flatMap(c => [c.title, c.blurb, c.source]),
+        s.others.note,
       ]
       for (const str of strings) expect(lintDehustle(str)).toEqual([])
     })
   }
+  // Чужая работа отделена от историй учеников. Секция «что делают другие» появилась,
+  // чтобы показать соседний ландшафт, и ровно этим она опасна: стоит одному чужому
+  // проекту утечь в real.cases с подписью «— Александр», и витрина начнёт врать.
+  describe('чужие проекты не выдаются за свои', () => {
+    for (const loc of ['ru', 'en'] as const) {
+      it(`каждый чужой кейс ведёт наружу и назван по автору (${loc})`, () => {
+        const o = getShowcase(loc).others
+        expect(o.cases.length).toBeGreaterThan(0)
+        expect(o.heading.length).toBeGreaterThan(0)
+        expect(o.note.length).toBeGreaterThan(0)
+        for (const c of o.cases) {
+          expect(c.href).toMatch(/^https:\/\/github\.com\//)
+          expect(c.source).toMatch(/awesome-(llm|ai)-apps/)
+          expect(c.source).toMatch(/MIT|Apache-2\.0/)
+          expect(c.title.length).toBeGreaterThan(0)
+          expect(c.blurb.length).toBeGreaterThan(0)
+        }
+      })
+      it(`ни один чужой id не попал в реальные истории (${loc})`, () => {
+        const s = getShowcase(loc)
+        const realIds = new Set(s.real.cases.map(c => c.id))
+        for (const c of s.others.cases) expect(realIds.has(c.id)).toBe(false)
+      })
+      it(`реальные истории по-прежнему подписаны автором (${loc})`, () => {
+        for (const c of getShowcase(loc).real.cases) expect(c.author.length).toBeGreaterThan(0)
+      })
+    }
+  })
   it('for-good ids are the 4 canonical ones', () => {
     const ids = getShowcase('ru').dream.cases.filter(c => c.category === 'for-good').map(c => c.id)
     expect(ids).toEqual(['eco', 'rescue', 'pattern-shield', 'safe-path'])

@@ -608,6 +608,20 @@
         "ru": "Великолепное достижение! Ваш цифровой двойник готов служить коллективу. Вы овладели искусством инженерии agent'ов и теперь являетесь настоящим Героем Труда в области AI.",
         "en": "A magnificent achievement! Your digital double stands ready to serve the collective. You have mastered the art of agent engineering and are now a true Hero of AI Labor."
       }
+    },
+    "00-kickstart/u4-sources": {
+      "intro": {
+        "ru": "Товарищ, любое изделие принимают по паспорту: кто изготовил, когда проверено, что разрешено. Знание — тоже изделие.",
+        "en": "Comrade, every article is accepted by its passport: who made it, when it was checked, what is permitted. Knowledge is an article too."
+      },
+      "mentorHint": {
+        "ru": "Нет клейма приёмки — нет доверия. Красивая упаковка в акт не вписывается.",
+        "en": "No inspection stamp, no trust. Fine packaging does not go into the report."
+      },
+      "outro": {
+        "ru": "Приёмка освоена. Теперь ты берёшь в работу только то, что не рассыплется, когда поставщик закроется.",
+        "en": "Inspection mastered. Now you take into work only what will not crumble when the supplier shuts down."
+      }
     }
   }
 }

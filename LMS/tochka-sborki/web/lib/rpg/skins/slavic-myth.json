@@ -608,6 +608,20 @@
         "ru": "Поздравляю, мастер! Ты не просто приручил духа, ты создал себе верного помощника по своему образу и подобию. Путь пройден достойно.",
         "en": "Congratulations, master! You have not just tamed a spirit; you have created a faithful assistant in your own image and likeness. The path has been walked with dignity."
       }
+    },
+    "00-kickstart/u4-sources": {
+      "intro": {
+        "ru": "На ярмарке товар щупают, а не на зазывалу глядят. Так и с наукой: смотри не на посулы, а на клеймо мастера.",
+        "en": "At a fair you handle the goods, you do not gawk at the barker. Same with learning: look for the maker mark, not the promises."
+      },
+      "mentorHint": {
+        "ru": "Доброе клеймо да свежая работа — вот и вся проверка, хозяин.",
+        "en": "A good maker mark and fresh work — that is the whole check, friend."
+      },
+      "outro": {
+        "ru": "Теперь тебя на базаре не проведёшь. Что своим трудом взял — то и останется, хоть весь торг разъедется.",
+        "en": "Now the market cannot fool you. What you took by your own labour stays yours, even after the traders scatter."
+      }
     }
   }
 }

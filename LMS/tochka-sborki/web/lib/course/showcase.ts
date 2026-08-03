@@ -48,14 +48,31 @@ export interface RealCase {
   href?: string   // escape hatch / legacy; deepDive takes precedence
 }
 
+/**
+ * Чужие открытые проекты. Отдельный тип и отдельная секция — НЕ RealCase:
+ * реальные истории принадлежат людям курса, и смешивать их с чужой работой
+ * нельзя даже визуально. Поэтому здесь обязательны `source` (кто автор и под
+ * какой лицензией) и внешняя ссылка, а категорий и фильтра нет.
+ */
+export interface OtherCase {
+  id: string
+  icon: string
+  title: Bi
+  blurb: Bi
+  source: Bi
+  href: string
+}
+
 interface ResolvedDream { id: string; icon: string; title: string; blurb: string; tag: string; category: CategoryKey; href?: string }
 interface ResolvedReal extends ResolvedDream { result: string; author: string }
+export interface ResolvedOther { id: string; icon: string; title: string; blurb: string; source: string; href: string }
 
 export interface ShowcaseVM {
   label: string
   video: { source: VideoSource | null; poster: string | null; caption: string; captionTrack: CaptionTrack | null; transcript: string | null }
   real: { heading: string; cases: ResolvedReal[] }
   dream: { heading: string; cases: ResolvedDream[] }
+  others: { heading: string; note: string; cases: ResolvedOther[] }
   categories: ResolvedCategory[]
   cta: string
 }
@@ -63,6 +80,11 @@ export interface ShowcaseVM {
 const LABEL: Bi = { ru: 'Возможности', en: 'Possibilities' }
 const REAL_HEADING: Bi = { ru: 'Реальные истории', en: 'Real stories' }
 const DREAM_HEADING: Bi = { ru: 'О чём можно мечтать', en: 'What you can dream about' }
+const OTHERS_HEADING: Bi = { ru: 'Что делают другие', en: 'What others are building' }
+const OTHERS_NOTE: Bi = {
+  ru: 'Чужие проекты с открытым кодом — не наши истории и не реклама. Показываем, чтобы было с чем сравнить свой замысел: открой, посмотри на устройство, забери подход.',
+  en: 'Open-source projects built by other people — not our stories, not an endorsement. They are here so you have something to compare your own idea against: open one, look at how it is built, take the approach.',
+}
 const CTA: Bi = { ru: 'Начать свой путь →', en: 'Start your path →' }
 const VIDEO: { url: string | null; poster: string | null; caption: Bi; captions: string | null; transcript: Bi | null } = {
   url: null,    // впиши YouTube/Vimeo watch-URL или путь к .mp4 — встроится автоматически
@@ -180,6 +202,38 @@ const REAL_CASES: RealCase[] = [
     deepDive: 'second-brain' },
 ]
 
+/**
+ * Живые подкаталоги awesome-llm-apps (Apache-2.0) — счётчики проверены по GitHub API
+ * 2026-08-03. Числа стареют: при правке сверяйся с репозиторием, а не с этой строкой.
+ */
+const OTHER_CASES: OtherCase[] = [
+  { id: 'starter-agents', icon: '🌱',
+    title: { ru: 'Агенты-одиночки, с которых начинают', en: 'Starter single agents' },
+    blurb: { ru: '16 небольших агентов целиком: разбор данных, чтение блога вслух, анализ резюме. Хороший масштаб для первого повторения своими руками.', en: '16 small complete agents: data analysis, reading a blog aloud, CV review. A good size to reproduce yourself first.' },
+    source: { ru: 'awesome-llm-apps · Apache-2.0', en: 'awesome-llm-apps · Apache-2.0' },
+    href: 'https://github.com/Shubhamsaboo/awesome-llm-apps/tree/main/starter_ai_agents' },
+  { id: 'mcp-agents', icon: '🔌',
+    title: { ru: 'Агенты поверх MCP', en: 'Agents built on MCP' },
+    blurb: { ru: 'Тот самый протокол из модуля 7, но в чужих руках: агент в браузере, агент над GitHub, маршрутизатор между несколькими MCP-серверами.', en: 'The protocol from module 7 in other hands: a browser agent, a GitHub agent, a router across several MCP servers.' },
+    source: { ru: 'awesome-llm-apps · Apache-2.0', en: 'awesome-llm-apps · Apache-2.0' },
+    href: 'https://github.com/Shubhamsaboo/awesome-llm-apps/tree/main/mcp_ai_agents' },
+  { id: 'rag-tutorials', icon: '📚',
+    title: { ru: 'Поиск по своим данным', en: 'Retrieval over your own data' },
+    blurb: { ru: '24 разбора агентного RAG на разных моделях и подходах — если строишь второй мозг, здесь видно, где у него обычно ломается точность.', en: '24 walkthroughs of agentic RAG across models and approaches — if you are building a second brain, this is where its accuracy usually breaks.' },
+    source: { ru: 'awesome-llm-apps · Apache-2.0', en: 'awesome-llm-apps · Apache-2.0' },
+    href: 'https://github.com/Shubhamsaboo/awesome-llm-apps/tree/main/rag_tutorials' },
+  { id: 'voice-agents', icon: '🎧',
+    title: { ru: 'Голосовые агенты', en: 'Voice agents' },
+    blurb: { ru: 'Аудиогид, поддержка по телефону, разбор страхового случая живым разговором. Соседняя ветка к нашему модулю 6.', en: 'An audio tour guide, phone support, an insurance claim handled in live conversation. A neighbour to our module 6.' },
+    source: { ru: 'awesome-llm-apps · Apache-2.0', en: 'awesome-llm-apps · Apache-2.0' },
+    href: 'https://github.com/Shubhamsaboo/awesome-llm-apps/tree/main/voice_ai_agents' },
+  { id: 'recipes', icon: '🧰',
+    title: { ru: 'Каталог рецептов и руководств', en: 'A catalogue of recipes and guides' },
+    blurb: { ru: 'Второй большой сборник — от простых чат-ботов до продвинутых агентов, с пошаговыми руководствами.', en: 'The second large collection — from simple chatbots to advanced agents, with step-by-step guides.' },
+    source: { ru: 'awesome-ai-apps · MIT', en: 'awesome-ai-apps · MIT' },
+    href: 'https://github.com/Arindam200/awesome-ai-apps' },
+]
+
 export function videoEmbedUrl(url: string | null): string | null {
   if (!url) return null
   const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/)
@@ -227,6 +281,11 @@ export function getShowcase(locale: Locale): ShowcaseVM {
     dream: {
       heading: DREAM_HEADING[L],
       cases: DREAM_CASES.map(c => ({ id: c.id, icon: c.icon, title: c.title[L], blurb: c.blurb[L], tag: c.tag[L], category: c.category, href: c.href })),
+    },
+    others: {
+      heading: OTHERS_HEADING[L],
+      note: OTHERS_NOTE[L],
+      cases: OTHER_CASES.map(c => ({ id: c.id, icon: c.icon, title: c.title[L], blurb: c.blurb[L], source: c.source[L], href: c.href })),
     },
     categories: CATEGORIES.filter(c => used.has(c.key)).map(c => ({ key: c.key, label: c.label[L] })),
     cta: CTA[L],
