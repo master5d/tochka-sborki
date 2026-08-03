@@ -4023,6 +4023,44 @@
           "reason": "копи-задача синтеза hero из трёх уже-построенных рамок; держать грани вместе при работе над лендингом"
         }
       }
+    },
+    {
+      "id": "fb_fce2d3f368ec",
+      "type": "text",
+      "x": 300,
+      "y": 6680,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "📌 Три мёртвые ссылки в уроках (course_currency 2026-08-03)",
+      "metadata": {
+        "sovern:layer": "infra",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 5,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-08-03T23:06:58.691Z",
+        "feedback": {}
+      }
+    },
+    {
+      "id": "fb_470dc61b0403",
+      "type": "text",
+      "x": 580,
+      "y": 6680,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "📌 Дрейф версий моделей в 4 юнитах (course_currency 2026-08-03)",
+      "metadata": {
+        "sovern:layer": "infra",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 5,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-08-03T23:06:58.755Z",
+        "feedback": {}
+      }
     }
   ],
   "edges": [
@@ -4745,6 +4783,16 @@
       "id": "e_fb_3c88df7942ce",
       "fromNode": "area_lms",
       "toNode": "fb_3c88df7942ce"
+    },
+    {
+      "id": "e_fb_fce2d3f368ec",
+      "fromNode": "area_infra",
+      "toNode": "fb_fce2d3f368ec"
+    },
+    {
+      "id": "e_fb_470dc61b0403",
+      "fromNode": "area_infra",
+      "toNode": "fb_470dc61b0403"
     }
   ]
 }

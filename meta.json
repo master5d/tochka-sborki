@@ -6,5 +6,18 @@
   "priority": "P1",
   "domain": ["education", "web"],
   "tech": ["nextjs", "mdx", "cloudflare", "typescript", "markdown"],
-  "confidentiality": "public"
+  "confidentiality": "public",
+  "loop": {
+    "ground_truth": "895 vitest + tsc + next build; живой смок задеплоенных страниц (курс собирается статикой, поэтому 'зелёная сборка' = страница реально существует)",
+    "drift": {
+      "monitors": [
+        "course_currency: возраст содержательной правки, рассинхрон RU/EN, версии против канона лаборатории, битые ссылки",
+        "deps-gate: сверка зависимостей до пуша",
+        "lint-design + test-identity: дизайн-токены и контракт идентичности"
+      ],
+      "half_life_days": 60
+    },
+    "activation": "course_currency в /wrap → находки в BACKLOG курса; битая ссылка и рассинхрон локалей чинятся сразу, дрейф версий — owner-решение (у контента есть голос, правило №2)",
+    "audited": "2026-08-03"
+  }
 }
