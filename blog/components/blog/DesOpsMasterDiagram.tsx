@@ -10,7 +10,7 @@ import React from 'react'
 export function DesOpsEngineDiagram() {
   const accent = 'var(--text-accent)'
   const text = 'var(--text-primary)'
-  const border = 'rgba(255, 255, 255, 0.1)'
+  const border = 'var(--border-color)'
   
   return (
     <div style={{ margin: '3rem 0', padding: '3rem', background: 'var(--bg-primary)', borderRadius: 'var(--radius)', border: `1px solid ${border}`, backdropFilter: 'blur(20px)' }}>
@@ -81,7 +81,7 @@ export function DesOpsEngineDiagram() {
 export function DesOpsFactoryDiagram() {
   const accent = 'var(--text-accent)' // Slight shift to emphasize "Action/Production"
   const text = 'var(--text-primary)'
-  const border = 'rgba(255, 255, 255, 0.1)'
+  const border = 'var(--border-color)'
 
   const steps = [
     { id: "01", name: "INGEST", desc: "Fact Verification & Core Asset Protocol" },

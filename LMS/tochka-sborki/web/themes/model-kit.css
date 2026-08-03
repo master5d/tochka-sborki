@@ -44,7 +44,7 @@
   --text-secondary: #5a5a6a;
   --text-accent: #0063ab;       /* AA на ВСЕХ фонах: #0070c0 давал 4.13 на bg-secondary */
   --border-color: #d8d2c6;
-  --border-accent: #0077cc40;
+  --border-accent: #0063ab40;   /* держим в паре с --text-accent, иначе рамки тянут старый оттенок */
   --text-on-accent: #ffffff;
   --crit: #c42619;              /* darkened to clear AA for error text on paper */
   --phase-1: #0077cc;

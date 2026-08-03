@@ -37,7 +37,9 @@ export function LessonProse({
         </Link>
       </p>
       <h1 style={{ margin: '.75rem 0 .35rem', fontSize: '1.6rem', color: 'var(--text-primary)' }}>{title}</h1>
-      <p style={{ margin: '0 0 1.75rem', fontSize: '.95rem', lineHeight: 1.55, color: 'var(--text-secondary)', borderLeft: '3px solid var(--text-accent)', paddingLeft: '.8rem' }}>
+      {/* Цель урока — врезка в традиции цитаты: тонкая линия слева, приглушённый
+          акцент. Толстая цветная полоса здесь спорила с заголовком за внимание. */}
+      <p style={{ margin: '0 0 1.75rem', fontSize: '.95rem', lineHeight: 1.55, color: 'var(--text-secondary)', borderLeft: '2px solid var(--border-accent)', paddingLeft: '.9rem' }}>
         {objective}
       </p>
 
