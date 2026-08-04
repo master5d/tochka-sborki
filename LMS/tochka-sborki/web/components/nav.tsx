@@ -82,11 +82,39 @@ export function Nav({ locale: localeProp }: Props = {}) {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
+      gap: '1.25rem',
       position: 'sticky',
       top: 0,
       zIndex: 10,
     }}>
       <style>{`
+        /* Устойчивый макет шапки на любой ширине.
+         *
+         * Раньше правила жили только в брейкпоинте 721-1280, и на широком экране
+         * шапка распирала СТРАНИЦУ: у авторизованного пользователя в английской
+         * версии пунктов больше (My lessons / Profile / Synergems) и слова длиннее,
+         * а служебные переключатели справа занимают ~460px и не сжимаются.
+         * Итог — горизонтальный скролл всего документа (владелец прислал скриншот
+         * на ~1900px: «Certificate» обрезан, полоса прокрутки внизу).
+         *
+         * Теперь переполняется ТОЛЬКО полоса ссылок: она и растягивается, и
+         * ужимается, и прокручивается сама. Страница не едет никогда.
+         */
+        nav > a:first-of-type { flex: 0 0 auto; }
+        nav > div:last-of-type { display: flex; min-width: 0; flex: 1 1 auto; justify-content: flex-end; }
+        .nav-secondary-links {
+          flex: 1 1 auto;
+          min-width: 0;
+          overflow-x: auto;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .nav-secondary-links::-webkit-scrollbar { display: none; }
+        .nav-secondary-links a { white-space: nowrap; }
+        /* Служебные переключатели (язык, тема, режим, вход) не сжимаются в кашу:
+           их ширина предсказуема, ужимать нужно навигацию, а не элементы управления. */
+        nav > div:last-of-type > *:not(.nav-secondary-links) { flex: 0 0 auto; }
+
         @media (max-width: 720px) {
           .nav-secondary-links { display: none !important; }
           .nav-brand-glyph { display: none !important; }
@@ -101,19 +129,11 @@ export function Nav({ locale: localeProp }: Props = {}) {
            переполнялась на 140px и добавляла странице горизонтальный скролл).
            Ужимаем зазоры и кегль, а остаток отдаём в горизонтальную прокрутку
            самой полосы ссылок — страница при этом не едет. */
+        /* Средние экраны: дополнительно ужимаем зазоры и кегль — прокрутка полосы
+           остаётся, но до неё доходит реже. */
         @media (min-width: 721px) and (max-width: 1280px) {
-          .nav-secondary-links {
-            gap: 0.9rem !important;
-            font-size: var(--text-xs);
-            overflow-x: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-          }
-          .nav-secondary-links::-webkit-scrollbar { display: none; }
-          .nav-secondary-links a { white-space: nowrap; }
-          /* правая группа (язык + переключатели) тоже ужимается, иначе шапка
-             остаётся на ~27px шире вьюпорта */
-          nav { padding: 0 1rem !important; }
+          .nav-secondary-links { gap: 0.9rem !important; font-size: var(--text-xs); }
+          nav { padding: 0 1rem !important; gap: 0.75rem !important; }
           nav > div:last-of-type { gap: 0.6rem !important; }
         }
       `}</style>
