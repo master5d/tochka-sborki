@@ -2,15 +2,14 @@ import { describe, it, expect } from 'vitest'
 import { readdirSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { MODULE_SLUGS as CORE, OPTIONAL_MODULE_SLUGS } from './modules'
 
 const here = dirname(fileURLToPath(import.meta.url))      // web/lib/rpg
 const contentDir = join(here, '..', '..', 'content', 'ru') // web/content/ru
 const skinsDir = join(here, 'skins')                        // web/lib/rpg/skins
 
-const MODULE_SLUGS = [
-  '00-kickstart', '01-introduction', '02-setup-guide', '03-stack-selection',
-  '04-prompt-engineering', '05-context-memory', '06-audio-pipeline', '07-tools', '08-agent-engineering',
-]
+// core + optional из канона modules.ts — локальный список разъезжался бы молча
+const MODULE_SLUGS = [...CORE, ...OPTIONAL_MODULE_SLUGS]
 
 function expectedKeys(): string[] {
   const keys: string[] = []
@@ -25,8 +24,8 @@ describe('skin pack unit-framing coverage', () => {
   const keys = expectedKeys()
   const files = readdirSync(skinsDir).filter(f => f.endsWith('.json'))
 
-  it('discovers 39 unit keys', () => {
-    expect(keys.length).toBe(39)
+  it('discovers 44 unit keys', () => {
+    expect(keys.length).toBe(44)
   })
 
   for (const file of files) {

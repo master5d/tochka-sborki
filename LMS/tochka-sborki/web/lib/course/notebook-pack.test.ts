@@ -1,9 +1,10 @@
 import { describe, it, expect } from 'vitest'
-import { PACKS, PROMPT_KIT, VERIFY_CHECKLIST, resolveNotebookPack, resolvePromptKit, resolveChecklist } from './notebook-pack'
+import { INTRO, PACKS, PROMPT_KIT, VERIFY_CHECKLIST, resolveNotebookPack, resolvePromptKit, resolveChecklist } from './notebook-pack'
 import { lintDehustle } from '@/lib/authoring/dehustle'
 
 const allBi = () => {
   const out: { ru: string; en: string }[] = []
+  out.push(...INTRO)
   for (const p of PACKS) {
     out.push(p.title, p.situation, p.sources, ...p.steps)
   }

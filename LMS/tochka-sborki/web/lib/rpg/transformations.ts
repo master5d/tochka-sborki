@@ -1,9 +1,9 @@
-import type { ModuleSlug } from './modules'
+import type { CourseModuleSlug } from './modules'
 import type { Bi, Locale } from './types'
 
 export interface Transformation { from: Bi; to: Bi }
 
-export const MICRO_TRANSFORMATIONS: Record<ModuleSlug, Transformation> = {
+export const MICRO_TRANSFORMATIONS: Record<CourseModuleSlug, Transformation> = {
   '00-kickstart':        { from: { ru: 'теряюсь в терминах ИИ',          en: 'lost in AI jargon' },
                            to:   { ru: 'вижу карту местности',            en: 'I see the lay of the land' } },
   '01-introduction':     { from: { ru: '«ИИ — это про код»',             en: '"AI is about code"' },
@@ -22,12 +22,14 @@ export const MICRO_TRANSFORMATIONS: Record<ModuleSlug, Transformation> = {
                            to:   { ru: 'подключаю инструменты, навыки, хуки', en: 'I plug in tools, skills, hooks' } },
   '08-agent-engineering': { from: { ru: 'делаю всё руками',              en: 'I do everything by hand' },
                            to:   { ru: 'оркеструю агентов под задачу',    en: 'I orchestrate agents for the task' } },
+  '09-ai-notebook':      { from: { ru: 'смотрю часами',                  en: 'watch for hours' },
+                           to:   { ru: 'извлекаю с уликами',             en: 'extract with evidence' } },
 }
 
 export function getTransformation(
   slug: string,
   locale: Locale,
 ): { from: string; to: string } | null {
-  const t = MICRO_TRANSFORMATIONS[slug as ModuleSlug]
+  const t = MICRO_TRANSFORMATIONS[slug as CourseModuleSlug]
   return t ? { from: t.from[locale], to: t.to[locale] } : null
 }

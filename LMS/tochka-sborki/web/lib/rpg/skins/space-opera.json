@@ -36,6 +36,10 @@
     "08-agent-engineering": {
       "ru": "Командный центр флота",
       "en": "Fleet Command Center"
+    },
+    "09-ai-notebook": {
+      "ru": "Навигационный Архив",
+      "en": "Navigation Archive"
     }
   },
   "questTitles": {
@@ -74,6 +78,10 @@
     "08-agent-engineering": {
       "ru": "Оркестрация флота: за пределами промптов",
       "en": "Orchestrating the Fleet: Beyond Prompts"
+    },
+    "09-ai-notebook": {
+      "ru": "Проложить курс по источникам",
+      "en": "Chart a course through sources"
     }
   },
   "units": {
@@ -621,6 +629,76 @@
       "outro": {
         "ru": "Проверка груза в протоколе. Что взято на борт по правилам — останется с кораблём, даже если станция уйдёт с орбиты.",
         "en": "Cargo inspection is in the protocol. What comes aboard by the rules stays with the ship, even if the station leaves orbit."
+      }
+    },
+    "09-ai-notebook/u1-first-notebook": {
+      "intro": {
+        "ru": "На борту перегруз данных. За 15 минут запускаем тетрадку, которая прокладывает маршрут от ответа к источнику.",
+        "en": "The ship is overloaded with data. In 15 minutes we launch a notebook that charts a route from answer to source."
+      },
+      "mentorHint": {
+        "ru": "Координаты источника важнее уверенного голоса навигатора.",
+        "en": "Source coordinates matter more than the navigator’s confident voice."
+      },
+      "outro": {
+        "ru": "Система запущена. Теперь изучим, как она держит курс.",
+        "en": "System launched. Now we study how it holds course."
+      }
+    },
+    "09-ai-notebook/u2-how-it-works": {
+      "intro": {
+        "ru": "Тетрадка сканирует груз: субтитры, PDF, записи. Каждый фрагмент получает координаты в журнале.",
+        "en": "The notebook scans the cargo: subtitles, PDFs, notes. Each fragment gets coordinates in the log."
+      },
+      "mentorHint": {
+        "ru": "Сигнал без координат не ведёт корабль, а сбивает его.",
+        "en": "A signal without coordinates does not guide the ship; it misleads it."
+      },
+      "outro": {
+        "ru": "Навигация понятна. Можно искать зоны риска.",
+        "en": "Navigation is clear. We can search for hazard zones."
+      }
+    },
+    "09-ai-notebook/u3-where-it-lies": {
+      "intro": {
+        "ru": "Опасности курса: пустые источники, ложные цитаты, ответы из общего шума. Проверяем приборами.",
+        "en": "Course hazards: empty sources, false quotes, answers from general noise. We check by instruments."
+      },
+      "mentorHint": {
+        "ru": "Клик по цитате — это сверка координат, а не формальность.",
+        "en": "Clicking a quote is coordinate verification, not ceremony."
+      },
+      "outro": {
+        "ru": "Зоны риска отмечены. Курс к знаниям стал безопаснее.",
+        "en": "Hazard zones are marked. The course to knowledge is safer."
+      }
+    },
+    "09-ai-notebook/u4-formats": {
+      "intro": {
+        "ru": "Иногда нужен отчёт капитану, иногда карта связей, иногда аудио-бриф. Формат выбирается по миссии.",
+        "en": "Sometimes the captain needs a report, sometimes a map of links, sometimes an audio brief. Format follows mission."
+      },
+      "mentorHint": {
+        "ru": "Любой бриф без координат — космический шум.",
+        "en": "Any brief without coordinates is space noise."
+      },
+      "outro": {
+        "ru": "Форматы пристыкованы. Груз можно передавать между палубами без потерь.",
+        "en": "Formats are docked. Cargo can move between decks without loss."
+      }
+    },
+    "09-ai-notebook/u5-practice": {
+      "intro": {
+        "ru": "Финальная миссия: твоя ниша, твои источники, один точный запрос и проверка цитат.",
+        "en": "Final mission: your niche, your sources, one precise query, and citation checks."
+      },
+      "mentorHint": {
+        "ru": "Не летай кругами вокруг планеты. Задай координаты посадки.",
+        "en": "Do not orbit the planet forever. Set landing coordinates."
+      },
+      "outro": {
+        "ru": "Миссия выполнена. Часы просмотра стали навигационной выжимкой с доказательствами.",
+        "en": "Mission complete. Hours of watching became a navigation extract with evidence."
       }
     }
   }

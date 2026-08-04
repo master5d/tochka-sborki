@@ -36,6 +36,10 @@
     "08-agent-engineering": {
       "ru": "Трон Оркестратора",
       "en": "The Orchestrator's Throne"
+    },
+    "09-ai-notebook": {
+      "ru": "Зал Доказанных Свитков",
+      "en": "Hall of Proven Scrolls"
     }
   },
   "questTitles": {
@@ -74,6 +78,10 @@
     "08-agent-engineering": {
       "ru": "Стань Дирижёром: Искусство Agent-инжиниринга!",
       "en": "Become the Conductor: The Art of Agent Engineering!"
+    },
+    "09-ai-notebook": {
+      "ru": "Извлеки Истину из Источников!",
+      "en": "Extract Truth from the Sources!"
     }
   },
   "units": {
@@ -621,6 +629,76 @@
       "outro": {
         "ru": "ВОТ ОНО! Теперь ты видишь подделку насквозь. Учитель, который исчезнет, не заберёт твою силу с собой!",
         "en": "THAT IS IT! Now you see through a fake at a glance. A teacher who vanishes will not take your power with them!"
+      }
+    },
+    "09-ai-notebook/u1-first-notebook": {
+      "intro": {
+        "ru": "Новый свиток открыт! За 15 минут ты создашь тетрадку, которая отвечает не легендами, а цитатами из источников.",
+        "en": "A new scroll opens! In 15 minutes you will create a notebook that answers with source quotes, not legends."
+      },
+      "mentorHint": {
+        "ru": "Сила героя растёт, когда каждый тезис держится на печати источника.",
+        "en": "A hero grows stronger when every claim rests on a source seal."
+      },
+      "outro": {
+        "ru": "Отлично! Первая тетрадка ожила. Теперь узнаем, какая магия держит её ответы на земле.",
+        "en": "Excellent! Your first notebook is alive. Now we learn what magic keeps its answers grounded."
+      }
+    },
+    "09-ai-notebook/u2-how-it-works": {
+      "intro": {
+        "ru": "Пора заглянуть под броню техники: тетрадка читает субтитры, PDF и заметки, а не угадывает твою судьбу.",
+        "en": "Time to look under the technique’s armor: the notebook reads subtitles, PDFs, and notes; it does not guess your fate."
+      },
+      "mentorHint": {
+        "ru": "Не путай голос оракула с источником. Источник должен быть виден.",
+        "en": "Do not confuse an oracle’s voice with a source. The source must be visible."
+      },
+      "outro": {
+        "ru": "Механизм понятен. Ты видишь, где сила тетрадки, а где начинается опасная дымка.",
+        "en": "The mechanism is clear. You see where the notebook is strong and where the dangerous haze begins."
+      }
+    },
+    "09-ai-notebook/u3-where-it-lies": {
+      "intro": {
+        "ru": "Любая техника может дать сбой. Сегодня ты ловишь ложный выпад и требуешь цитату как доказательство.",
+        "en": "Any technique can fail. Today you catch the false strike and demand a quote as proof."
+      },
+      "mentorHint": {
+        "ru": "Ответ без цитаты — это монстр без полоски HP: бить неудобно, доверять нельзя.",
+        "en": "An answer without a quote is a monster with no HP bar: hard to fight, impossible to trust."
+      },
+      "outro": {
+        "ru": "Есть! Ты пробил иллюзию. Теперь пересказ больше не пройдёт под видом знания.",
+        "en": "Yes! You broke the illusion. A retelling can no longer pass as knowledge."
+      }
+    },
+    "09-ai-notebook/u4-formats": {
+      "intro": {
+        "ru": "Тетрадка умеет менять форму: таблица, карта, аудио, слайды. Выбери форму, которая честнее служит задаче.",
+        "en": "The notebook can change form: table, map, audio, slides. Choose the form that serves the task honestly."
+      },
+      "mentorHint": {
+        "ru": "Красивая форма не усиливает слабый источник. Сначала печать, потом сияние.",
+        "en": "A beautiful form does not strengthen a weak source. Seal first, shine later."
+      },
+      "outro": {
+        "ru": "Формы освоены! Теперь каждый артефакт несёт не блеск, а проверяемую силу.",
+        "en": "Forms mastered! Now every artifact carries verifiable power, not just shine."
+      }
+    },
+    "09-ai-notebook/u5-practice": {
+      "intro": {
+        "ru": "Финальная тренировка: собери тетрадку под свою нишу и заставь её отвечать только с уликами.",
+        "en": "Final training: build a notebook for your niche and make it answer only with evidence."
+      },
+      "mentorHint": {
+        "ru": "Настоящий мастер не смотрит весь архив подряд. Он задаёт вопрос и требует след.",
+        "en": "A true master does not watch the whole archive end to end. They ask a question and demand a trace."
+      },
+      "outro": {
+        "ru": "Победа! Ты больше не тонешь в роликах: ты извлекаешь знание с цитатами.",
+        "en": "Victory! You no longer drown in videos: you extract knowledge with quotes."
       }
     }
   }

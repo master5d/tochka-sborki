@@ -36,6 +36,10 @@
     "08-agent-engineering": {
       "ru": "Костяной Собор",
       "en": "The Bone Cathedral"
+    },
+    "09-ai-notebook": {
+      "ru": "Скрипторий Свидетельств",
+      "en": "Scriptorium of Testimony"
     }
   },
   "questTitles": {
@@ -74,6 +78,10 @@
     "08-agent-engineering": {
       "ru": "От prompt'а к легиону: искусство оркестрации",
       "en": "From Prompt to Legion: The Art of Orchestration"
+    },
+    "09-ai-notebook": {
+      "ru": "Сковать конспект на цепях источника",
+      "en": "Bind the digest to its sources"
     }
   },
   "units": {
@@ -621,6 +629,76 @@
       "outro": {
         "ru": "Ты отличаешь подлинник от списка. Знание, добытое так, останется твоим, даже если башня рухнет.",
         "en": "You can tell an original from a copy. Knowledge won this way stays yours even if the tower falls."
+      }
+    },
+    "09-ai-notebook/u1-first-notebook": {
+      "intro": {
+        "ru": "Перед тобой груда фолиантов и шёпота. За 15 минут мы заведём тетрадь, которая отвечает только по отмеченным страницам.",
+        "en": "Before you lies a heap of tomes and whispers. In 15 minutes we open a notebook that answers only from marked pages."
+      },
+      "mentorHint": {
+        "ru": "Шёпот без страницы — приманка. Не бери её.",
+        "en": "A whisper without a page is bait. Do not take it."
+      },
+      "outro": {
+        "ru": "Тетрадь зажглась ровным светом. Теперь узнаем, какие руны держат её в границах.",
+        "en": "The notebook burns with steady light. Now we learn which runes keep it within bounds."
+      }
+    },
+    "09-ai-notebook/u2-how-it-works": {
+      "intro": {
+        "ru": "Магия здесь простая: текст разрезан на фрагменты, каждый фрагмент помнит свой том.",
+        "en": "The magic here is simple: text is cut into fragments, and each fragment remembers its tome."
+      },
+      "mentorHint": {
+        "ru": "Если фрагмент не помнит родословную, он уже проклят.",
+        "en": "If a fragment forgets its lineage, it is already cursed."
+      },
+      "outro": {
+        "ru": "Ты увидел устройство печати. Теперь ложная мудрость будет звучать тише.",
+        "en": "You have seen the seal’s machinery. False wisdom will sound quieter now."
+      }
+    },
+    "09-ai-notebook/u3-where-it-lies": {
+      "intro": {
+        "ru": "Сегодня мы ищем трещины: цитаты, ведущие в пустоту, и выводы, которых нет в манускриптах.",
+        "en": "Today we seek cracks: quotes leading into emptiness and conclusions absent from the manuscripts."
+      },
+      "mentorHint": {
+        "ru": "Не спорь с призраком. Попроси страницу, строку и фразу.",
+        "en": "Do not argue with a phantom. Ask for page, line, and phrase."
+      },
+      "outro": {
+        "ru": "Проклятие снято. Ты отличаешь знание с печатью от голоса из стены.",
+        "en": "The curse is lifted. You can tell sealed knowledge from a voice in the wall."
+      }
+    },
+    "09-ai-notebook/u4-formats": {
+      "intro": {
+        "ru": "Один и тот же свиток может стать картой, таблицей, речью или слайдами. Не всякая форма честна.",
+        "en": "The same scroll can become a map, table, speech, or slides. Not every form is honest."
+      },
+      "mentorHint": {
+        "ru": "Чем пышнее обложка, тем внимательнее ищи цепь к источнику.",
+        "en": "The richer the cover, the harder you look for the chain to the source."
+      },
+      "outro": {
+        "ru": "Формы подчинены. Они больше не прячут пустоту под золотом.",
+        "en": "The forms are subdued. They no longer hide emptiness under gold."
+      }
+    },
+    "09-ai-notebook/u5-practice": {
+      "intro": {
+        "ru": "Финальный обряд: твои источники, твой вопрос, твоя проверка. Тетрадь должна служить, а не пророчествовать.",
+        "en": "Final rite: your sources, your question, your verification. The notebook must serve, not prophesy."
+      },
+      "mentorHint": {
+        "ru": "Смотри не часами, а точечно. Добыча знания требует ножа, не сети.",
+        "en": "Do not watch for hours; strike precisely. Harvesting knowledge needs a knife, not a net."
+      },
+      "outro": {
+        "ru": "Обряд завершён. Ты извлекаешь с уликами и оставляешь тьму без добычи.",
+        "en": "The rite is complete. You extract with evidence and leave the dark empty-handed."
       }
     }
   }

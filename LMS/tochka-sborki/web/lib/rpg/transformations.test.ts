@@ -22,6 +22,17 @@ describe('micro-transformations', () => {
     expect(ru!.to).not.toBe(en!.to)
   })
 
+  it('includes the optional notebook module transformation', () => {
+    expect(getTransformation('09-ai-notebook', 'ru')).toEqual({
+      from: 'смотрю часами',
+      to: 'извлекаю с уликами',
+    })
+    expect(getTransformation('09-ai-notebook', 'en')).toEqual({
+      from: 'watch for hours',
+      to: 'extract with evidence',
+    })
+  })
+
   it('returns null for an unknown slug', () => {
     expect(getTransformation('does-not-exist', 'ru')).toBeNull()
   })

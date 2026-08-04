@@ -36,6 +36,10 @@
     "08-agent-engineering": {
       "ru": "Агентов Хоровод",
       "en": "The Agents' Round Dance"
+    },
+    "09-ai-notebook": {
+      "ru": "Изба с Письменами",
+      "en": "The Hut of Writings"
     }
   },
   "questTitles": {
@@ -74,6 +78,10 @@
     "08-agent-engineering": {
       "ru": "Как водить хоровод систем агентов мудро",
       "en": "Wisely Leading the Round Dance of Agents"
+    },
+    "09-ai-notebook": {
+      "ru": "Вытянуть правду по следу",
+      "en": "Pull truth by the trail"
     }
   },
   "units": {
@@ -621,6 +629,76 @@
       "outro": {
         "ru": "Теперь тебя на базаре не проведёшь. Что своим трудом взял — то и останется, хоть весь торг разъедется.",
         "en": "Now the market cannot fool you. What you took by your own labour stays yours, even after the traders scatter."
+      }
+    },
+    "09-ai-notebook/u1-first-notebook": {
+      "intro": {
+        "ru": "Принесли тебе мешок сказов да записей. За четверть часа заведём тетрадку: спросишь — она покажет, из какого листа ответ.",
+        "en": "You have a sack of tales and records. In a quarter hour we make a notebook: ask, and it shows which leaf the answer came from."
+      },
+      "mentorHint": {
+        "ru": "Сказ без следа — ветер над полем.",
+        "en": "A tale without a trail is wind over a field."
+      },
+      "outro": {
+        "ru": "Тетрадка заведена. Теперь поглядим, как она по следу ходит.",
+        "en": "The notebook is made. Now we see how it follows the trail."
+      }
+    },
+    "09-ai-notebook/u2-how-it-works": {
+      "intro": {
+        "ru": "Хитрость нехитрая: тетрадка режет источник на куски и помнит, где какой лежит.",
+        "en": "The trick is plain: the notebook cuts a source into pieces and remembers where each one lies."
+      },
+      "mentorHint": {
+        "ru": "Память без места — что клад без метки: ищи потом по всему лесу.",
+        "en": "Memory without a place is treasure without a mark: then you search the whole forest."
+      },
+      "outro": {
+        "ru": "Разобрался. Теперь байка от источника отделяется легко.",
+        "en": "You have it. Now a yarn separates from a source easily."
+      }
+    },
+    "09-ai-notebook/u3-where-it-lies": {
+      "intro": {
+        "ru": "Будем ловить, где врёт: говорит складно, а следа к листу нет. Тут и проверка нужна.",
+        "en": "We catch where it lies: it speaks smoothly, but there is no trail to the leaf. That is where checking matters."
+      },
+      "mentorHint": {
+        "ru": "Не верь гладкой речи. Попроси показать клеймо да строку.",
+        "en": "Do not trust smooth speech. Ask for the mark and the line."
+      },
+      "outro": {
+        "ru": "Теперь тебя красивым пересказом не проведёшь. Есть след — есть дело.",
+        "en": "Now a pretty retelling will not fool you. There is a trail, there is a case."
+      }
+    },
+    "09-ai-notebook/u4-formats": {
+      "intro": {
+        "ru": "Можно сделать таблицу, карту, разговор или слайды. Главное — чтоб след не потерялся по дороге.",
+        "en": "You can make a table, map, conversation, or slides. The main thing is not to lose the trail on the way."
+      },
+      "mentorHint": {
+        "ru": "Наряд хорош, пока под ним добротная работа.",
+        "en": "Finery is good only when sound work sits beneath it."
+      },
+      "outro": {
+        "ru": "Формы примерены. Теперь выбираешь не что краше, а что честнее.",
+        "en": "The forms are fitted. Now you choose not what is prettier, but what is more honest."
+      }
+    },
+    "09-ai-notebook/u5-practice": {
+      "intro": {
+        "ru": "Бери свою тему и свои источники. Не смотри до темноты: спроси по делу и требуй след.",
+        "en": "Take your topic and your sources. Do not watch until dark: ask the real question and demand the trail."
+      },
+      "mentorHint": {
+        "ru": "Умный хозяин не перерывает весь амбар, когда знает, что ищет.",
+        "en": "A wise keeper does not rummage through the whole barn when they know what they seek."
+      },
+      "outro": {
+        "ru": "Готово. Из долгого просмотра вышла добыча с уликами.",
+        "en": "Done. Long viewing turned into findings with evidence."
       }
     }
   }

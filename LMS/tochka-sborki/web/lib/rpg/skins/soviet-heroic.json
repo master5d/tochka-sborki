@@ -36,6 +36,10 @@
     "08-agent-engineering": {
       "ru": "Генштаб",
       "en": "The General Staff"
+    },
+    "09-ai-notebook": {
+      "ru": "Бюро Источников",
+      "en": "Bureau of Sources"
     }
   },
   "questTitles": {
@@ -74,6 +78,10 @@
     "08-agent-engineering": {
       "ru": "Оркестровать бригаду agent'ов",
       "en": "Orchestrate a Brigade of Agents"
+    },
+    "09-ai-notebook": {
+      "ru": "Организовать тетрадь доказательств",
+      "en": "Organize the evidence notebook"
     }
   },
   "units": {
@@ -621,6 +629,76 @@
       "outro": {
         "ru": "Приёмка освоена. Теперь ты берёшь в работу только то, что не рассыплется, когда поставщик закроется.",
         "en": "Inspection mastered. Now you take into work only what will not crumble when the supplier shuts down."
+      }
+    },
+    "09-ai-notebook/u1-first-notebook": {
+      "intro": {
+        "ru": "Товарищ, перед нами массив материалов. За 15 минут разворачиваем тетрадь, где каждый вывод проходит по документу.",
+        "en": "Comrade, we have a body of materials. In 15 minutes we deploy a notebook where every conclusion runs through a document."
+      },
+      "mentorHint": {
+        "ru": "Вывод без документа в работу не принимается.",
+        "en": "A conclusion without a document is not accepted into work."
+      },
+      "outro": {
+        "ru": "Тетрадь введена в строй. Переходим к устройству участка.",
+        "en": "The notebook is commissioned. We move to the section’s operating principle."
+      }
+    },
+    "09-ai-notebook/u2-how-it-works": {
+      "intro": {
+        "ru": "Устройство простое: источник разбит, промаркирован и возвращается в ответе как ссылка на место.",
+        "en": "The device is simple: the source is split, marked, and returned in the answer as a link to place."
+      },
+      "mentorHint": {
+        "ru": "Маркировка важнее бодрого доклада.",
+        "en": "Marking matters more than a brisk report."
+      },
+      "outro": {
+        "ru": "Схема освоена. Теперь проверим участок на брак.",
+        "en": "The scheme is mastered. Now we inspect the section for defects."
+      }
+    },
+    "09-ai-notebook/u3-where-it-lies": {
+      "intro": {
+        "ru": "Проверка качества: цитата должна вести к месту, число должно сходиться, отсутствующий факт не выдумывается.",
+        "en": "Quality control: the quote must lead to the place, the number must match, the absent fact must not be invented."
+      },
+      "mentorHint": {
+        "ru": "Нет отметки ОТК — нет доверия к изделию.",
+        "en": "No QA stamp, no trust in the article."
+      },
+      "outro": {
+        "ru": "Брак выявлен и отсечён. Тетрадь работает по нормативу.",
+        "en": "Defects identified and removed. The notebook works to standard."
+      }
+    },
+    "09-ai-notebook/u4-formats": {
+      "intro": {
+        "ru": "Формат выдачи выбирается под задачу: таблица для сравнения, карта для связей, аудио для обзора.",
+        "en": "Output format is chosen for the task: table for comparison, map for links, audio for overview."
+      },
+      "mentorHint": {
+        "ru": "Форма отчёта не отменяет ссылку на первичный документ.",
+        "en": "Report form does not cancel the reference to the primary document."
+      },
+      "outro": {
+        "ru": "Форматы распределены. Доклад можно передавать без потери доказательств.",
+        "en": "Formats assigned. The report can be handed over without losing evidence."
+      }
+    },
+    "09-ai-notebook/u5-practice": {
+      "intro": {
+        "ru": "Финальная практика: берём твою тему, комплектуем источники, выдаём результат с цитатами.",
+        "en": "Final practice: we take your topic, assemble sources, and produce a result with quotes."
+      },
+      "mentorHint": {
+        "ru": "Не трать смену на просмотр подряд. Работай вопросом и актом проверки.",
+        "en": "Do not spend the shift watching end to end. Work by question and inspection act."
+      },
+      "outro": {
+        "ru": "Задание выполнено. Часы просмотра превращены в проверяемую выжимку.",
+        "en": "Assignment complete. Hours of watching have become a verifiable extract."
       }
     }
   }

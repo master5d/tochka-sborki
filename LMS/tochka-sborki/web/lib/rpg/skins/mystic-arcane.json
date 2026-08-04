@@ -36,6 +36,10 @@
     "08-agent-engineering": {
       "ru": "Совет Архимагов",
       "en": "The Archmages' Council"
+    },
+    "09-ai-notebook": {
+      "ru": "Обсерватория Источников",
+      "en": "Observatory of Sources"
     }
   },
   "questTitles": {
@@ -74,6 +78,10 @@
     "08-agent-engineering": {
       "ru": "От заклинаний к великим ритуалам",
       "en": "From Spells to Grand Rituals"
+    },
+    "09-ai-notebook": {
+      "ru": "Настроить тетрадь различения",
+      "en": "Tune the notebook of discernment"
     }
   },
   "units": {
@@ -621,6 +629,76 @@
       "outro": {
         "ru": "Твой взор различает подлинное от наведённого. Это и есть первая ступень истинного различения.",
         "en": "Your sight now parts the genuine from the glamoured. This is the first step of true discernment."
+      }
+    },
+    "09-ai-notebook/u1-first-notebook": {
+      "intro": {
+        "ru": "Собери созвездие источников. За 15 минут тетрадь начнёт отвечать, указывая звезду, откуда взят свет.",
+        "en": "Gather a constellation of sources. In 15 minutes the notebook begins answering while pointing to the star that gave the light."
+      },
+      "mentorHint": {
+        "ru": "Истинное сияние имеет координаты.",
+        "en": "True radiance has coordinates."
+      },
+      "outro": {
+        "ru": "Созвездие собрано. Теперь различим, как свет проходит через инструмент.",
+        "en": "The constellation is gathered. Now we discern how light passes through the instrument."
+      }
+    },
+    "09-ai-notebook/u2-how-it-works": {
+      "intro": {
+        "ru": "Тетрадь не видит весь космос сразу: она ищет близкие фрагменты и складывает из них ответ.",
+        "en": "The notebook does not see the whole cosmos at once: it finds nearby fragments and composes an answer from them."
+      },
+      "mentorHint": {
+        "ru": "Где нет фрагмента, там начинается гадание.",
+        "en": "Where there is no fragment, divination begins."
+      },
+      "outro": {
+        "ru": "Принцип ясен. Теперь ты чувствуешь границу между знанием и наведённым блеском.",
+        "en": "The principle is clear. Now you feel the boundary between knowledge and glamoured shine."
+      }
+    },
+    "09-ai-notebook/u3-where-it-lies": {
+      "intro": {
+        "ru": "Проверка — это ритуал заземления. Кликни цитату и посмотри, стоит ли под ней земля.",
+        "en": "Verification is a grounding ritual. Click the quote and see whether earth stands beneath it."
+      },
+      "mentorHint": {
+        "ru": "Тезис без опоры растворяется в эфире.",
+        "en": "A claim without support dissolves into the aether."
+      },
+      "outro": {
+        "ru": "Ритуал сработал. Иллюзии тускнеют, источники остаются.",
+        "en": "The ritual worked. Illusions dim; sources remain."
+      }
+    },
+    "09-ai-notebook/u4-formats": {
+      "intro": {
+        "ru": "Карты, таблицы, аудио и слайды — разные линзы. Подбери линзу, которая не искажает источник.",
+        "en": "Maps, tables, audio, and slides are different lenses. Choose the lens that does not distort the source."
+      },
+      "mentorHint": {
+        "ru": "Линза полезна, пока не выдаёт свой блеск за свет звезды.",
+        "en": "A lens helps only while it does not pass its own shine off as starlight."
+      },
+      "outro": {
+        "ru": "Линзы настроены. Теперь форма усиливает различение, а не туман.",
+        "en": "The lenses are tuned. Form now strengthens discernment, not fog."
+      }
+    },
+    "09-ai-notebook/u5-practice": {
+      "intro": {
+        "ru": "Приложи практику к своей области: источники, вопрос, цитаты, проверка. Так тетрадь становится рабочим прибором.",
+        "en": "Apply the practice to your field: sources, question, quotes, verification. That is how the notebook becomes an instrument."
+      },
+      "mentorHint": {
+        "ru": "Не вращай небесную сферу бесконечно. Наведи трубу на нужную звезду.",
+        "en": "Do not spin the celestial sphere forever. Aim the tube at the needed star."
+      },
+      "outro": {
+        "ru": "Прибор настроен. Ты извлекаешь знание с координатами.",
+        "en": "The instrument is tuned. You extract knowledge with coordinates."
       }
     }
   }

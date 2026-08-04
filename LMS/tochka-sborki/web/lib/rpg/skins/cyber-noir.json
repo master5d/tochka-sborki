@@ -36,6 +36,10 @@
     "08-agent-engineering": {
       "ru": "Штаб Синдиката",
       "en": "The Syndicate HQ"
+    },
+    "09-ai-notebook": {
+      "ru": "Архив Улик",
+      "en": "Evidence Archive"
     }
   },
   "questTitles": {
@@ -74,6 +78,10 @@
     "08-agent-engineering": {
       "ru": "Заставь своих agent'ов говорить друг с другом.",
       "en": "Make your agents talk to each other."
+    },
+    "09-ai-notebook": {
+      "ru": "Вытащить факты из шума.",
+      "en": "Pull facts out of the noise."
     }
   },
   "units": {
@@ -621,6 +629,76 @@
       "outro": {
         "ru": "Ты научился читать метаданные раньше рекламы. В этом городе это разница между оперативником и туристом.",
         "en": "You have learned to read metadata before advertising. In this city that is the difference between an operative and a tourist."
+      }
+    },
+    "09-ai-notebook/u1-first-notebook": {
+      "intro": {
+        "ru": "Клиент принёс гору записей. За 15 минут поднимем тетрадку, где каждый ответ оставляет след в деле.",
+        "en": "A client brought a pile of records. In 15 minutes we raise a notebook where every answer leaves a trace in the case file."
+      },
+      "mentorHint": {
+        "ru": "Нет следа — нет факта. В этом городе иначе не выживают.",
+        "en": "No trace, no fact. That is how you survive in this city."
+      },
+      "outro": {
+        "ru": "Досье открыто. Теперь посмотрим, как машина привязывает слова к уликам.",
+        "en": "The dossier is open. Now we inspect how the machine ties words to evidence."
+      }
+    },
+    "09-ai-notebook/u2-how-it-works": {
+      "intro": {
+        "ru": "Под капотом всё прозаично: индексы, фрагменты, субтитры, ссылки. Никакой мистики, только цепочка хранения.",
+        "en": "Under the hood it is plain work: indexes, chunks, subtitles, links. No mysticism, just custody chain."
+      },
+      "mentorHint": {
+        "ru": "Спроси не «что она сказала», а «из какого пакета данных это пришло».",
+        "en": "Ask not “what did it say,” but “which data packet did this come from.”"
+      },
+      "outro": {
+        "ru": "Цепочка понятна. Значит, её можно проверять и ломать тестами.",
+        "en": "The chain is clear. That means you can verify it and break-test it."
+      }
+    },
+    "09-ai-notebook/u3-where-it-lies": {
+      "intro": {
+        "ru": "Теперь ловим ложь: уверенный тон, пустая ссылка, цитата не туда. Классика поддельных дел.",
+        "en": "Now we catch lies: confident tone, empty link, citation to the wrong place. Classic forged-case behavior."
+      },
+      "mentorHint": {
+        "ru": "Кликаешь цитату. Если она не приводит на место преступления, отчёт в корзину.",
+        "en": "Click the quote. If it does not lead to the scene, the report goes in the bin."
+      },
+      "outro": {
+        "ru": "Подделки вскрыты. Тетрадка остаётся инструментом, а не свидетелем без проверки.",
+        "en": "Forgeries exposed. The notebook stays a tool, not an unchecked witness."
+      }
+    },
+    "09-ai-notebook/u4-formats": {
+      "intro": {
+        "ru": "Отчёт, таблица, аудио, слайды — разные оболочки одного дела. Выбирай ту, где улика не теряется.",
+        "en": "Report, table, audio, slides: different wrappers for one case. Choose the one where evidence does not disappear."
+      },
+      "mentorHint": {
+        "ru": "Формат без ссылок — красивый постер на стене участка. Пользы мало.",
+        "en": "A format without links is a pretty poster on the precinct wall. Not much use."
+      },
+      "outro": {
+        "ru": "Форматы прошли проверку. Теперь дело можно отдавать дальше без потери следов.",
+        "en": "Formats passed inspection. Now the case can move on without losing traces."
+      }
+    },
+    "09-ai-notebook/u5-practice": {
+      "intro": {
+        "ru": "Берём твою нишу и собираем рабочее досье: вопрос, источники, цитаты, проверка.",
+        "en": "We take your niche and assemble a working dossier: question, sources, quotes, verification."
+      },
+      "mentorHint": {
+        "ru": "Не смотри камеры всю ночь. Поставь вопрос и вытащи нужные кадры.",
+        "en": "Do not watch footage all night. Ask the question and pull the frames you need."
+      },
+      "outro": {
+        "ru": "Дело закрыто: из часов просмотра получился короткий отчёт с уликами.",
+        "en": "Case closed: hours of viewing became a short report with evidence."
       }
     }
   }

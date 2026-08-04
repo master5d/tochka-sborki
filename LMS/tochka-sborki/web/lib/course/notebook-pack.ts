@@ -23,6 +23,21 @@ export interface NotebookPack {
   steps: Bi[]
 }
 
+export const INTRO: Bi[] = [
+  {
+    ru: 'Source-grounded тетрадка — это конспект, где ответ привязан к загруженным источникам: видео, PDF, статьям, заметкам. Нормальный результат не просто звучит убедительно, а ведёт цитатой в точку источника.',
+    en: 'A source-grounded notebook is a digest tied to the sources you upload: videos, PDFs, articles, notes. A useful answer does not just sound convincing; it points back to the exact source with a quote.',
+  },
+  {
+    ru: 'Gemini Notebook, бывший NotebookLM, — удобный референс такого инструмента. Для этой страницы бесплатного тира достаточно: нужна не магия, а тетрадка, которая умеет читать твои источники и показывать, откуда взяла тезис.',
+    en: 'Gemini Notebook, formerly NotebookLM, is a useful reference for this kind of tool. The free tier is enough for this page: you need a notebook that can read your sources and show where each point came from.',
+  },
+  {
+    ru: 'Если отдельной тетрадки нет, промпты работают и в обычном чате с приложенными файлами. Разница только в дисциплине: каждый вывод проси подкрепить цитатой, иначе это пересказ без проверки.',
+    en: 'If you do not have a separate notebook tool, the prompts also work in a regular chat with attached files. The discipline is the same: ask for a quote behind every conclusion, otherwise it is an unchecked retelling.',
+  },
+]
+
 export const PACKS: NotebookPack[] = [
   {
     id: 'youtube-playlist',
