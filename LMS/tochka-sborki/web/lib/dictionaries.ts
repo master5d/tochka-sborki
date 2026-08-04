@@ -248,10 +248,10 @@ export const dictionaries: Record<Locale, Dictionary> = {
     forWhoLabel: 'Для кого',
     forWhoHeading: 'Этот курс для тебя, если...',
     forWho: [
-      { title: 'Хочешь понять AI изнутри', body: 'Не просто пользоваться ChatGPT, а строить с ним — pipeline’ы, агентов, автоматизации.' },
-      { title: 'Уже пробовал, но не систематизировал', body: 'Промпты работают хаотично. Хочешь выстроить процесс, который масштабируется.' },
-      { title: 'Строишь AI-продукт', body: 'Нужен практический фундамент: Claude Code, MCP, агенты, деплой — без воды.' },
-      { title: 'Ценишь суверенитет', body: 'Walk-away экономика, open-source стек, никаких lock-in платформ.' },
+      { title: 'Читаешь про ИИ, но не пробовал', body: 'Подписан на каналы, знаешь слова «агент» и «промпт». Год чтения даёт ориентацию, но не умение: без своих рук уверенность почти не растёт. Начни с одного дела — страница «попробовать» открыта без записи.' },
+      { title: 'Понимаешь зачем, не знаешь как', body: 'Самый частый случай. Ты уже видел, что ИИ полезен, но между «читаю про агентов» и «строю агентов» не хватает ступеньки. Этот курс — она и есть.' },
+      { title: 'Упираешься не в знания, а в доступ', body: 'Сервис не открывается, оплата не проходит. Это не твоя некомпетентность и не повод бросать: в курсе есть отдельный маршрут — установка через cloud-relay и суверенный стек на своей машине.' },
+      { title: 'Уже строишь и ищешь равных', body: 'Гайды для начинающих тебе не нужны. Нужен разговор с теми, кто тоже строит: синергемы, разборы и общий контур вместо очередного обзора нейросетей.' },
     ],
     forWhoTagline: 'Если ты строишь AI во благо, а не чтобы урвать — ты дома. Я учу осознанных людей строить решения, которые делают мир лучше.',
     chatVsSystem: {
@@ -516,10 +516,10 @@ export const dictionaries: Record<Locale, Dictionary> = {
     forWhoLabel: 'Who it’s for',
     forWhoHeading: 'This course is for you if...',
     forWho: [
-      { title: 'You want to understand AI from the inside', body: 'Not just use ChatGPT — build with it: pipelines, agents, automation.' },
-      { title: 'You’ve tried but it’s not systematic', body: 'Prompts work hit-or-miss. You want a process that scales.' },
-      { title: 'You’re building an AI product', body: 'You need a practical foundation: Claude Code, MCP, agents, deploys — no fluff.' },
-      { title: 'You value sovereignty', body: 'Walk-away economics, open-source stack, no platform lock-in.' },
+      { title: 'You read about AI but never tried it', body: 'You follow the channels and know the words: "agent", "prompt". A year of reading gives orientation, not skill: without your own hands, confidence barely moves. Start with one real task — the try-it page is open, no signup.' },
+      { title: 'You know why, not how', body: 'The most common case. You have seen that AI is useful, but between "reading about agents" and "building agents" a step is missing. This course is that step.' },
+      { title: 'Your wall is access, not knowledge', body: 'The service will not open, the payment will not go through. That is not incompetence and not a reason to quit: the course has its own route — a cloud relay install and a sovereign stack on your own machine.' },
+      { title: 'You already build and want peers', body: 'Beginner guides are not what you need. You need a conversation with people who also build: synergems, teardowns and a shared circuit instead of one more roundup of neural nets.' },
     ],
     forWhoTagline: 'If you build AI for good, not to grab — you’re home. I teach conscious people to build solutions that make the world better.',
     chatVsSystem: {

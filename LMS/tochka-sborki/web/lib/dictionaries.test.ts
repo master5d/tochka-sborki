@@ -38,3 +38,44 @@ describe('value-clarity dictionary parity (fb_8423715c58e2)', () => {
     }
   })
 })
+
+/**
+ * Блок «Для кого» описывает СТАДИИ пути, а не мотивы: где человек сейчас
+ * находится, а не почему он пришёл. Рамка взята из чужого исследования
+ * аудитории ИИ-каналов — но только рамка: цифры оттуда в курс не переносились,
+ * потому что в источнике нет ни автора, ни ссылки на само исследование, а
+ * модуль 0 учит проверять источник по автору и дате.
+ */
+describe('«Для кого» — стадии пути', () => {
+  for (const locale of ['ru', 'en'] as const) {
+    const t = getDictionary(locale)
+
+    it(`${locale}: четыре стадии, каждая с внятным описанием`, () => {
+      expect(t.forWho).toHaveLength(4)
+      for (const item of t.forWho) {
+        expect(item.title.length).toBeGreaterThan(10)
+        expect(item.body.length, `${item.title}: описание слишком куцее`).toBeGreaterThan(80)
+      }
+    })
+
+    it(`${locale}: ядро аудитории названо — «понимаю зачем, не знаю как»`, () => {
+      const bodies = t.forWho.map((i) => `${i.title} ${i.body}`).join(' ').toLowerCase()
+      expect(bodies).toMatch(/не знаешь как|know why, not how/)
+      expect(bodies, 'нет метафоры ступеньки между чтением и делом').toMatch(/ступеньк\w*|a step is missing/)
+    })
+
+    it(`${locale}: стадия «упёрся в доступ» не забыта`, () => {
+      // Этого сегмента нет в западных моделях, а у курса под него есть
+      // отдельный маршрут: cloud-relay и суверенный стек.
+      const bodies = t.forWho.map((i) => `${i.title} ${i.body}`).join(' ').toLowerCase()
+      expect(bodies).toMatch(/доступ|access/)
+      expect(bodies).toMatch(/cloud-relay|cloud relay/)
+    })
+
+    it(`${locale}: в блоке нет чужих цифр`, () => {
+      // Проценты из неатрибутированного исследования сюда попасть не должны.
+      const bodies = t.forWho.map((i) => i.body).join(' ')
+      expect(bodies, 'появился процент из чужих данных').not.toMatch(/\d+\s*%/)
+    })
+  }
+})

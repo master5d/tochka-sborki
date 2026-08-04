@@ -91,6 +91,10 @@ const INTRO: Bi[] = [
     ru: 'Копируй по шагу, вставляй в агента, читай что он отвечает. Курс тут не нужен: если сработает — ты сам поймёшь, зачем идти дальше. Если не сработает — ты потерял двадцать минут и узнал границу.',
     en: 'Copy one step at a time, paste it into the agent, read what comes back. You do not need the course for this: if it works, you will see for yourself why to go further. If it does not, you spent twenty minutes and learned where the edge is.',
   },
+  {
+    ru: 'Почему сразу руками, а не «сначала почитаю». Чтение про ИИ даёт ориентацию, но не умение: можно год листать каналы и остаться там же, где начал. Уверенность растёт от сделанного, а не от прочитанного, — поэтому здесь нет ни одной строки теории.',
+    en: 'Why hands first, rather than "let me read up on it". Reading about AI gives orientation, not skill: you can scroll the channels for a year and end up where you started. Confidence grows from what you did, not from what you read — which is why there is not a single line of theory here.',
+  },
 ]
 
 const NOT_PROGRAMMING: { heading: Bi; body: Bi[] } = {
