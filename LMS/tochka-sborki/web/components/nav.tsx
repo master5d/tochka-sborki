@@ -4,13 +4,11 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { getDictionary, type Locale } from '@/lib/dictionaries'
-import { detectOs, readStoredOs, storeOs } from '@/lib/os-pref'
+import { detectOs, readStoredOs, storeOs, type Os } from '@/lib/os-pref'
 import { activeEasterEgg, type EasterEgg } from '@/lib/easter-eggs'
-import { ThemeToggle } from '@/components/theme-toggle'
-import { RpgModeToggle } from '@/components/rpg-mode-toggle'
-import { LiteToggle } from '@/components/lite-toggle'
 import { useRpgMode } from '@/lib/use-rpg-mode'
 import { SkipLink } from '@/components/skip-link'
+import { SettingsMenu } from '@/components/settings-menu'
 
 interface Props { locale?: Locale }
 
@@ -22,7 +20,7 @@ export function Nav({ locale: localeProp }: Props = {}) {
   const { plain } = useRpgMode(locale)
 
   const [email, setEmail] = useState<string | null>(null)
-  const [os, setOs] = useState<string | null>(null)
+  const [os, setOs] = useState<Os | null>(null)
   // Date-driven easter egg — computed client-side to avoid SSR/hydration date drift.
   const [egg, setEgg] = useState<EasterEgg | null>(null)
 
@@ -171,43 +169,17 @@ export function Nav({ locale: localeProp }: Props = {}) {
           {otherLocale === 'en' ? 'EN' : 'RU'}
         </Link>
 
-        <ThemeToggle locale={locale} />
+        {/* Тема, режим подачи, экономия трафика и выбор системы свёрнуты в одну
+            кнопку: это настройки, их трогают однажды, а места они занимали
+            больше, чем вся навигация курса (~460px из шапки). */}
+        <SettingsMenu
+          locale={locale}
+          os={os}
+          onToggleOs={toggleOs}
+          osTitle={t.nav.osTitle}
+          osLabel={os ? t.nav.osCurrent(os) : t.nav.osTitle}
+        />
 
-        <RpgModeToggle locale={locale} />
-
-        <LiteToggle locale={locale} />
-
-        {os && (
-          <button
-            onClick={toggleOs}
-            title={t.nav.osTitle}
-            aria-label={t.nav.osCurrent(os)}
-            style={{
-              display: 'flex',
-              background: 'var(--bg-surface)',
-              border: '1px solid var(--border-color)',
-              borderRadius: '20px',
-              overflow: 'hidden',
-              cursor: 'pointer',
-              padding: 0,
-              fontFamily: 'var(--font-mono)',
-              fontSize: 'var(--text-xs)',
-            }}
-          >
-            <span style={{
-              padding: '3px 8px',
-              background: os === 'mac' ? 'var(--text-accent)' : 'transparent',
-              color: os === 'mac' ? 'var(--text-on-accent)' : 'var(--text-secondary)',
-              fontWeight: os === 'mac' ? 700 : 400,
-            }}>🍎</span>
-            <span style={{
-              padding: '3px 8px',
-              background: os === 'windows' ? 'var(--text-accent)' : 'transparent',
-              color: os === 'windows' ? 'var(--text-on-accent)' : 'var(--text-secondary)',
-              fontWeight: os === 'windows' ? 700 : 400,
-            }}>🪟</span>
-          </button>
-        )}
         {email ? (
           <>
             <span style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)' }}>
