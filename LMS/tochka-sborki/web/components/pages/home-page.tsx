@@ -138,6 +138,18 @@ export function HomePage({ locale }: Props) {
             {t.hero.cta}
           </a>
           <HeroSecondaryCta locale={locale} />
+          {/* Третий путь для сомневающегося: не «войти» и не «программа»,
+              а сделать одно дело своими руками до всякой записи. */}
+          <Link href={`${locale === 'en' ? '/en' : ''}/try/`} style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.875rem',
+            color: 'var(--text-secondary)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            textDecoration: 'none',
+          }}>
+            {t.hero.ctaTry}
+          </Link>
         </div>
       </section>
 

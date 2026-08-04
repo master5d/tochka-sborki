@@ -35,6 +35,8 @@ export type Dictionary = {
     cta: string
     ctaSecondary: string
     ctaSecondaryAuthed: string
+    /** Для тех, кто ещё не решился: открытая страница /try, без записи и почты. */
+    ctaTry: string
   }
   forWhoLabel: string
   forWhoHeading: string
@@ -241,6 +243,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       cta: 'Программа ↓',
       ctaSecondary: '→ Войти',
       ctaSecondaryAuthed: '→ Продолжить курс',
+      ctaTry: '→ Сначала попробовать',
     },
     forWhoLabel: 'Для кого',
     forWhoHeading: 'Этот курс для тебя, если...',
@@ -508,6 +511,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       cta: 'See program ↓',
       ctaSecondary: '→ Sign in',
       ctaSecondaryAuthed: '→ Continue course',
+      ctaTry: '→ Try it first',
     },
     forWhoLabel: 'Who it’s for',
     forWhoHeading: 'This course is for you if...',
