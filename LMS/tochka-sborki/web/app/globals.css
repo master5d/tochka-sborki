@@ -41,7 +41,19 @@ pre, code {
   font-weight: 600;
   border-radius: 0 0 6px 0;
 }
-.skip-link:focus { left: 0; }
+/* При фокусе ссылка встаёт В ПОТОК, а не поверх шапки.
+   Раньше она была absolute поверх и закрывала собой логотип и первые пункты
+   меню — человек, идущий с клавиатуры, терял из виду ровно ту навигацию,
+   мимо которой ссылка предлагает перепрыгнуть. Теперь шапка съезжает вниз
+   на высоту полосы, и видно и то, и другое. */
+.skip-link:focus {
+  position: static;
+  display: block;
+  left: auto;
+  width: 100%;
+  border-radius: 0;
+  text-align: left;
+}
 
 /* Visible keyboard focus indicator (keyboard only, not mouse clicks) */
 :focus-visible {

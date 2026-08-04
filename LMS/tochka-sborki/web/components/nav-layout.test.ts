@@ -50,3 +50,32 @@ describe('макет шапки не даёт странице горизонт�
     expect(NAV).toMatch(/\.nav-secondary-links a\s*\{[\s\S]*?white-space:\s*nowrap/)
   })
 })
+
+/**
+ * Находки со скриншота владельца (вид вошедшего, /support/, ~1900px).
+ */
+describe('шапка вошедшего пользователя', () => {
+  const CSS = readFileSync(join(HERE, '..', 'app', 'globals.css'), 'utf8')
+
+  it('ссылка «перейти к содержимому» не накрывает шапку', () => {
+    // Была absolute поверх и закрывала логотип с первыми пунктами: человек,
+    // идущий с клавиатуры, терял из виду ту самую навигацию, мимо которой
+    // ссылка предлагает перепрыгнуть.
+    const focus = /\.skip-link:focus\s*\{[\s\S]*?\}/.exec(CSS)?.[0] ?? ''
+    expect(focus, 'нет правила для .skip-link:focus').not.toBe('')
+    expect(focus, 'ссылка снова всплывает поверх шапки').toMatch(/position:\s*static/)
+  })
+
+  it('в шапке показывается часть адреса до @, полный — в подсказке', () => {
+    // Полный адрес занимал 158px и выдавливал «Сертификат» за край полосы.
+    expect(NAV).toMatch(/email\.split\('@'\)\[0\]/)
+    expect(NAV).toMatch(/title=\{email\}/)
+    expect(NAV).toMatch(/textOverflow:\s*'ellipsis'/)
+  })
+
+  it('край полосы затухает, когда пункты не помещаются', () => {
+    // Обрезанное слово должно читаться как «есть продолжение», а не как
+    // сломанная вёрстка.
+    expect(NAV).toMatch(/mask-image:\s*linear-gradient/)
+  })
+})

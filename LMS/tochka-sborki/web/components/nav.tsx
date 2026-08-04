@@ -109,6 +109,13 @@ export function Nav({ locale: localeProp }: Props = {}) {
         }
         .nav-secondary-links::-webkit-scrollbar { display: none; }
         .nav-secondary-links a { white-space: nowrap; }
+        /* Когда пункты не помещаются, край полосы затухает — обрезанное слово
+           читается как «здесь есть продолжение», а не как поломка вёрстки
+           (на скриншоте владельца «Сертификат» обрывался без всякого намёка). */
+        .nav-secondary-links {
+          mask-image: linear-gradient(to right, #000 calc(100% - 1.5rem), transparent 100%);
+          -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 1.5rem), transparent 100%);
+        }
         /* Служебные переключатели (язык, тема, режим, вход) не сжимаются в кашу:
            их ширина предсказуема, ужимать нужно навигацию, а не элементы управления. */
         nav > div:last-of-type > *:not(.nav-secondary-links) { flex: 0 0 auto; }
@@ -182,8 +189,18 @@ export function Nav({ locale: localeProp }: Props = {}) {
 
         {email ? (
           <>
-            <span style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)' }}>
-              {email}
+            {/* Полный адрес занимал в шапке 158px и выдавливал «Сертификат»
+                за край. Показываем часть до @ (этого хватает, чтобы понять,
+                под кем вошёл), полный — в подсказке и для скринридера. */}
+            <span
+              title={email}
+              style={{
+                color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)',
+                fontSize: 'var(--text-xs)', maxWidth: '12ch', overflow: 'hidden',
+                textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+              }}
+            >
+              {email.split('@')[0]}
             </span>
             <button
               onClick={handleLogout}
