@@ -8,7 +8,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const t = getLesson(slug, 'en')
-  return t ? { title: t.metaTitle, description: t.metaDescription } : {}
+  // Уроки за admission-гейтом: индекс курса индексируется, уроки — нет.
+  return t ? { title: t.metaTitle, description: t.metaDescription, robots: { index: false } } : {}
 }
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {

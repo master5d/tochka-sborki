@@ -5,10 +5,9 @@ export const dynamic = 'force-static'
 
 const SITE = 'https://academy.synergify.com'
 
-import { LESSONS } from '../lib/course/living-practice'
-
-/** Публичные страницы академии; RU канон, EN — альтернатива через hreflang. */
-const PATHS: string[] = ['', 'pravila', 'praktika', ...LESSONS.map((l) => `praktika/${l.slug}`)]
+/** Публичные страницы академии; RU канон, EN — альтернатива через hreflang.
+ *  Уроки /praktika/<slug>/ за admission-гейтом — в sitemap не попадают (noindex). */
+const PATHS: string[] = ['', 'pravila', 'praktika']
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return PATHS.map((path) => {

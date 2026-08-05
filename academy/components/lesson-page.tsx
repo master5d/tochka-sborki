@@ -1,5 +1,6 @@
 import type { Locale } from '../lib/registry'
 import { getLesson } from '../lib/course/living-practice'
+import { AdmissionGate } from './admission-gate'
 
 interface Props { locale: Locale; slug: string }
 
@@ -27,17 +28,19 @@ export function LessonPage({ locale, slug }: Props) {
           {t.title}
         </h1>
 
-        {t.prose.map((p, i) => (
-          <p key={i} style={{ color: 'var(--text-secondary)', lineHeight: 1.75, fontSize: 'var(--text-base)', marginBottom: '1.1rem' }}>{p}</p>
-        ))}
+        <AdmissionGate locale={locale}>
+          {t.prose.map((p, i) => (
+            <p key={i} style={{ color: 'var(--text-secondary)', lineHeight: 1.75, fontSize: 'var(--text-base)', marginBottom: '1.1rem' }}>{p}</p>
+          ))}
 
-        {t.next && (
-          <p style={{ marginTop: '3rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-soft)' }}>
-            <a href={`${base}${t.next.slug}/`} style={{ color: 'var(--text-primary)', fontWeight: 600, textDecoration: 'none' }}>
-              {String(t.index + 1).padStart(2, '0')} · {t.next.title} →
-            </a>
-          </p>
-        )}
+          {t.next && (
+            <p style={{ marginTop: '3rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-soft)' }}>
+              <a href={`${base}${t.next.slug}/`} style={{ color: 'var(--text-primary)', fontWeight: 600, textDecoration: 'none' }}>
+                {String(t.index + 1).padStart(2, '0')} · {t.next.title} →
+              </a>
+            </p>
+          )}
+        </AdmissionGate>
 
         <p style={{ marginTop: t.next ? '1.5rem' : '3rem' }}>
           <a href={base} style={{ color: GOLD, fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', letterSpacing: '0.08em', textDecoration: 'none' }}>
