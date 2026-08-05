@@ -1,5 +1,6 @@
 import { getDictionary, type Locale } from '../lib/dictionaries'
 import { getCourses } from '../lib/registry'
+import { courseCard } from '../lib/course/living-practice'
 
 interface Props { locale: Locale }
 
@@ -55,6 +56,19 @@ export function AcademyPage({ locale }: Props) {
           {t.coursesLabel}
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
+          {(() => {
+            const first = courseCard(locale)
+            return (
+              <a
+                href={first.href}
+                aria-label={first.name}
+                style={{ border: '1px solid var(--accent-line)', borderRadius: 'var(--radius)', padding: '1.5rem', textDecoration: 'none', background: 'var(--bg-surface)', display: 'block' }}
+              >
+                <div style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '0.4rem' }}>{first.name}</div>
+                <div style={{ color: 'var(--text-muted)', fontSize: 'var(--text-sm)', lineHeight: 1.5 }}>{first.tagline}</div>
+              </a>
+            )
+          })()}
           {courses.map((c) =>
             c.status === 'live' ? (
               <a
