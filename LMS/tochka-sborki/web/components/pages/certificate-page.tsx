@@ -324,7 +324,8 @@ export function CertificatePage({ locale }: Props) {
           </section>
         )}
       </main>
-      <Footer locale={locale} />
+      {/* CTA «получи сертификат» на самой странице сертификата бессмысленна */}
+      <Footer locale={locale} showCertificateCta={false} />
     </>
   )
 }

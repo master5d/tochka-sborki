@@ -14,19 +14,22 @@ async function makeAuthRequest(url: string, method: string): Promise<Request> {
 
 interface MockData {
   completedSlugs?: string[]
-  admissionRow?: { granted_at: number } | null
+  /** Последовательные ответы SELECT admissions ... first(): [до INSERT, после INSERT] */
+  admissionFirstSeq?: ({ granted_at: number } | null)[]
   admissions?: { course: string; granted_at: number }[]
   courses?: { course: string; viewed: number; completed: number }[]
 }
 
 function makeEnv(data: MockData = {}) {
   const run = vi.fn().mockResolvedValue({ success: true })
+  const firstSeq = [...(data.admissionFirstSeq ?? [null])]
   const env = {
     DB: {
       prepare: (sql: string) => ({
         bind: (..._args: unknown[]) => ({
           run,
-          first: vi.fn().mockResolvedValue(data.admissionRow ?? null),
+          first: vi.fn().mockImplementation(async () =>
+            firstSeq.length > 1 ? firstSeq.shift() : firstSeq[0] ?? null),
           all: vi.fn().mockImplementation(async () => {
             if (sql.includes('GROUP BY course')) return { results: data.courses ?? [] }
             if (sql.includes('FROM admissions')) return { results: data.admissions ?? [] }
@@ -66,7 +69,10 @@ describe('handleAdmission', () => {
 
   it('grants when completed progress covers every catalog module', async () => {
     const req = await makeAuthRequest('https://ai.synergify.com/api/academy/admission', 'POST')
-    const { env, run } = makeEnv({ completedSlugs: ALL_SLUGS, admissionRow: { granted_at: 12345 } })
+    const { env, run } = makeEnv({
+      completedSlugs: ALL_SLUGS,
+      admissionFirstSeq: [null, { granted_at: 12345 }], // до INSERT пусто, после — строка
+    })
     const res = await handleAdmission(req, env)
     expect(res.status).toBe(200)
     const body = await res.json() as { granted: boolean; course: string; granted_at: number }
@@ -74,6 +80,21 @@ describe('handleAdmission', () => {
     expect(body.course).toBe('tochka-sborki')
     expect(body.granted_at).toBe(12345) // read back — idempotent repeat returns the ORIGINAL grant time
     expect(run).toHaveBeenCalled() // INSERT OR IGNORE issued
+  })
+
+  it('an existing admission is permanent: granted without re-checking progress', async () => {
+    // Рост COURSE_CATALOG не должен ретроактивно закрывать дверь выпускникам.
+    const req = await makeAuthRequest('https://ai.synergify.com/api/academy/admission', 'POST')
+    const { env, run } = makeEnv({
+      completedSlugs: [], // прогресс «неполный» — и это не должно иметь значения
+      admissionFirstSeq: [{ granted_at: 777 }],
+    })
+    const res = await handleAdmission(req, env)
+    expect(res.status).toBe(200)
+    const body = await res.json() as { granted: boolean; granted_at: number }
+    expect(body.granted).toBe(true)
+    expect(body.granted_at).toBe(777)
+    expect(run).not.toHaveBeenCalled() // ни INSERT, ни пере-проверки
   })
 })
 

@@ -10,6 +10,15 @@ export async function handleAdmission(request: Request, env: Env): Promise<Respo
   const auth = await requireAuth(request, env)
   if (auth instanceof Response) return auth
 
+  // Выданный admission постоянен: не пере-проверяем прогресс, иначе рост
+  // COURSE_CATALOG ретроактивно закрывал бы дверь старым выпускникам.
+  const existing = await env.DB.prepare(
+    'SELECT granted_at FROM admissions WHERE user_id = ? AND course = ?'
+  ).bind(auth.sub, COURSE).first<{ granted_at: number }>()
+  if (existing) {
+    return Response.json({ granted: true, course: COURSE, granted_at: existing.granted_at })
+  }
+
   const { results } = await env.DB.prepare(
     'SELECT lesson_slug FROM progress WHERE user_id = ? AND course = ? AND completed_at IS NOT NULL'
   ).bind(auth.sub, COURSE).all<{ lesson_slug: string }>()
