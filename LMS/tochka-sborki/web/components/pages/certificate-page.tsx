@@ -19,6 +19,11 @@ const COPY = {
     copyLink: 'Скопировать ссылку',
     copied: '✓ Скопировано',
     shareText: 'Получил золотой билет «Точки Сборки» — vibe coding, Claude Code, агенты, автоматизация.',
+    academyLabel: '/ академия',
+    academyHeading: 'Дверь открыта',
+    academyBody: 'Золотой билет — это и вход. Точка сборки пройдена, и академия S.A.S.H.A — закрытая школа живых связей — теперь узнаёт тебя.',
+    academyCta: 'Войти в академию →',
+    academyUrl: 'https://academy.synergify.com/',
   },
   en: {
     label: '/ certificate',
@@ -32,6 +37,11 @@ const COPY = {
     copyLink: 'Copy link',
     copied: '✓ Copied',
     shareText: 'Earned my Tochka Sborki golden ticket — vibe coding, Claude Code, agents, automation.',
+    academyLabel: '/ academy',
+    academyHeading: 'The door is open',
+    academyBody: 'The golden ticket is also an entrance. Your assembly point is set, and S.A.S.H.A — the gated school of living connections — now recognizes you.',
+    academyCta: 'Enter the academy →',
+    academyUrl: 'https://academy.synergify.com/en/',
   },
 }
 
@@ -67,10 +77,15 @@ export function CertificatePage({ locale }: Props) {
     }
   }, [name])
 
-  // S4 (fb_97517f307a46): request the academy admission fire-and-forget — the
-  // server verifies completion; the ticket renders the same either way.
+  // S4 (fb_97517f307a46): request the academy admission — the server verifies
+  // completion; the ticket renders the same either way. On grant, the page
+  // additionally shows the academy door (invitation block below the ticket).
+  const [academyGranted, setAcademyGranted] = useState(false)
   useEffect(() => {
-    fetch('/api/academy/admission', { method: 'POST', credentials: 'include' }).catch(() => {})
+    fetch('/api/academy/admission', { method: 'POST', credentials: 'include' })
+      .then(r => (r.ok ? r.json() : null))
+      .then(d => { if (d?.granted) setAcademyGranted(true) })
+      .catch(() => {})
   }, [])
 
   const date = new Date().toISOString().slice(0, 10)
@@ -266,6 +281,48 @@ export function CertificatePage({ locale }: Props) {
             </div>
           </div>
         </div>
+
+        {academyGranted && (
+          <section aria-label={t.academyHeading} style={{
+            marginTop: '3rem',
+            border: '1px solid var(--text-accent)',
+            borderRadius: 'var(--radius)',
+            padding: '1.5rem',
+            background: 'var(--bg-surface)',
+            maxWidth: '640px',
+          }}>
+            <div style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: 'var(--text-xs)',
+              color: 'var(--text-accent)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.15em',
+              marginBottom: '0.75rem',
+            }}>
+              {t.academyLabel}
+            </div>
+            <h2 style={{
+              fontFamily: 'var(--font-display), system-ui, sans-serif',
+              fontSize: 'var(--text-xl)',
+              color: 'var(--text-primary)',
+              margin: '0 0 0.75rem',
+            }}>
+              {t.academyHeading}
+            </h2>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6, margin: '0 0 1rem' }}>
+              {t.academyBody}
+            </p>
+            <a href={t.academyUrl} style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: 'var(--text-sm)',
+              fontWeight: 700,
+              color: 'var(--text-accent)',
+              letterSpacing: '0.06em',
+            }}>
+              {t.academyCta}
+            </a>
+          </section>
+        )}
       </main>
       <Footer locale={locale} />
     </>

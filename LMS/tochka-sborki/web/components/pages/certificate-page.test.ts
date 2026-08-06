@@ -18,4 +18,13 @@ describe('certificate page — academy admission wiring (S4)', () => {
     expect(certData).not.toMatch(/SYMBOLIC/i)
     expect(certData).toContain('granted server-side')
   })
+
+  it('shows the academy door only on a server grant (both locales)', () => {
+    // Блок-приглашение рендерится ТОЛЬКО при granted — билет сам по себе
+    // рендерится одинаково при fail/401 (инвариант fb_6ded7b0b7980 не нарушен).
+    expect(src).toContain('academyGranted && (')
+    expect(src).toMatch(/d\?\.granted.*setAcademyGranted\(true\)/)
+    expect(src).toContain('https://academy.synergify.com/')
+    expect(src).toContain('https://academy.synergify.com/en/')
+  })
 })
