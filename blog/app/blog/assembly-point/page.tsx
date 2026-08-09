@@ -3,8 +3,9 @@ import { AssemblyPoint } from '@/components/blog/posts/assembly-point'
 import { PostLayout } from '@/components/blog/post-layout'
 import { getPost } from '@/lib/posts'
 
-const title = 'TODO: title'
-const description = 'TODO: description'
+const title = 'Точка сборки: от чужих инструментов к суверенной практике'
+const description =
+  'Три позы работы с AI — чужие инструменты, личная практика, суверенная практика. Practice OS, правило «сначала черновик» и почему учитель растит учителей, а не последователей.'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://mamaev.coach'),

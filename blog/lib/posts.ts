@@ -161,6 +161,23 @@ export const posts: Post[] = [
     related: ['horizons', 'prologue'],
     en: { title: 'A second brain: I query my own archive like a person', description: "Notes pile up but you never reread them — ideas drown in the archive. I built a knowledge graph that answers questions from my own notes and finds the connections between them.", readingTime: '~5 min' },
   },
+  {
+    slug: 'assembly-point',
+    title: 'Точка сборки: от чужих инструментов к суверенной практике',
+    description:
+      'Три позы работы с AI — чужие инструменты, личная практика, суверенная практика. Practice OS, правило «сначала черновик» и почему учитель растит учителей, а не последователей.',
+    date: '2026-08-09',
+    author: 'Александр Мамаев',
+    readingTime: '~6 мин',
+    tags: ['AI', 'практика', 'суверенность', 'Точка Сборки'],
+    related: ['charter', 'prologue', 'nervous-strength'],
+    en: {
+      title: 'The Assembly Point: from borrowed tools to a sovereign practice',
+      description:
+        'Three postures of working with AI — borrowed tools, personal practice, sovereign practice. The Practice OS, the rough-draft-first rule, and why a teacher grows teachers, not followers.',
+      readingTime: '~6 min',
+    },
+  },
 ]
 
 const byDateDesc = (a: Post, b: Post) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0)

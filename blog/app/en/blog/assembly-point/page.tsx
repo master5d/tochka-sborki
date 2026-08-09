@@ -3,8 +3,9 @@ import { AssemblyPoint } from '@/components/blog/posts/assembly-point'
 import { PostLayout } from '@/components/blog/post-layout'
 import { getPost } from '@/lib/posts'
 
-const title = 'TODO: title'
-const description = 'TODO: description'
+const title = 'The Assembly Point: from borrowed tools to a sovereign practice'
+const description =
+  'Three postures of working with AI — borrowed tools, personal practice, sovereign practice. The Practice OS, the rough-draft-first rule, and why a teacher grows teachers, not followers.'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://mamaev.coach'),
