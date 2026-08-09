@@ -4061,6 +4061,101 @@
         "sovern:created": "2026-08-03T23:06:58.755Z",
         "feedback": {}
       }
+    },
+    {
+      "id": "fb_f07263d05aa8",
+      "type": "text",
+      "x": 860,
+      "y": 6680,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "📌 ЭПИК: Assembly Point — офлайн-итерация коучинговой практики (The Healing Society)",
+      "metadata": {
+        "sovern:layer": "infra",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 5,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-08-09T06:45:33.388Z",
+        "feedback": {}
+      }
+    },
+    {
+      "id": "fb_74314d66685d",
+      "type": "text",
+      "x": 1140,
+      "y": 6680,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "📌 Assembly Point S1: эссе-манифест рамки (blog, EN, kind:post)",
+      "metadata": {
+        "sovern:layer": "infra",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 5,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-08-09T06:45:33.665Z",
+        "feedback": {}
+      }
+    },
+    {
+      "id": "fb_f3b5ae0a7f18",
+      "type": "text",
+      "x": 300,
+      "y": 6860,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "📌 Assembly Point S2: intro-воркшоп «AI for healers» (hub/events)",
+      "metadata": {
+        "sovern:layer": "infra",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 5,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-08-09T06:45:33.776Z",
+        "feedback": {}
+      }
+    },
+    {
+      "id": "fb_260e72b1d9ff",
+      "type": "text",
+      "x": 580,
+      "y": 6860,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "📌 Assembly Point S3: коучинг-оффер на mentor (диагностика → Practice OS)",
+      "metadata": {
+        "sovern:layer": "infra",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 5,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-08-09T06:45:33.881Z",
+        "feedback": {}
+      }
+    },
+    {
+      "id": "fb_6062b40d45c0",
+      "type": "text",
+      "x": 860,
+      "y": 6860,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "📌 Assembly Point S4: платная когорта «собери Practice OS» (⛔ ворота: спрос с S2)",
+      "metadata": {
+        "sovern:layer": "infra",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 5,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-08-09T06:45:34.000Z",
+        "feedback": {}
+      }
     }
   ],
   "edges": [
@@ -4793,6 +4888,31 @@
       "id": "e_fb_470dc61b0403",
       "fromNode": "area_infra",
       "toNode": "fb_470dc61b0403"
+    },
+    {
+      "id": "e_fb_f07263d05aa8",
+      "fromNode": "area_infra",
+      "toNode": "fb_f07263d05aa8"
+    },
+    {
+      "id": "e_fb_74314d66685d",
+      "fromNode": "area_infra",
+      "toNode": "fb_74314d66685d"
+    },
+    {
+      "id": "e_fb_f3b5ae0a7f18",
+      "fromNode": "area_infra",
+      "toNode": "fb_f3b5ae0a7f18"
+    },
+    {
+      "id": "e_fb_260e72b1d9ff",
+      "fromNode": "area_infra",
+      "toNode": "fb_260e72b1d9ff"
+    },
+    {
+      "id": "e_fb_6062b40d45c0",
+      "fromNode": "area_infra",
+      "toNode": "fb_6062b40d45c0"
     }
   ]
 }
