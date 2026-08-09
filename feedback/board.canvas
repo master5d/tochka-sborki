@@ -4092,7 +4092,7 @@
       "text": "📌 Assembly Point S1: эссе-манифест рамки (blog, EN, kind:post)",
       "metadata": {
         "sovern:layer": "infra",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 5,
         "sovern:urgency": 5,
