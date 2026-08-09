@@ -6,6 +6,8 @@ interface Service {
   body: string
   deliverable: string
   duration: string
+  href?: string
+  hrefLabel?: string
 }
 
 interface Case {
@@ -88,6 +90,15 @@ export const dictionaries: Record<Locale, Dictionary> = {
         body: 'Работаю part-time как embedded agent engineer в команде. Помогаю проектировать, ревьюить, бить production-fires.',
         deliverable: 'Continuous capacity',
         duration: 'monthly retainer',
+      },
+      {
+        label: '04',
+        title: 'Practice OS — для частной практики',
+        body: 'Формат для соло-практиков (терапевты, коучи, целители): диагностика того, как ты работаешь с AI сейчас — чужие инструменты, личная практика или суверенная практика, — и сборка твоей Practice OS: память, база знаний, помощники и ритуалы твоего дела. 1:1, офлайн в Нашвилле (The Healing Society) или удалённо.',
+        deliverable: 'Работающая Practice OS на твоих файлах и задачах + план самостоятельного развития',
+        duration: 'формат и объём обсуждаем на discovery call',
+        href: 'https://mamaev.coach/blog/assembly-point/',
+        hrefLabel: 'Манифест подхода: «Точка сборки» →',
       },
     ],
     casesLabel: '// cases',
@@ -181,6 +192,15 @@ export const dictionaries: Record<Locale, Dictionary> = {
         body: 'Part-time embedded agent engineer with your team. Help with design, reviews, fighting production fires.',
         deliverable: 'Continuous capacity',
         duration: 'monthly retainer',
+      },
+      {
+        label: '04',
+        title: 'Practice OS — for private practice',
+        body: 'A format for solo practitioners (therapists, coaches, healers): a diagnosis of how you work with AI today — borrowed tools, personal practice, or sovereign practice — and the assembly of your Practice OS: the memory, knowledge base, helpers and rituals of your work. 1:1, in person in Nashville (The Healing Society) or remote.',
+        deliverable: 'A working Practice OS on your own files and tasks + a plan to grow it yourself',
+        duration: 'format and scope discussed on a discovery call',
+        href: 'https://mamaev.coach/en/blog/assembly-point/',
+        hrefLabel: 'The manifesto: “The Assembly Point” →',
       },
     ],
     casesLabel: '// cases',

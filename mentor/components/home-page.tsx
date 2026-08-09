@@ -246,6 +246,15 @@ export function HomePage({ locale }: Props) {
                     <div style={{ color: 'var(--text-accent)', marginBottom: '0.4rem', opacity: 0.5 }}>Term</div>
                     <span style={{ color: 'var(--text-primary)' }}>{s.duration}</span>
                   </div>
+                  {s.href ? (
+                    <a
+                      href={s.href}
+                      style={{ color: 'var(--text-secondary)', textDecoration: 'none', transition: 'color 0.2s' }}
+                      className="footer-link"
+                    >
+                      {s.hrefLabel}
+                    </a>
+                  ) : null}
                 </div>
               </div>
             ))}
