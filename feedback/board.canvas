@@ -4111,7 +4111,7 @@
       "text": "📌 Assembly Point S2: intro-воркшоп «AI for healers» (hub/events)",
       "metadata": {
         "sovern:layer": "infra",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 5,
         "sovern:urgency": 5,
@@ -4130,7 +4130,7 @@
       "text": "📌 Assembly Point S3: коучинг-оффер на mentor (диагностика → Practice OS)",
       "metadata": {
         "sovern:layer": "infra",
-        "sovern:status": "idle",
+        "sovern:status": "done",
         "sovern:reopened": false,
         "sovern:impact": 5,
         "sovern:urgency": 5,
