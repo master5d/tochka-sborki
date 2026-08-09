@@ -4156,6 +4156,25 @@
         "sovern:created": "2026-08-09T06:45:34.000Z",
         "feedback": {}
       }
+    },
+    {
+      "id": "fb_d92395b93e00",
+      "type": "text",
+      "x": 1140,
+      "y": 6860,
+      "width": 240,
+      "height": 140,
+      "color": "#64748b",
+      "text": "📌 Assembly Point: копи-майнинг из «Рабочей тетради 2025» (LF piece #160) для S3/S4",
+      "metadata": {
+        "sovern:layer": "infra",
+        "sovern:status": "idle",
+        "sovern:reopened": false,
+        "sovern:impact": 5,
+        "sovern:urgency": 5,
+        "sovern:created": "2026-08-09T16:20:14.329Z",
+        "feedback": {}
+      }
     }
   ],
   "edges": [
@@ -4913,6 +4932,11 @@
       "id": "e_fb_6062b40d45c0",
       "fromNode": "area_infra",
       "toNode": "fb_6062b40d45c0"
+    },
+    {
+      "id": "e_fb_d92395b93e00",
+      "fromNode": "area_infra",
+      "toNode": "fb_d92395b93e00"
     }
   ]
 }
