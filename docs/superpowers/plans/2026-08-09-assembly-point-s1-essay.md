@@ -28,7 +28,7 @@
 **Interfaces:**
 - Produces: компонент `AssemblyPoint({ locale })` (имя генерит scaffolder из слага) + два route; registry-stub в stdout (НЕ вставлять — Task 3 даёт готовую запись).
 
-- [ ] **Step 1: Прогнать scaffolder**
+- [x] **Step 1: Прогнать scaffolder**
 
 ```bash
 cd blog && npm run new:post -- assembly-point
@@ -36,7 +36,7 @@ cd blog && npm run new:post -- assembly-point
 
 Expected: три строки `✓ ...` (component + 2 routes) и напечатанный Post-stub. Если `✗ exists` — остановиться и разобраться (no-overwrite guard).
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git -C . add blog/components/blog/posts/assembly-point.tsx blog/app/blog/assembly-point/page.tsx blog/app/en/blog/assembly-point/page.tsx
@@ -54,7 +54,7 @@ git commit -m "feat(blog): scaffold assembly-point essay (Assembly Point S1, fb_
 - Consumes: компонент из Task 1 (структура `if (locale === 'en') {...}` + RU-ветка, обёртки `<div className={styles.prose}>` сохранить, `styles.lead` на первом абзаце).
 - Produces: готовый контент обеих локалей для Task 3/4.
 
-- [ ] **Step 1: EN-ветка — вставить verbatim**
+- [x] **Step 1: EN-ветка — вставить verbatim**
 
 Разметка: первый `<p className={styles.lead}>`, далее `<h2>`/`<p>` по структуре. Текст:
 
@@ -84,7 +84,7 @@ git commit -m "feat(blog): scaffold assembly-point essay (Assembly Point S1, fb_
 >
 > That is the frame. The practice of moving the point — that is slower, more personal work, and it is what I do now.
 
-- [ ] **Step 2: RU-ветка — вставить verbatim**
+- [x] **Step 2: RU-ветка — вставить verbatim**
 
 > У Кастанеды было имя для места, где собирается мир человека: точка сборки. Сдвинь её — и мир пересоберётся. Я не ожидал, что термин из книги о магии окажется самым точным словом для того, что происходит с нами и AI. Но вот мы здесь.
 >
@@ -112,7 +112,7 @@ git commit -m "feat(blog): scaffold assembly-point essay (Assembly Point S1, fb_
 >
 > Это рамка. Сдвигать точку — работа медленнее и личнее, и именно ей я теперь занимаюсь.
 
-- [ ] **Step 3: Проверка сборки компонента**
+- [x] **Step 3: Проверка сборки компонента**
 
 ```bash
 cd blog && npx tsc --noEmit && npx vitest run
@@ -120,7 +120,7 @@ cd blog && npx tsc --noEmit && npx vitest run
 
 Expected: tsc чистый; vitest зелёный (posts.test.ts ещё не знает пост — падать не должен, реестр не тронут).
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git -C . add blog/components/blog/posts/assembly-point.tsx
@@ -138,7 +138,7 @@ git commit -m "feat(blog): assembly-point essay prose, RU+EN (owner-approved ver
 - Consumes: тип `Post` (slug/title/description/date/author/readingTime/tags/related/en).
 - Produces: пост виден index/RSS/sitemap/graph/manifest (всё выводится из реестра).
 
-- [ ] **Step 1: Добавить запись (точный литерал)**
+- [x] **Step 1: Добавить запись (точный литерал)**
 
 ```ts
 {
@@ -160,7 +160,7 @@ git commit -m "feat(blog): assembly-point essay prose, RU+EN (owner-approved ver
 },
 ```
 
-- [ ] **Step 2: Тесты + сборка**
+- [x] **Step 2: Тесты + сборка**
 
 ```bash
 cd blog && npx vitest run && npx tsc --noEmit && npm run build
@@ -168,7 +168,7 @@ cd blog && npx vitest run && npx tsc --noEmit && npm run build
 
 Expected: всё зелёное; build эмитит `/blog/assembly-point/` и `/en/blog/assembly-point/` в `out/`.
 
-- [ ] **Step 3: Глазная проверка рендера** (канон verify_rendered_output_visually)
+- [x] **Step 3: Глазная проверка рендера** (канон verify_rendered_output_visually)
 
 Поднять статик локально, открыть обе локали, прочитать глазами (заголовок, lead, h2-структура, отсутствие TODO):
 
@@ -178,7 +178,7 @@ cd blog && npx serve out -l 4711
 
 ⚠ после проверки процесс `serve` УБИТЬ — stale serve держит `out/` и роняет следующий build (EBUSY).
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git -C . add blog/lib/posts.ts
@@ -189,13 +189,13 @@ git commit -m "feat(blog): register assembly-point essay (Assembly Point S1, fb_
 
 ### Task 4: Закрыть тикет
 
-- [ ] **Step 1: Статус на доске**
+- [x] **Step 1: Статус на доске**
 
 ```bash
 cd feedback && node scripts/fb.mjs status fb_74314d66685d done
 ```
 
-- [ ] **Step 2: Commit доски**
+- [x] **Step 2: Commit доски**
 
 ```bash
 git -C . add feedback/feedback.jsonl feedback/board.canvas
