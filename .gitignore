@@ -16,3 +16,6 @@ node_modules/
 # Личные заметки владельца под академию-манифест (репо PUBLIC — заметки не для VCS)
 academy/_notes/*
 !academy/_notes/README.md
+# агентские droppings + локальные логи desops (аудит 2026-08-13)
+.serena/
+logs/

@@ -36,7 +36,7 @@
 | Папка | Что это | Деплой |
 |-------|---------|--------|
 | `LMS/` | Контейнер курсов. Первый — `LMS/tochka-sborki/` («Точка Сборки»), задел на следующие. | — |
-| `LMS/tochka-sborki/web/` | Next.js 16 LMS-сайт курса | `ai.synergify.com` (CF Pages `tochka-sborki`) |
+| `LMS/tochka-sborki/web/` | Next.js 16 LMS-сайт курса (+ `/try` — цепочки промптов без записи) | `ai.synergify.com` (CF Pages `tochka-sborki`) |
 | `hub/` | Личный лендинг + блог + магазин | `mamaev.coach` (CF Pages `mamaev-coach-hub`) |
 | `mentor/` | B2B agent-engineering | `mentor.mamaev.coach` (CF Pages `mamaev-coach-mentor`) |
 | `synergify/` | Зонтик-лендинг Synergify (worker: два входа + подписка) | `synergify.com` (worker `synergify-home`) |
