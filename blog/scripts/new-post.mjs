@@ -7,9 +7,16 @@ import { fileURLToPath } from 'node:url'
 import { componentName, componentSource, routeSource, registryStub } from './templates.mjs'
 
 const BLOG = join(dirname(fileURLToPath(import.meta.url)), '..')
+const KINDS = ['post', 'note']
 const args = process.argv.slice(2)
-const slug = args.find(a => !a.startsWith('--'))
-const kind = args.includes('--kind') && args[args.indexOf('--kind') + 1] === 'note' ? 'note' : 'post'
+const kindIdx = args.indexOf('--kind')
+const kind = kindIdx === -1 ? 'post' : args[kindIdx + 1]
+const slug = args.find((a, i) => !a.startsWith('--') && i !== kindIdx + 1)
+
+if (!kind || !KINDS.includes(kind)) {
+  console.error(`✗ invalid --kind: ${kind ? `'${kind}'` : '(empty)'} — expected one of: ${KINDS.join(', ')}`)
+  process.exit(2)
+}
 
 if (!slug || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) {
   console.error('Usage: node scripts/new-post.mjs <kebab-slug> [--kind note]')

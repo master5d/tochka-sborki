@@ -4,7 +4,7 @@
 // consumable source (no node_modules, no lockfile) so CI's `npm ci` in hub/
 // can resolve the file: dependency inside the repo clone.
 // Usage: node scripts/sync-desops-kit.mjs
-import { cpSync, rmSync, mkdirSync, existsSync } from 'node:fs'
+import { cpSync, rmSync, mkdirSync, existsSync, renameSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -19,8 +19,11 @@ if (!existsSync(src)) {
   process.exit(1)
 }
 
-rmSync(dest, { recursive: true, force: true })
-mkdirSync(dest, { recursive: true })
+// Build into a tmp dir first; the existing vendor copy is only replaced
+// after every entry has landed there — a half-failed sync must not destroy it.
+const tmp = `${dest}.tmp-${process.pid}`
+rmSync(tmp, { recursive: true, force: true })
+mkdirSync(tmp, { recursive: true })
 
 const ENTRIES = [
   'components',
@@ -33,14 +36,32 @@ const ENTRIES = [
   'package.json',
 ]
 
+const failures = []
 for (const entry of ENTRIES) {
   const from = join(src, entry)
   if (!existsSync(from)) {
-    console.warn(`skip (missing in source): ${entry}`)
+    console.error(`missing in source: ${entry}`)
+    failures.push(entry)
     continue
   }
-  cpSync(from, join(dest, entry), { recursive: true })
-  console.log(`synced ${entry}`)
+  try {
+    cpSync(from, join(tmp, entry), { recursive: true })
+    console.log(`synced ${entry}`)
+  } catch (err) {
+    console.error(`copy failed: ${entry}: ${err.message}`)
+    failures.push(entry)
+  }
 }
+
+if (failures.length > 0) {
+  rmSync(tmp, { recursive: true, force: true })
+  console.error(`\nsync failed (${failures.length}): ${failures.join(', ')} — ${dest} left untouched`)
+  process.exit(1)
+}
+
+// tmp build proven complete — swap it into place.
+mkdirSync(dirname(dest), { recursive: true })
+rmSync(dest, { recursive: true, force: true })
+renameSync(tmp, dest)
 
 console.log(`\nhub/vendor/desops-ui-kit refreshed from ${src}`)
