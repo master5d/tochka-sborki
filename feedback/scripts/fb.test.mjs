@@ -1,7 +1,7 @@
 import { test, beforeEach } from 'node:test'
 import assert from 'node:assert/strict'
 import { execFileSync } from 'node:child_process'
-import { mkdtempSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { mkdtempSync, readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -51,6 +51,40 @@ test('status: меняет статус по префиксу id и пересо
   assert.equal(saved.status, 'active')
   const canvas = JSON.parse(readFileSync(join(dir, 'board.canvas'), 'utf8'))
   assert.equal(canvas.nodes.find(n => n.id === id).metadata['sovern:status'], 'active')
+})
+
+test('status: сохраняет битую JSONL строку verbatim и чистит tmp после atomic rewrite', () => {
+  const out = run(['add'], sampleTicket)
+  const id = out.match(/fb_[0-9a-f]{12}/)[0]
+  const corrupt = '{это не json, но это тикет, который нельзя терять'
+  const before = readFileSync(join(dir, 'feedback.jsonl'), 'utf8')
+  writeFileSync(join(dir, 'feedback.jsonl'), `${corrupt}\n${before}`)
+
+  run(['status', id, 'active'])
+
+  const rewritten = readFileSync(join(dir, 'feedback.jsonl'), 'utf8').split('\n')
+  assert.equal(rewritten[0], corrupt)
+  assert.equal(JSON.parse(rewritten[1]).status, 'active')
+  assert.deepEqual(readdirSync(dir).filter(name => name.endsWith('.tmp')), [])
+})
+
+test('unknown command/flags: usage в stderr и exit 2', () => {
+  assert.throws(
+    () => run(['wat']),
+    error => {
+      assert.equal(error.status, 2)
+      assert.match(error.stderr.toString(), /usage: fb\.mjs/)
+      return true
+    },
+  )
+  assert.throws(
+    () => run(['status', '--bogus']),
+    error => {
+      assert.equal(error.status, 2)
+      assert.match(error.stderr.toString(), /usage: fb\.mjs/)
+      return true
+    },
+  )
 })
 
 test('status: невалидный статус → ошибка, файл не тронут', () => {

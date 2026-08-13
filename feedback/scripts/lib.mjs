@@ -13,6 +13,21 @@ export function ticketId(content) {
   return 'fb_' + createHash('sha256').update(normalized, 'utf8').digest('hex').slice(0, 12)
 }
 
+/** JSONL → records. Битые строки сохраняются verbatim для безопасной перезаписи. */
+export function parseJsonlRecords(text, onWarn) {
+  const records = []
+  for (const [i, line] of text.split('\n').entries()) {
+    if (!line.trim()) continue
+    try {
+      records.push({ ok: true, value: JSON.parse(line), raw: line })
+    } catch {
+      records.push({ ok: false, raw: line })
+      onWarn(`feedback.jsonl: битая строка ${i + 1} сохранена без изменений`)
+    }
+  }
+  return records
+}
+
 /** JSONL → массив тикетов. Битые строки скипаются через onWarn (конвейер не валится). */
 export function parseJsonl(text, onWarn) {
   const tickets = []

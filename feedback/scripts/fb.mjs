@@ -5,26 +5,60 @@
 //   node fb.mjs status <id|префикс> <status> — смена статуса + rebuild
 //   node fb.mjs build          — пересборка board.canvas из feedback.jsonl
 // Директория данных: $FEEDBACK_DIR или ../ относительно скрипта (= feedback/).
-import { readFileSync, writeFileSync, appendFileSync, existsSync } from 'node:fs'
+import { readFileSync, writeFileSync, appendFileSync, existsSync, renameSync, rmSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { ticketId, parseJsonl, buildCanvas } from './lib.mjs'
+import { ticketId, parseJsonlRecords, buildCanvas } from './lib.mjs'
 
 const DIR = process.env.FEEDBACK_DIR ?? join(dirname(fileURLToPath(import.meta.url)), '..')
 const JSONL = join(DIR, 'feedback.jsonl')
 const CANVAS = join(DIR, 'board.canvas')
 const STATUSES = ['idle', 'pending', 'active', 'done', 'blocked']
 
-const readTickets = () =>
-  parseJsonl(existsSync(JSONL) ? readFileSync(JSONL, 'utf8') : '', w => console.warn('⚠', w))
+const usage = () => 'usage: fb.mjs add | status <id|prefix> <status> [--verified] | build'
+
+const failUsage = message => {
+  if (message) console.error(message)
+  console.error(usage())
+  process.exit(2)
+}
+
+const atomicWriteFile = (file, data) => {
+  const tmp = `${file}.tmp`
+  try {
+    writeFileSync(tmp, data)
+    renameSync(tmp, file)
+  } catch (error) {
+    try {
+      rmSync(tmp, { force: true })
+    } catch {}
+    throw error
+  }
+}
+
+const readRecords = () => {
+  const warnings = []
+  const records = parseJsonlRecords(existsSync(JSONL) ? readFileSync(JSONL, 'utf8') : '', w => warnings.push(w))
+  if (warnings.length) {
+    console.warn(`⚠ ${warnings.length} битых строк feedback.jsonl сохранено без изменений`)
+    for (const warning of warnings) console.warn('⚠', warning)
+  }
+  return records
+}
+
+const ticketsFrom = records => records.filter(r => r.ok).map(r => r.value)
+
+const serializeRecords = records =>
+  records.map(r => r.ok ? JSON.stringify(r.value) : r.raw).join('\n') + (records.length ? '\n' : '')
 
 const rebuild = tickets =>
-  writeFileSync(CANVAS, JSON.stringify(buildCanvas(tickets), null, 2) + '\n')
+  atomicWriteFile(CANVAS, JSON.stringify(buildCanvas(tickets), null, 2) + '\n')
 
 const [cmd, ...args] = process.argv.slice(2)
 
 switch (cmd) {
   case 'add': {
+    if (args.length) failUsage(`unknown add argument: ${args[0]}`)
     let input
     try {
       input = JSON.parse(readFileSync(0, 'utf8'))
@@ -37,7 +71,8 @@ switch (cmd) {
       process.exit(1)
     }
     const id = ticketId(input.content)
-    const tickets = readTickets()
+    const records = readRecords()
+    const tickets = ticketsFrom(records)
     if (tickets.some(t => t.id === id)) {
       console.log(`duplicate: ${id} уже в feedback.jsonl — пропущено`)
       break
@@ -49,18 +84,18 @@ switch (cmd) {
     break
   }
   case 'status': {
+    const unknownFlag = args.find(a => a.startsWith('--') && a !== '--verified')
+    if (unknownFlag) failUsage(`unknown flag: ${unknownFlag}`)
     // --verified снимает reopen-guard при закрытии переоткрытого тикета.
     const verified = args.includes('--verified')
     const [prefix, status] = args.filter(a => a !== '--verified')
-    if (!prefix || !status) {
-      console.error('usage: fb.mjs status <id|prefix> <status> [--verified]')
-      process.exit(1)
-    }
+    if (!prefix || !status || args.filter(a => a !== '--verified').length !== 2) failUsage()
     if (!STATUSES.includes(status)) {
       console.error(`невалидный статус «${status}»; допустимо: ${STATUSES.join(', ')}`)
       process.exit(1)
     }
-    const tickets = readTickets()
+    const records = readRecords()
+    const tickets = ticketsFrom(records)
     const matches = tickets.filter(t => t.id.startsWith(prefix))
     if (matches.length !== 1) {
       console.error(matches.length === 0 ? `тикет «${prefix}» не найден` : `«${prefix}» неоднозначен (${matches.length} совпадений)`)
@@ -80,19 +115,19 @@ switch (cmd) {
     }
     if (status === 'done' && verified) delete ticket.reopened
     ticket.status = status
-    writeFileSync(JSONL, tickets.map(t => JSON.stringify(t)).join('\n') + '\n')
+    atomicWriteFile(JSONL, serializeRecords(records))
     rebuild(tickets)
     const tag = ticket.reopened ? ' 🔁 reopened' : verified ? ' (verified)' : ''
     console.log(`status: ${ticket.id} → ${status}${tag}`)
     break
   }
   case 'build': {
-    const tickets = readTickets()
+    if (args.length) failUsage(`unknown build argument: ${args[0]}`)
+    const tickets = ticketsFrom(readRecords())
     rebuild(tickets)
     console.log(`built: ${tickets.length} тикетов → board.canvas`)
     break
   }
   default:
-    console.error('usage: fb.mjs add | status <id|prefix> <status> | build')
-    process.exit(1)
+    failUsage(cmd ? `unknown command: ${cmd}` : undefined)
 }
