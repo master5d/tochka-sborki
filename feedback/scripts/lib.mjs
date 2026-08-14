@@ -87,3 +87,25 @@ export function buildCanvas(tickets) {
   }))
   return { nodes: [...areaNodes, ...ticketNodes], edges }
 }
+
+/**
+ * Ноды и рёбра, которые пересборка обязана СОХРАНИТЬ: всё, что не наше.
+ *
+ * board.canvas — общая доска: сюда же пишет MCP-сервер sovern-canvas (ноды
+ * владельца, созданные из агента). Полная перегенерация из feedback.jsonl их
+ * стирала — ревизия MCP 2026-08-14 поймала это на живом канвасе. Наши узлы
+ * опознаются по id: `area_<layer>` и id тикетов; всё остальное — чужое.
+ * Ребро сохраняется, только если оба его конца выживают, иначе канвас
+ * останется с висячей ссылкой.
+ */
+export function foreignCanvasParts(existing, ours) {
+  if (!existing || !Array.isArray(existing.nodes)) return { nodes: [], edges: [] }
+  const ourIds = new Set((ours.nodes ?? []).map(n => n.id))
+  const nodes = existing.nodes.filter(n => n?.id && !ourIds.has(n.id))
+  const keptIds = new Set([...ourIds, ...nodes.map(n => n.id)])
+  const ourEdgeIds = new Set((ours.edges ?? []).map(e => e.id))
+  const edges = (existing.edges ?? []).filter(
+    e => e?.id && !ourEdgeIds.has(e.id) && keptIds.has(e.fromNode) && keptIds.has(e.toNode)
+  )
+  return { nodes, edges }
+}

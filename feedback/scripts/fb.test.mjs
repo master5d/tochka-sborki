@@ -159,3 +159,37 @@ test('add: невалидный JSON на stdin → ошибка', () => {
 test('add: без content → ошибка', () => {
   assert.throws(() => run(['add'], '{"title":"x"}'))
 })
+
+test('rebuild сохраняет чужие узлы MCP и не плодит висячих рёбер', () => {
+  const id = JSON.parse(run(['add'], sampleTicket).match(/\{.*\}/s)?.[0] ?? '{}').id
+    ?? JSON.parse(readFileSync(join(dir, 'feedback.jsonl'), 'utf8').trim()).id
+  const canvasPath = join(dir, 'board.canvas')
+  const canvas = JSON.parse(readFileSync(canvasPath, 'utf8'))
+
+  // Доску делит MCP sovern-canvas: его узел + ребро между двумя его узлами,
+  // плюс ребро, ссылающееся на узел, которого нет (мусор прошлых правок).
+  canvas.nodes.push({ id: 'mcp_a', type: 'text', text: 'узел агента', x: 0, y: 0, width: 200, height: 60 })
+  canvas.nodes.push({ id: 'mcp_b', type: 'text', text: 'второй', x: 0, y: 100, width: 200, height: 60 })
+  canvas.edges.push({ id: 'e_mcp', fromNode: 'mcp_a', toNode: 'mcp_b' })
+  canvas.edges.push({ id: 'e_dangling', fromNode: 'mcp_a', toNode: 'ghost' })
+  writeFileSync(canvasPath, JSON.stringify(canvas, null, 2) + '\n')
+
+  run(['build'])
+
+  const rebuilt = JSON.parse(readFileSync(canvasPath, 'utf8'))
+  const ids = rebuilt.nodes.map(n => n.id)
+  assert.ok(ids.includes('mcp_a') && ids.includes('mcp_b'), 'чужие узлы обязаны пережить пересборку')
+  assert.ok(ids.includes(id), 'тикет на месте')
+  const edgeIds = rebuilt.edges.map(e => e.id)
+  assert.ok(edgeIds.includes('e_mcp'), 'ребро между выжившими чужими узлами сохранено')
+  assert.ok(!edgeIds.includes('e_dangling'), 'ребро в несуществующий узел не переносится')
+})
+
+test('rebuild под чужим локом: отказ, доска не тронута', () => {
+  run(['add'], sampleTicket)
+  const canvasPath = join(dir, 'board.canvas')
+  const before = readFileSync(canvasPath, 'utf8')
+  writeFileSync(`${canvasPath}.lock`, '')          // держатель жив (лок свежий)
+  assert.throws(() => run(['build']), /занят другим процессом/)
+  assert.equal(readFileSync(canvasPath, 'utf8'), before, 'чужая запись не затёрта')
+})
