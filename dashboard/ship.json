@@ -1,0 +1,19 @@
+{
+  "name": "mc_hub",
+  "emoji": "🎓",
+  "title": "mamaev.coach hub",
+  "tab": {
+    "mode": "embed",
+    "url": "https://mamaev.coach"
+  },
+  "links": [
+    {
+      "label": "hub",
+      "url": "https://mamaev.coach"
+    },
+    {
+      "label": "blog",
+      "url": "https://mamaev.coach/blog/"
+    }
+  ]
+}
