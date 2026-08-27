@@ -1,39 +1,43 @@
+---
+desops: contract/v1
+status: ok
+descriptor: 'Model kit: конструктивистский чертёж — гигантский гротеск-заголовок,
+  mono-микролейблы, резкие 4px-углы, cyan-акцент; двухтемный (тёмная база + тёплая
+  «модельная бумага»).'
+dials: {variance: 4, motion: 2, density: 3}
+palette:
+  dark: {bg: '#0a0a0f', surface: '#16161f', text: '#f0f0f5', muted: '#8e8ea0', accent: '#00d1ff',
+    border: '#242433'}
+  light: {bg: '#f4f1ea', surface: '#fbf9f4', text: '#15151a', muted: '#5a5a6a', accent: '#0070c0',
+    border: '#d8d2c6'}
+tokens: inherit
+rationale: 'Снято с фактической ДНК (themes/model-kit.css), а не назначено сверху.
+  variance 4 — палитра узкая, но phase-ряд и градиент-токены дают вариативность акцента.
+  motion 2 — анимаций почти нет, только hover и hero-glow. density 3 — лендинг намеренно
+  воздушный: section-gap 5rem, короткие блоки, много поля вокруг текста; это подтверждено
+  живым замером в design-audit 2026-08-02. Акцент dark совпадает с глобальным seed
+  #00D1FF; light-акцент затемнён до #0070c0 ради WCAG-AA (граничный #0077cc не проходил
+  на тёплой бумаге).'
+---
 # hub — DESIGN.md
 
-> Наследует `GLOBAL_DESIGN.md` NAUTILUS (C:\telo\Efforts\Ongoing\NAUTILUS\core\desops\GLOBAL_DESIGN.md).
-> Локальные расширения фиксируют ФАКТИЧЕСКУЮ визуальную ДНК проекта; core brand
-> identity не переопределяется без justification (DesOps-Standard.md §4 File Organization).
+## Что это за интерфейс
 
-## Inherited
-- Tokens: см. `C:\telo\Efforts\Ongoing\NAUTILUS\core\desops\tokens.json` (seed #00D1FF, Inter/JetBrains Mono, spacing unit 4px)
+Model kit: конструктивистский чертёж — гигантский гротеск-заголовок, mono-микролейблы, резкие 4px-углы, cyan-акцент; двухтемный (тёмная база + тёплая «модельная бумага»).
 
-## Local Identity (onboarded 2026-07-07)
+## Решения
 
-Sources: `themes/model-kit.css` (единый токен-слой, тема через `data-theme`),
-`app/globals.css` (импортит `@desops/ui-kit/globals.css`), `components/site-header.tsx`,
-`components/home-page.tsx`.
+- 2026-08-27: контракт заведён миграцией (спек 2026-08-27-design-consolidation); dials выставлены из design/identity.json
 
-**«Model kit»** — двух-темный (dark default + light «constructivist paper») лендинг
-mamaev.coach. Уже частично на DesOps-рельсах: потребляет `@desops/ui-kit`
-(ThemeToggle + globals). Hex ниже = документация существующей ДНК.
+## Не делать
 
-- **Palette dark:** ground `--bg-primary #0a0a0f` → `--bg-secondary #111118` →
-  `--bg-surface #16161f`; text `#f0f0f5` / secondary `#8e8ea0`; accent
-  `--text-accent #00d1ff` («Cyber Blue» — СОВПАДАЕТ с GLOBAL_DESIGN seed #00D1FF);
-  crit `#ff6b5b`; phase-ряд `#00d1ff/#5e5ce6/#ff9900/#ff44aa`;
-  hub-only градиент-токены `--accent-gradient` (phase-1→2) + `--hero-glow`.
-- **Palette light («тёплая модельная бумага»):** `#f4f1ea/#eae6dc/#fbf9f4`, text
-  `#15151a/#5a5a6a`, accent `#0077cc` (deep blue для контраста, WCAG-guard в LMS),
-  phase-ряд затемнён. Обе темы полные — токены в `[data-theme="dark"/"light"]`.
-- **Typography:** Geist Sans (body, `--font-geist-sans`) + Geist Mono
-  (wordmark/микро-лейблы `0.7–0.8rem`, letter-spacing); display-шкала
-  `clamp(2.8rem,7vw,6.5rem)`, гигантские номера секций `clamp(5rem,14vw,11rem)`.
-  Расхождение с GLOBAL_DESIGN Inter/JetBrains — осознанная Geist-идентичность.
-- **Density/shape:** `--radius 4px` (резче глобальных), `--content-max 1100px`,
-  `--section-gap 5rem`, `--accent-line 3px solid accent`; sticky header
-  `rgba(bg,0.85)+blur(12px)`; **стилизация преимущественно inline `style={{}}`
-  на CSS-переменных**, НЕ Tailwind-утилиты — semgrep-правила почти не имеют
-  поверхности, дрейф ловится по токенам.
-- **SHARED CHROME:** `themes/model-kit.css` зеркалится в blog/LMS/mentor
-  (4 копии, sync вручную) — hub-копия несёт +2 hub-only градиент-токена.
-- **Identity preserved** — акцент уже = SOVRN-cyan; re-skin не требуется и не выполнялся.
+- TODO(owner): перенести сюда проектные антипаттерны из legacy — `design/notes/legacy-DESIGN.md`
+- (общелабораторное, не про этот проект) hex в разметке мимо токенов (`lint-design.ps1`)
+
+## Доктрина
+
+- `C:\telo\Efforts\Ongoing\NAUTILUS\core\desops\doctrine\INDEX.md`
+
+## Legacy
+
+Прежний DESIGN.md целиком: `design/notes/legacy-DESIGN.md` (ничего не потеряно).

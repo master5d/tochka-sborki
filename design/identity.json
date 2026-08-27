@@ -1,0 +1,15 @@
+{
+  "descriptor": "> Наследует `GLOBAL_DESIGN.md` NAUTILUS (C:\\telo\\Efforts\\Ongoing\\NAUTILUS\\core\\desops\\GLOBAL_DESIGN.md). > Локальные расширения фиксируют ФАКТИЧЕСКУЮ визуальную ДНК проекта; core brand > identity не п",
+  "dials": {
+    "variance": null,
+    "motion": null,
+    "density": null
+  },
+  "palette": {
+    "dark": {
+      "bg": "#00d1ff",
+      "accent": "#00d1ff"
+    }
+  },
+  "derived-from": "DESIGN.md"
+}

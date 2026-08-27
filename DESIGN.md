@@ -1,11 +1,33 @@
+---
+desops: contract/v1
+status: draft
+descriptor: '> Наследует `GLOBAL_DESIGN.md` NAUTILUS (C:\telo\Efforts\Ongoing\NAUTILUS\core\desops\GLOBAL_DESIGN.md).
+  > Локальные расширения фиксируют ФАКТИЧЕСКУЮ визуальную ДНК проекта; core brand
+  > identity не п'
+dials: {variance: null, motion: null, density: null}
+palette:
+  dark: {bg: '#00d1ff', accent: '#00d1ff'}
+tokens: inherit
+---
 # mc_hub — DESIGN.md
 
-> Наследует `GLOBAL_DESIGN.md` NAUTILUS (C:\telo\Efforts\Ongoing\NAUTILUS\core\desops\GLOBAL_DESIGN.md).
-> Локальные расширения фиксируют ФАКТИЧЕСКУЮ визуальную ДНК проекта; core brand
-> identity не переопределяется без justification (DesOps-Standard.md §4 File Organization).
+## Что это за интерфейс
 
-## Inherited
-- Tokens: см. `C:\telo\Efforts\Ongoing\NAUTILUS\core\desops\tokens.json` (seed #00D1FF, Inter/JetBrains Mono, spacing unit 4px)
+> Наследует `GLOBAL_DESIGN.md` NAUTILUS (C:\telo\Efforts\Ongoing\NAUTILUS\core\desops\GLOBAL_DESIGN.md). > Локальные расширения фиксируют ФАКТИЧЕСКУЮ визуальную ДНК проекта; core brand > identity не п
 
-## Local Identity (заполнить при onboarding)
-- Palette / typography / density отличия от GLOBAL_DESIGN: TBD-ON-ONBOARDING
+## Решения
+
+- 2026-08-27: контракт заведён миграцией (спек 2026-08-27-design-consolidation); dials НЕ выставлены — status draft, выставить при первом касании
+
+## Не делать
+
+- TODO(owner): перенести сюда проектные антипаттерны из legacy — `design/notes/legacy-DESIGN.md`
+- (общелабораторное, не про этот проект) hex в разметке мимо токенов (`lint-design.ps1`)
+
+## Доктрина
+
+- `C:\telo\Efforts\Ongoing\NAUTILUS\core\desops\doctrine\INDEX.md`
+
+## Legacy
+
+Прежний DESIGN.md целиком: `design/notes/legacy-DESIGN.md` (ничего не потеряно).
