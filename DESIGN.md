@@ -1,22 +1,25 @@
 ---
 desops: contract/v1
 status: draft
-descriptor: '> Наследует `GLOBAL_DESIGN.md` NAUTILUS (C:\telo\Efforts\Ongoing\NAUTILUS\core\desops\GLOBAL_DESIGN.md).
-  > Локальные расширения фиксируют ФАКТИЧЕСКУЮ визуальную ДНК проекта; core brand
-  > identity не п'
+descriptor: 'Model kit: конструктивистский чертёж — гигантский гротеск, mono-микролейблы,
+  резкие углы, cyan-акцент; двухтемный (графит + тёплая «модельная бумага»).'
 dials: {variance: null, motion: null, density: null}
 palette:
-  dark: {bg: '#00d1ff', accent: '#00d1ff'}
+  dark: {bg: '#0a0a0f', surface: '#16161f', text: '#f0f0f5', muted: '#8e8ea0', accent: '#00d1ff',
+    border: '#242433'}
+  light: {bg: '#f4f1ea', surface: '#fbf9f4', text: '#15151a', muted: '#5a5a6a', accent: '#0063ab',
+    border: '#d8d2c6'}
 tokens: inherit
 ---
 # mc_hub — DESIGN.md
 
 ## Что это за интерфейс
 
-> Наследует `GLOBAL_DESIGN.md` NAUTILUS (C:\telo\Efforts\Ongoing\NAUTILUS\core\desops\GLOBAL_DESIGN.md). > Локальные расширения фиксируют ФАКТИЧЕСКУЮ визуальную ДНК проекта; core brand > identity не п
+Model kit: конструктивистский чертёж — гигантский гротеск, mono-микролейблы, резкие углы, cyan-акцент; двухтемный (графит + тёплая «модельная бумага»).
 
 ## Решения
 
+- 2026-08-28: палитра и дескриптор перенесены из фактического источника проекта — `blog/themes/model-kit.css (тот же файл темы, что у hub и mentor)`; прежнее значение поставила миграция по частоте hex, и оно было неверным
 - 2026-08-27: контракт заведён миграцией (спек 2026-08-27-design-consolidation); dials НЕ выставлены — status draft, выставить при первом касании
 
 ## Не делать
