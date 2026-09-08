@@ -16,7 +16,7 @@ const FACTS: Record<'ru' | 'en', RegExp[]> = {
   ru: [/18 часов 36 минут/, /2 часов 39 минут/, /1 час 47 минут/, /9 модулей/, /44 урок/, /8,9 часа/, /38 %/, /46 %/, /84 %/, /3,1 %/, /3,13 %/],
 }
 
-const SERVICE = [/\[scene:/, /\[loop:/, /\[сцена:/, /\[петля:/, /Service header/, /Служебная шапка/, /^CTA:/m, /^\*\*/m]
+const SERVICE = [/\[scene:/, /\[loop:/, /\[сцена:/, /\[петля:/, /Service header/, /Служебная шапка/, /CTA:\s*\*\*/, /\*\*/]
 
 function ctasOf(c: QuestContent) {
   return [
@@ -52,7 +52,8 @@ describe('quest content', () => {
         expect(f.habit.guide).toBe('scroller')
         expect(f.detour.guide).toBe('builder')
         expect(f.outcomes[0].guide).not.toBe(f.outcomes[1].guide)
-        for (const o of f.outcomes) expect(o.source.length).toBeGreaterThan(5)
+        expect(f.outcomes[0].source, 'scroller outcome must carry a source').toBeDefined()
+        for (const o of f.outcomes) if (o.source !== undefined) expect(o.source.length).toBeGreaterThan(5)
       }
     })
     it(`${loc}: seo within limits, footer verbatim`, () => {

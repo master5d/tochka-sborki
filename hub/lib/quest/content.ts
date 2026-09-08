@@ -7,7 +7,7 @@ import type { SceneId } from './scenes'
 
 export type Guide = 'scroller' | 'builder'
 export interface Cta { label: string; href: string }
-export interface Outcome { guide: Guide; value: string; text: string; source: string }
+export interface Outcome { guide: Guide; value: string; text: string; source?: string }
 export interface PathBlock { guide: Guide; title: string; paragraphs: string[]; ctas?: Cta[] }
 export interface Fork {
   id: 'boulder' | 'temple' | 'gates'
@@ -125,7 +125,7 @@ const en: QuestContent = {
       outcomesTitle: 'Outcomes',
       outcomes: [
         { guide: 'scroller', value: '84 %', text: 'of developers use AI in their work, and 3.1 % fully trust its answers', source: 'Stack Overflow Developer Survey, 2025' },
-        { guide: 'builder', value: '44 lessons', text: '8.9 hours by the published durations; the finale is module 8 "Agent engineering", lesson "Prototype → Production"', source: 'the Assemblage Point, published lesson durations' },
+        { guide: 'builder', value: '44 lessons', text: '8.9 hours by the published durations; the finale is module 8 "Agent engineering", lesson "Prototype → Production"' },
       ],
       bridge: "Hard hat on, the intent is yours. What's left is where to take it: the trail out of the workshop runs into a wall with gates.",
     },
@@ -159,7 +159,7 @@ const en: QuestContent = {
       outcomesTitle: 'Outcomes',
       outcomes: [
         { guide: 'scroller', value: '3.13 %', text: 'of those who enroll finish an online course', source: 'edX, 2017–18; Reich & Ruipérez-Valiente, Science, 2019' },
-        { guide: 'builder', value: '9 modules', text: '$0, the price of entry at the first gate', source: 'the Assemblage Point, ai.synergify.com' },
+        { guide: 'builder', value: '9 modules', text: '$0, the price of entry at the first gate' },
       ],
       bridge: 'The gates are open. From the castle wall behind them the whole road is visible, and "made it" on this map means something different from what it means on the highway.',
     },
@@ -288,7 +288,7 @@ const ru: QuestContent = {
       outcomesTitle: 'Исходы',
       outcomes: [
         { guide: 'scroller', value: '84 %', text: 'разработчиков используют ИИ в работе, а полностью доверяют его ответам 3,1 %', source: 'Stack Overflow Developer Survey, 2025' },
-        { guide: 'builder', value: '44 урока', text: '8,9 часа по объявленным длительностям; финал это модуль 8 «Агентский инжиниринг», урок «Prototype → Production»', source: 'Точка Сборки, по объявленным длительностям уроков' },
+        { guide: 'builder', value: '44 урока', text: '8,9 часа по объявленным длительностям; финал это модуль 8 «Агентский инжиниринг», урок «Prototype → Production»' },
       ],
       bridge: 'Каска надета, замысел твой. Осталось понять, куда его нести: тропа из мастерской упирается в стену с воротами.',
     },
@@ -322,7 +322,7 @@ const ru: QuestContent = {
       outcomesTitle: 'Исходы',
       outcomes: [
         { guide: 'scroller', value: '3,13 %', text: 'до конца онлайн-курса доходят 3,13 % записавшихся', source: 'edX, 2017–18; Reich & Ruipérez-Valiente, Science, 2019' },
-        { guide: 'builder', value: '9 модулей', text: '0 ₽, цена входа в первые ворота', source: 'Точка Сборки, ai.synergify.com' },
+        { guide: 'builder', value: '9 модулей', text: '0 ₽, цена входа в первые ворота' },
       ],
       bridge: 'Ворота открыты. С крепостной стены за ними виден весь путь, и «дошёл» на этой карте значит не то, что на быстрой дороге.',
     },
