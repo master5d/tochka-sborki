@@ -14,5 +14,11 @@ for (const [file, needles] of Object.entries(checks)) {
   for (const n of needles) if (!html.includes(n)) { console.error(`${file}: missing "${n}"`); failed++ }
   if (/\[(scene|loop|сцена|петля):/.test(html)) { console.error(`${file}: service mark leaked`); failed++ }
 }
+{
+  const ru = readFileSync(join(process.cwd(), 'out/index.html'), 'utf8')
+  if (!ru.includes('lang="ru"')) { console.error('out/index.html: missing lang="ru"'); failed++ }
+  const en = readFileSync(join(process.cwd(), 'out/en/index.html'), 'utf8')
+  if (!en.includes('lang="en"')) { console.error('out/en/index.html: missing lang="en"'); failed++ }
+}
 console.log(failed ? `smoke: ${failed} miss(es)` : 'smoke: ok')
 process.exit(failed ? 1 : 0)
