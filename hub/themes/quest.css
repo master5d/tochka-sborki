@@ -17,31 +17,6 @@
   --quest-tint-about: #faefe1;
   --quest-card: #fbf9f4;
   --quest-plaque-ink: #2b1d12;
-  /* Hero scrim: rgba(--bg-primary) ramps, never a hex literal, so both track the
-     theme. Two layers: a frame-wide wash, and a copy-local ramp (below) sized to
-     the text block itself — the local one is what actually guarantees contrast,
-     since the copy's height (and therefore where its last line lands inside the
-     frame) changes with line-wrap at every width, while a single frame-relative
-     gradient would not track that.
-     Wave C: the tall art carries the Scroller and the Builder in its lower-middle
-     third (the world-v3 gate crop puts both guides ~55-80% down the frame). The
-     copy panel moved from a bottom band (which blanketed exactly that band, per
-     the Wave A "hero lost the guides" finding) to a TOP band, so both ramps are
-     now solid-at-top-fading-to-clear-at-bottom instead of the reverse. */
-  --quest-hero-scrim: linear-gradient(
-    180deg,
-    rgba(var(--bg-primary-rgb), 0.5) 0%,
-    rgba(var(--bg-primary-rgb), 0.2) 45%,
-    rgba(var(--bg-primary-rgb), 0.04) 100%
-  );
-  --quest-hero-copy-scrim: linear-gradient(
-    180deg,
-    var(--bg-primary) 0%,
-    rgba(var(--bg-primary-rgb), 0.98) 62%,
-    rgba(var(--bg-primary-rgb), 0.9) 82%,
-    rgba(var(--bg-primary-rgb), 0.55) 94%,
-    rgba(var(--bg-primary-rgb), 0) 100%
-  );
 }
 
 @media (prefers-color-scheme: dark) {
@@ -87,26 +62,43 @@
 }
 
 /* Hero: the tall map as the first screen's backdrop (A4). The frame is capped at
-   viewport-minus-header; the copy sits over it on a token-driven scrim and is
-   free to grow taller than the frame (no overflow:hidden here) so long copy
-   never clips — it just spills onto the plain chapter tint below the art.
-   Wave C: copy anchored to the TOP (was bottom) — the world-v3 art carries the
-   Scroller and the Builder in its lower-middle third, and a bottom-anchored copy
-   panel blanketed exactly that band (Wave A "hero lost the guides" finding). The
-   art's object-position is pulled down (78% down the Y axis) so the visible crop
-   keeps the guides in frame under the copy instead of cropping them off the
-   bottom, and the frame stays 1264px min-height. */
-.quest-hero-frame { position: relative; min-height: calc(100vh - var(--quest-stage-top)); display: flex; align-items: flex-start; }
+   viewport-minus-header. Wave C's finding: a scrim over the whole frame protects
+   text but washes the art out to a watermark, and the last bio line's contrast
+   then rides on local art luminance instead of a token guarantee. Fix (polish
+   pass): no scrim anywhere. The copy sits on its OWN opaque panel painted from
+   `--quest-tint-hero` (already asserted ≥4.5/4.5/3.0 for primary/accent/secondary
+   in contrast.test.ts, in all four theme blocks — token-against-token, not
+   art-against-text) and the art keeps full strength everywhere the panel doesn't
+   cover. Desktop: panel is a left column (~45%), art fills the rest, hard edge
+   between them (no gradient — a fade would itself be a wash). Mobile: panel is a
+   top band, art fills the rest below it. The art's object-position stays pulled
+   down (78%/72%) so the Scroller and the Builder, who live in the art's
+   lower-middle third, land in the art zone rather than under the panel. */
+.quest-hero-frame { position: relative; min-height: calc(100vh - var(--quest-stage-top)); display: flex; align-items: stretch; }
 .quest-hero-frame .quest-scene.quest-hero-scene { position: absolute; top: 0; left: 0; right: 0; height: calc(100vh - var(--quest-stage-top)); aspect-ratio: auto; border: none; border-radius: 0; z-index: 0; }
 .quest-hero-frame .quest-scene.quest-hero-scene img { object-position: 50% 78%; }
-.quest-hero-scrim { position: absolute; top: 0; left: 0; right: 0; height: calc(100vh - var(--quest-stage-top)); background: var(--quest-hero-scrim); pointer-events: none; z-index: 1; }
-.quest-hero-copy { position: relative; z-index: 2; width: 100%; padding: 2.5rem 2rem 5rem; background: var(--quest-hero-copy-scrim); }
-@media (max-width: 720px) {
-  .quest-hero-frame { min-height: calc(100svh - var(--quest-stage-top)); }
+.quest-hero-copy { position: relative; z-index: 2; width: 45%; min-width: 22rem; max-width: 34rem; padding: 3rem 2.5rem; background: var(--quest-tint-hero); display: flex; flex-direction: column; justify-content: center; }
+@media (max-width: 900px) {
+  .quest-hero-frame { flex-direction: column; min-height: calc(100svh - var(--quest-stage-top)); }
   .quest-hero-frame .quest-scene.quest-hero-scene { height: calc(100svh - var(--quest-stage-top)); }
   .quest-hero-frame .quest-scene.quest-hero-scene img { object-position: 50% 72%; }
-  .quest-hero-scrim { height: calc(100svh - var(--quest-stage-top)); }
-  .quest-hero-copy { padding: 1.75rem 1.25rem 4rem; }
+  .quest-hero-copy { width: 100%; min-width: 0; max-width: none; max-height: 58vh; overflow-y: auto; padding: 1.75rem 1.25rem; justify-content: flex-start; }
+  /* Content usually runs longer than the band (scrollable) — a sticky fade in the
+     panel's own colour signals "more below" instead of clipping a line mid-word.
+     It sits INSIDE the opaque panel (nothing but panel colour behind it), so it
+     never exposes the art through the panel. */
+  .quest-hero-copy::after {
+    content: '';
+    position: sticky;
+    display: block;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1.5rem;
+    margin-top: -1.5rem;
+    background: linear-gradient(to bottom, transparent, var(--quest-tint-hero));
+    pointer-events: none;
+  }
 }
 
 /* Sticky stage layout. Chapters that host it are rendered `bleed` (A1): the

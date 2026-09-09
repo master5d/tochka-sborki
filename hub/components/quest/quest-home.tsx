@@ -23,7 +23,9 @@ export function QuestHome({ locale }: Props) {
       <style>{`
         @media (max-width: 720px) {
           .hub-section { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
-          .quest-hero h1 { font-size: clamp(1.6rem, 7vw, 3rem) !important; }
+        }
+        @media (max-width: 900px) {
+          .quest-hero h1 { font-size: clamp(1.5rem, 6.5vw, 2.6rem) !important; }
         }
       `}</style>
 
@@ -31,7 +33,6 @@ export function QuestHome({ locale }: Props) {
       <Chapter id="hero" tint="hero" bleed>
         <div className="quest-hero-frame">
           <SceneLoop id={c.hero.scene} locale={locale} eager className="quest-hero-scene" />
-          <div className="quest-hero-scrim" aria-hidden />
           <div className="quest-hero-copy quest-hero">
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--section-label-size)', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '1rem' }}>
               {c.hero.name} · {c.hero.role}

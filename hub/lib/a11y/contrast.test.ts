@@ -94,3 +94,26 @@ describe('quest chapter tints', () => {
     })
   }
 })
+
+// The hero's copy panel (`.quest-hero-copy`, themes/quest.css) is painted solid from
+// `--quest-tint-hero` — no scrim over the art. This is the same token already covered
+// by the loop above (it's in TINTS), asserted again here under its own name so the
+// hero-panel guarantee reads as a guarantee, not a side effect of the tint loop.
+describe('quest hero panel contrast (no scrim — token vs token)', () => {
+  const cases: Array<[string, string, string]> = [
+    [':root {', ':root {', 'light fallback'],
+    [':root:not([data-theme])', ':root:not([data-theme])', 'system dark'],
+    ['[data-theme="dark"]', '[data-theme="dark"]', 'explicit dark'],
+    ['[data-theme="light"]', '[data-theme="light"]', 'explicit light'],
+  ]
+  for (const [questSel, kitSel, name] of cases) {
+    it(`${name}: hero copy text stays readable on --quest-tint-hero`, () => {
+      const tint = questTokensOf(questSel)
+      const kit = tokensOf(kitSel)
+      const panel = tint['--quest-tint-hero']
+      expect(contrastRatio(kit['--text-primary'], panel), `${name} primary on hero panel`).toBeGreaterThanOrEqual(4.5)
+      expect(contrastRatio(kit['--text-accent'], panel), `${name} accent on hero panel`).toBeGreaterThanOrEqual(4.5)
+      expect(contrastRatio(kit['--text-secondary'], panel), `${name} secondary on hero panel`).toBeGreaterThanOrEqual(3.0)
+    })
+  }
+})
