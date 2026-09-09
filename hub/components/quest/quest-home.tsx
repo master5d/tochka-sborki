@@ -1,7 +1,6 @@
 'use client'
 import type { Locale } from '../../lib/dictionaries'
 import { quest, type Fork } from '../../lib/quest/content'
-import { LangSwitcher } from '../lang-switcher'
 import { Chapter, type Tint } from './chapter'
 import { GatePlaques } from './gate-plaques'
 import { OutcomeReveal } from './outcome-reveal'
@@ -21,7 +20,6 @@ export function QuestHome({ locale }: Props) {
   const c = quest[locale]
   return (
     <main>
-      <LangSwitcher locale={locale} />
       <style>{`
         @media (max-width: 720px) {
           .hub-section { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }

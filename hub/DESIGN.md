@@ -8,7 +8,7 @@ dials: {variance: 4, motion: 3, density: 3}
 palette:
   dark: {bg: '#0a0a0f', surface: '#16161f', text: '#f0f0f5', muted: '#8e8ea0', accent: '#00d1ff',
     border: '#242433'}
-  light: {bg: '#f4f1ea', surface: '#fbf9f4', text: '#15151a', muted: '#5a5a6a', accent: '#0070c0',
+  light: {bg: '#f4f1ea', surface: '#fbf9f4', text: '#15151a', muted: '#5a5a6a', accent: '#0063ab',
     border: '#d8d2c6'}
 tokens: inherit
 rationale: 'Снято с фактической ДНК (themes/model-kit.css), а не назначено сверху.
@@ -17,7 +17,7 @@ rationale: 'Снято с фактической ДНК (themes/model-kit.css), 
   воздушный: section-gap 5rem, короткие блоки, много поля вокруг текста; это подтверждено
   живым замером в design-audit 2026-08-02. Акцент dark совпадает с глобальным seed
   #00D1FF; light-акцент затемнён до #0070c0 ради WCAG-AA (граничный #0077cc не проходил
-  на тёплой бумаге).'
+  на тёплой бумаге); 2026-09-08: light-акцент #0063ab — #0070c0 не проходил AA на тинтах quest.'
 ---
 # hub — DESIGN.md
 

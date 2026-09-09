@@ -10,7 +10,7 @@
   --bg-surface: #fbf9f4;
   --text-primary: #15151a;
   --text-secondary: #5a5a6a;
-  --text-accent: #0070c0;
+  --text-accent: #0063ab;
   --border-color: #d8d2c6;
   --border-accent: #0077cc40;
   --text-on-accent: #ffffff;
@@ -80,7 +80,7 @@
   --bg-surface: #fbf9f4;
   --text-primary: #15151a;
   --text-secondary: #5a5a6a;
-  --text-accent: #0077cc;       /* Deep blue for light mode contrast */
+  --text-accent: #0063ab;       /* Deep blue for light mode contrast, AA-safe on quest tints */
   --border-color: #d8d2c6;
   --border-accent: #0077cc40;
   --text-on-accent: #ffffff;

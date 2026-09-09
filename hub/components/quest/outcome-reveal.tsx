@@ -33,7 +33,7 @@ export function OutcomeReveal({ title, outcomes, labels }: Props) {
         {outcomes.map((o) => (
           <article key={o.guide} className="quest-card">
             <GuideChip guide={o.guide} label={o.guide === 'scroller' ? labels.habit : labels.detour} />
-            <div className="quest-number">{o.value}</div>
+            {o.text.includes(o.value) ? null : <div className="quest-number">{o.value}</div>}
             <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, color: 'var(--text-primary)' }}>{o.text}</p>
             {o.source ? <div className="quest-source">{o.source}</div> : null}
           </article>

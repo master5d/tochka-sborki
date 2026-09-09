@@ -88,7 +88,9 @@ describe('quest chapter tints', () => {
         expect(tint[t], `${questSel} ${t}`).toMatch(/^#[0-9a-f]{6}$/i)
         expect(contrastRatio(kit['--text-primary'], tint[t]), `${name} primary on ${t}`).toBeGreaterThanOrEqual(4.5)
         expect(contrastRatio(kit['--text-secondary'], tint[t]), `${name} secondary on ${t}`).toBeGreaterThanOrEqual(3.0)
+        expect(contrastRatio(kit['--text-accent'], tint[t]), `${name} accent on ${t}`).toBeGreaterThanOrEqual(4.5)
       }
+      expect(contrastRatio(kit['--text-accent'], tint['--quest-card']), `${name} accent on --quest-card`).toBeGreaterThanOrEqual(4.5)
     })
   }
 })

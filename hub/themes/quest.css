@@ -59,11 +59,12 @@
 }
 
 /* Sticky stage layout. */
-.quest-stage { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
+.quest-stage { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
 .quest-stage__media { position: sticky; top: var(--quest-stage-top); height: calc(100vh - var(--quest-stage-top)); display: flex; align-items: center; }
 .quest-stage__media > * { width: 100%; }
-.quest-stage__steps { display: flex; flex-direction: column; gap: clamp(3rem, 12vh, 8rem); padding: 20vh 0 30vh; }
-.quest-stage__step { min-height: 40vh; display: flex; align-items: center; }
+.quest-stage__steps { display: flex; flex-direction: column; gap: clamp(2rem, 8vh, 5rem); padding: 12vh 0 18vh; }
+.quest-stage__step { min-height: 28vh; display: flex; align-items: center; }
+.quest-stage__steps .quest-cards { grid-template-columns: 1fr; }
 .quest-stage__step[data-active="false"] { opacity: 0.8; } /* 0.8, not lower: primary text must stay ≥ 4.5:1 on light tints */
 .quest-stage__step[data-active="true"] { opacity: 1; }
 @media (prefers-reduced-motion: no-preference) { .quest-stage__step { transition: opacity 300ms ease; } }
@@ -78,7 +79,7 @@
 .quest-scene { position: relative; aspect-ratio: 1264 / 848; overflow: hidden; border-radius: var(--radius); border: 1px solid var(--border-color); background: var(--bg-secondary); container-type: inline-size; }
 .quest-scene img, .quest-scene video { display: block; width: 100%; height: 100%; object-fit: cover; }
 .quest-scene__caption { position: absolute; left: 0.75rem; bottom: 0.75rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.04em; color: var(--text-primary); background: rgba(var(--bg-primary-rgb), 0.85); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.3rem 0.55rem; }
-.quest-plaque { position: absolute; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: clamp(7px, 1.15cqw, 18px); letter-spacing: 0.06em; text-transform: lowercase; color: var(--quest-plaque-ink); text-align: center; line-height: 1.1; padding: 0 2%; overflow: hidden; }
+.quest-plaque { position: absolute; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: clamp(9px, 2.2cqw, 20px); letter-spacing: 0.06em; text-transform: lowercase; color: var(--quest-plaque-ink); text-align: center; line-height: 1.1; padding: 0 2%; overflow: hidden; }
 
 /* Cards. */
 .quest-card { background: var(--quest-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem; }
