@@ -59,3 +59,36 @@ describe('hub theme contrast', () => {
     expect(contrastRatio(t['--text-primary'], t['--bg-surface'])).toBeGreaterThanOrEqual(4.5)
   })
 })
+
+const QUEST = readFileSync(join(process.cwd(), 'themes', 'quest.css'), 'utf8')
+const TINTS = ['hero', 'intro', 'fork1', 'fork2', 'fork3', 'finale', 'about'].map((k) => `--quest-tint-${k}`)
+
+function questTokensOf(selector: string): Record<string, string> {
+  const start = QUEST.indexOf(selector)
+  if (start < 0) throw new Error(`блок ${selector} не найден в quest.css`)
+  const open = QUEST.indexOf('{', start)
+  const close = QUEST.indexOf('}', open)
+  const out: Record<string, string> = {}
+  for (const m of QUEST.slice(open + 1, close).matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)) out[m[1]] = m[2].trim()
+  return out
+}
+
+describe('quest chapter tints', () => {
+  const cases: Array<[string, string, string]> = [
+    [':root {', ':root {', 'light fallback'],
+    [':root:not([data-theme])', ':root:not([data-theme])', 'system dark'],
+    ['[data-theme="dark"]', '[data-theme="dark"]', 'explicit dark'],
+    ['[data-theme="light"]', '[data-theme="light"]', 'explicit light'],
+  ]
+  for (const [questSel, kitSel, name] of cases) {
+    it(`${name}: text stays readable on every tint`, () => {
+      const tint = questTokensOf(questSel)
+      const kit = tokensOf(kitSel)
+      for (const t of TINTS) {
+        expect(tint[t], `${questSel} ${t}`).toMatch(/^#[0-9a-f]{6}$/i)
+        expect(contrastRatio(kit['--text-primary'], tint[t]), `${name} primary on ${t}`).toBeGreaterThanOrEqual(4.5)
+        expect(contrastRatio(kit['--text-secondary'], tint[t]), `${name} secondary on ${t}`).toBeGreaterThanOrEqual(3.0)
+      }
+    })
+  }
+})

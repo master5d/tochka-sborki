@@ -2,3 +2,4 @@
 2026-07-07 design-new: onboarded; baseline lint = 7 violations, gate=staged-only
 2026-08-02 design-audit: FAIL (5 findings)
 2026-08-02 design-polish: PASS (6/6 findings fixed, lint 0, tests 24)
+2026-09-08 design-change: quest theme layered on model-kit (7 chapter tints ×4 blocks, contrast test extended), motion dial 2→3

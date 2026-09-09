@@ -1,0 +1,93 @@
+/* Quest theme: chapter tints and the sticky stage, layered on model-kit tokens.
+   Palette = model-kit paper + the pastel fields of illustration style v2
+   (lavender, mint, sand, peach, steel). Every tint is declared four times,
+   exactly like model-kit: bare :root (pre-hydration / no JS), system dark,
+   explicit dark, explicit light. contrast.test.ts keeps them readable. */
+:root {
+  --quest-stage-top: 3.25rem;
+  --quest-tint-hero: #ece6f8;
+  --quest-tint-intro: #e4f1ea;
+  --quest-tint-fork1: #f3ecdf;
+  --quest-tint-fork2: #fbe8d9;
+  --quest-tint-fork3: #e3e8f5;
+  --quest-tint-finale: #e9e3f7;
+  --quest-tint-about: #f4f1ea;
+  --quest-card: #fbf9f4;
+  --quest-plaque-ink: #2b1d12;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --quest-tint-hero: #15121f;
+    --quest-tint-intro: #0f1a16;
+    --quest-tint-fork1: #1b1712;
+    --quest-tint-fork2: #1f1611;
+    --quest-tint-fork3: #12151f;
+    --quest-tint-finale: #171226;
+    --quest-tint-about: #0a0a0f;
+    --quest-card: #16161f;
+  }
+}
+
+[data-theme="dark"] {
+  --quest-tint-hero: #15121f;
+  --quest-tint-intro: #0f1a16;
+  --quest-tint-fork1: #1b1712;
+  --quest-tint-fork2: #1f1611;
+  --quest-tint-fork3: #12151f;
+  --quest-tint-finale: #171226;
+  --quest-tint-about: #0a0a0f;
+  --quest-card: #16161f;
+}
+
+[data-theme="light"] {
+  --quest-tint-hero: #ece6f8;
+  --quest-tint-intro: #e4f1ea;
+  --quest-tint-fork1: #f3ecdf;
+  --quest-tint-fork2: #fbe8d9;
+  --quest-tint-fork3: #e3e8f5;
+  --quest-tint-finale: #e9e3f7;
+  --quest-tint-about: #f4f1ea;
+  --quest-card: #fbf9f4;
+}
+
+/* Reveal: visible at rest; JS adds .is-in when the block enters the viewport. */
+.quest-reveal { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .quest-reveal[data-armed] { opacity: 0; transform: translateY(12px); transition: opacity 400ms ease, transform 400ms ease; }
+  .quest-reveal[data-armed].is-in { opacity: 1; transform: none; }
+}
+
+/* Sticky stage layout. */
+.quest-stage { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
+.quest-stage__media { position: sticky; top: var(--quest-stage-top); height: calc(100vh - var(--quest-stage-top)); display: flex; align-items: center; }
+.quest-stage__media > * { width: 100%; }
+.quest-stage__steps { display: flex; flex-direction: column; gap: clamp(3rem, 12vh, 8rem); padding: 20vh 0 30vh; }
+.quest-stage__step { min-height: 40vh; display: flex; align-items: center; }
+.quest-stage__step[data-active="false"] { opacity: 0.55; }
+.quest-stage__step[data-active="true"] { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) { .quest-stage__step { transition: opacity 300ms ease; } }
+@media (max-width: 900px) {
+  .quest-stage { grid-template-columns: 1fr; gap: 0; }
+  .quest-stage__media { height: 42vh; z-index: 1; }
+  .quest-stage__steps { padding: 1.5rem 0 3rem; gap: 2rem; }
+  .quest-stage__step { min-height: 0; }
+}
+
+/* Scene frame (poster/video share the art's aspect). */
+.quest-scene { position: relative; aspect-ratio: 1264 / 848; overflow: hidden; border-radius: var(--radius); border: 1px solid var(--border-color); background: var(--bg-secondary); container-type: inline-size; }
+.quest-scene img, .quest-scene video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.quest-scene__caption { position: absolute; left: 0.75rem; bottom: 0.75rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.04em; color: var(--text-primary); background: rgba(var(--bg-primary-rgb), 0.85); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.3rem 0.55rem; }
+.quest-plaque { position: absolute; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: clamp(7px, 1.15cqw, 18px); letter-spacing: 0.06em; text-transform: lowercase; color: var(--quest-plaque-ink); text-align: center; line-height: 1.1; padding: 0 2%; overflow: hidden; }
+
+/* Cards. */
+.quest-card { background: var(--quest-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem; }
+.quest-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+@media (max-width: 720px) { .quest-cards { grid-template-columns: 1fr; } }
+.quest-chip { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
+.quest-chip img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: top; background: var(--bg-secondary); border: 1px solid var(--border-color); }
+.quest-number { font-family: var(--font-display), system-ui, sans-serif; font-weight: 900; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 0.95; letter-spacing: -0.03em; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.quest-source { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary); letter-spacing: 0.02em; }
+.quest-cta { display: inline-block; font-family: var(--font-mono); font-size: var(--text-sm); letter-spacing: 0.04em; color: var(--text-on-accent); background: var(--text-accent); border-radius: var(--radius); padding: 0.8rem 1.2rem; text-decoration: none; }
+.quest-cta:hover { opacity: 0.9; }
+.quest-cta--ghost { color: var(--text-accent); background: transparent; border: 1px solid var(--text-accent); }

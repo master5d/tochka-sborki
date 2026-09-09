@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "@desops/ui-kit/globals.css";
 @import "../themes/model-kit.css";
+@import "../themes/quest.css";
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 

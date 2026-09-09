@@ -4,7 +4,7 @@ status: ok
 descriptor: 'Model kit: конструктивистский чертёж — гигантский гротеск-заголовок,
   mono-микролейблы, резкие 4px-углы, cyan-акцент; двухтемный (тёмная база + тёплая
   «модельная бумага»).'
-dials: {variance: 4, motion: 2, density: 3}
+dials: {variance: 4, motion: 3, density: 3}
 palette:
   dark: {bg: '#0a0a0f', surface: '#16161f', text: '#f0f0f5', muted: '#8e8ea0', accent: '#00d1ff',
     border: '#242433'}
@@ -28,6 +28,7 @@ Model kit: конструктивистский чертёж — гигантс�
 ## Решения
 
 - 2026-08-27: контракт заведён миграцией (спек 2026-08-27-design-consolidation); dials выставлены из design/identity.json
+- 2026-09-08: тема quest (скроллителлинг главной по Adweek×Twitch, спек 2026-09-08-quest-home-design): тинты глав поверх model-kit, sticky-сцены с петлями, reveal 400 мс; motion 2 → 3
 
 ## Не делать
 
