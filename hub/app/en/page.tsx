@@ -1,10 +1,9 @@
-import { HomePage } from '../../components/home-page'
+import type { Metadata } from 'next'
+import { QuestHome } from '../../components/quest/quest-home'
+import { quest } from '../../lib/quest/content'
 
-export const metadata = {
-  title: 'Alexander Mamaev — vibe coder, AI builder, coach',
-  description: 'Personal landing — projects, contacts, agent-systems work',
-}
+export const metadata: Metadata = { title: quest.en.seo.title, description: quest.en.seo.description }
 
 export default function Page() {
-  return <HomePage locale="en" />
+  return <QuestHome locale="en" />
 }
