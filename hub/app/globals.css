@@ -11,6 +11,7 @@ html, body {
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
+  overflow-x: hidden; /* quest bleed layout (Wave A) must never scroll sideways */
 }
 
 ::selection {

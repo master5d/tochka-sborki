@@ -13,13 +13,15 @@ interface Props {
   children?: ReactNode
   /** The hero loop may start eagerly; everything else waits for the viewport. */
   eager?: boolean
+  /** Extra class appended to the `.quest-scene` wrapper (e.g. the hero backdrop variant). */
+  className?: string
 }
 
 /**
  * Poster first, video only when motion is allowed and the frame is on screen.
  * Frame 0 of every loop equals the poster, so the swap is invisible.
  */
-export function SceneLoop({ id, locale, caption, children, eager = false }: Props) {
+export function SceneLoop({ id, locale, caption, children, eager = false, className }: Props) {
   const scene = SCENES[id]
   const assets = sceneAssets(id)
   const ref = useRef<HTMLDivElement>(null)
@@ -51,7 +53,7 @@ export function SceneLoop({ id, locale, caption, children, eager = false }: Prop
   }, [motion])
 
   return (
-    <div ref={ref} className="quest-scene" data-scene={id}>
+    <div ref={ref} className={className ? `quest-scene ${className}` : 'quest-scene'} data-scene={id}>
       {motion ? (
         <video
           ref={videoRef}

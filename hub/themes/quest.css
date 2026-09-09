@@ -2,52 +2,74 @@
    Palette = model-kit paper + the pastel fields of illustration style v2
    (lavender, mint, sand, peach, steel). Every tint is declared four times,
    exactly like model-kit: bare :root (pre-hydration / no JS), system dark,
-   explicit dark, explicit light. contrast.test.ts keeps them readable. */
+   explicit dark, explicit light. contrast.test.ts keeps them readable.
+   Wave A (2026-09-09): tints saturated from ~4-8% HSV to ~13-18% (light) /
+   deepened to ~70% HSV-S at low V (dark) — still every value clears the
+   4.5 / 4.5 / 3.0 contrast floor with headroom (see waveA-report.md). */
 :root {
   --quest-stage-top: 3.25rem;
-  --quest-tint-hero: #ece6f8;
-  --quest-tint-intro: #e4f1ea;
-  --quest-tint-fork1: #f3ecdf;
-  --quest-tint-fork2: #fbe8d9;
-  --quest-tint-fork3: #e3e8f5;
-  --quest-tint-finale: #e9e3f7;
-  --quest-tint-about: #f4f1ea;
+  --quest-tint-hero: #e3d9fa;
+  --quest-tint-intro: #cdfae3;
+  --quest-tint-fork1: #faefcd;
+  --quest-tint-fork2: #fadacd;
+  --quest-tint-fork3: #d2defa;
+  --quest-tint-finale: #f1d4fa;
+  --quest-tint-about: #faefe1;
   --quest-card: #fbf9f4;
   --quest-plaque-ink: #2b1d12;
+  /* Hero scrim: rgba(--bg-primary) ramps, never a hex literal, so both track the
+     theme. Two layers: a frame-wide wash for the art's own bottom-fade, and a
+     copy-local ramp (below) sized to the text block itself — the local one is
+     what actually guarantees contrast, since the copy's height (and therefore
+     where its first line lands inside the frame) changes with line-wrap at
+     every width, while a single frame-relative gradient would not track that. */
+  --quest-hero-scrim: linear-gradient(
+    180deg,
+    rgba(var(--bg-primary-rgb), 0.05) 0%,
+    rgba(var(--bg-primary-rgb), 0.22) 55%,
+    rgba(var(--bg-primary-rgb), 0.5) 100%
+  );
+  --quest-hero-copy-scrim: linear-gradient(
+    180deg,
+    rgba(var(--bg-primary-rgb), 0.55) 0%,
+    rgba(var(--bg-primary-rgb), 0.9) 12%,
+    rgba(var(--bg-primary-rgb), 0.98) 28%,
+    var(--bg-primary) 55%
+  );
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --quest-tint-hero: #15121f;
-    --quest-tint-intro: #0f1a16;
-    --quest-tint-fork1: #1b1712;
-    --quest-tint-fork2: #1f1611;
-    --quest-tint-fork3: #12151f;
-    --quest-tint-finale: #171226;
-    --quest-tint-about: #0a0a0f;
+    --quest-tint-hero: #0e081c;
+    --quest-tint-intro: #081c12;
+    --quest-tint-fork1: #1c1708;
+    --quest-tint-fork2: #1c0e08;
+    --quest-tint-fork3: #080e1c;
+    --quest-tint-finale: #17081c;
+    --quest-tint-about: #120d05;
     --quest-card: #16161f;
   }
 }
 
 [data-theme="dark"] {
-  --quest-tint-hero: #15121f;
-  --quest-tint-intro: #0f1a16;
-  --quest-tint-fork1: #1b1712;
-  --quest-tint-fork2: #1f1611;
-  --quest-tint-fork3: #12151f;
-  --quest-tint-finale: #171226;
-  --quest-tint-about: #0a0a0f;
+  --quest-tint-hero: #0e081c;
+  --quest-tint-intro: #081c12;
+  --quest-tint-fork1: #1c1708;
+  --quest-tint-fork2: #1c0e08;
+  --quest-tint-fork3: #080e1c;
+  --quest-tint-finale: #17081c;
+  --quest-tint-about: #120d05;
   --quest-card: #16161f;
 }
 
 [data-theme="light"] {
-  --quest-tint-hero: #ece6f8;
-  --quest-tint-intro: #e4f1ea;
-  --quest-tint-fork1: #f3ecdf;
-  --quest-tint-fork2: #fbe8d9;
-  --quest-tint-fork3: #e3e8f5;
-  --quest-tint-finale: #e9e3f7;
-  --quest-tint-about: #f4f1ea;
+  --quest-tint-hero: #e3d9fa;
+  --quest-tint-intro: #cdfae3;
+  --quest-tint-fork1: #faefcd;
+  --quest-tint-fork2: #fadacd;
+  --quest-tint-fork3: #d2defa;
+  --quest-tint-finale: #f1d4fa;
+  --quest-tint-about: #faefe1;
   --quest-card: #fbf9f4;
 }
 
@@ -58,12 +80,36 @@
   .quest-reveal[data-armed].is-in { opacity: 1; transform: none; }
 }
 
-/* Sticky stage layout. */
+/* Hero: the map as the first screen's backdrop (A4). The frame is capped at
+   viewport-minus-header; the copy sits over it on a token-driven scrim and is
+   free to grow taller than the frame (no overflow:hidden here) so long copy
+   never clips — it just spills onto the plain chapter tint below the art. */
+.quest-hero-frame { position: relative; min-height: calc(100vh - var(--quest-stage-top)); display: flex; align-items: flex-end; }
+.quest-hero-frame .quest-scene.quest-hero-scene { position: absolute; top: 0; left: 0; right: 0; height: calc(100vh - var(--quest-stage-top)); aspect-ratio: auto; border: none; border-radius: 0; z-index: 0; }
+.quest-hero-scrim { position: absolute; top: 0; left: 0; right: 0; height: calc(100vh - var(--quest-stage-top)); background: var(--quest-hero-scrim); pointer-events: none; z-index: 1; }
+.quest-hero-copy { position: relative; z-index: 2; width: 100%; padding: 3rem 2rem 3.5rem; background: var(--quest-hero-copy-scrim); }
+@media (max-width: 720px) {
+  .quest-hero-frame { min-height: calc(100svh - var(--quest-stage-top)); }
+  .quest-hero-frame .quest-scene.quest-hero-scene { height: calc(100svh - var(--quest-stage-top)); }
+  .quest-hero-scrim { height: calc(100svh - var(--quest-stage-top)); }
+  .quest-hero-copy { padding: 2rem 1.25rem 2.5rem; }
+}
+
+/* Sticky stage layout. Chapters that host it are rendered `bleed` (A1): the
+   band drops its own horizontal padding so this grid runs to the viewport
+   edge on wide screens — the media column starts flush left, the text
+   column caps its own line length locally (Para maxWidth etc.), plus a
+   little breathing room on the right so cards never touch the edge. */
 .quest-stage { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
 .quest-stage__media { position: sticky; top: var(--quest-stage-top); height: calc(100vh - var(--quest-stage-top)); display: flex; align-items: center; }
 .quest-stage__media > * { width: 100%; }
-.quest-stage__steps { display: flex; flex-direction: column; gap: clamp(2rem, 8vh, 5rem); padding: 12vh 0 18vh; }
-.quest-stage__step { min-height: 28vh; display: flex; align-items: center; }
+.quest-stage__steps { display: flex; flex-direction: column; gap: clamp(2rem, 8vh, 5rem); padding: 12vh 2rem 18vh 0; }
+/* A3: a one-sentence step no longer forces a 28vh cell (the finale's void).
+   Height now follows content; the inter-step `gap` above already does the
+   heavy lifting for use-active-step's IntersectionObserver (threshold list +
+   -15% root margin, unchanged) — padding-block only adds a little breathing
+   room around each step's own text so it doesn't settle flush against gap. */
+.quest-stage__step { min-height: 0; padding-block: 4vh; display: flex; align-items: center; }
 .quest-stage__steps .quest-cards { grid-template-columns: 1fr; }
 .quest-stage__step[data-active="false"] { opacity: 0.8; } /* 0.8, not lower: primary text must stay ≥ 4.5:1 on light tints */
 .quest-stage__step[data-active="true"] { opacity: 1; }
@@ -71,12 +117,13 @@
 @media (max-width: 900px) {
   .quest-stage { grid-template-columns: 1fr; gap: 0; }
   .quest-stage__media { height: 42vh; z-index: 1; }
-  .quest-stage__steps { padding: 1.5rem 0 3rem; gap: 2rem; }
-  .quest-stage__step { min-height: 0; }
+  .quest-stage__steps { padding: 1.5rem 2rem 3rem; gap: 2rem; }
+  .quest-stage__step { min-height: 0; padding-block: 2rem; }
 }
 
-/* Scene frame (poster/video share the art's aspect). */
-.quest-scene { position: relative; aspect-ratio: 1264 / 848; overflow: hidden; border-radius: var(--radius); border: 1px solid var(--border-color); background: var(--bg-secondary); container-type: inline-size; }
+/* Scene frame (poster/video share the art's aspect). A1: no border, no radius —
+   the world runs to the edge instead of reading as a screenshot in a frame. */
+.quest-scene { position: relative; aspect-ratio: 1264 / 848; overflow: hidden; background: var(--bg-secondary); container-type: inline-size; }
 .quest-scene img, .quest-scene video { display: block; width: 100%; height: 100%; object-fit: cover; }
 .quest-scene__caption { position: absolute; left: 0.75rem; bottom: 0.75rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.04em; color: var(--text-primary); background: rgba(var(--bg-primary-rgb), 0.85); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.3rem 0.55rem; }
 .quest-plaque { position: absolute; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: clamp(8px, 1.9cqw, 17px); letter-spacing: 0.06em; text-transform: lowercase; color: var(--quest-plaque-ink); text-align: center; line-height: 1.05; padding: 0 2%; overflow: visible; }

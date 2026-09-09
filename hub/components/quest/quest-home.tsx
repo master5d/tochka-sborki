@@ -27,10 +27,12 @@ export function QuestHome({ locale }: Props) {
         }
       `}</style>
 
-      {/* 0. Hero: the map, the four lines, the header line that stays. */}
-      <Chapter id="hero" tint="hero">
-        <div className="quest-hero" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: '2rem' }}>
-          <div>
+      {/* 0. Hero: the map is the first screen's backdrop, copy sits over it on a scrim (A4). */}
+      <Chapter id="hero" tint="hero" bleed>
+        <div className="quest-hero-frame">
+          <SceneLoop id={c.hero.scene} locale={locale} eager className="quest-hero-scene" />
+          <div className="quest-hero-scrim" aria-hidden />
+          <div className="quest-hero-copy quest-hero">
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--section-label-size)', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '1rem' }}>
               {c.hero.name} · {c.hero.role}
             </div>
@@ -40,12 +42,11 @@ export function QuestHome({ locale }: Props) {
             {c.hero.lines.slice(1).map((l) => <Para key={l} text={l} lead />)}
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', marginTop: '1.5rem' }}>{c.hero.bio}</p>
           </div>
-          <SceneLoop id={c.hero.scene} locale={locale} eager />
         </div>
       </Chapter>
 
       {/* 1. Intro: camp by the fire, three paragraphs as steps beside the sticky scene. */}
-      <Chapter id="intro" tint="intro" eyebrow={c.intro.eyebrow} heading={c.intro.heading}>
+      <Chapter id="intro" tint="intro" eyebrow={c.intro.eyebrow} heading={c.intro.heading} bleed>
         <StickyStage
           media={() => <SceneLoop id={c.intro.scene} locale={locale} />}
           steps={c.intro.paragraphs.map((p, i) => ({ key: `intro-${i}`, body: p }))}
@@ -54,7 +55,7 @@ export function QuestHome({ locale }: Props) {
 
       {/* 2–4. Forks. */}
       {c.forks.map((fork) => (
-        <Chapter key={fork.id} id={fork.id} tint={FORK_TINT[fork.id]} eyebrow={fork.eyebrow} heading={fork.obstacle}>
+        <Chapter key={fork.id} id={fork.id} tint={FORK_TINT[fork.id]} eyebrow={fork.eyebrow} heading={fork.obstacle} bleed>
           <StickyStage
             media={(active) =>
               fork.id === 'gates'
@@ -67,7 +68,7 @@ export function QuestHome({ locale }: Props) {
               { key: `${fork.id}-outcomes`, body: <OutcomeReveal title={fork.outcomesTitle} outcomes={fork.outcomes} labels={c.labels} /> },
             ]}
           />
-          <div style={{ marginTop: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'flex-start' }}>
+          <div style={{ maxWidth: 'var(--content-max)', margin: '2.5rem auto 0', padding: '0 2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'flex-start' }}>
             {fork.cta ? <a href={fork.cta.href} className="quest-cta">{fork.cta.label}</a> : null}
             <Para text={fork.bridge} />
           </div>
@@ -75,7 +76,7 @@ export function QuestHome({ locale }: Props) {
       ))}
 
       {/* 5. Finale. */}
-      <Chapter id="finale" tint="finale" eyebrow={c.finale.eyebrow} heading={c.finale.heading}>
+      <Chapter id="finale" tint="finale" eyebrow={c.finale.eyebrow} heading={c.finale.heading} bleed>
         <StickyStage
           media={() => <SceneLoop id={c.finale.scene} locale={locale} />}
           steps={[
