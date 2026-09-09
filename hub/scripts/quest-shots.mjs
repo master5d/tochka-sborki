@@ -1,5 +1,16 @@
 // Chapter screenshots of the static export for acceptance. Usage:
 //   npx serve out -l 4173   (or any static server)  →  node scripts/quest-shots.mjs http://localhost:4173 <outDir>
+//
+// This is a LOCAL ACCEPTANCE TOOL, not part of the build or CI. It is never run by
+// `npm run build`, `npm test`, or any workflow — it imports `playwright`, which is
+// deliberately NOT a dependency in hub/package.json (adding it would bloat every
+// CI install with a browser download nobody else needs).
+//
+// It needs Playwright available on the machine running it, e.g.:
+//   npm i -g playwright   (or any existing install that already has browsers downloaded)
+//
+// Run it against a served copy of the static export (`out/`), not the dev server —
+// see the two commands above and in docs/superpowers/plans/2026-09-08-quest-home-acceptance.md.
 import { chromium } from 'playwright'
 import { mkdirSync } from 'node:fs'
 import { join } from 'node:path'

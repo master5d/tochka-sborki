@@ -85,3 +85,13 @@ recorded for it either way.
   on disk but are unverified.
 - Vibe-check threshold (r90=0.2677 around `sel-f17539f2f970`) is the first calibration point for
   this trend sample — no adopt/reject verdict should be drawn from a single uncalibrated pass.
+
+## Как переснять
+
+`scripts/quest-shots.mjs` needs Playwright on the machine (not an `hub/package.json` dependency
+— see the comment block at the top of the script) and a served copy of the static export:
+
+```
+npx -y serve hub/out -l 4173
+node hub/scripts/quest-shots.mjs http://localhost:4173 <outDir>
+```
