@@ -22,17 +22,32 @@ function dirSize(dir: string): number {
 }
 
 describe('quest assets', () => {
-  it('every scene has a poster ≤ 350 KB and a loop ≤ 900 KB', () => {
+  it('every scene has a day and a night poster, each ≤ 400 KB', () => {
     for (const id of SCENE_IDS) {
-      const a = sceneAssets(id)
-      expect(sizeOf(a.poster), `${id} poster`).toBeLessThanOrEqual(350 * KB)
-      expect(sizeOf(a.loop), `${id} loop`).toBeLessThanOrEqual(900 * KB)
+      for (const state of ['day', 'night'] as const) {
+        const a = sceneAssets(id, state)
+        expect(sizeOf(a.poster), `${id} ${state} poster`).toBeLessThanOrEqual(400 * KB)
+      }
+    }
+  })
+  it('the old horizontal (stateless) scene posters and loops are gone', () => {
+    for (const id of SCENE_IDS) {
+      expect(existsSync(join(PUBLIC, 'quest', 'scenes', `${id}.webp`)), `${id}.webp should have been retired`).toBe(false)
+      expect(existsSync(join(PUBLIC, 'quest', 'loops', `${id}.mp4`)), `${id}.mp4 should have been retired`).toBe(false)
+    }
+  })
+  it('no loop files exist yet — this wave ships posters only (Wave E regenerates loops)', () => {
+    for (const id of SCENE_IDS) {
+      for (const state of ['day', 'night'] as const) {
+        const a = sceneAssets(id, state)
+        expect(existsSync(join(PUBLIC, a.loop)), `${a.loop} should not exist yet`).toBe(false)
+      }
     }
   })
   it('both guide cut-outs exist and are ≤ 200 KB', () => {
     for (const p of Object.values(GUIDE_ASSETS)) expect(sizeOf(p)).toBeLessThanOrEqual(200 * KB)
   })
-  it('the whole quest folder stays under 9 MB', () => {
-    expect(dirSize(join(PUBLIC, 'quest'))).toBeLessThanOrEqual(9 * 1024 * KB)
+  it('the whole quest folder stays under 24 MB', () => {
+    expect(dirSize(join(PUBLIC, 'quest'))).toBeLessThanOrEqual(24 * 1024 * KB)
   })
 })

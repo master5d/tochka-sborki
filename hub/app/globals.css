@@ -11,7 +11,18 @@ html, body {
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
-  overflow-x: hidden; /* quest bleed layout (Wave A) must never scroll sideways */
+}
+
+/* quest bleed layout (Wave A) must never scroll sideways. This lives on `html`
+   ONLY, not `body`: overflow-x on `body` also (per spec) computes body's
+   overflow-y to `auto`, turning body into its own scroll container — an
+   ancestor between `html` and every `position: sticky` element on the page.
+   That silently breaks position: sticky in Chromium/WebKit/Gecko alike (a sticky
+   element's containing block can no longer see past that ancestor), which is the
+   real cause of the Wave A/B "world disappears mid-chapter" finding: the sticky
+   scene was never actually sticking on the fork chapters, at any scroll position. */
+html {
+  overflow-x: hidden;
 }
 
 ::selection {

@@ -53,25 +53,34 @@ export function QuestHome({ locale }: Props) {
         />
       </Chapter>
 
-      {/* 2–4. Forks. */}
+      {/* 2–4. Forks. The CTA + bridge are a trailing step INSIDE the same sticky
+          grid as setup/habit/outcomes (not a sibling block after it) — otherwise
+          the grid's own height stops short of the chapter's real content and the
+          sticky world un-pins early, leaving bare tint while the cards keep
+          scrolling (the Wave A/B "world disappears mid-chapter" finding). */}
       {c.forks.map((fork) => (
         <Chapter key={fork.id} id={fork.id} tint={FORK_TINT[fork.id]} eyebrow={fork.eyebrow} heading={fork.obstacle} bleed>
           <StickyStage
             media={(active) =>
               fork.id === 'gates'
-                ? <GatePlaques locale={locale} plaques={c.labels.plaques} caption={active === 0 ? undefined : active === 1 ? c.labels.habit : c.labels.detour} />
-                : <SceneLoop id={fork.scene} locale={locale} caption={active === 0 ? undefined : active === 1 ? c.labels.habit : c.labels.detour} />
+                ? <GatePlaques locale={locale} plaques={c.labels.plaques} caption={active === 1 ? c.labels.habit : active === 2 ? c.labels.detour : undefined} />
+                : <SceneLoop id={fork.scene} locale={locale} caption={active === 1 ? c.labels.habit : active === 2 ? c.labels.detour : undefined} />
             }
             steps={[
               { key: `${fork.id}-setup`, body: fork.setup.map((p, i) => <Para key={i} text={p} lead />) },
               { key: `${fork.id}-habit`, body: <PathFork fork={fork} labels={c.labels} /> },
               { key: `${fork.id}-outcomes`, body: <OutcomeReveal title={fork.outcomesTitle} outcomes={fork.outcomes} labels={c.labels} /> },
+              {
+                key: `${fork.id}-outro`,
+                body: (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'flex-start' }}>
+                    {fork.cta ? <a href={fork.cta.href} className="quest-cta">{fork.cta.label}</a> : null}
+                    <Para text={fork.bridge} />
+                  </div>
+                ),
+              },
             ]}
           />
-          <div style={{ maxWidth: 'var(--content-max)', margin: '2.5rem auto 0', padding: '0 2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'flex-start' }}>
-            {fork.cta ? <a href={fork.cta.href} className="quest-cta">{fork.cta.label}</a> : null}
-            <Para text={fork.bridge} />
-          </div>
         </Chapter>
       ))}
 

@@ -1,6 +1,7 @@
 'use client'
-import { useRef, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { useActiveStep } from './use-active-step'
+import { useChapterProgress } from './use-chapter-progress'
 
 export interface StageStep { key: string; body: ReactNode }
 
@@ -10,12 +11,36 @@ interface Props {
   steps: StageStep[]
 }
 
-/** Sticky scene on the left, scrolling steps on the right; stacked under 900px. */
+function useReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const apply = () => setReduced(mq.matches)
+    apply()
+    mq.addEventListener('change', apply)
+    return () => mq.removeEventListener('change', apply)
+  }, [])
+  return reduced
+}
+
+/**
+ * Sticky scene on the left, scrolling steps on the right; stacked under 900px.
+ * `ref` spans the WHOLE stage — steps AND anything a caller appends after them
+ * (a fork's CTA + bridge paragraph are passed in as a trailing step, not rendered
+ * outside this grid) — so the sticky media's containing block never runs out
+ * before the chapter's content does (see the Wave A/B "world disappears mid-chapter"
+ * finding). `useChapterProgress` reads that same box to drive `--pan`, which the
+ * scene's CSS turns into `object-position` panning; `prefers-reduced-motion` pins
+ * the pan at 0.33 instead of following scroll.
+ */
 export function StickyStage({ media, steps }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   const active = useActiveStep(ref, steps.length)
+  const scrollProgress = useChapterProgress(ref)
+  const reducedMotion = useReducedMotion()
+  const pan = reducedMotion ? 0.33 : scrollProgress
   return (
-    <div className="quest-stage" ref={ref}>
+    <div className="quest-stage" ref={ref} style={{ '--pan': pan } as CSSProperties}>
       <div className="quest-stage__media">{media(active)}</div>
       <div className="quest-stage__steps">
         {steps.map((s, i) => (

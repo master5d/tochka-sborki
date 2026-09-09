@@ -18,23 +18,29 @@
   --quest-card: #fbf9f4;
   --quest-plaque-ink: #2b1d12;
   /* Hero scrim: rgba(--bg-primary) ramps, never a hex literal, so both track the
-     theme. Two layers: a frame-wide wash for the art's own bottom-fade, and a
-     copy-local ramp (below) sized to the text block itself — the local one is
-     what actually guarantees contrast, since the copy's height (and therefore
-     where its first line lands inside the frame) changes with line-wrap at
-     every width, while a single frame-relative gradient would not track that. */
+     theme. Two layers: a frame-wide wash, and a copy-local ramp (below) sized to
+     the text block itself — the local one is what actually guarantees contrast,
+     since the copy's height (and therefore where its last line lands inside the
+     frame) changes with line-wrap at every width, while a single frame-relative
+     gradient would not track that.
+     Wave C: the tall art carries the Scroller and the Builder in its lower-middle
+     third (the world-v3 gate crop puts both guides ~55-80% down the frame). The
+     copy panel moved from a bottom band (which blanketed exactly that band, per
+     the Wave A "hero lost the guides" finding) to a TOP band, so both ramps are
+     now solid-at-top-fading-to-clear-at-bottom instead of the reverse. */
   --quest-hero-scrim: linear-gradient(
     180deg,
-    rgba(var(--bg-primary-rgb), 0.05) 0%,
-    rgba(var(--bg-primary-rgb), 0.22) 55%,
-    rgba(var(--bg-primary-rgb), 0.5) 100%
+    rgba(var(--bg-primary-rgb), 0.5) 0%,
+    rgba(var(--bg-primary-rgb), 0.2) 45%,
+    rgba(var(--bg-primary-rgb), 0.04) 100%
   );
   --quest-hero-copy-scrim: linear-gradient(
     180deg,
-    rgba(var(--bg-primary-rgb), 0.55) 0%,
-    rgba(var(--bg-primary-rgb), 0.9) 12%,
-    rgba(var(--bg-primary-rgb), 0.98) 28%,
-    var(--bg-primary) 55%
+    var(--bg-primary) 0%,
+    rgba(var(--bg-primary-rgb), 0.98) 62%,
+    rgba(var(--bg-primary-rgb), 0.9) 82%,
+    rgba(var(--bg-primary-rgb), 0.55) 94%,
+    rgba(var(--bg-primary-rgb), 0) 100%
   );
 }
 
@@ -80,19 +86,27 @@
   .quest-reveal[data-armed].is-in { opacity: 1; transform: none; }
 }
 
-/* Hero: the map as the first screen's backdrop (A4). The frame is capped at
+/* Hero: the tall map as the first screen's backdrop (A4). The frame is capped at
    viewport-minus-header; the copy sits over it on a token-driven scrim and is
    free to grow taller than the frame (no overflow:hidden here) so long copy
-   never clips — it just spills onto the plain chapter tint below the art. */
-.quest-hero-frame { position: relative; min-height: calc(100vh - var(--quest-stage-top)); display: flex; align-items: flex-end; }
+   never clips — it just spills onto the plain chapter tint below the art.
+   Wave C: copy anchored to the TOP (was bottom) — the world-v3 art carries the
+   Scroller and the Builder in its lower-middle third, and a bottom-anchored copy
+   panel blanketed exactly that band (Wave A "hero lost the guides" finding). The
+   art's object-position is pulled down (78% down the Y axis) so the visible crop
+   keeps the guides in frame under the copy instead of cropping them off the
+   bottom, and the frame stays 1264px min-height. */
+.quest-hero-frame { position: relative; min-height: calc(100vh - var(--quest-stage-top)); display: flex; align-items: flex-start; }
 .quest-hero-frame .quest-scene.quest-hero-scene { position: absolute; top: 0; left: 0; right: 0; height: calc(100vh - var(--quest-stage-top)); aspect-ratio: auto; border: none; border-radius: 0; z-index: 0; }
+.quest-hero-frame .quest-scene.quest-hero-scene img { object-position: 50% 78%; }
 .quest-hero-scrim { position: absolute; top: 0; left: 0; right: 0; height: calc(100vh - var(--quest-stage-top)); background: var(--quest-hero-scrim); pointer-events: none; z-index: 1; }
-.quest-hero-copy { position: relative; z-index: 2; width: 100%; padding: 3rem 2rem 3.5rem; background: var(--quest-hero-copy-scrim); }
+.quest-hero-copy { position: relative; z-index: 2; width: 100%; padding: 2.5rem 2rem 5rem; background: var(--quest-hero-copy-scrim); }
 @media (max-width: 720px) {
   .quest-hero-frame { min-height: calc(100svh - var(--quest-stage-top)); }
   .quest-hero-frame .quest-scene.quest-hero-scene { height: calc(100svh - var(--quest-stage-top)); }
+  .quest-hero-frame .quest-scene.quest-hero-scene img { object-position: 50% 72%; }
   .quest-hero-scrim { height: calc(100svh - var(--quest-stage-top)); }
-  .quest-hero-copy { padding: 2rem 1.25rem 2.5rem; }
+  .quest-hero-copy { padding: 1.75rem 1.25rem 4rem; }
 }
 
 /* Sticky stage layout. Chapters that host it are rendered `bleed` (A1): the
@@ -102,7 +116,7 @@
    little breathing room on the right so cards never touch the edge. */
 .quest-stage { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
 .quest-stage__media { position: sticky; top: var(--quest-stage-top); height: calc(100vh - var(--quest-stage-top)); display: flex; align-items: center; }
-.quest-stage__media > * { width: 100%; }
+.quest-stage__media > * { width: 100%; height: 100%; }
 .quest-stage__steps { display: flex; flex-direction: column; gap: clamp(2rem, 8vh, 5rem); padding: 12vh 2rem 18vh 0; }
 /* A3: a one-sentence step no longer forces a 28vh cell (the finale's void).
    Height now follows content; the inter-step `gap` above already does the
@@ -122,9 +136,18 @@
 }
 
 /* Scene frame (poster/video share the art's aspect). A1: no border, no radius —
-   the world runs to the edge instead of reading as a screenshot in a frame. */
-.quest-scene { position: relative; aspect-ratio: 1264 / 848; overflow: hidden; background: var(--bg-secondary); container-type: inline-size; }
-.quest-scene img, .quest-scene video { display: block; width: 100%; height: 100%; object-fit: cover; }
+   the world runs to the edge instead of reading as a screenshot in a frame.
+   The 848×1264 aspect-ratio is the DEFAULT (used where a scene isn't inside the
+   sticky stage, e.g. the About section). Inside `.quest-stage__media` the scene
+   must fill the sticky box's own height exactly instead of deriving its height
+   from the (now portrait, taller-than-the-old-landscape-frame) aspect-ratio —
+   otherwise the scene renders shorter than the sticky box and leaves bare tint
+   above/below it for the whole time the world is pinned (the Wave A/B "world
+   disappears mid-chapter" finding: it isn't a scroll timing bug, it's a fixed
+   aspect-ratio box floating inside a taller sticky box). */
+.quest-scene { position: relative; aspect-ratio: 848 / 1264; overflow: hidden; background: var(--bg-secondary); container-type: inline-size; }
+.quest-scene img, .quest-scene video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% calc(var(--pan, 0.5) * 100%); }
+.quest-stage__media .quest-scene { height: 100%; aspect-ratio: auto; }
 .quest-scene__caption { position: absolute; left: 0.75rem; bottom: 0.75rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.04em; color: var(--text-primary); background: rgba(var(--bg-primary-rgb), 0.85); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.3rem 0.55rem; }
 .quest-plaque { position: absolute; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: clamp(8px, 1.9cqw, 17px); letter-spacing: 0.06em; text-transform: lowercase; color: var(--quest-plaque-ink); text-align: center; line-height: 1.05; padding: 0 2%; overflow: visible; }
 

@@ -12,10 +12,13 @@ describe('quest scenes registry', () => {
       expect(SCENES[id].alt.en.trim().length, `${id} en alt`).toBeGreaterThan(10)
     }
   })
-  it('asset paths are under /quest/', () => {
-    const a = sceneAssets('02-camp')
-    expect(a.poster).toBe('/quest/scenes/02-camp.webp')
-    expect(a.loop).toBe('/quest/loops/02-camp.mp4')
+  it('asset paths are under /quest/ and keyed by state', () => {
+    const day = sceneAssets('02-camp', 'day')
+    expect(day.poster).toBe('/quest/scenes/02-camp-day.webp')
+    expect(day.loop).toBe('/quest/loops/02-camp-day.mp4')
+    const night = sceneAssets('02-camp', 'night')
+    expect(night.poster).toBe('/quest/scenes/02-camp-night.webp')
+    expect(night.loop).toBe('/quest/loops/02-camp-night.mp4')
   })
   it('gate plaques sit inside the frame and do not overlap', () => {
     for (const p of GATE_PLAQUES) {
