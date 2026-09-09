@@ -64,7 +64,7 @@
 .quest-stage__media > * { width: 100%; }
 .quest-stage__steps { display: flex; flex-direction: column; gap: clamp(3rem, 12vh, 8rem); padding: 20vh 0 30vh; }
 .quest-stage__step { min-height: 40vh; display: flex; align-items: center; }
-.quest-stage__step[data-active="false"] { opacity: 0.55; }
+.quest-stage__step[data-active="false"] { opacity: 0.8; } /* 0.8, not lower: primary text must stay ≥ 4.5:1 on light tints */
 .quest-stage__step[data-active="true"] { opacity: 1; }
 @media (prefers-reduced-motion: no-preference) { .quest-stage__step { transition: opacity 300ms ease; } }
 @media (max-width: 900px) {
