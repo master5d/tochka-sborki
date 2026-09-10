@@ -16,7 +16,7 @@ function Paragraphs({ items }: { items: string[] }) {
   return (
     <>
       {items.map((p, i) => (
-        <p key={i} style={{ fontSize: 'var(--text-base)', lineHeight: 1.7, color: 'var(--text-primary)' }}>{p}</p>
+        <p key={i} className="quest-prose" style={{ fontSize: 'var(--text-base)', lineHeight: 1.7, color: 'var(--text-primary)' }}>{p}</p>
       ))}
     </>
   )

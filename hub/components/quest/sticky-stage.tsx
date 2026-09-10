@@ -45,7 +45,7 @@ export function StickyStage({ media, steps }: Props) {
       <div className="quest-stage__steps">
         {steps.map((s, i) => (
           <div key={s.key} className="quest-stage__step" data-step={i} data-active={i === active ? 'true' : 'false'}>
-            <div style={{ fontSize: 'var(--text-lg)', lineHeight: 1.65, color: 'var(--text-primary)', maxWidth: '36rem' }}>{s.body}</div>
+            <div className="quest-prose" style={{ fontSize: 'var(--text-lg)', lineHeight: 1.65, color: 'var(--text-primary)' }}>{s.body}</div>
           </div>
         ))}
       </div>

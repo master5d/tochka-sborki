@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
-import { Unbounded } from 'next/font/google'
+import { PT_Serif, Unbounded } from 'next/font/google'
 import { LangSuggestBanner } from '../components/lang-suggest-banner'
 import { ThemeProvider, MaterialThemeProvider } from '@desops/ui-kit'
 import { SiteHeader } from '../components/site-header'
@@ -11,6 +11,19 @@ const unbounded = Unbounded({
   subsets: ['latin', 'cyrillic'],
   weight: ['900'],
   variable: '--font-display',
+  display: 'swap',
+})
+
+// Wave H (H3): an editorial serif for the quest's narrative body text only —
+// PT Serif (Paratype) is a NATIVE Cyrillic type family (not a Latin face with a
+// bolted-on Cyrillic subset), reads well at a narrow measure, and next/font
+// self-hosts it at build time (no runtime request to fonts.googleapis.com, so
+// it works even stricter-than-Google-fonts CSPs). `subsets` controls which
+// glyphs actually ship; both are requested since the quest page is bilingual.
+const ptSerif = PT_Serif({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '700'],
+  variable: '--font-serif',
   display: 'swap',
 })
 
@@ -26,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="ru"
       suppressHydrationWarning
-      className={`${GeistSans.variable} ${GeistMono.variable} ${unbounded.variable}`}
+      className={`${GeistSans.variable} ${GeistMono.variable} ${unbounded.variable} ${ptSerif.variable}`}
     >
       <body className="bg-background text-on-background min-h-screen">
         {/* attribute ОБЯЗАН быть data-theme: токены в themes/model-kit.css живут в

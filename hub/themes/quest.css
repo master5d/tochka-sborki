@@ -190,6 +190,17 @@
   .quest-opener__guide--right { display: none; }
 }
 
+/* Wave H (H3): an editorial register for the quest's NARRATIVE body text only
+   — headings/labels/numbers/captions/UI keep their own explicit font-family
+   (mono or display) and are unaffected. `--font-serif` = PT Serif (Cyrillic-
+   native, self-hosted via next/font — see app/layout.tsx), falling back to
+   system serifs if the variable is ever unset. `ch` is the character-width
+   unit, so 64ch reads as ~64 characters at ANY font-size this class is used
+   at (text-base steps and text-lg lead paragraphs alike) — the narrow
+   magazine measure the wide grotesque column never had. Weight/contrast are
+   untouched: this only ever sets font-family + max-width, never color. */
+.quest-prose { font-family: var(--font-serif), Georgia, 'Times New Roman', serif; max-width: 64ch; }
+
 /* Cards. */
 .quest-card { background: var(--quest-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem; }
 .quest-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
