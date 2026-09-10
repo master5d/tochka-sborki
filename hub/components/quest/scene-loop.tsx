@@ -2,7 +2,9 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { Locale } from '../../lib/dictionaries'
+import { isSplitScene } from '../../lib/quest/plates'
 import { SCENES, sceneAssets, type SceneId } from '../../lib/quest/scenes'
+import { ScenePlates } from './scene-plates'
 import { useThemeState } from './use-theme-state'
 
 function useReducedMotion(): boolean {
@@ -56,6 +58,7 @@ export function SceneLoop({ id, locale, quip, children, eager = false, className
   const nightAssets = sceneAssets(id, 'night')
   const reducedMotion = useReducedMotion()
   const videoRef = useRef<HTMLVideoElement>(null)
+  const split = isSplitScene(id)
 
   // Once mounted with an explicit (non-system) theme, the day/night source must stop
   // competing with the <img>'s own src — otherwise a system-dark reader who explicitly
@@ -69,7 +72,10 @@ export function SceneLoop({ id, locale, quip, children, eager = false, className
     return () => observer.disconnect()
   }, [])
 
+  // Wave K: a split scene renders two still plates instead (ScenePlates below) —
+  // there's no loop video for it to drive, so this effect is a no-op for it.
   useEffect(() => {
+    if (split) return
     if (reducedMotion) return
     const video = videoRef.current
     if (!video) return
@@ -88,35 +94,50 @@ export function SceneLoop({ id, locale, quip, children, eager = false, className
     video.load()
     return () => video.removeEventListener('loadedmetadata', onLoaded)
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-run on an actual source change
-  }, [assets.loop, reducedMotion])
+  }, [assets.loop, reducedMotion, split])
 
   return (
     <div className={className ? `quest-scene ${className}` : 'quest-scene'} data-scene={id} data-world={theme}>
-      <picture>
-        {explicitTheme ? null : <source media="(prefers-color-scheme: dark)" srcSet={nightAssets.poster} />}
-        <img
-          src={assets.poster}
-          width={scene.width}
-          height={scene.height}
+      {split ? (
+        <ScenePlates
+          id={id}
+          state={theme}
+          locale={locale}
           alt={scene.alt[locale]}
-          loading={eager ? 'eager' : 'lazy'}
-        />
-      </picture>
-      {!reducedMotion ? (
-        <video
-          ref={videoRef}
-          className="quest-scene__video"
           width={scene.width}
           height={scene.height}
-          poster={assets.poster}
-          muted
-          loop
-          playsInline
-          autoPlay
-          aria-hidden="true"
-          tabIndex={-1}
+          explicitTheme={explicitTheme}
+          eager={eager}
         />
-      ) : null}
+      ) : (
+        <>
+          <picture>
+            {explicitTheme ? null : <source media="(prefers-color-scheme: dark)" srcSet={nightAssets.poster} />}
+            <img
+              src={assets.poster}
+              width={scene.width}
+              height={scene.height}
+              alt={scene.alt[locale]}
+              loading={eager ? 'eager' : 'lazy'}
+            />
+          </picture>
+          {!reducedMotion ? (
+            <video
+              ref={videoRef}
+              className="quest-scene__video"
+              width={scene.width}
+              height={scene.height}
+              poster={assets.poster}
+              muted
+              loop
+              playsInline
+              autoPlay
+              aria-hidden="true"
+              tabIndex={-1}
+            />
+          ) : null}
+        </>
+      )}
       {children}
       {quip ? <div className="quest-scene__quip">{quip}</div> : null}
     </div>

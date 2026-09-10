@@ -9,10 +9,16 @@ const checks = {
 let failed = 0
 for (const [file, needles] of Object.entries(checks)) {
   const html = readFileSync(join(process.cwd(), file), 'utf8')
+  // Wave K: a split scene (01-map, 02-camp, 06-wall, 07-signs) renders two plate
+  // stills (quest/plates/<id>-<state>-{sky,land}.webp) instead of a flat poster —
+  // both reference forms count toward the same "distinct scene id" tally, and
+  // either one satisfies the night-reference check.
   const sceneMatches = html.match(/\/quest\/scenes\/(0\d-[a-z]+)-(day|night)\.webp/g) ?? []
-  const scenes = new Set(sceneMatches.map((m) => m.match(/0\d-[a-z]+/)[0]))
+  const plateMatches = html.match(/\/quest\/plates\/(0\d-[a-z]+)-(day|night)-(sky|land)\.webp/g) ?? []
+  const scenes = new Set([...sceneMatches, ...plateMatches].map((m) => m.match(/0\d-[a-z]+/)[0]))
   if (scenes.size < 7) { console.error(`${file}: only ${scenes.size} distinct scene posters, expected ≥ 7`); failed++ }
-  if (!sceneMatches.some((m) => m.endsWith('-night.webp'))) { console.error(`${file}: no night poster reference found (picture/source for system-dark)`); failed++ }
+  const hasNight = sceneMatches.some((m) => m.endsWith('-night.webp')) || plateMatches.some((m) => m.includes('-night-'))
+  if (!hasNight) { console.error(`${file}: no night poster reference found (picture/source for system-dark)`); failed++ }
   for (const n of needles) if (!html.includes(n)) { console.error(`${file}: missing "${n}"`); failed++ }
   if (/\[(scene|loop|сцена|петля):/.test(html)) { console.error(`${file}: service mark leaked`); failed++ }
 }

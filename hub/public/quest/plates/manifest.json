@@ -1,0 +1,203 @@
+{
+  "feather": 48,
+  "band": [
+    0.25,
+    0.6
+  ],
+  "scenes": [
+    {
+      "id": "01-map",
+      "state": "day",
+      "size": [
+        848,
+        1264
+      ],
+      "horizon_row": 320,
+      "feather": 48,
+      "unsplit": false,
+      "sky": "01-map-day-sky.webp",
+      "land": "01-map-day-land.webp",
+      "recompose_max_channel_diff": 1.52587890625e-05,
+      "recompose_frac_over_4": 0.0
+    },
+    {
+      "id": "01-map",
+      "state": "night",
+      "size": [
+        848,
+        1264
+      ],
+      "horizon_row": 395,
+      "feather": 48,
+      "unsplit": false,
+      "sky": "01-map-night-sky.webp",
+      "land": "01-map-night-land.webp",
+      "recompose_max_channel_diff": 1.52587890625e-05,
+      "recompose_frac_over_4": 0.0
+    },
+    {
+      "id": "02-camp",
+      "state": "day",
+      "size": [
+        848,
+        1264
+      ],
+      "horizon_row": 458,
+      "feather": 48,
+      "unsplit": false,
+      "sky": "02-camp-day-sky.webp",
+      "land": "02-camp-day-land.webp",
+      "recompose_max_channel_diff": 1.52587890625e-05,
+      "recompose_frac_over_4": 0.0
+    },
+    {
+      "id": "02-camp",
+      "state": "night",
+      "size": [
+        848,
+        1264
+      ],
+      "horizon_row": 469,
+      "feather": 48,
+      "unsplit": false,
+      "sky": "02-camp-night-sky.webp",
+      "land": "02-camp-night-land.webp",
+      "recompose_max_channel_diff": 1.52587890625e-05,
+      "recompose_frac_over_4": 0.0
+    },
+    {
+      "id": "03-boulder",
+      "state": "day",
+      "size": [
+        848,
+        1264
+      ],
+      "horizon_row": 682,
+      "feather": 48,
+      "unsplit": true
+    },
+    {
+      "id": "03-boulder",
+      "state": "night",
+      "size": [
+        848,
+        1264
+      ],
+      "horizon_row": 365,
+      "feather": 48,
+      "unsplit": false,
+      "sky": "03-boulder-night-sky.webp",
+      "land": "03-boulder-night-land.webp",
+      "recompose_max_channel_diff": 1.52587890625e-05,
+      "recompose_frac_over_4": 0.0
+    },
+    {
+      "id": "04-temple",
+      "state": "day",
+      "size": [
+        848,
+        1264
+      ],
+      "horizon_row": 755,
+      "feather": 48,
+      "unsplit": true
+    },
+    {
+      "id": "04-temple",
+      "state": "night",
+      "size": [
+        848,
+        1264
+      ],
+      "horizon_row": 357,
+      "feather": 48,
+      "unsplit": true
+    },
+    {
+      "id": "05-gates",
+      "state": "day",
+      "size": [
+        848,
+        1264
+      ],
+      "horizon_row": 589,
+      "feather": 48,
+      "unsplit": true
+    },
+    {
+      "id": "05-gates",
+      "state": "night",
+      "size": [
+        848,
+        1264
+      ],
+      "horizon_row": 321,
+      "feather": 48,
+      "unsplit": false,
+      "sky": "05-gates-night-sky.webp",
+      "land": "05-gates-night-land.webp",
+      "recompose_max_channel_diff": 1.52587890625e-05,
+      "recompose_frac_over_4": 0.0
+    },
+    {
+      "id": "06-wall",
+      "state": "day",
+      "size": [
+        848,
+        1264
+      ],
+      "horizon_row": 344,
+      "feather": 48,
+      "unsplit": false,
+      "sky": "06-wall-day-sky.webp",
+      "land": "06-wall-day-land.webp",
+      "recompose_max_channel_diff": 1.52587890625e-05,
+      "recompose_frac_over_4": 0.0
+    },
+    {
+      "id": "06-wall",
+      "state": "night",
+      "size": [
+        848,
+        1264
+      ],
+      "horizon_row": 381,
+      "feather": 48,
+      "unsplit": false,
+      "sky": "06-wall-night-sky.webp",
+      "land": "06-wall-night-land.webp",
+      "recompose_max_channel_diff": 1.52587890625e-05,
+      "recompose_frac_over_4": 0.0
+    },
+    {
+      "id": "07-signs",
+      "state": "day",
+      "size": [
+        848,
+        1264
+      ],
+      "horizon_row": 397,
+      "feather": 48,
+      "unsplit": false,
+      "sky": "07-signs-day-sky.webp",
+      "land": "07-signs-day-land.webp",
+      "recompose_max_channel_diff": 1.52587890625e-05,
+      "recompose_frac_over_4": 0.0
+    },
+    {
+      "id": "07-signs",
+      "state": "night",
+      "size": [
+        848,
+        1264
+      ],
+      "horizon_row": 581,
+      "feather": 48,
+      "unsplit": false,
+      "sky": "07-signs-night-sky.webp",
+      "land": "07-signs-night-land.webp",
+      "recompose_max_channel_diff": 1.52587890625e-05,
+      "recompose_frac_over_4": 0.0
+    }
+  ]
+}

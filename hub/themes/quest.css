@@ -255,12 +255,32 @@
    above/below it for the whole time the world is pinned (the Wave A/B "world
    disappears mid-chapter" finding: it isn't a scroll timing bug, it's a fixed
    aspect-ratio box floating inside a taller sticky box). */
-.quest-scene { position: relative; aspect-ratio: 848 / 1264; overflow: hidden; background: var(--bg-secondary); container-type: inline-size; }
+/* `width: 100%` (Wave K): a split scene's own content is two absolutely-positioned
+   plates (scene-plates.tsx) — no in-flow child left to hand `.quest-scene` an
+   intrinsic width the way the flat scene's in-flow `<picture>` used to. Without
+   it, a context whose own width comes from content sizing (e.g. `#about`'s grid
+   cell, capped by `max-width` rather than a fixed width) collapses this box to
+   0x0. Harmless for every context that already sets an explicit width/inset
+   (hero, finale, the intro band, the sticky stage) — this is just the base case. */
+.quest-scene { position: relative; width: 100%; aspect-ratio: 848 / 1264; overflow: hidden; background: var(--bg-secondary); container-type: inline-size; }
 .quest-scene img, .quest-scene video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% calc(var(--pan, 0.5) * 100%); }
 /* The loop sits over the poster's <picture>; both share the same box and pan so
    a load stall (or reduced motion, where the video is never rendered) shows the
    correct still frame instead of a gap. */
 .quest-scene video.quest-scene__video { position: absolute; inset: 0; }
+/* Wave K: split scenes (SceneLoop's `isSplitScene` branch) replace the poster
+   + loop <video> above with two stacked stills — sky and land, positioned by
+   the manifest's own geometry (lib/quest/plates.ts), never a number retyped
+   here. `.quest-scene img, video` above still applies (object-fit: cover,
+   full box) to both plates' <img>s — this block only adds the stacking box
+   and the land plate's own drift + oversize-and-clip surplus (see
+   scene-plates.tsx `usePlateDrift` for why land moving UP is the safe
+   direction: it can only grow the sky/land seam overlap, never expose it). */
+.quest-scene__plates { position: absolute; inset: 0; }
+.quest-scene__plate { position: absolute; inset: 0; overflow: hidden; }
+.quest-scene__plate--sky { z-index: 1; }
+.quest-scene__plate--land { z-index: 0; }
+.quest-scene__plate--land img { transform-origin: top; transform: translate3d(0, var(--px-land, 0px), 0) scale(1, var(--scale-land, 1)); will-change: transform; } /* --scale-land ramps 1 -> LAND_SCALE_Y with progress (scene-plates.tsx); defaults to 1 (identity) so no-JS/reduced-motion reproduce the original still exactly. transform-origin:top keeps the top edge's own displacement purely translate-driven — the scale's surplus grows only downward, where it's needed (land only ever drifts up) */
 .quest-stage__media .quest-scene { height: 100%; aspect-ratio: auto; }
 /* Wave G (G4): the About scene sits outside the sticky stage (no sticky text
    column beside it), so without an override it falls back to the 848/1264

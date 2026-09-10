@@ -20,9 +20,23 @@
 # `verify-batch.py` in that folder — are untouched) into
 # `public/quest/loops/<id>-<state>.mp4` and asserts the 900 KB ceiling holds
 # after the remux (faststart only moves the moov atom; it does not re-encode).
+#
+# Wave K: parallax plates. A prior task split each accepted scene along its
+# natural sky/land seam into `plates/<id>-<state>-{sky,land}.webp` + a
+# `manifest.json` carrying per-frame `horizon_row`/`feather`/`size`/`unsplit`
+# (NAUTILUS `.worktrees/world-v3/.../plates/`). This script copies BOTH the
+# manifest and the plate images for scenes whose day AND night frame split
+# cleanly straight through — never hand-picks ids; `lib/quest/plates.ts`
+# applies the same symmetry rule (both states `unsplit: false`) when reading
+# the copied manifest at build/runtime, so a future re-split that flips a
+# scene's `unsplit` flag changes what this script copies without an edit
+# here. Ceiling per plate file is 1000 KB — plates are near-full-canvas WebP
+# with an alpha channel (the seam feather), heavier than the opaque 400 KB
+# scene posters; same weight class as the 900 KB loop videos.
 param(
   [string]$Media = 'C:\telo\Efforts\Ongoing\NAUTILUS\core\desops\taste\_media\world-v3',
-  [string]$Loops = 'C:\telo\Efforts\Ongoing\NAUTILUS\.worktrees\world-v3\core\image-pool\worlds\mamaev-quest\loops-v3'
+  [string]$Loops = 'C:\telo\Efforts\Ongoing\NAUTILUS\.worktrees\world-v3\core\image-pool\worlds\mamaev-quest\loops-v3',
+  [string]$Plates = 'C:\telo\Efforts\Ongoing\NAUTILUS\.worktrees\world-v3\core\desops\taste\_media\world-v3\plates'
 )
 $ErrorActionPreference = 'Stop'
 $hub = Split-Path -Parent $PSScriptRoot
@@ -30,6 +44,7 @@ $out = Join-Path $hub 'public\quest'
 New-Item -ItemType Directory -Force (Join-Path $out 'scenes') | Out-Null
 New-Item -ItemType Directory -Force (Join-Path $out 'roads') | Out-Null
 New-Item -ItemType Directory -Force (Join-Path $out 'loops') | Out-Null
+New-Item -ItemType Directory -Force (Join-Path $out 'plates') | Out-Null
 
 $ids = '01-map', '02-camp', '03-boulder', '04-temple', '05-gates', '06-wall', '07-signs'
 $states = 'day', 'night'
@@ -83,6 +98,39 @@ foreach ($id in $ids) {
     }
   }
 }
+
+# 1d. Plates (Wave K) → public/quest/plates/, manifest.json + per-scene webp,
+#     symmetry rule applied here from the manifest itself (never a hardcoded id list).
+$manifestSrc = Join-Path $Plates 'manifest.json'
+if (-not (Test-Path $manifestSrc)) {
+  throw "plates manifest not found: $manifestSrc"
+}
+$manifest = Get-Content $manifestSrc -Raw | ConvertFrom-Json
+$maxPlateBytes = 1000 * 1024
+$byId = $manifest.scenes | Group-Object -Property id
+$splitIds = @()
+foreach ($g in $byId) {
+  $frames = $g.Group
+  $bothSplit = ($frames.Count -eq 2) -and (-not ($frames | Where-Object { $_.unsplit }))
+  if ($bothSplit) { $splitIds += $g.Name }
+}
+foreach ($id in $splitIds) {
+  foreach ($frame in ($byId | Where-Object { $_.Name -eq $id }).Group) {
+    foreach ($layer in 'sky', 'land') {
+      $fileName = $frame.$layer
+      $src = Join-Path $Plates $fileName
+      if (-not (Test-Path $src)) { throw "plate file missing: $src" }
+      $dst = Join-Path $out "plates\$fileName"
+      Copy-Item -Path $src -Destination $dst -Force
+      $bytes = (Get-Item $dst).Length
+      if ($bytes -gt $maxPlateBytes) {
+        throw "$fileName is $bytes bytes, over the $maxPlateBytes byte plate ceiling"
+      }
+    }
+  }
+}
+Copy-Item -Path $manifestSrc -Destination (Join-Path $out 'plates\manifest.json') -Force
+Write-Host "plates: split scenes = $($splitIds -join ', ')"
 
 # 2. Retire the Wave A/B horizontal scenes: two asset sets under public/ would
 #    be two sources of truth (spec §6, "решения оператора").
