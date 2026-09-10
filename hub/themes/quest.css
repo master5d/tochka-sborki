@@ -147,15 +147,13 @@
    on the LEFT. A REAL mirror, not a hack: the media/steps swap grid position
    (`order`, DOM stays the same so mobile collapse below needs no extra rule),
    the steps' own padding reverses (breathing room moves to the side touching
-   the media), and the scene's own corner badges (caption/quip) flip to the
-   opposite corner so they still read as "the corner nearest the steps" /
-   "the corner farthest from the steps" respectively. Scoped to ≥900px only —
-   below that the stage is already a single column in DOM (reading) order and
-   mirroring a stack means nothing. */
+   the media), and the scene's own corner badge (quip) flips to the opposite
+   corner so it still reads as "the corner farthest from the steps". Scoped to
+   ≥900px only — below that the stage is already a single column in DOM
+   (reading) order and mirroring a stack means nothing. */
 @media (min-width: 900px) {
   .quest-stage--mirror .quest-stage__media { order: 2; }
   .quest-stage--mirror .quest-stage__steps { order: 1; padding: 12vh 0 18vh 2rem; }
-  .quest-stage--mirror .quest-scene__caption { left: auto; right: 0.75rem; }
   .quest-stage--mirror .quest-scene__quip { right: auto; left: 0.75rem; }
 }
 
@@ -255,7 +253,6 @@
    already goes 2-up at ≥720px and stacks below it — unchanged). */
 #about .quest-scene { height: auto; aspect-ratio: 848 / 1264; max-width: 22rem; margin: 0 auto; }
 @media (max-width: 900px) { #about .quest-scene { max-width: 16rem; } }
-.quest-scene__caption { position: absolute; left: 0.75rem; bottom: 0.75rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.04em; color: var(--text-primary); background: rgba(var(--bg-primary-rgb), 0.85); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.3rem 0.55rem; }
 .quest-plaque { position: absolute; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: clamp(8px, 1.9cqw, 17px); letter-spacing: 0.06em; text-transform: lowercase; color: var(--quest-plaque-ink); text-align: center; line-height: 1.05; padding: 0 2%; overflow: visible; }
 
 /* Wave H (H2): the fork opener — a chapter change as an event, not a small
@@ -288,7 +285,13 @@
 
 /* Cards. */
 .quest-card { background: var(--quest-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem; }
-.quest-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+/* `align-items: start` (not the grid default `stretch`): a shorter card must
+   end where ITS OWN content ends, not get stretched to match a taller sibling
+   in the same row — a stretched-but-empty card reads as a mistake, not a
+   deliberate frame. `.quest-path`'s own `min-height` + internal `stretch`
+   (below) still make the road strip fill THAT card's own height, unaffected
+   by this — the corridor stays legible, it just isn't inflated by a neighbour. */
+.quest-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; align-items: start; }
 
 /* Wave D: fork road strips continue their path card — one object, no seam. The
    border/radius/surface move to the group; the nested `.quest-card` goes flat so
@@ -317,6 +320,11 @@
   .quest-path > .road-strip-frame { flex: 0 0 clamp(180px, 28%, 240px); align-self: stretch; }
   .quest-path .road-strip { width: 100%; height: 100%; aspect-ratio: auto; object-position: 50% 50%; }
   .quest-path .quest-card { flex: 1 1 auto; min-width: 0; }
+  /* Wave I round 2: `#gates` (hideRoad) has no strip to give a floor to — the
+     26rem min-height above exists ONLY to keep that strip's corridor legible,
+     so a road-less card must not inherit it (it would just be dead space
+     under the last line). Back to a plain column, sized to its own content. */
+  .quest-path--no-road { flex-direction: column; min-height: 0; }
 }
 @media (max-width: 720px) { .quest-cards { grid-template-columns: 1fr; } }
 .quest-chip { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
@@ -327,9 +335,10 @@
 .quest-cta:hover { opacity: 0.9; }
 .quest-cta--ghost { color: var(--text-accent); background: transparent; border: 1px solid var(--text-accent); }
 
-/* Wave F: the Scroller's remark on a fast, sustained scroll. Bottom-right, so it
-   never overlaps the step caption (bottom-left, used only inside the sticky
-   stage). Same token pattern as that caption. */
+/* Wave F: the Scroller's remark on a fast, sustained scroll. Bottom-right corner
+   of the scene (Wave I removed the sibling bottom-left step caption — a fork's
+   scene depicts the obstacle, not either road, so no road label belongs on it —
+   this badge is now the only corner mark left on a scene). */
 .quest-scene__quip { position: absolute; right: 0.75rem; bottom: 0.75rem; max-width: 70%; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.02em; line-height: 1.4; color: var(--text-primary); background: rgba(var(--bg-primary-rgb), 0.85); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.4rem 0.6rem; }
 @media (prefers-reduced-motion: no-preference) { .quest-scene__quip { transition: opacity 300ms ease; } }
 

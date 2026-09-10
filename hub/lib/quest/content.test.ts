@@ -80,6 +80,32 @@ describe('quest rendered surface carries no service marks (any module)', () => {
       expect(text, `loopCaption remnant in ${file}`).not.toMatch(/loopCaption|loop-caption/)
     }
   })
+  /**
+   * Wave I: a fork chapter's sticky scene depicts the OBSTACLE, not either
+   * road — the two path cards (each with its own guide chip) and the road
+   * strips already name the road, so a caption on the scene that names one
+   * road while the card beside it names the other is a false statement about
+   * the picture, not a label. The fix removed the `caption` prop/class
+   * entirely rather than making it track the active step (there is nothing
+   * true and useful for it to say), so the guard is the same shape as the
+   * loop-caption one above: the feature — and specifically its pairing with
+   * either road label — must stay gone, not just quiet.
+   */
+  it('Wave I: no fork scene caption remains, and neither road label is ever paired with one', () => {
+    const roadLabels = LOCALES.flatMap((loc) => [quest[loc].labels.habit, quest[loc].labels.detour])
+    for (const file of files) {
+      const text = readFileSync(file, 'utf8')
+      expect(text, `caption prop/class remnant in ${file}`).not.toMatch(/\bcaption\b\s*[?:=]|quest-scene__caption/)
+      let idx = text.indexOf('caption')
+      while (idx !== -1) {
+        const nearby = text.slice(idx, idx + 60)
+        for (const label of roadLabels) {
+          expect(nearby, `caption paired with "${label}" in ${file}`).not.toContain(label)
+        }
+        idx = text.indexOf('caption', idx + 1)
+      }
+    }
+  })
 })
 
 describe('quest content', () => {

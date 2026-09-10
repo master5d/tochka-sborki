@@ -131,11 +131,10 @@ export function QuestHome({ locale }: Props) {
           <Chapter key={fork.id} id={fork.id} tint={FORK_TINT[fork.id]} eyebrow={fork.eyebrow} heading={fork.obstacle} bleed guides>
             <StickyStage
               mirror={fork.id === 'temple'}
-              media={(active) => (
+              media={() => (
                 <SceneLoop
                   id={fork.scene}
                   locale={locale}
-                  caption={active === 1 ? c.labels.habit : undefined}
                   quip={quipFor(fork.id)}
                 />
               )}

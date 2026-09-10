@@ -119,12 +119,13 @@ describe('quest hero panel contrast (no scrim — token vs token)', () => {
 })
 
 // Wave F's corner badge (.quest-scene__quip) paints `--text-primary` on
-// `rgba(var(--bg-primary-rgb), 0.85)` — the SAME token combination the
-// pre-existing .quest-scene__caption already uses, just composited over each
-// chapter's tint (the badge sits on top of the scene art, which sits on the
-// chapter's tint at its edges) rather than tested as an isolated flat colour.
+// `rgba(var(--bg-primary-rgb), 0.85)`, composited over each chapter's tint
+// (the badge sits on top of the scene art, which sits on the chapter's tint
+// at its edges) rather than tested as an isolated flat colour.
 // (Wave F also shipped a sibling `.quest-scene__loop-caption` badge sharing this
-// token combo; Wave G removed that feature — see lib/quest/content.test.ts.)
+// token combo; Wave G removed that feature — see lib/quest/content.test.ts. Wave
+// I removed the plain `.quest-scene__caption` road label too — see
+// components/quest/quest-home.test.tsx.)
 function blendOverTint(bgPrimaryRgb: string, alpha: number, tintHex: string): string {
   const [br, bgc, bb] = bgPrimaryRgb.split(',').map((n) => Number(n.trim()))
   const [tr, tg, tb] = hexToRgb(tintHex)

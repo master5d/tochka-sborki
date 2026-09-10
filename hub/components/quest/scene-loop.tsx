@@ -20,8 +20,6 @@ function useReducedMotion(): boolean {
 interface Props {
   id: SceneId
   locale: Locale
-  /** Mono caption in the bottom-left corner, switches with the active step. */
-  caption?: string
   /**
    * Wave F: the Scroller's one-line remark on a fast scroll, shown near this
    * scene while `active` is true. Caller (QuestHome) decides which chapter's
@@ -51,7 +49,7 @@ interface Props {
  * zero when the reader flips the theme mid-loop. `prefers-reduced-motion:
  * reduce` never renders the `<video>` at all — the poster is what shows.
  */
-export function SceneLoop({ id, locale, caption, quip, children, eager = false, className }: Props) {
+export function SceneLoop({ id, locale, quip, children, eager = false, className }: Props) {
   const scene = SCENES[id]
   const theme = useThemeState()
   const assets = sceneAssets(id, theme)
@@ -121,7 +119,6 @@ export function SceneLoop({ id, locale, caption, quip, children, eager = false, 
       ) : null}
       {children}
       {quip ? <div className="quest-scene__quip">{quip}</div> : null}
-      {caption ? <div className="quest-scene__caption">{caption}</div> : null}
     </div>
   )
 }

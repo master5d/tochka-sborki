@@ -6,7 +6,7 @@ import { useChapterProgress } from './use-chapter-progress'
 export interface StageStep { key: string; body: ReactNode }
 
 interface Props {
-  /** Render prop: receives the active step index so the media can switch its caption. */
+  /** Render prop: receives the active step index (also used to dim inactive steps). */
   media: (active: number) => ReactNode
   steps: StageStep[]
   /** Wave I: `#temple`'s real mirror of `#boulder` — sticky world on the RIGHT,

@@ -38,7 +38,7 @@ export function PathFork({ fork, labels, mark, onMark, hideRoad = false }: Props
       {[fork.habit, fork.detour].map((path) => {
         const thisMark: PathMark = path === fork.habit ? 'habit' : 'detour'
         return (
-        <div key={path.guide} className="quest-path">
+        <div key={path.guide} className={hideRoad ? 'quest-path quest-path--no-road' : 'quest-path'}>
           {hideRoad ? null : <RoadStrip forkId={fork.id} guide={path.guide} />}
           <article className="quest-card">
             <GuideChip guide={path.guide} label={guideName(path.guide)} />
