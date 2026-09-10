@@ -20,8 +20,22 @@ function useReducedMotion(): boolean {
 interface Props {
   id: SceneId
   locale: Locale
-  /** Mono caption in the corner, switches with the active step. */
+  /** Mono caption in the bottom-left corner, switches with the active step. */
   caption?: string
+  /**
+   * Wave F: one line naming what moves in this scene's loop — top-left, the
+   * OPPOSITE corner from `caption`, so the two never fight for the same spot.
+   * Hidden under reduced motion regardless of what the caller passes: the scene
+   * is a still there (no `<video>` at all, see below), so a line describing
+   * motion would misdescribe what's actually on screen.
+   */
+  loopCaption?: string
+  /**
+   * Wave F: the Scroller's one-line remark on a fast scroll, shown near this
+   * scene while `active` is true. Caller (QuestHome) decides which chapter's
+   * scene is "current" and passes the quip only there.
+   */
+  quip?: string
   /** Absolutely positioned children over the art (plaques). */
   children?: ReactNode
   /** The hero poster may load eagerly; everything else waits for the viewport. */
@@ -45,7 +59,7 @@ interface Props {
  * zero when the reader flips the theme mid-loop. `prefers-reduced-motion:
  * reduce` never renders the `<video>` at all — the poster is what shows.
  */
-export function SceneLoop({ id, locale, caption, children, eager = false, className }: Props) {
+export function SceneLoop({ id, locale, caption, loopCaption, quip, children, eager = false, className }: Props) {
   const scene = SCENES[id]
   const theme = useThemeState()
   const assets = sceneAssets(id, theme)
@@ -114,6 +128,8 @@ export function SceneLoop({ id, locale, caption, children, eager = false, classN
         />
       ) : null}
       {children}
+      {loopCaption && !reducedMotion ? <div className="quest-scene__loop-caption">{loopCaption}</div> : null}
+      {quip ? <div className="quest-scene__quip">{quip}</div> : null}
       {caption ? <div className="quest-scene__caption">{caption}</div> : null}
     </div>
   )

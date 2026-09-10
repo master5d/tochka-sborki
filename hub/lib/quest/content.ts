@@ -35,6 +35,12 @@ export interface QuestContent {
   }
   labels: { habit: string; detour: string; scroller: string; builder: string; plaques: [string, string]; skipToText: string }
   footer: string
+  /** Wave F: one line per scene naming what moves in its loop — verbatim from the
+   *  canon's `[loop: …]` / `[петля: …]` marks, not authored here. */
+  captions: Record<SceneId, string>
+  /** Wave F: the Scroller's one-line remark on a fast scroll, a canon sentence
+   *  about the feed (from the canon's own prose, not composed for this feature). */
+  scrollerQuip: string
 }
 
 const COURSE_EN = 'https://ai.synergify.com/en/'
@@ -203,6 +209,16 @@ const en: QuestContent = {
     skipToText: 'Skip to text',
   },
   footer: '© 2026 · mamaev.coach · ⬡ vibe in motion',
+  captions: {
+    '01-map': 'the map breathes slowly, light pulses along both roads; on scroll the camera descends toward the fork',
+    '02-camp': 'sparks rise from the fire, the phone screen blinks with notifications',
+    '03-boulder': 'on the boulder\'s screen autoplay spins "next episode in 5…4…3"; the Builder\'s rope tightens in time with the scroll',
+    '04-temple': 'candle flames flow smoothly into a terminal cursor blinking in the same rhythm',
+    '05-gates': 'above the left gate a ⬡ gear turns, above the right one a ribbon of observability charts drifts by',
+    '06-wall': 'new lights climb the trail from below; the ⬡ sign in the sky turns slowly',
+    '07-signs': 'static; the signs sway lightly in the wind',
+  },
+  scrollerQuip: 'The endless feed has a perfect interface and zero leftovers.',
 }
 
 const ru: QuestContent = {
@@ -366,6 +382,16 @@ const ru: QuestContent = {
     skipToText: 'К тексту',
   },
   footer: '© 2026 · mamaev.coach · ⬡ vibe in motion',
+  captions: {
+    '01-map': 'карта медленно дышит, свет пульсирует по обеим дорогам; при скролле камера опускается к развилке',
+    '02-camp': 'искры костра поднимаются вверх, экран телефона мигает уведомлениями',
+    '03-boulder': 'на экране валуна крутится автоплей «следующая серия через 5…4…3»; трос Сборщика натягивается в такт скроллу',
+    '04-temple': 'пламя свечей плавно перетекает в курсор терминала, мигающий в том же ритме',
+    '05-gates': 'над левыми воротами вращается шестерёнка ⬡, над правыми плывёт лента графиков observability',
+    '06-wall': 'по тропе снизу поднимаются новые огоньки; знак ⬡ в небе медленно вращается',
+    '07-signs': 'статично; таблички слегка покачиваются на ветру',
+  },
+  scrollerQuip: 'У бесконечной ленты идеальный интерфейс и нулевой остаток.',
 }
 
 export const quest: Record<Locale, QuestContent> = { ru, en }

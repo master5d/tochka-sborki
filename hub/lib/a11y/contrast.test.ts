@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { contrastRatio } from './contrast'
+import { contrastRatio, hexToRgb } from './contrast'
 
 const CSS = readFileSync(join(process.cwd(), 'themes', 'model-kit.css'), 'utf8')
 const LAYOUT = readFileSync(join(process.cwd(), 'app', 'layout.tsx'), 'utf8')
@@ -114,6 +114,59 @@ describe('quest hero panel contrast (no scrim — token vs token)', () => {
       expect(contrastRatio(kit['--text-primary'], panel), `${name} primary on hero panel`).toBeGreaterThanOrEqual(4.5)
       expect(contrastRatio(kit['--text-accent'], panel), `${name} accent on hero panel`).toBeGreaterThanOrEqual(4.5)
       expect(contrastRatio(kit['--text-secondary'], panel), `${name} secondary on hero panel`).toBeGreaterThanOrEqual(3.0)
+    })
+  }
+})
+
+// Wave F's two new corner badges (.quest-scene__loop-caption, .quest-scene__quip)
+// paint `--text-primary` on `rgba(var(--bg-primary-rgb), 0.85)` — the SAME token
+// combination the pre-existing .quest-scene__caption already uses, just composited
+// over each chapter's tint (the badge sits on top of the scene art, which sits on
+// the chapter's tint at its edges) rather than tested as an isolated flat colour.
+function blendOverTint(bgPrimaryRgb: string, alpha: number, tintHex: string): string {
+  const [br, bgc, bb] = bgPrimaryRgb.split(',').map((n) => Number(n.trim()))
+  const [tr, tg, tb] = hexToRgb(tintHex)
+  const mix = (fg: number, bg: number) => Math.round(fg * alpha + bg * (1 - alpha))
+  const toHex = (n: number) => n.toString(16).padStart(2, '0')
+  return `#${toHex(mix(br, tr))}${toHex(mix(bgc, tg))}${toHex(mix(bb, tb))}`
+}
+
+describe('quest Wave F corner badges (loop caption / quip) stay readable', () => {
+  const cases: Array<[string, string, string]> = [
+    [':root {', ':root {', 'light fallback'],
+    [':root:not([data-theme])', ':root:not([data-theme])', 'system dark'],
+    ['[data-theme="dark"]', '[data-theme="dark"]', 'explicit dark'],
+    ['[data-theme="light"]', '[data-theme="light"]', 'explicit light'],
+  ]
+  for (const [questSel, kitSel, name] of cases) {
+    it(`${name}: text-primary on the semi-opaque bg-primary badge clears AA over every tint`, () => {
+      const tint = questTokensOf(questSel)
+      const kit = tokensOf(kitSel)
+      for (const t of TINTS) {
+        const composite = blendOverTint(kit['--bg-primary-rgb'], 0.85, tint[t])
+        expect(contrastRatio(kit['--text-primary'], composite), `${name} badge on ${t}`).toBeGreaterThanOrEqual(4.5)
+      }
+    })
+  }
+})
+
+// Wave F's path-choice control (.quest-path-choice) marks its pressed state with
+// `--text-accent` (underline + colour, never colour alone) — already guarded at
+// 4.5:1 against every tint and --quest-card above; asserted again here under its
+// own name so the guarantee for this NEW surface reads as deliberate, not a side
+// effect of the tint loop.
+describe('quest Wave F path-choice pressed state stays readable', () => {
+  const cases: Array<[string, string, string]> = [
+    [':root {', ':root {', 'light fallback'],
+    [':root:not([data-theme])', ':root:not([data-theme])', 'system dark'],
+    ['[data-theme="dark"]', '[data-theme="dark"]', 'explicit dark'],
+    ['[data-theme="light"]', '[data-theme="light"]', 'explicit light'],
+  ]
+  for (const [questSel, kitSel, name] of cases) {
+    it(`${name}: accent underline/text reads on --quest-card`, () => {
+      const tint = questTokensOf(questSel)
+      const kit = tokensOf(kitSel)
+      expect(contrastRatio(kit['--text-accent'], tint['--quest-card']), `${name} accent on quest-card`).toBeGreaterThanOrEqual(4.5)
     })
   }
 })

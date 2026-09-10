@@ -1,12 +1,15 @@
 'use client'
 import type { Locale } from '../../lib/dictionaries'
 import { quest, type Fork } from '../../lib/quest/content'
+import { buildRoute, routeText } from '../../lib/quest/route'
 import { Chapter, type Tint } from './chapter'
 import { GatePlaques } from './gate-plaques'
 import { OutcomeReveal } from './outcome-reveal'
 import { PathFork } from './path-fork'
 import { SceneLoop } from './scene-loop'
 import { StickyStage } from './sticky-stage'
+import { usePathChoice } from './use-path-choice'
+import { useScrollMood } from './use-scroll-mood'
 
 interface Props { locale: Locale }
 
@@ -18,6 +21,18 @@ function Para({ text, lead = false }: { text: string; lead?: boolean }) {
 
 export function QuestHome({ locale }: Props) {
   const c = quest[locale]
+  // Wave F: path choice with memory. `marks` is `{}` before mount, before storage
+  // is read, and forever if storage throws or stays empty — the finale then reads
+  // exactly as it does today (buildRoute returns null for anything short of all
+  // three forks marked).
+  const { marks, setMark } = usePathChoice()
+  const route = buildRoute(marks, c)
+  // Wave F: the page notices how you read. `quipChapterId` is which chapter's
+  // scene should show the Scroller's remark right now (or null — nothing to show,
+  // including always under prefers-reduced-motion, handled inside the hook).
+  const { chapterId: quipChapterId, showQuip } = useScrollMood()
+  const quipFor = (id: string) => (showQuip && quipChapterId === id ? c.scrollerQuip : undefined)
+
   return (
     <main>
       <style>{`
@@ -32,7 +47,14 @@ export function QuestHome({ locale }: Props) {
       {/* 0. Hero: the map is the first screen's backdrop, copy sits over it on a scrim (A4). */}
       <Chapter id="hero" tint="hero" bleed>
         <div className="quest-hero-frame">
-          <SceneLoop id={c.hero.scene} locale={locale} eager className="quest-hero-scene" />
+          <SceneLoop
+            id={c.hero.scene}
+            locale={locale}
+            eager
+            className="quest-hero-scene"
+            loopCaption={c.captions[c.hero.scene]}
+            quip={quipFor('hero')}
+          />
           <div className="quest-hero-copy quest-hero">
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--section-label-size)', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '1rem' }}>
               {c.hero.name} · {c.hero.role}
@@ -49,7 +71,14 @@ export function QuestHome({ locale }: Props) {
       {/* 1. Intro: camp by the fire, three paragraphs as steps beside the sticky scene. */}
       <Chapter id="intro" tint="intro" eyebrow={c.intro.eyebrow} heading={c.intro.heading} bleed>
         <StickyStage
-          media={() => <SceneLoop id={c.intro.scene} locale={locale} />}
+          media={() => (
+            <SceneLoop
+              id={c.intro.scene}
+              locale={locale}
+              loopCaption={c.captions[c.intro.scene]}
+              quip={quipFor('intro')}
+            />
+          )}
           steps={c.intro.paragraphs.map((p, i) => ({ key: `intro-${i}`, body: p }))}
         />
       </Chapter>
@@ -64,12 +93,28 @@ export function QuestHome({ locale }: Props) {
           <StickyStage
             media={(active) =>
               fork.id === 'gates'
-                ? <GatePlaques locale={locale} plaques={c.labels.plaques} caption={active === 1 ? c.labels.habit : active === 2 ? c.labels.detour : undefined} />
-                : <SceneLoop id={fork.scene} locale={locale} caption={active === 1 ? c.labels.habit : active === 2 ? c.labels.detour : undefined} />
+                ? (
+                  <GatePlaques
+                    locale={locale}
+                    plaques={c.labels.plaques}
+                    caption={active === 1 ? c.labels.habit : active === 2 ? c.labels.detour : undefined}
+                    loopCaption={c.captions[fork.scene]}
+                    quip={quipFor(fork.id)}
+                  />
+                )
+                : (
+                  <SceneLoop
+                    id={fork.scene}
+                    locale={locale}
+                    caption={active === 1 ? c.labels.habit : active === 2 ? c.labels.detour : undefined}
+                    loopCaption={c.captions[fork.scene]}
+                    quip={quipFor(fork.id)}
+                  />
+                )
             }
             steps={[
               { key: `${fork.id}-setup`, body: fork.setup.map((p, i) => <Para key={i} text={p} lead />) },
-              { key: `${fork.id}-habit`, body: <PathFork fork={fork} labels={c.labels} /> },
+              { key: `${fork.id}-habit`, body: <PathFork fork={fork} labels={c.labels} mark={marks[fork.id]} onMark={(m) => setMark(fork.id, m)} /> },
               { key: `${fork.id}-outcomes`, body: <OutcomeReveal title={fork.outcomesTitle} outcomes={fork.outcomes} labels={c.labels} /> },
               {
                 key: `${fork.id}-outro`,
@@ -88,9 +133,23 @@ export function QuestHome({ locale }: Props) {
       {/* 5. Finale. */}
       <Chapter id="finale" tint="finale" eyebrow={c.finale.eyebrow} heading={c.finale.heading} bleed>
         <StickyStage
-          media={() => <SceneLoop id={c.finale.scene} locale={locale} />}
+          media={() => (
+            <SceneLoop
+              id={c.finale.scene}
+              locale={locale}
+              loopCaption={c.captions[c.finale.scene]}
+              quip={quipFor('finale')}
+            />
+          )}
           steps={[
             ...c.finale.paragraphs.map((p, i) => ({ key: `finale-${i}`, body: p })),
+            /* Wave F: the reader's assembled route, canon titles + guide names
+               only (lib/quest/route.ts) — rendered ONLY when all three forks are
+               marked; otherwise this step is simply absent and the finale reads
+               exactly as it did before Wave F. */
+            ...(route
+              ? [{ key: 'finale-route', body: <p className="quest-route">{routeText(route, c.labels)}</p> }]
+              : []),
             {
               key: 'finale-cta',
               body: (
@@ -107,7 +166,7 @@ export function QuestHome({ locale }: Props) {
       {/* 6. About × 2 + footer. */}
       <Chapter id="about" tint="about">
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: '2rem' }}>
-          <SceneLoop id={c.about.scene} locale={locale} />
+          <SceneLoop id={c.about.scene} locale={locale} loopCaption={c.captions[c.about.scene]} quip={quipFor('about')} />
           <div className="quest-cards">
             <article className="quest-card">
               <h3 style={{ fontFamily: 'var(--font-display), system-ui, sans-serif', fontWeight: 900, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>{c.about.author.heading}</h3>

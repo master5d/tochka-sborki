@@ -182,3 +182,31 @@
 .quest-cta { display: inline-block; font-family: var(--font-mono); font-size: var(--text-sm); letter-spacing: 0.04em; color: var(--text-on-accent); background: var(--text-accent); border-radius: var(--radius); padding: 0.8rem 1.2rem; text-decoration: none; }
 .quest-cta:hover { opacity: 0.9; }
 .quest-cta--ghost { color: var(--text-accent); background: transparent; border: 1px solid var(--text-accent); }
+
+/* Wave F: one line naming what moves in the scene's loop — top-left, the corner
+   OPPOSITE the step caption (.quest-scene__caption, bottom-left), so the two
+   never compete for the same spot. Same token pattern as that caption (already
+   the app's one precedent for text-over-art) rather than a new untested surface.
+   Hidden entirely under reduced motion (scene-loop.tsx), never rendered in that
+   case, so it can't claim motion a still frame doesn't have. */
+.quest-scene__loop-caption { position: absolute; left: 0.75rem; top: 0.75rem; right: 0.75rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.02em; line-height: 1.4; color: var(--text-primary); background: rgba(var(--bg-primary-rgb), 0.85); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.3rem 0.55rem; }
+
+/* Wave F: the Scroller's remark on a fast, sustained scroll. Bottom-right, so it
+   never overlaps the loop caption (top-left) or the step caption (bottom-left,
+   used only inside the sticky stage). Same token pattern as both captions. */
+.quest-scene__quip { position: absolute; right: 0.75rem; bottom: 0.75rem; max-width: 70%; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.02em; line-height: 1.4; color: var(--text-primary); background: rgba(var(--bg-primary-rgb), 0.85); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.4rem 0.6rem; }
+@media (prefers-reduced-motion: no-preference) { .quest-scene__quip { transition: opacity 300ms ease; } }
+
+/* Wave F: marking a road as taken. The road's own title IS the control — no
+   invented "select this" copy — so `all: unset` makes the button inherit the
+   heading's font/colour instead of looking like a button. `aria-pressed` (in
+   path-choice.tsx) carries the state to assistive tech; the pressed look uses
+   TWO cues (underline + accent colour), never colour alone. */
+.quest-path-choice { all: unset; cursor: pointer; }
+.quest-path-choice:focus-visible { outline: 2px solid var(--text-accent); outline-offset: 3px; border-radius: 2px; }
+.quest-path-choice[aria-pressed="true"] { text-decoration: underline; text-decoration-color: var(--text-accent); text-decoration-thickness: 2px; text-underline-offset: 0.25em; }
+
+/* Wave F: the finale's assembled route — canon fork titles + guide names only
+   (lib/quest/route.ts), joined the way the footer already joins its own
+   fragments (the same " · " glyph), not a sentence composed for this feature. */
+.quest-route { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--text-secondary); letter-spacing: 0.02em; }
