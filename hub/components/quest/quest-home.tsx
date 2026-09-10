@@ -24,14 +24,31 @@ function Para({ text, lead = false }: { text: string; lead?: boolean }) {
   return <p className="quest-prose" style={{ fontSize: lead ? 'var(--text-lg)' : 'var(--text-base)', lineHeight: 1.7, color: 'var(--text-primary)', marginBottom: '1rem' }}>{text}</p>
 }
 
-/** Wave J1 (item 4): the hero art drifts a little independent of the copy
- * panel beside it, so the first screen isn't static while the reader begins
- * to scroll. `frameRef` measures `.quest-hero-frame`'s own transit (same
- * `clampProgress` math as `useChapterProgress`); `driftRef` is the wrapper
- * around the hero `SceneLoop` that receives the resulting `--px-y`. The
- * wrapper is deliberately 8% larger than its frame (`scale(1.08)` in CSS,
- * `.quest-hero-frame{overflow:hidden}` clipping the surplus) so the drift has
- * somewhere to go without ever exposing a gap at the art's edge. */
+/** Wave J1 fix (coordinator review): the first cut's rate (-0.984 vs the
+ * copy's -1.0) was invisible in practice — ~14px of relative drift is below
+ * the threshold of perception. Reworked to guarantee a fixed PIXEL
+ * displacement instead of a small rate: `HERO_DRIFT_TARGET` (80px) is what
+ * the art lags BEHIND its own natural scroll position by the time the hero
+ * has fully scrolled past — i.e. `relativeDisplacement(art, copy) ===
+ * HERO_DRIFT_TARGET` exactly at that point (copy has no added transform, so
+ * its own displacement over the same window is the plain -scrollDelta; the
+ * art's is that same -scrollDelta + amplitude — the difference IS the
+ * amplitude, by construction). `frameRef` measures `.quest-hero-frame`'s own
+ * box directly (local scroll = `-rect.top`, progress = that ÷ the frame's own
+ * height — NOT `clampProgress`, whose viewport-relative formula starts the
+ * hero already ~50% "through" its transit at scrollY=0, which was hiding
+ * most of the usable range). `driftRef` is the wrapper around the hero
+ * `SceneLoop`. The wrapper is scaled vertically only (`scaleY`, not a
+ * uniform `scale`) in CSS — a uniform zoom would also crop the LEFT/RIGHT
+ * edges, and the hero art already runs a character (the robot) right to the
+ * frame's right edge; `scaleY` gives vertical surplus for the drift without
+ * touching horizontal framing at all. `amplitude` is capped at 85% of that
+ * surplus so the drift can never expose a gap at the top/bottom edge — on a
+ * short viewport where the full 80px doesn't fit, it quietly shrinks instead
+ * (per the brief: stay subtle rather than break the frame). */
+const HERO_DRIFT_TARGET = 80
+const HERO_SCALE_Y = 1.22 // ±11% of the frame's own height as vertical surplus, scaleY only (no horizontal crop change)
+
 function useHeroDrift() {
   const frameRef = useRef<HTMLDivElement>(null)
   const driftRef = useRef<HTMLDivElement>(null)
@@ -41,8 +58,9 @@ function useHeroDrift() {
     const drift = driftRef.current
     if (!frame || !drift) return
     const rect = frame.getBoundingClientRect()
-    const amplitude = Math.min(56, Math.max(24, rect.height * 0.03))
-    const progress = clampProgress(rect.top, rect.height, window.innerHeight)
+    const surplusPerSide = (rect.height * (HERO_SCALE_Y - 1)) / 2
+    const amplitude = Math.min(HERO_DRIFT_TARGET, surplusPerSide * 0.85)
+    const progress = Math.min(1, Math.max(0, -rect.top / rect.height))
     drift.style.setProperty('--px-y', `${progress * amplitude}px`)
   }, !reducedMotion)
   return { frameRef, driftRef }

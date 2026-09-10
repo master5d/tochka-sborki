@@ -82,15 +82,17 @@
    so any scroll-to leaves that much clearance instead of tucking content under it. */
 #hero { scroll-margin-top: var(--quest-stage-top); }
 .quest-hero-frame { position: relative; min-height: calc(100vh - var(--quest-stage-top)); display: flex; align-items: stretch; overflow: hidden; }
-/* Wave J1 (item 4): the hero art's own slow vertical drift lives on this
-   wrapper, not on `.quest-hero-scene` itself — the wrapper is scaled 8%
-   larger than the frame it sits in (a no-JS, no-motion-preference baseline;
-   see the override below) so `--px-y`'s translate always has surplus art to
-   reveal instead of exposing a gap at the top/bottom edge; `.quest-hero-frame`
-   above clips the surplus. `useHeroDrift` (quest-home.tsx) writes `--px-y`. */
+/* Wave J1 fix: the hero art's own vertical drift lives on this wrapper, not
+   on `.quest-hero-scene` itself. `scaleY` (not a uniform `scale`) gives the
+   drift vertical surplus to move within without ever touching the LEFT/RIGHT
+   framing — the hero art already runs a character to the frame's right edge,
+   so a uniform zoom would risk cropping it; `scaleY` only stretches/reveals
+   vertically. `.quest-hero-frame` above clips the surplus at top/bottom.
+   `useHeroDrift` (quest-home.tsx) writes `--px-y`, capped so it can never
+   exceed the surplus this scale provides (never exposes a gap). */
 .quest-hero-drift { position: absolute; inset: 0; }
 @media (prefers-reduced-motion: no-preference) {
-  .quest-hero-drift { transform: translate3d(0, var(--px-y, 0px), 0) scale(1.08); will-change: transform; }
+  .quest-hero-drift { transform: translate3d(0, var(--px-y, 0px), 0) scaleY(1.22); will-change: transform; }
 }
 .quest-hero-frame .quest-scene.quest-hero-scene { position: absolute; top: 0; left: 0; right: 0; height: calc(100vh - var(--quest-stage-top)); aspect-ratio: auto; border: none; border-radius: 0; z-index: 0; }
 .quest-hero-frame .quest-scene.quest-hero-scene img { object-position: 50% 78%; }
