@@ -10,7 +10,24 @@ html, body {
   color: var(--text-primary);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  scroll-behavior: smooth;
+}
+
+/* Round 2 finding (quest hero polish): this was unconditional `scroll-behavior:
+   smooth` on html,body — the one motion rule in the codebase NOT gated behind
+   prefers-reduced-motion (everything else, e.g. .quest-reveal in quest.css, is).
+   It animates every programmatic scroll (scrollIntoViewIfNeeded, hash jumps),
+   and Playwright's `reducedMotion: 'reduce'` only sets the media-feature — it does
+   nothing for a rule that never checks it. A screenshot taken mid-animation, while
+   the sticky/backdrop-filter header is still compositing the previous frame, is
+   what produced the pink/magenta "ghost" on the mobile hero headline (visible in
+   ru-mobile-dark-hero-top.png): two partially-composited scroll frames blended
+   into one paint. Gating this like every other motion rule removes the mid-scroll
+   frame entirely for reduced-motion agents (real users with the OS preference,
+   and every automated screenshot), and stops smooth-scroll animations from ever
+   racing a layout shift (e.g. the language-suggestion banner mounting late) into
+   a torn frame. */
+@media (prefers-reduced-motion: no-preference) {
+  html, body { scroll-behavior: smooth; }
 }
 
 /* quest bleed layout (Wave A) must never scroll sideways. This lives on `html`
