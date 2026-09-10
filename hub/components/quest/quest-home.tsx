@@ -87,7 +87,7 @@ export function QuestHome({ locale }: Props) {
           sticky world un-pins early, leaving bare tint while the cards keep
           scrolling (the Wave A/B "world disappears mid-chapter" finding). */}
       {c.forks.map((fork) => (
-        <Chapter key={fork.id} id={fork.id} tint={FORK_TINT[fork.id]} eyebrow={fork.eyebrow} heading={fork.obstacle} bleed>
+        <Chapter key={fork.id} id={fork.id} tint={FORK_TINT[fork.id]} eyebrow={fork.eyebrow} heading={fork.obstacle} bleed guides>
           <StickyStage
             media={(active) =>
               fork.id === 'gates'

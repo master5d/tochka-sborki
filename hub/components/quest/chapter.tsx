@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { GUIDE_ASSETS } from '../../lib/quest/scenes'
 
 export type Tint = 'hero' | 'intro' | 'fork1' | 'fork2' | 'fork3' | 'finale' | 'about'
 
@@ -15,11 +16,26 @@ interface Props {
    * same for any content they place after the bleeding child.
    */
   bleed?: boolean
+  /**
+   * Wave H (H2): a chapter change as an EVENT rather than a small left-aligned
+   * eyebrow+heading — used by the three forks, where a new obstacle really is
+   * a turn in the story. The tint (already the section's own background — no
+   * new surface, no new contrast pair) fills the width, eyebrow+heading sit
+   * centred and large, and the two guides bracket the title as circular
+   * cut-outs — what keeps them feeling present "all the way down" the page,
+   * not just in the scene art. No new copy: eyebrow/heading are still exactly
+   * `fork.eyebrow`/`fork.obstacle` from content.ts. Below 720px the row
+   * collapses to the title plus the LEFT (Scroller) medallion only — two
+   * medallions plus a large title no longer fit one mobile screen without
+   * either shrinking to illegible or pushing the chapter's own art off the
+   * first screen.
+   */
+  guides?: boolean
   children: ReactNode
 }
 
 /** One chapter of the quest: tinted full-width band, content capped at --content-max. */
-export function Chapter({ id, tint, eyebrow, heading, children, bleed = false }: Props) {
+export function Chapter({ id, tint, eyebrow, heading, children, bleed = false, guides = false }: Props) {
   const capStyle = { maxWidth: 'var(--content-max)', margin: '0 auto', padding: bleed ? '0 2rem' : undefined }
   // A backdrop-style bleed chapter (no eyebrow/heading of its own, e.g. the hero) also
   // drops the section's TOP padding: the art must start right under the sticky
@@ -40,16 +56,29 @@ export function Chapter({ id, tint, eyebrow, heading, children, bleed = false }:
   return (
     <section id={id} className="hub-section" style={{ background: `var(--quest-tint-${tint})`, padding: `${vPadTop} ${bleed ? '0' : '2rem'} ${vPadBottom}`, borderTop: '1px solid var(--border-color)' }}>
       <div style={bleed ? undefined : { maxWidth: 'var(--content-max)', margin: '0 auto' }}>
-        {eyebrow ? (
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--section-label-size)', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '1rem', ...capStyle }}>
-            {eyebrow}
+        {guides ? (
+          <div className="quest-opener" style={capStyle}>
+            <img className="quest-opener__guide" src={GUIDE_ASSETS.scroller} alt="" width={112} height={112} loading="lazy" />
+            <div className="quest-opener__text">
+              {eyebrow ? <div className="quest-opener__eyebrow">{eyebrow}</div> : null}
+              {heading ? <h2 className="quest-opener__title">{heading}</h2> : null}
+            </div>
+            <img className="quest-opener__guide quest-opener__guide--right" src={GUIDE_ASSETS.builder} alt="" width={112} height={112} loading="lazy" />
           </div>
-        ) : null}
-        {heading ? (
-          <h2 style={{ fontFamily: 'var(--font-display), system-ui, sans-serif', fontWeight: 900, fontSize: 'clamp(1.6rem, 4vw, 2.8rem)', lineHeight: 1.05, letterSpacing: '-0.03em', color: 'var(--text-primary)', marginBottom: '2rem', textWrap: 'balance', ...capStyle }}>
-            {heading}
-          </h2>
-        ) : null}
+        ) : (
+          <>
+            {eyebrow ? (
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--section-label-size)', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '1rem', ...capStyle }}>
+                {eyebrow}
+              </div>
+            ) : null}
+            {heading ? (
+              <h2 style={{ fontFamily: 'var(--font-display), system-ui, sans-serif', fontWeight: 900, fontSize: 'clamp(1.6rem, 4vw, 2.8rem)', lineHeight: 1.05, letterSpacing: '-0.03em', color: 'var(--text-primary)', marginBottom: '2rem', textWrap: 'balance', ...capStyle }}>
+                {heading}
+              </h2>
+            ) : null}
+          </>
+        )}
         {children}
       </div>
     </section>
