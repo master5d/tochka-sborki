@@ -9,6 +9,10 @@ interface Props {
   /** Render prop: receives the active step index so the media can switch its caption. */
   media: (active: number) => ReactNode
   steps: StageStep[]
+  /** Wave I: `#temple`'s real mirror of `#boulder` — sticky world on the RIGHT,
+   *  steps on the LEFT (≥900px only; below that both chapters are already one
+   *  column in the same DOM order). */
+  mirror?: boolean
 }
 
 function useReducedMotion(): boolean {
@@ -33,14 +37,14 @@ function useReducedMotion(): boolean {
  * scene's CSS turns into `object-position` panning; `prefers-reduced-motion` pins
  * the pan at 0.33 instead of following scroll.
  */
-export function StickyStage({ media, steps }: Props) {
+export function StickyStage({ media, steps, mirror = false }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   const active = useActiveStep(ref, steps.length)
   const scrollProgress = useChapterProgress(ref)
   const reducedMotion = useReducedMotion()
   const pan = reducedMotion ? 0.33 : scrollProgress
   return (
-    <div className="quest-stage" ref={ref} style={{ '--pan': pan } as CSSProperties}>
+    <div className={mirror ? 'quest-stage quest-stage--mirror' : 'quest-stage'} ref={ref} style={{ '--pan': pan } as CSSProperties}>
       <div className="quest-stage__media">{media(active)}</div>
       <div className="quest-stage__steps">
         {steps.map((s, i) => (

@@ -10,6 +10,9 @@ interface Props {
   /** The reader's mark for THIS fork, if any (Wave F, from localStorage). */
   mark?: PathMark
   onMark: (mark: PathMark) => void
+  /** Wave I: `#gates` already shows both roads as tall edge rails — skip the
+   *  redundant strip inside each card here so the two don't repeat the same art. */
+  hideRoad?: boolean
 }
 
 function Paragraphs({ items }: { items: string[] }) {
@@ -28,7 +31,7 @@ function Paragraphs({ items }: { items: string[] }) {
  * copy invented for it, `mark`/`onMark` wire it to localStorage via the caller's
  * `usePathChoice`.
  */
-export function PathFork({ fork, labels, mark, onMark }: Props) {
+export function PathFork({ fork, labels, mark, onMark, hideRoad = false }: Props) {
   const guideName = (g: 'scroller' | 'builder') => (g === 'scroller' ? labels.scroller : labels.builder)
   return (
     <div className="quest-cards">
@@ -36,7 +39,7 @@ export function PathFork({ fork, labels, mark, onMark }: Props) {
         const thisMark: PathMark = path === fork.habit ? 'habit' : 'detour'
         return (
         <div key={path.guide} className="quest-path">
-          <RoadStrip forkId={fork.id} guide={path.guide} />
+          {hideRoad ? null : <RoadStrip forkId={fork.id} guide={path.guide} />}
           <article className="quest-card">
             <GuideChip guide={path.guide} label={guideName(path.guide)} />
             <h3 style={{ fontFamily: 'var(--font-display), system-ui, sans-serif', fontWeight: 900, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>

@@ -143,6 +143,88 @@
   .quest-stage__step { min-height: 0; padding-block: 2rem; }
 }
 
+/* Wave I: #temple mirrors #boulder's device — sticky world on the RIGHT, steps
+   on the LEFT. A REAL mirror, not a hack: the media/steps swap grid position
+   (`order`, DOM stays the same so mobile collapse below needs no extra rule),
+   the steps' own padding reverses (breathing room moves to the side touching
+   the media), and the scene's own corner badges (caption/quip) flip to the
+   opposite corner so they still read as "the corner nearest the steps" /
+   "the corner farthest from the steps" respectively. Scoped to ≥900px only —
+   below that the stage is already a single column in DOM (reading) order and
+   mirroring a stack means nothing. */
+@media (min-width: 900px) {
+  .quest-stage--mirror .quest-stage__media { order: 2; }
+  .quest-stage--mirror .quest-stage__steps { order: 1; padding: 12vh 0 18vh 2rem; }
+  .quest-stage--mirror .quest-scene__caption { left: auto; right: 0.75rem; }
+  .quest-stage--mirror .quest-scene__quip { right: auto; left: 0.75rem; }
+}
+
+/* Wave I: #intro's new composition — a full-width band showing the WHOLE scene
+   frame (never cropped: object-fit:contain, letterboxed on the chapter's own
+   tint rather than the art's edges bleeding into a crop), then the chapter's
+   prose as a single narrow centred column below it, on the plain tint. No
+   sticky stage here — this is the page's first breath after the hero, meant
+   to read as a page turning, not another split screen. */
+.quest-band { width: 100%; margin-bottom: var(--section-gap); background: var(--bg-secondary); }
+.quest-band .quest-scene { aspect-ratio: auto; height: clamp(280px, 46vw, 620px); background: var(--quest-tint-intro); }
+.quest-band .quest-scene img, .quest-band .quest-scene video { object-fit: contain; }
+@media (max-width: 900px) { .quest-band .quest-scene { height: clamp(220px, 62vw, 420px); } }
+
+/* Shared narrow centred column — #intro's prose below its band, #finale's
+   opening paragraphs above its title card. Plain tint behind, no card. */
+.quest-narrow-copy { max-width: 42rem; margin: 0 auto; padding: 0 2rem var(--section-gap); }
+
+/* Wave I: the outcomes act, common to all three forks — breaks OUT of whatever
+   composition the fork uses above it (sticky stage or the two-roads grid) into
+   its own full-width band, the tint already the section's own background
+   (edge to edge, no new surface). Echoes the chapter opener exactly: same
+   `.quest-opener` row (large centred title, a guide medallion each side) —
+   reused, not reinvented — with the two stat cards underneath, capped at
+   --content-max like every other capped block on the page. */
+.quest-outcomes-act { padding: var(--section-gap) 2rem; }
+.quest-outcomes-act__row { max-width: var(--content-max); margin: 0 auto; padding-bottom: clamp(1.5rem, 4vw, 2.5rem); }
+.quest-outcomes-act .quest-cards { max-width: var(--content-max); margin: 0 auto; }
+
+/* Wave I: #gates — the two-roads composition. No large sticky scene: the two
+   road strips (already Wave D/H art, one per guide) become tall rails pinned
+   at the LEFT and RIGHT edges of the viewport for the chapter's length — same
+   sticky mechanic as `.quest-stage__media`, just two of them bracketing a
+   narrow centred text column instead of one beside a wide one. Below 900px
+   there is no room for edges, so the grid collapses to a single column in
+   DOM (reading) order: the habit rail, then the text, then the detour rail. */
+.quest-two-roads__rail .road-strip-frame { display: block; }
+.quest-two-roads__text { padding: 1.5rem 1.25rem; }
+@media (min-width: 900px) {
+  .quest-two-roads { display: grid; grid-template-columns: minmax(120px, 14vw) minmax(0, 1fr) minmax(120px, 14vw); gap: clamp(1rem, 3vw, 2rem); align-items: start; }
+  .quest-two-roads__rail { position: sticky; top: var(--quest-stage-top); height: calc(100vh - var(--quest-stage-top)); }
+  .quest-two-roads__rail .road-strip-frame { height: 100%; }
+  .quest-two-roads__rail .road-strip { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: 50% 50%; }
+  .quest-two-roads__text { max-width: 42rem; margin: 0 auto; padding: 6vh 0; }
+  /* The habit/detour cards, inside this already-narrow column, stay a single
+     stack rather than the usual 2-up grid — there is no room for two columns
+     between two sticky rails, and the rails already carry the road art the
+     cards would otherwise repeat. */
+  .quest-two-roads__text .quest-cards { grid-template-columns: 1fr; }
+}
+/* The chapter's own gate-plaques art, kept but shrunk to a plain inline panel
+   (not sticky, not large) — its native 848×1264 aspect matches `.quest-scene`'s
+   default cover box exactly, so nothing crops and the plaques stay in place. */
+.quest-gate-scene { max-width: 18rem; margin: 0 auto 1.5rem; }
+
+/* Wave I: #finale — a closing title card mirroring the hero's own pattern
+   (A4): the scene full-bleed behind, the closing line + CTA on their OWN
+   opaque, token-painted surface (never straight on the art), centred this
+   time rather than a side column since there's only one short line + a
+   button to hold, not a whole bio. */
+.quest-finale-frame { position: relative; min-height: min(70vh, 640px); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.quest-finale-frame .quest-scene.quest-finale-scene { position: absolute; inset: 0; aspect-ratio: auto; width: 100%; height: 100%; border: none; border-radius: 0; z-index: 0; }
+.quest-finale-frame .quest-scene.quest-finale-scene img { object-position: 50% 55%; }
+.quest-finale-copy { position: relative; z-index: 2; max-width: 28rem; margin: 2rem; padding: 2.5rem 2rem; background: var(--quest-tint-finale); border-radius: var(--radius); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
+@media (max-width: 900px) {
+  .quest-finale-frame { min-height: 56vh; }
+  .quest-finale-copy { margin: 1.25rem; padding: 1.5rem 1.25rem; }
+}
+
 /* Scene frame (poster/video share the art's aspect). A1: no border, no radius —
    the world runs to the edge instead of reading as a screenshot in a frame.
    The 848×1264 aspect-ratio is the DEFAULT (used where a scene isn't inside the
@@ -168,8 +250,11 @@
    Matching that same viewport-height box (same rule shape as the one above)
    keeps 07-signs consistent with the rest of the page instead of reading as a
    one-off frame. */
-#about .quest-scene { height: calc(100vh - var(--quest-stage-top)); aspect-ratio: auto; }
-@media (max-width: 900px) { #about .quest-scene { height: 42vh; } }
+/* Wave I: #about — the signs scene as a centred PANEL (not a full-bleed band,
+   no sticky stage), the two About cards below it, side by side (`.quest-cards`
+   already goes 2-up at ≥720px and stacks below it — unchanged). */
+#about .quest-scene { height: auto; aspect-ratio: 848 / 1264; max-width: 22rem; margin: 0 auto; }
+@media (max-width: 900px) { #about .quest-scene { max-width: 16rem; } }
 .quest-scene__caption { position: absolute; left: 0.75rem; bottom: 0.75rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.04em; color: var(--text-primary); background: rgba(var(--bg-primary-rgb), 0.85); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.3rem 0.55rem; }
 .quest-plaque { position: absolute; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: clamp(8px, 1.9cqw, 17px); letter-spacing: 0.06em; text-transform: lowercase; color: var(--quest-plaque-ink); text-align: center; line-height: 1.05; padding: 0 2%; overflow: visible; }
 

@@ -6,6 +6,7 @@ import { Chapter, type Tint } from './chapter'
 import { GatePlaques } from './gate-plaques'
 import { OutcomeReveal } from './outcome-reveal'
 import { PathFork } from './path-fork'
+import { RoadStrip } from './road-strip'
 import { SceneLoop } from './scene-loop'
 import { StickyStage } from './sticky-stage'
 import { usePathChoice } from './use-path-choice'
@@ -67,99 +68,119 @@ export function QuestHome({ locale }: Props) {
         </div>
       </Chapter>
 
-      {/* 1. Intro: camp by the fire, three paragraphs as steps beside the sticky scene. */}
+      {/* 1. Intro: a full-width band of the camp scene (the whole frame, never
+          cropped), then the three paragraphs as a single narrow centred
+          column below it on the plain tint — the page's first breath, not
+          another split screen. */}
       <Chapter id="intro" tint="intro" eyebrow={c.intro.eyebrow} heading={c.intro.heading} bleed>
-        <StickyStage
-          media={() => (
-            <SceneLoop
-              id={c.intro.scene}
-              locale={locale}
-              quip={quipFor('intro')}
-            />
-          )}
-          steps={c.intro.paragraphs.map((p, i) => ({ key: `intro-${i}`, body: p }))}
-        />
-      </Chapter>
-
-      {/* 2–4. Forks. The CTA + bridge are a trailing step INSIDE the same sticky
-          grid as setup/habit/outcomes (not a sibling block after it) — otherwise
-          the grid's own height stops short of the chapter's real content and the
-          sticky world un-pins early, leaving bare tint while the cards keep
-          scrolling (the Wave A/B "world disappears mid-chapter" finding). */}
-      {c.forks.map((fork) => (
-        <Chapter key={fork.id} id={fork.id} tint={FORK_TINT[fork.id]} eyebrow={fork.eyebrow} heading={fork.obstacle} bleed guides>
-          <StickyStage
-            media={(active) =>
-              fork.id === 'gates'
-                ? (
-                  <GatePlaques
-                    locale={locale}
-                    plaques={c.labels.plaques}
-                    caption={active === 1 ? c.labels.habit : active === 2 ? c.labels.detour : undefined}
-                    quip={quipFor(fork.id)}
-                  />
-                )
-                : (
-                  <SceneLoop
-                    id={fork.scene}
-                    locale={locale}
-                    caption={active === 1 ? c.labels.habit : active === 2 ? c.labels.detour : undefined}
-                    quip={quipFor(fork.id)}
-                  />
-                )
-            }
-            steps={[
-              { key: `${fork.id}-setup`, body: fork.setup.map((p, i) => <Para key={i} text={p} lead />) },
-              { key: `${fork.id}-habit`, body: <PathFork fork={fork} labels={c.labels} mark={marks[fork.id]} onMark={(m) => setMark(fork.id, m)} /> },
-              { key: `${fork.id}-outcomes`, body: <OutcomeReveal title={fork.outcomesTitle} outcomes={fork.outcomes} labels={c.labels} /> },
-              {
-                key: `${fork.id}-outro`,
-                body: (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'flex-start' }}>
-                    {fork.cta ? <a href={fork.cta.href} className="quest-cta">{fork.cta.label}</a> : null}
-                    <Para text={fork.bridge} />
-                  </div>
-                ),
-              },
-            ]}
+        <div className="quest-band">
+          <SceneLoop
+            id={c.intro.scene}
+            locale={locale}
+            quip={quipFor('intro')}
           />
-        </Chapter>
-      ))}
-
-      {/* 5. Finale. */}
-      <Chapter id="finale" tint="finale" eyebrow={c.finale.eyebrow} heading={c.finale.heading} bleed>
-        <StickyStage
-          media={() => (
-            <SceneLoop
-              id={c.finale.scene}
-              locale={locale}
-              quip={quipFor('finale')}
-            />
-          )}
-          steps={[
-            ...c.finale.paragraphs.map((p, i) => ({ key: `finale-${i}`, body: p })),
-            /* Wave F: the reader's assembled route — each fork's own obstacle
-               noun (fork.obstacle, prefix stripped) plus the road taken there
-               (lib/quest/route.ts) — rendered ONLY when all three forks are
-               marked; otherwise this step is simply absent and the finale reads
-               exactly as it did before Wave F. */
-            ...(route
-              ? [{ key: 'finale-route', body: <p className="quest-route">{routeText(route)}</p> }]
-              : []),
-            {
-              key: 'finale-cta',
-              body: (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'flex-start' }}>
-                  <div className="quest-number" style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.4rem)' }}>{c.finale.closing}</div>
-                  <a href={c.finale.cta.href} className="quest-cta">{c.finale.cta.label}</a>
-                </div>
-              ),
-            },
-          ]}
-        />
+        </div>
+        <div className="quest-narrow-copy">
+          {c.intro.paragraphs.map((p, i) => <Para key={i} text={p} lead />)}
+        </div>
       </Chapter>
 
-      {/* 6. About × 2 + footer. */}
+      {/* 2–4. Forks: each gets its own composition below the shared chapter
+          opener. #boulder keeps the workhorse sticky-stage (world left/steps
+          right); #temple is its real mirror (world right/steps left); #gates
+          drops the big sticky scene for two tall road rails bracketing a
+          narrow text column — the fork made visible. In all three, the
+          outcomes act breaks OUT into its own full-width band (echoing the
+          opener), and the CTA + bridge close the chapter as a narrow centred
+          column — neither is inside a sticky grid any more, so there is
+          nothing left to un-pin early. */}
+      {c.forks.map((fork) => {
+        const outro = (
+          <div className="quest-narrow-copy" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'flex-start' }}>
+            {fork.cta ? <a href={fork.cta.href} className="quest-cta">{fork.cta.label}</a> : null}
+            <Para text={fork.bridge} />
+          </div>
+        )
+        const outcomesAct = <OutcomeReveal title={fork.outcomesTitle} outcomes={fork.outcomes} labels={c.labels} />
+
+        if (fork.id === 'gates') {
+          return (
+            <Chapter key={fork.id} id={fork.id} tint={FORK_TINT[fork.id]} eyebrow={fork.eyebrow} heading={fork.obstacle} bleed guides>
+              <div className="quest-two-roads">
+                <div className="quest-two-roads__rail quest-two-roads__rail--left">
+                  <RoadStrip forkId={fork.id} guide={fork.habit.guide} />
+                </div>
+                <div className="quest-two-roads__text">
+                  {fork.setup.map((p, i) => <Para key={i} text={p} lead />)}
+                  <div className="quest-gate-scene">
+                    <GatePlaques locale={locale} plaques={c.labels.plaques} quip={quipFor(fork.id)} />
+                  </div>
+                  <PathFork fork={fork} labels={c.labels} mark={marks[fork.id]} onMark={(m) => setMark(fork.id, m)} hideRoad />
+                </div>
+                <div className="quest-two-roads__rail quest-two-roads__rail--right">
+                  <RoadStrip forkId={fork.id} guide={fork.detour.guide} />
+                </div>
+              </div>
+              {outcomesAct}
+              {outro}
+            </Chapter>
+          )
+        }
+
+        return (
+          <Chapter key={fork.id} id={fork.id} tint={FORK_TINT[fork.id]} eyebrow={fork.eyebrow} heading={fork.obstacle} bleed guides>
+            <StickyStage
+              mirror={fork.id === 'temple'}
+              media={(active) => (
+                <SceneLoop
+                  id={fork.scene}
+                  locale={locale}
+                  caption={active === 1 ? c.labels.habit : undefined}
+                  quip={quipFor(fork.id)}
+                />
+              )}
+              steps={[
+                { key: `${fork.id}-setup`, body: fork.setup.map((p, i) => <Para key={i} text={p} lead />) },
+                { key: `${fork.id}-habit`, body: <PathFork fork={fork} labels={c.labels} mark={marks[fork.id]} onMark={(m) => setMark(fork.id, m)} /> },
+              ]}
+            />
+            {outcomesAct}
+            {outro}
+          </Chapter>
+        )
+      })}
+
+      {/* 5. Finale: a closing title card mirroring the hero's own pattern —
+          the paragraphs (and, once all three forks are marked, the assembled
+          route) run first as a narrow centred column on the plain tint, then
+          the scene sits full-bleed with the closing line + CTA on their OWN
+          token-painted surface, centred over it — never straight on the art. */}
+      <Chapter id="finale" tint="finale" eyebrow={c.finale.eyebrow} heading={c.finale.heading} bleed>
+        <div className="quest-narrow-copy">
+          {c.finale.paragraphs.map((p, i) => <Para key={i} text={p} />)}
+          {/* Wave F: the reader's assembled route — each fork's own obstacle
+             noun (fork.obstacle, prefix stripped) plus the road taken there
+             (lib/quest/route.ts) — rendered ONLY when all three forks are
+             marked; otherwise this line is simply absent and the finale reads
+             exactly as it did before Wave F. */}
+          {route ? <p className="quest-route">{routeText(route)}</p> : null}
+        </div>
+        <div className="quest-finale-frame">
+          <SceneLoop
+            id={c.finale.scene}
+            locale={locale}
+            className="quest-finale-scene"
+            quip={quipFor('finale')}
+          />
+          <div className="quest-finale-copy">
+            <div className="quest-number" style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.4rem)' }}>{c.finale.closing}</div>
+            <a href={c.finale.cta.href} className="quest-cta">{c.finale.cta.label}</a>
+          </div>
+        </div>
+      </Chapter>
+
+      {/* 6. About: the signs scene as a centred panel (no sticky stage), the
+          two About cards below it, side by side. */}
       <Chapter id="about" tint="about">
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: '2rem' }}>
           <SceneLoop id={c.about.scene} locale={locale} quip={quipFor('about')} />
