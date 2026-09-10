@@ -36,11 +36,11 @@ describe('quest assets', () => {
       expect(existsSync(join(PUBLIC, 'quest', 'loops', `${id}.mp4`)), `${id}.mp4 should have been retired`).toBe(false)
     }
   })
-  it('no loop files exist yet — this wave ships posters only (Wave E regenerates loops)', () => {
+  it('Wave E: every scene has a day and a night loop, each ≤ 900 KB', () => {
     for (const id of SCENE_IDS) {
       for (const state of ['day', 'night'] as const) {
         const a = sceneAssets(id, state)
-        expect(existsSync(join(PUBLIC, a.loop)), `${a.loop} should not exist yet`).toBe(false)
+        expect(sizeOf(a.loop), `${id} ${state} loop`).toBeLessThanOrEqual(900 * KB)
       }
     }
   })

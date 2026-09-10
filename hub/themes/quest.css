@@ -155,6 +155,10 @@
    aspect-ratio box floating inside a taller sticky box). */
 .quest-scene { position: relative; aspect-ratio: 848 / 1264; overflow: hidden; background: var(--bg-secondary); container-type: inline-size; }
 .quest-scene img, .quest-scene video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% calc(var(--pan, 0.5) * 100%); }
+/* The loop sits over the poster's <picture>; both share the same box and pan so
+   a load stall (or reduced motion, where the video is never rendered) shows the
+   correct still frame instead of a gap. */
+.quest-scene video.quest-scene__video { position: absolute; inset: 0; }
 .quest-stage__media .quest-scene { height: 100%; aspect-ratio: auto; }
 .quest-scene__caption { position: absolute; left: 0.75rem; bottom: 0.75rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.04em; color: var(--text-primary); background: rgba(var(--bg-primary-rgb), 0.85); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.3rem 0.55rem; }
 .quest-plaque { position: absolute; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: clamp(8px, 1.9cqw, 17px); letter-spacing: 0.06em; text-transform: lowercase; color: var(--quest-plaque-ink); text-align: center; line-height: 1.05; padding: 0 2%; overflow: visible; }
