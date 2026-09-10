@@ -1,4 +1,5 @@
 import type { Locale } from '../dictionaries'
+import type { Guide } from './content'
 
 export type SceneId = '01-map' | '02-camp' | '03-boulder' | '04-temple' | '05-gates' | '06-wall' | '07-signs'
 
@@ -94,3 +95,26 @@ export const GATE_PLAQUES: [PlaqueBox, PlaqueBox] = [
   { left: 26, top: 44.2, width: 15.9, height: 2.5 },
   { left: 57, top: 44.7, width: 13.5, height: 1.8 },
 ]
+
+/** Wave D: the three forks that split into a habit road and a detour, each a narrow
+ * vertical strip of the same world (768×1536, world-v3) continuing that fork's scene. */
+export type ForkId = 'boulder' | 'temple' | 'gates'
+export const FORK_IDS: ForkId[] = ['boulder', 'temple', 'gates']
+const ROAD_GUIDES: Guide[] = ['scroller', 'builder']
+
+/**
+ * Path of a fork's road strip. `guide` matches `PathBlock.guide` (the habit road's
+ * guide is the Scroller, the detour's is the Builder) — same day/night contract as
+ * `sceneAssets`, driven by `useThemeState`, not the wall clock.
+ */
+export function roadStrip(forkId: ForkId, guide: Guide, state: SceneState): string {
+  return `/quest/roads/${forkId}-${guide}-${state}.webp`
+}
+
+/** Day-state lookup table, mainly for exhaustive tests; components call `roadStrip` directly. */
+export const ROAD_STRIPS: Record<ForkId, Record<Guide, string>> = Object.fromEntries(
+  FORK_IDS.map((forkId) => [
+    forkId,
+    Object.fromEntries(ROAD_GUIDES.map((guide) => [guide, roadStrip(forkId, guide, 'day')])),
+  ]),
+) as Record<ForkId, Record<Guide, string>>

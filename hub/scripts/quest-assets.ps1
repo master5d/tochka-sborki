@@ -5,6 +5,13 @@
 # world-v3 tall (848x1264) art — and the old horizontal loops are retired (they
 # don't fit the tall frame; Wave E regenerates loops for it). This script no
 # longer touches ffmpeg or the guide cut-outs; guides were a one-time asset.
+#
+# Wave D: three forks each split into a habit road (Scroller) and a detour
+# (Builder) — 12 narrow vertical strips (768x1536, world-v3/roads/) encoded to
+# `public/quest/roads/<fork>-<guide>-<state>.webp`. Source filenames use
+# habit/detour (the generation ids); the site registry (`roadStrip`) keys by
+# `guide` (scroller/builder) instead, matching `PathBlock.guide` — this script
+# is the one place that translates between the two vocabularies.
 param(
   [string]$Media = 'C:\telo\Efforts\Ongoing\NAUTILUS\core\desops\taste\_media\world-v3'
 )
@@ -12,9 +19,13 @@ $ErrorActionPreference = 'Stop'
 $hub = Split-Path -Parent $PSScriptRoot
 $out = Join-Path $hub 'public\quest'
 New-Item -ItemType Directory -Force (Join-Path $out 'scenes') | Out-Null
+New-Item -ItemType Directory -Force (Join-Path $out 'roads') | Out-Null
 
 $ids = '01-map', '02-camp', '03-boulder', '04-temple', '05-gates', '06-wall', '07-signs'
 $states = 'day', 'night'
+$forks = 'boulder', 'temple', 'gates'
+# generation id (habit/detour) → site guide (scroller/builder)
+$roadGuides = @{ habit = 'scroller'; detour = 'builder' }
 
 # 1. Scenes → WebP q82 (Pillow keeps the native 848x1264 frame; no resize).
 $py = @"
@@ -28,6 +39,17 @@ Set-Content -Path $pyFile -Value $py -Encoding UTF8
 foreach ($id in $ids) {
   foreach ($state in $states) {
     python $pyFile (Join-Path $Media "$id-$state.png") (Join-Path $out "scenes\$id-$state.webp")
+  }
+}
+
+# 1b. Road strips → WebP q82 (native 768x1536, no resize), roads/<fork>-<guide>-<state>.webp.
+$roadsMedia = Join-Path $Media 'roads'
+foreach ($fork in $forks) {
+  foreach ($genId in $roadGuides.Keys) {
+    $guide = $roadGuides[$genId]
+    foreach ($state in $states) {
+      python $pyFile (Join-Path $roadsMedia "$fork-$genId-$state.png") (Join-Path $out "roads\$fork-$guide-$state.webp")
+    }
   }
 }
 
