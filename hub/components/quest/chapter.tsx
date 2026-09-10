@@ -1,5 +1,33 @@
-import type { ReactNode } from 'react'
+'use client'
+import { useRef, type ReactNode } from 'react'
 import { GUIDE_ASSETS } from '../../lib/quest/scenes'
+import { clampProgress } from './use-chapter-progress'
+import { useParallaxFrame, useReducedMotion } from './use-parallax'
+
+/** Wave J1 (item 3): the opener's guide medallions drift a small amount toward
+ * their own edge (left guide left, right guide right) as the opener enters and
+ * leaves the viewport — one shared registration in the page's parallax loop
+ * per opener, reading the opener row's own transit (`clampProgress`, the same
+ * math `useChapterProgress` uses) and writing `--px-x` straight onto each
+ * guide `<img>`. Capped well under the ~40px spec ceiling. `enabled` is false
+ * for every non-opener chapter (skips registering entirely) and for reduced
+ * motion (checked once, shared across all openers via `useReducedMotion`). */
+function useMedallionDrift(enabled: boolean, amplitude = 32) {
+  const openerRef = useRef<HTMLDivElement>(null)
+  const leftRef = useRef<HTMLImageElement>(null)
+  const rightRef = useRef<HTMLImageElement>(null)
+  const reducedMotion = useReducedMotion()
+  useParallaxFrame(() => {
+    const opener = openerRef.current
+    if (!opener) return
+    const rect = opener.getBoundingClientRect()
+    const progress = clampProgress(rect.top, rect.height, window.innerHeight)
+    const shift = amplitude * progress
+    leftRef.current?.style.setProperty('--px-x', `${-shift}px`)
+    rightRef.current?.style.setProperty('--px-x', `${shift}px`)
+  }, enabled && !reducedMotion)
+  return { openerRef, leftRef, rightRef }
+}
 
 export type Tint = 'hero' | 'intro' | 'fork1' | 'fork2' | 'fork3' | 'finale' | 'about'
 
@@ -36,6 +64,7 @@ interface Props {
 
 /** One chapter of the quest: tinted full-width band, content capped at --content-max. */
 export function Chapter({ id, tint, eyebrow, heading, children, bleed = false, guides = false }: Props) {
+  const { openerRef, leftRef, rightRef } = useMedallionDrift(guides)
   const capStyle = { maxWidth: 'var(--content-max)', margin: '0 auto', padding: bleed ? '0 2rem' : undefined }
   // A backdrop-style bleed chapter (no eyebrow/heading of its own, e.g. the hero) also
   // drops the section's TOP padding: the art must start right under the sticky
@@ -57,13 +86,13 @@ export function Chapter({ id, tint, eyebrow, heading, children, bleed = false, g
     <section id={id} className="hub-section" style={{ background: `var(--quest-tint-${tint})`, padding: `${vPadTop} ${bleed ? '0' : '2rem'} ${vPadBottom}`, borderTop: '1px solid var(--border-color)' }}>
       <div style={bleed ? undefined : { maxWidth: 'var(--content-max)', margin: '0 auto' }}>
         {guides ? (
-          <div className="quest-opener" style={capStyle}>
-            <img className="quest-opener__guide" src={GUIDE_ASSETS.scroller} alt="" width={112} height={112} loading="lazy" />
+          <div className="quest-opener" style={capStyle} ref={openerRef}>
+            <img ref={leftRef} className="quest-opener__guide" src={GUIDE_ASSETS.scroller} alt="" width={112} height={112} loading="lazy" />
             <div className="quest-opener__text">
               {eyebrow ? <div className="quest-opener__eyebrow">{eyebrow}</div> : null}
               {heading ? <h2 className="quest-opener__title">{heading}</h2> : null}
             </div>
-            <img className="quest-opener__guide quest-opener__guide--right" src={GUIDE_ASSETS.builder} alt="" width={112} height={112} loading="lazy" />
+            <img ref={rightRef} className="quest-opener__guide quest-opener__guide--right" src={GUIDE_ASSETS.builder} alt="" width={112} height={112} loading="lazy" />
           </div>
         ) : (
           <>

@@ -1,10 +1,14 @@
 'use client'
+import { useRef } from 'react'
 import type { Locale } from '../../lib/dictionaries'
-import { quest, type Fork } from '../../lib/quest/content'
+import { quest, type Fork, type QuestContent } from '../../lib/quest/content'
+import type { PathMark } from '../../lib/quest/route'
 import { buildRoute, routeText } from '../../lib/quest/route'
 import { Chapter, type Tint } from './chapter'
 import { GatePlaques } from './gate-plaques'
 import { OutcomeReveal } from './outcome-reveal'
+import { clampProgress } from './use-chapter-progress'
+import { useParallaxFrame, useReducedMotion } from './use-parallax'
 import { PathFork } from './path-fork'
 import { RoadStrip } from './road-strip'
 import { SceneLoop } from './scene-loop'
@@ -20,6 +24,89 @@ function Para({ text, lead = false }: { text: string; lead?: boolean }) {
   return <p className="quest-prose" style={{ fontSize: lead ? 'var(--text-lg)' : 'var(--text-base)', lineHeight: 1.7, color: 'var(--text-primary)', marginBottom: '1rem' }}>{text}</p>
 }
 
+/** Wave J1 (item 4): the hero art drifts a little independent of the copy
+ * panel beside it, so the first screen isn't static while the reader begins
+ * to scroll. `frameRef` measures `.quest-hero-frame`'s own transit (same
+ * `clampProgress` math as `useChapterProgress`); `driftRef` is the wrapper
+ * around the hero `SceneLoop` that receives the resulting `--px-y`. The
+ * wrapper is deliberately 8% larger than its frame (`scale(1.08)` in CSS,
+ * `.quest-hero-frame{overflow:hidden}` clipping the surplus) so the drift has
+ * somewhere to go without ever exposing a gap at the art's edge. */
+function useHeroDrift() {
+  const frameRef = useRef<HTMLDivElement>(null)
+  const driftRef = useRef<HTMLDivElement>(null)
+  const reducedMotion = useReducedMotion()
+  useParallaxFrame(() => {
+    const frame = frameRef.current
+    const drift = driftRef.current
+    if (!frame || !drift) return
+    const rect = frame.getBoundingClientRect()
+    const amplitude = Math.min(56, Math.max(24, rect.height * 0.03))
+    const progress = clampProgress(rect.top, rect.height, window.innerHeight)
+    drift.style.setProperty('--px-y', `${progress * amplitude}px`)
+  }, !reducedMotion)
+  return { frameRef, driftRef }
+}
+
+/** Wave J1 (item 2): `#gates`' two road rails move at different rates from
+ * each other (one lagging, one leading the centred text) so the fork visibly
+ * splits as the reader descends — max ~80px of relative drift across the
+ * chapter (±40px each), well under the "gimmick" ceiling in the brief.
+ * `containerRef` measures the whole `.quest-two-roads` grid's own transit;
+ * the two rail `<img>`s get their `--px-y` written directly, clipped by
+ * `.quest-two-roads__rail{overflow:hidden}` + a static `scale(1.15)` in CSS
+ * (same oversize-and-clip trick as the hero, sized generously since the rail
+ * amplitude is larger). A standalone component (not a hook called inside
+ * `c.forks.map`) so the hook obeys the rules of hooks regardless of fork
+ * order. */
+function GatesRoads({
+  fork,
+  labels,
+  plaques,
+  locale,
+  quip,
+  mark,
+  onMark,
+}: {
+  fork: Fork
+  labels: QuestContent['labels']
+  plaques: [string, string]
+  locale: Locale
+  quip?: string
+  mark?: PathMark
+  onMark: (mark: PathMark) => void
+}) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const leftImgRef = useRef<HTMLImageElement>(null)
+  const rightImgRef = useRef<HTMLImageElement>(null)
+  const reducedMotion = useReducedMotion()
+  useParallaxFrame(() => {
+    const el = containerRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const progress = clampProgress(rect.top, rect.height, window.innerHeight)
+    leftImgRef.current?.style.setProperty('--px-y', `${-40 * progress}px`)
+    rightImgRef.current?.style.setProperty('--px-y', `${40 * progress}px`)
+  }, !reducedMotion)
+  return (
+    <div className="quest-two-roads" ref={containerRef}>
+      <div className="quest-two-roads__rail quest-two-roads__rail--left">
+        <RoadStrip forkId={fork.id} guide={fork.habit.guide} imgRef={leftImgRef} />
+      </div>
+      <div className="quest-two-roads__text">
+        {fork.setup.map((p, i) => <Para key={i} text={p} lead />)}
+        <div className="quest-gate-scene">
+          <GatePlaques locale={locale} plaques={plaques} quip={quip} />
+        </div>
+        <PathFork fork={fork} labels={labels} mark={mark} onMark={onMark} hideRoad />
+      </div>
+      <div className="quest-two-roads__rail quest-two-roads__rail--right">
+        <RoadStrip forkId={fork.id} guide={fork.detour.guide} imgRef={rightImgRef} />
+      </div>
+    </div>
+  )
+}
+
 export function QuestHome({ locale }: Props) {
   const c = quest[locale]
   // Wave F: path choice with memory. `marks` is `{}` before mount, before storage
@@ -33,6 +120,7 @@ export function QuestHome({ locale }: Props) {
   // including always under prefers-reduced-motion, handled inside the hook).
   const { chapterId: quipChapterId, showQuip } = useScrollMood()
   const quipFor = (id: string) => (showQuip && quipChapterId === id ? c.scrollerQuip : undefined)
+  const heroDrift = useHeroDrift()
 
   return (
     <main>
@@ -47,14 +135,16 @@ export function QuestHome({ locale }: Props) {
 
       {/* 0. Hero: the map is the first screen's backdrop, copy sits over it on a scrim (A4). */}
       <Chapter id="hero" tint="hero" bleed>
-        <div className="quest-hero-frame">
-          <SceneLoop
-            id={c.hero.scene}
-            locale={locale}
-            eager
-            className="quest-hero-scene"
-            quip={quipFor('hero')}
-          />
+        <div className="quest-hero-frame" ref={heroDrift.frameRef}>
+          <div className="quest-hero-drift" ref={heroDrift.driftRef}>
+            <SceneLoop
+              id={c.hero.scene}
+              locale={locale}
+              eager
+              className="quest-hero-scene"
+              quip={quipFor('hero')}
+            />
+          </div>
           <div className="quest-hero-copy quest-hero">
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--section-label-size)', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '1rem' }}>
               {c.hero.name} · {c.hero.role}
@@ -106,21 +196,15 @@ export function QuestHome({ locale }: Props) {
         if (fork.id === 'gates') {
           return (
             <Chapter key={fork.id} id={fork.id} tint={FORK_TINT[fork.id]} eyebrow={fork.eyebrow} heading={fork.obstacle} bleed guides>
-              <div className="quest-two-roads">
-                <div className="quest-two-roads__rail quest-two-roads__rail--left">
-                  <RoadStrip forkId={fork.id} guide={fork.habit.guide} />
-                </div>
-                <div className="quest-two-roads__text">
-                  {fork.setup.map((p, i) => <Para key={i} text={p} lead />)}
-                  <div className="quest-gate-scene">
-                    <GatePlaques locale={locale} plaques={c.labels.plaques} quip={quipFor(fork.id)} />
-                  </div>
-                  <PathFork fork={fork} labels={c.labels} mark={marks[fork.id]} onMark={(m) => setMark(fork.id, m)} hideRoad />
-                </div>
-                <div className="quest-two-roads__rail quest-two-roads__rail--right">
-                  <RoadStrip forkId={fork.id} guide={fork.detour.guide} />
-                </div>
-              </div>
+              <GatesRoads
+                fork={fork}
+                labels={c.labels}
+                plaques={c.labels.plaques}
+                locale={locale}
+                quip={quipFor(fork.id)}
+                mark={marks[fork.id]}
+                onMark={(m) => setMark(fork.id, m)}
+              />
               {outcomesAct}
               {outro}
             </Chapter>

@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { useActiveStep } from './use-active-step'
-import { useChapterProgress } from './use-chapter-progress'
+import { lagPan, useChapterProgress } from './use-chapter-progress'
 
 export interface StageStep { key: string; body: ReactNode }
 
@@ -35,14 +35,18 @@ function useReducedMotion(): boolean {
  * before the chapter's content does (see the Wave A/B "world disappears mid-chapter"
  * finding). `useChapterProgress` reads that same box to drive `--pan`, which the
  * scene's CSS turns into `object-position` panning; `prefers-reduced-motion` pins
- * the pan at 0.33 instead of following scroll.
+ * the pan at 0.33 instead of following scroll. Wave J1: raw scroll progress is run
+ * through `lagPan` first — the world's own pan lags the reader at ~0.6 for most of
+ * the chapter (the depth cue: the art moves slower than the text column scrolls
+ * past it), then catches up over the last stretch so the frame is still fully
+ * traversed by the chapter's end.
  */
 export function StickyStage({ media, steps, mirror = false }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   const active = useActiveStep(ref, steps.length)
   const scrollProgress = useChapterProgress(ref)
   const reducedMotion = useReducedMotion()
-  const pan = reducedMotion ? 0.33 : scrollProgress
+  const pan = reducedMotion ? 0.33 : lagPan(scrollProgress)
   return (
     <div className={mirror ? 'quest-stage quest-stage--mirror' : 'quest-stage'} ref={ref} style={{ '--pan': pan } as CSSProperties}>
       <div className="quest-stage__media">{media(active)}</div>

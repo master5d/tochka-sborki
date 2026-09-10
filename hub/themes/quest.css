@@ -81,7 +81,17 @@
    --quest-stage-top the frame/scene height math already reserves for the header,
    so any scroll-to leaves that much clearance instead of tucking content under it. */
 #hero { scroll-margin-top: var(--quest-stage-top); }
-.quest-hero-frame { position: relative; min-height: calc(100vh - var(--quest-stage-top)); display: flex; align-items: stretch; }
+.quest-hero-frame { position: relative; min-height: calc(100vh - var(--quest-stage-top)); display: flex; align-items: stretch; overflow: hidden; }
+/* Wave J1 (item 4): the hero art's own slow vertical drift lives on this
+   wrapper, not on `.quest-hero-scene` itself — the wrapper is scaled 8%
+   larger than the frame it sits in (a no-JS, no-motion-preference baseline;
+   see the override below) so `--px-y`'s translate always has surplus art to
+   reveal instead of exposing a gap at the top/bottom edge; `.quest-hero-frame`
+   above clips the surplus. `useHeroDrift` (quest-home.tsx) writes `--px-y`. */
+.quest-hero-drift { position: absolute; inset: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .quest-hero-drift { transform: translate3d(0, var(--px-y, 0px), 0) scale(1.08); will-change: transform; }
+}
 .quest-hero-frame .quest-scene.quest-hero-scene { position: absolute; top: 0; left: 0; right: 0; height: calc(100vh - var(--quest-stage-top)); aspect-ratio: auto; border: none; border-radius: 0; z-index: 0; }
 .quest-hero-frame .quest-scene.quest-hero-scene img { object-position: 50% 78%; }
 .quest-hero-copy { position: relative; z-index: 2; width: 45%; min-width: 22rem; max-width: 34rem; padding: 3rem 2.5rem; background: var(--quest-tint-hero); display: flex; flex-direction: column; justify-content: center; }
@@ -194,9 +204,19 @@
 .quest-two-roads__text { padding: 1.5rem 1.25rem; }
 @media (min-width: 900px) {
   .quest-two-roads { display: grid; grid-template-columns: minmax(120px, 14vw) minmax(0, 1fr) minmax(120px, 14vw); gap: clamp(1rem, 3vw, 2rem); align-items: start; }
-  .quest-two-roads__rail { position: sticky; top: var(--quest-stage-top); height: calc(100vh - var(--quest-stage-top)); }
+  .quest-two-roads__rail { position: sticky; top: var(--quest-stage-top); height: calc(100vh - var(--quest-stage-top)); overflow: hidden; }
   .quest-two-roads__rail .road-strip-frame { height: 100%; }
   .quest-two-roads__rail .road-strip { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: 50% 50%; }
+  /* Wave J1 (item 2): the two rails move at different rates from each other
+     (one lagging, one leading the centred text) — `GatesRoads` (quest-home.tsx)
+     writes `--px-y` (±40px max, ~80px relative drift at the chapter's end)
+     straight onto each rail's own `<img>`. `scale(1.15)` is the same
+     oversize-and-clip trick as the hero (`.quest-two-roads__rail{overflow:
+     hidden}` above does the clipping), sized generously since this rail's
+     amplitude is the largest of the three new layers. */
+  @media (prefers-reduced-motion: no-preference) {
+    .quest-two-roads__rail .road-strip { transform: translate3d(0, var(--px-y, 0px), 0) scale(1.15); will-change: transform; }
+  }
   .quest-two-roads__text { max-width: 42rem; margin: 0 auto; padding: 6vh 0; }
   /* The habit/detour cards, inside this already-narrow column, stay a single
      stack rather than the usual 2-up grid — there is no room for two columns
@@ -262,6 +282,13 @@
    `prefers-reduced-motion` is a non-issue here — nothing in this band moves. */
 .quest-opener { display: flex; align-items: center; justify-content: center; gap: clamp(1rem, 4vw, 3rem); padding-bottom: clamp(1.5rem, 4vw, 2.5rem); text-align: center; }
 .quest-opener__guide { width: clamp(56px, 8vw, 112px); height: clamp(56px, 8vw, 112px); border-radius: 50%; object-fit: cover; object-position: top; flex-shrink: 0; background: var(--bg-secondary); border: 2px solid var(--border-color); }
+/* Wave J1 (item 3): the two guide medallions drift a small amount toward
+   their own edge (left guide left, right guide right, ≤32px each) as the
+   opener enters and leaves the viewport — `useMedallionDrift` (chapter.tsx)
+   writes `--px-x` straight onto each `<img>`, opposite sign per side. */
+@media (prefers-reduced-motion: no-preference) {
+  .quest-opener__guide { transform: translate3d(var(--px-x, 0px), 0, 0); will-change: transform; }
+}
 .quest-opener__eyebrow { font-family: var(--font-mono); font-size: var(--section-label-size); color: var(--text-accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.75rem; }
 .quest-opener__title { font-family: var(--font-display), system-ui, sans-serif; font-weight: 900; font-size: clamp(2.1rem, 6.5vw, 4.2rem); line-height: 1.02; letter-spacing: -0.03em; color: var(--text-primary); text-wrap: balance; margin: 0; }
 /* Mobile: two medallions + a large centred title no longer fit one screen

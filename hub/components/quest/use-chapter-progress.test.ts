@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { clampProgress, panOffset } from './use-chapter-progress'
+import { clampProgress, lagPan, panOffset } from './use-chapter-progress'
 
 describe('clampProgress', () => {
   it('is 0 before the chapter enters the viewport', () => {
@@ -40,5 +40,30 @@ describe('panOffset', () => {
   it('clamps out-of-range input', () => {
     expect(panOffset(-1)).toBe('0%')
     expect(panOffset(2)).toBe('100%')
+  })
+})
+
+describe('lagPan', () => {
+  it('preserves both endpoints — full frame still traversed start to end', () => {
+    expect(lagPan(0)).toBe(0)
+    expect(lagPan(1)).toBe(1)
+  })
+  it('lags scroll at the target rate for most of the transit', () => {
+    expect(lagPan(0.5)).toBeCloseTo(0.3, 5) // 0.5 * 0.6
+    expect(lagPan(0.85)).toBeCloseTo(0.51, 5) // 0.85 * 0.6, the catch-up threshold
+  })
+  it('is strictly monotonic — never runs the world backwards', () => {
+    const steps = Array.from({ length: 21 }, (_, i) => i / 20)
+    const values = steps.map((p) => lagPan(p))
+    for (let i = 1; i < values.length; i++) expect(values[i]).toBeGreaterThan(values[i - 1])
+  })
+  it('stays within 0…1 for out-of-range input', () => {
+    expect(lagPan(-1)).toBe(0)
+    expect(lagPan(2)).toBe(1)
+  })
+  it('is continuous at the catch-up seam (no visible jump)', () => {
+    const before = lagPan(0.85 - 1e-6)
+    const after = lagPan(0.85 + 1e-6)
+    expect(Math.abs(after - before)).toBeLessThan(1e-4)
   })
 })

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type RefObject } from 'react'
 import type { Guide } from '../../lib/quest/content'
 import { roadStrip, type ForkId } from '../../lib/quest/scenes'
 import { useThemeState } from './use-theme-state'
@@ -7,6 +7,10 @@ import { useThemeState } from './use-theme-state'
 interface Props {
   forkId: ForkId
   guide: Guide
+  /** Wave J1: `#gates`' rail-drift hook writes `--px-y` straight onto this
+   *  `<img>` — passed in only by the two `#gates` rails, undefined everywhere
+   *  else this component is used (the fork cards' inline strips). */
+  imgRef?: RefObject<HTMLImageElement | null>
 }
 
 /**
@@ -17,7 +21,7 @@ interface Props {
  * a `<source media="(prefers-color-scheme: dark)">` gives night for free in the
  * system-theme, no-JS case; once mounted, an explicit theme choice overrides it.
  */
-export function RoadStrip({ forkId, guide }: Props) {
+export function RoadStrip({ forkId, guide, imgRef }: Props) {
   const theme = useThemeState()
   const src = roadStrip(forkId, guide, theme)
   const nightSrc = roadStrip(forkId, guide, 'night')
@@ -34,7 +38,7 @@ export function RoadStrip({ forkId, guide }: Props) {
   return (
     <picture className="road-strip-frame">
       {explicitTheme ? null : <source media="(prefers-color-scheme: dark)" srcSet={nightSrc} />}
-      <img className="road-strip" src={src} width={768} height={1536} alt="" loading="lazy" data-world={theme} />
+      <img ref={imgRef} className="road-strip" src={src} width={768} height={1536} alt="" loading="lazy" data-world={theme} />
     </picture>
   )
 }
