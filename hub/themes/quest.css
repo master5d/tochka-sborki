@@ -160,6 +160,16 @@
    correct still frame instead of a gap. */
 .quest-scene video.quest-scene__video { position: absolute; inset: 0; }
 .quest-stage__media .quest-scene { height: 100%; aspect-ratio: auto; }
+/* Wave G (G4): the About scene sits outside the sticky stage (no sticky text
+   column beside it), so without an override it falls back to the 848/1264
+   default at the FULL content-max width — at ~1100px wide that renders ~1640px
+   tall, a much larger and differently-cropped frame than every other chapter's
+   scene (which fills exactly one viewport height inside .quest-stage__media).
+   Matching that same viewport-height box (same rule shape as the one above)
+   keeps 07-signs consistent with the rest of the page instead of reading as a
+   one-off frame. */
+#about .quest-scene { height: calc(100vh - var(--quest-stage-top)); aspect-ratio: auto; }
+@media (max-width: 900px) { #about .quest-scene { height: 42vh; } }
 .quest-scene__caption { position: absolute; left: 0.75rem; bottom: 0.75rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.04em; color: var(--text-primary); background: rgba(var(--bg-primary-rgb), 0.85); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.3rem 0.55rem; }
 .quest-plaque { position: absolute; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: clamp(8px, 1.9cqw, 17px); letter-spacing: 0.06em; text-transform: lowercase; color: var(--quest-plaque-ink); text-align: center; line-height: 1.05; padding: 0 2%; overflow: visible; }
 
@@ -172,7 +182,17 @@
    its own border-radius and background can't draw a second edge under the strip. */
 .quest-path { display: flex; flex-direction: column; background: var(--quest-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; }
 .quest-path .quest-card { border: none; border-radius: 0; background: transparent; }
+/* Wave G (G2): at its native 768/1536 aspect-ratio, a strip as wide as its card
+   column (~500-700px on a two-up grid) runs 1000-1400px tall — a second
+   full-size illustration, not a "narrow strip", and it pushes the card's own
+   heading/text below the fold (audit finding). Capped to a band above the
+   card at >=900px (same breakpoint the rest of the page uses for stacked ->
+   side-by-side layout); still a portrait crop (object-position anchored to the
+   top of the art, where the guide figures live), just short enough that the
+   card's heading and first lines share the screen with it. Below 900px it
+   already was the short 3:1 band — untouched. */
 .road-strip { display: block; width: 100%; height: auto; aspect-ratio: 768 / 1536; object-fit: cover; object-position: 50% 0%; }
+@media (min-width: 900px) { .road-strip { aspect-ratio: auto; height: clamp(140px, 16vw, 220px); } }
 @media (max-width: 720px) { .road-strip { aspect-ratio: 3 / 1; object-position: 50% 12%; } }
 @media (max-width: 720px) { .quest-cards { grid-template-columns: 1fr; } }
 .quest-chip { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
@@ -183,17 +203,9 @@
 .quest-cta:hover { opacity: 0.9; }
 .quest-cta--ghost { color: var(--text-accent); background: transparent; border: 1px solid var(--text-accent); }
 
-/* Wave F: one line naming what moves in the scene's loop — top-left, the corner
-   OPPOSITE the step caption (.quest-scene__caption, bottom-left), so the two
-   never compete for the same spot. Same token pattern as that caption (already
-   the app's one precedent for text-over-art) rather than a new untested surface.
-   Hidden entirely under reduced motion (scene-loop.tsx), never rendered in that
-   case, so it can't claim motion a still frame doesn't have. */
-.quest-scene__loop-caption { position: absolute; left: 0.75rem; top: 0.75rem; right: 0.75rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.02em; line-height: 1.4; color: var(--text-primary); background: rgba(var(--bg-primary-rgb), 0.85); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.3rem 0.55rem; }
-
 /* Wave F: the Scroller's remark on a fast, sustained scroll. Bottom-right, so it
-   never overlaps the loop caption (top-left) or the step caption (bottom-left,
-   used only inside the sticky stage). Same token pattern as both captions. */
+   never overlaps the step caption (bottom-left, used only inside the sticky
+   stage). Same token pattern as that caption. */
 .quest-scene__quip { position: absolute; right: 0.75rem; bottom: 0.75rem; max-width: 70%; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.02em; line-height: 1.4; color: var(--text-primary); background: rgba(var(--bg-primary-rgb), 0.85); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 0.4rem 0.6rem; }
 @media (prefers-reduced-motion: no-preference) { .quest-scene__quip { transition: opacity 300ms ease; } }
 

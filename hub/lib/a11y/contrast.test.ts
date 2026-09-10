@@ -118,11 +118,13 @@ describe('quest hero panel contrast (no scrim — token vs token)', () => {
   }
 })
 
-// Wave F's two new corner badges (.quest-scene__loop-caption, .quest-scene__quip)
-// paint `--text-primary` on `rgba(var(--bg-primary-rgb), 0.85)` — the SAME token
-// combination the pre-existing .quest-scene__caption already uses, just composited
-// over each chapter's tint (the badge sits on top of the scene art, which sits on
-// the chapter's tint at its edges) rather than tested as an isolated flat colour.
+// Wave F's corner badge (.quest-scene__quip) paints `--text-primary` on
+// `rgba(var(--bg-primary-rgb), 0.85)` — the SAME token combination the
+// pre-existing .quest-scene__caption already uses, just composited over each
+// chapter's tint (the badge sits on top of the scene art, which sits on the
+// chapter's tint at its edges) rather than tested as an isolated flat colour.
+// (Wave F also shipped a sibling `.quest-scene__loop-caption` badge sharing this
+// token combo; Wave G removed that feature — see lib/quest/content.test.ts.)
 function blendOverTint(bgPrimaryRgb: string, alpha: number, tintHex: string): string {
   const [br, bgc, bb] = bgPrimaryRgb.split(',').map((n) => Number(n.trim()))
   const [tr, tg, tb] = hexToRgb(tintHex)
@@ -131,7 +133,7 @@ function blendOverTint(bgPrimaryRgb: string, alpha: number, tintHex: string): st
   return `#${toHex(mix(br, tr))}${toHex(mix(bgc, tg))}${toHex(mix(bb, tb))}`
 }
 
-describe('quest Wave F corner badges (loop caption / quip) stay readable', () => {
+describe('quest Wave F corner badge (quip) stays readable', () => {
   const cases: Array<[string, string, string]> = [
     [':root {', ':root {', 'light fallback'],
     [':root:not([data-theme])', ':root:not([data-theme])', 'system dark'],

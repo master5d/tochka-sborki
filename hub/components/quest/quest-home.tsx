@@ -52,7 +52,6 @@ export function QuestHome({ locale }: Props) {
             locale={locale}
             eager
             className="quest-hero-scene"
-            loopCaption={c.captions[c.hero.scene]}
             quip={quipFor('hero')}
           />
           <div className="quest-hero-copy quest-hero">
@@ -75,7 +74,6 @@ export function QuestHome({ locale }: Props) {
             <SceneLoop
               id={c.intro.scene}
               locale={locale}
-              loopCaption={c.captions[c.intro.scene]}
               quip={quipFor('intro')}
             />
           )}
@@ -98,7 +96,6 @@ export function QuestHome({ locale }: Props) {
                     locale={locale}
                     plaques={c.labels.plaques}
                     caption={active === 1 ? c.labels.habit : active === 2 ? c.labels.detour : undefined}
-                    loopCaption={c.captions[fork.scene]}
                     quip={quipFor(fork.id)}
                   />
                 )
@@ -107,7 +104,6 @@ export function QuestHome({ locale }: Props) {
                     id={fork.scene}
                     locale={locale}
                     caption={active === 1 ? c.labels.habit : active === 2 ? c.labels.detour : undefined}
-                    loopCaption={c.captions[fork.scene]}
                     quip={quipFor(fork.id)}
                   />
                 )
@@ -137,7 +133,6 @@ export function QuestHome({ locale }: Props) {
             <SceneLoop
               id={c.finale.scene}
               locale={locale}
-              loopCaption={c.captions[c.finale.scene]}
               quip={quipFor('finale')}
             />
           )}
@@ -167,7 +162,7 @@ export function QuestHome({ locale }: Props) {
       {/* 6. About × 2 + footer. */}
       <Chapter id="about" tint="about">
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: '2rem' }}>
-          <SceneLoop id={c.about.scene} locale={locale} loopCaption={c.captions[c.about.scene]} quip={quipFor('about')} />
+          <SceneLoop id={c.about.scene} locale={locale} quip={quipFor('about')} />
           <div className="quest-cards">
             <article className="quest-card">
               <h3 style={{ fontFamily: 'var(--font-display), system-ui, sans-serif', fontWeight: 900, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>{c.about.author.heading}</h3>

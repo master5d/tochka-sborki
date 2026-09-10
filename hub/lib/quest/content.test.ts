@@ -1,3 +1,5 @@
+import { readFileSync, readdirSync } from 'node:fs'
+import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { quest, type QuestContent } from './content'
 
@@ -25,6 +27,60 @@ function ctasOf(c: QuestContent) {
     c.about.author.cta,
   ]
 }
+
+/**
+ * G1's hole: the leaked `[loop: …]` stage directions ("sparks rise from the
+ * fire, the phone screen blinks with notifications") lived in a `captions`
+ * data map next to the narrative, so this file's own `strings(c)` walk over
+ * `quest[loc]` DID pass over them — the miss was the regex list, not the
+ * reach. A guard scoped to `quest[loc]` still only ever proves ONE module
+ * (content.ts) clean; a service mark authored straight into a component's
+ * JSX (a road-strip label, a hardcoded plaque string, a new data module this
+ * file never imports) would sail through it exactly the same way. So this
+ * walk is over every non-test `.ts`/`.tsx` file under `lib/quest` and
+ * `components/quest` — the whole surface the page actually renders from,
+ * regardless of which module a string lives in.
+ */
+function questModuleFiles(): string[] {
+  const roots = [join(process.cwd(), 'lib', 'quest'), join(process.cwd(), 'components', 'quest')]
+  const out: string[] = []
+  for (const root of roots) {
+    for (const name of readdirSync(root)) {
+      if (!/\.(ts|tsx)$/.test(name) || name.endsWith('.test.ts') || name.endsWith('.test.tsx')) continue
+      out.push(join(root, name))
+    }
+  }
+  return out
+}
+
+/** Block comments (`/** ... *\/`, JSDoc included) are where the SERVICE list's
+ *  own markdown-bold check (`**`) and the bracket-tag examples in doc comments
+ *  (like the one just above this function, or content.ts's now-removed one)
+ *  would false-positive — they document the shape, they don't render it. Line
+ *  comments are left alone: none in this tree carry these shapes (checked),
+ *  and stripping them risks truncating a `https://` href at its `//`. */
+function stripBlockComments(src: string): string {
+  return src.replace(/\/\*[\s\S]*?\*\//g, '')
+}
+
+describe('quest rendered surface carries no service marks (any module)', () => {
+  const files = questModuleFiles()
+  it('found the quest source files (guard against an empty, always-green walk)', () => {
+    expect(files.length).toBeGreaterThan(10)
+  })
+  for (const file of files) {
+    it(`${file.slice(process.cwd().length + 1)}: no service-mark shape in source`, () => {
+      const text = stripBlockComments(readFileSync(file, 'utf8'))
+      for (const re of SERVICE) expect(text, `service mark ${re} in ${file}`).not.toMatch(re)
+    })
+  }
+  it('the loop-caption feature (G1) stays removed: no prop, class, or content-map remnant', () => {
+    for (const file of files) {
+      const text = readFileSync(file, 'utf8')
+      expect(text, `loopCaption remnant in ${file}`).not.toMatch(/loopCaption|loop-caption/)
+    }
+  })
+})
 
 describe('quest content', () => {
   for (const loc of LOCALES) {

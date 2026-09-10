@@ -22,12 +22,23 @@ interface Props {
 export function Chapter({ id, tint, eyebrow, heading, children, bleed = false }: Props) {
   const capStyle = { maxWidth: 'var(--content-max)', margin: '0 auto', padding: bleed ? '0 2rem' : undefined }
   // A backdrop-style bleed chapter (no eyebrow/heading of its own, e.g. the hero) also
-  // drops the section's vertical padding: the art must start right under the sticky
-  // header, not 5rem of tinted padding below it. Chapters with a heading keep the
-  // vertical rhythm — only their horizontal padding is dropped for the sticky stage.
-  const vPad = bleed && !eyebrow && !heading ? '0' : 'var(--section-gap)'
+  // drops the section's TOP padding: the art must start right under the sticky
+  // header, not 5rem of tinted padding above it. Chapters with a heading keep the
+  // top rhythm — only their horizontal padding is dropped for the sticky stage.
+  const vPadTop = bleed && !eyebrow && !heading ? '0' : 'var(--section-gap)'
+  // Wave G (G3): every bleed chapter's own bottom padding used to be the SAME
+  // flat section-gap slab, rendered in the chapter's tint with nothing in it —
+  // the sticky world has already fully unpinned by the time scroll reaches it
+  // (the stage's own trailing step padding, `.quest-stage__steps`'s 18vh, is
+  // what actually gives the last step room to breathe), so that slab read as
+  // "the art stopped, here's a band of empty tint" right before the next
+  // chapter (sharpest on the finale, whose neighbour — About — isn't itself a
+  // sticky-stage chapter and stacks its OWN top padding on top of it). Dropped
+  // for every bleed chapter, not just the finale, since the cause is the same
+  // shape everywhere it occurs.
+  const vPadBottom = bleed ? '0' : 'var(--section-gap)'
   return (
-    <section id={id} className="hub-section" style={{ background: `var(--quest-tint-${tint})`, padding: `${vPad} ${bleed ? '0' : '2rem'}`, borderTop: '1px solid var(--border-color)' }}>
+    <section id={id} className="hub-section" style={{ background: `var(--quest-tint-${tint})`, padding: `${vPadTop} ${bleed ? '0' : '2rem'} ${vPadBottom}`, borderTop: '1px solid var(--border-color)' }}>
       <div style={bleed ? undefined : { maxWidth: 'var(--content-max)', margin: '0 auto' }}>
         {eyebrow ? (
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--section-label-size)', color: 'var(--text-accent)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '1rem', ...capStyle }}>
