@@ -143,12 +143,13 @@ export function QuestHome({ locale }: Props) {
           )}
           steps={[
             ...c.finale.paragraphs.map((p, i) => ({ key: `finale-${i}`, body: p })),
-            /* Wave F: the reader's assembled route, canon titles + guide names
-               only (lib/quest/route.ts) — rendered ONLY when all three forks are
+            /* Wave F: the reader's assembled route — each fork's own obstacle
+               noun (fork.obstacle, prefix stripped) plus the road taken there
+               (lib/quest/route.ts) — rendered ONLY when all three forks are
                marked; otherwise this step is simply absent and the finale reads
                exactly as it did before Wave F. */
             ...(route
-              ? [{ key: 'finale-route', body: <p className="quest-route">{routeText(route, c.labels)}</p> }]
+              ? [{ key: 'finale-route', body: <p className="quest-route">{routeText(route)}</p> }]
               : []),
             {
               key: 'finale-cta',

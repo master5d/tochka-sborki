@@ -150,23 +150,23 @@ describe('quest Wave F corner badges (loop caption / quip) stay readable', () =>
   }
 })
 
-// Wave F's path-choice control (.quest-path-choice) marks its pressed state with
-// `--text-accent` (underline + colour, never colour alone) — already guarded at
-// 4.5:1 against every tint and --quest-card above; asserted again here under its
-// own name so the guarantee for this NEW surface reads as deliberate, not a side
-// effect of the tint loop.
+// Wave F round 2's path-choice control (.quest-path-choice): the UNPRESSED chip
+// border is --border-color (non-text, not a contrast-ratio surface); the PRESSED
+// state is a solid --text-accent fill with --text-on-accent text — the exact
+// pairing .quest-cta already uses, reused rather than inventing a new one, but
+// asserted here under its own name for this NEW surface rather than relying on
+// quest-cta's (nonexistent) coverage to carry it.
 describe('quest Wave F path-choice pressed state stays readable', () => {
-  const cases: Array<[string, string, string]> = [
-    [':root {', ':root {', 'light fallback'],
-    [':root:not([data-theme])', ':root:not([data-theme])', 'system dark'],
-    ['[data-theme="dark"]', '[data-theme="dark"]', 'explicit dark'],
-    ['[data-theme="light"]', '[data-theme="light"]', 'explicit light'],
+  const cases: Array<[string, string]> = [
+    [':root {', 'light fallback'],
+    [':root:not([data-theme])', 'system dark'],
+    ['[data-theme="dark"]', 'explicit dark'],
+    ['[data-theme="light"]', 'explicit light'],
   ]
-  for (const [questSel, kitSel, name] of cases) {
-    it(`${name}: accent underline/text reads on --quest-card`, () => {
-      const tint = questTokensOf(questSel)
+  for (const [kitSel, name] of cases) {
+    it(`${name}: on-accent text reads on the solid accent fill`, () => {
       const kit = tokensOf(kitSel)
-      expect(contrastRatio(kit['--text-accent'], tint['--quest-card']), `${name} accent on quest-card`).toBeGreaterThanOrEqual(4.5)
+      expect(contrastRatio(kit['--text-on-accent'], kit['--text-accent']), `${name} text-on-accent on text-accent`).toBeGreaterThanOrEqual(4.5)
     })
   }
 })
