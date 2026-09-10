@@ -32,7 +32,7 @@ export function RoadStrip({ forkId, guide }: Props) {
   }, [])
 
   return (
-    <picture>
+    <picture className="road-strip-frame">
       {explicitTheme ? null : <source media="(prefers-color-scheme: dark)" srcSet={nightSrc} />}
       <img className="road-strip" src={src} width={768} height={1536} alt="" loading="lazy" data-world={theme} />
     </picture>

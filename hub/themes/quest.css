@@ -182,18 +182,29 @@
    its own border-radius and background can't draw a second edge under the strip. */
 .quest-path { display: flex; flex-direction: column; background: var(--quest-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; }
 .quest-path .quest-card { border: none; border-radius: 0; background: transparent; }
-/* Wave G (G2): at its native 768/1536 aspect-ratio, a strip as wide as its card
-   column (~500-700px on a two-up grid) runs 1000-1400px tall — a second
-   full-size illustration, not a "narrow strip", and it pushes the card's own
-   heading/text below the fold (audit finding). Capped to a band above the
-   card at >=900px (same breakpoint the rest of the page uses for stacked ->
-   side-by-side layout); still a portrait crop (object-position anchored to the
-   top of the art, where the guide figures live), just short enough that the
-   card's heading and first lines share the screen with it. Below 900px it
-   already was the short 3:1 band — untouched. */
-.road-strip { display: block; width: 100%; height: auto; aspect-ratio: 768 / 1536; object-fit: cover; object-position: 50% 0%; }
-@media (min-width: 900px) { .road-strip { aspect-ratio: auto; height: clamp(140px, 16vw, 220px); } }
-@media (max-width: 720px) { .road-strip { aspect-ratio: 3 / 1; object-position: 50% 12%; } }
+/* Wave H (H1): Wave G's cap (below) over-corrected — it capped the strip to a
+   574×220 landscape letterbox, which on this TALL corridor art (768×1536, road
+   running bottom-to-top, figure+action in the lower two thirds) shows nothing
+   but sky. Fix: at >=900px the strip becomes a VERTICAL band that shares the
+   card's row instead of sitting above it — a column ~28% of the card's width
+   running the card's FULL height. At that column's aspect (narrow and tall),
+   object-fit:cover only trims the LEFT/RIGHT edges of the art to fill the box;
+   the full corridor height (road, figure, horizon) stays in frame, so no
+   object-position tuning is needed there. `min-height` on the row is a floor
+   so a short card can't shrink the column below the 1.5 aspect the smoke
+   assertion checks. Below 900px there's no room for a side-by-side column, so
+   it falls back to a short horizontal band, same as before Wave H — but now
+   anchored low (object-position ~85% down) so that band shows the corridor's
+   lower two thirds (the action) instead of the sky the old top-anchored crop
+   (0%) showed. */
+.road-strip-frame { display: block; }
+.road-strip { display: block; width: 100%; height: auto; aspect-ratio: 3 / 1; object-fit: cover; object-position: 50% 85%; }
+@media (min-width: 900px) {
+  .quest-path { flex-direction: row; align-items: stretch; min-height: 26rem; }
+  .quest-path > .road-strip-frame { flex: 0 0 clamp(180px, 28%, 240px); align-self: stretch; }
+  .quest-path .road-strip { width: 100%; height: 100%; aspect-ratio: auto; object-position: 50% 50%; }
+  .quest-path .quest-card { flex: 1 1 auto; min-width: 0; }
+}
 @media (max-width: 720px) { .quest-cards { grid-template-columns: 1fr; } }
 .quest-chip { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
 .quest-chip img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: top; background: var(--bg-secondary); border: 1px solid var(--border-color); }
