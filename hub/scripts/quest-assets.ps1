@@ -36,7 +36,8 @@
 param(
   [string]$Media = 'C:\telo\Efforts\Ongoing\NAUTILUS\core\desops\taste\_media\world-v3',
   [string]$Loops = 'C:\telo\Efforts\Ongoing\NAUTILUS\.worktrees\world-v3\core\image-pool\worlds\mamaev-quest\loops-v3',
-  [string]$Plates = 'C:\telo\Efforts\Ongoing\NAUTILUS\.worktrees\world-v3\core\desops\taste\_media\world-v3\plates'
+  [string]$Plates = 'C:\telo\Efforts\Ongoing\NAUTILUS\.worktrees\world-v3\core\desops\taste\_media\world-v3\plates',
+  [string]$Outcomes = ''
 )
 $ErrorActionPreference = 'Stop'
 $hub = Split-Path -Parent $PSScriptRoot
@@ -131,6 +132,30 @@ foreach ($id in $splitIds) {
 }
 Copy-Item -Path $manifestSrc -Destination (Join-Path $out 'plates\manifest.json') -Force
 Write-Host "plates: split scenes = $($splitIds -join ', ')"
+
+# 1e. L2/L3 (2026-09-11): outcome illustrations + detour curtains, already web
+#     WebP in NAUTILUS `core/image-pool/worlds/mamaev-quest/outcomes-v3/` (commit
+#     6d333921; the main NAUTILUS tree may sit on another branch — pass -Outcomes
+#     pointing at a checkout/archive of origin/main). Copied as-is (no re-encode),
+#     renamed habit/detour → scroller/builder like the road strips; the generation
+#     manifest stays in NAUTILUS (its prompt marks are not page copy).
+if ($Outcomes) {
+  New-Item -ItemType Directory -Force (Join-Path $out 'outcomes') | Out-Null
+  New-Item -ItemType Directory -Force (Join-Path $out 'detours') | Out-Null
+  $maxStillBytes = 250 * 1024
+  foreach ($fork in $forks) {
+    foreach ($state in $states) {
+      foreach ($genId in $roadGuides.Keys) {
+        $guide = $roadGuides[$genId]
+        Copy-Item (Join-Path $Outcomes "outcome-$fork-$genId-$state.webp") (Join-Path $out "outcomes\$fork-$guide-$state.webp") -Force
+      }
+      Copy-Item (Join-Path $Outcomes "detour-$fork-$state.webp") (Join-Path $out "detours\$fork-$state.webp") -Force
+    }
+  }
+  Get-ChildItem (Join-Path $out 'outcomes'), (Join-Path $out 'detours') -File | Where-Object { $_.Length -gt $maxStillBytes } | ForEach-Object {
+    throw "$($_.Name) is $($_.Length) bytes, over the $maxStillBytes byte ceiling"
+  }
+}
 
 # 2. Retire the Wave A/B horizontal scenes: two asset sets under public/ would
 #    be two sources of truth (spec §6, "решения оператора").

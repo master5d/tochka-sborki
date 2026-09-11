@@ -1,5 +1,41 @@
 import { describe, expect, it } from 'vitest'
-import { clampProgress, lagPan, panOffset } from './use-chapter-progress'
+import { clampProgress, lagPan, panOffset, pinProgress, wipeReveal } from './use-chapter-progress'
+
+describe('pinProgress (how far a sticky child has travelled inside its stage)', () => {
+  it('is 0 at pin start and 1 at pin release', () => {
+    expect(pinProgress(0, 1200)).toBe(0)
+    expect(pinProgress(1200, 1200)).toBe(1)
+    expect(pinProgress(600, 1200)).toBeCloseTo(0.5, 10)
+  })
+  it('clamps outside the pinned span and survives a stage no taller than its child', () => {
+    expect(pinProgress(-40, 1200)).toBe(0)
+    expect(pinProgress(1300, 1200)).toBe(1)
+    expect(pinProgress(10, 0)).toBe(0)
+  })
+})
+
+describe('wipeReveal (L3 curtain between the two roads)', () => {
+  it('is 0 (habit world only) before the window starts', () => {
+    expect(wipeReveal(0)).toBe(0)
+    expect(wipeReveal(0.3, 0.4, 0.7)).toBe(0)
+    expect(wipeReveal(0.4, 0.4, 0.7)).toBe(0)
+  })
+  it('is 1 (detour world fully drawn) from the window end on', () => {
+    expect(wipeReveal(0.7, 0.4, 0.7)).toBe(1)
+    expect(wipeReveal(1)).toBe(1)
+  })
+  it('is linear and monotonic inside the window', () => {
+    expect(wipeReveal(0.55, 0.4, 0.7)).toBeCloseTo(0.5, 10)
+    const xs = [0.4, 0.45, 0.5, 0.6, 0.65, 0.7].map((p) => wipeReveal(p, 0.4, 0.7))
+    for (let i = 1; i < xs.length; i++) expect(xs[i]).toBeGreaterThanOrEqual(xs[i - 1])
+  })
+  it('clamps garbage input and never divides by a zero-width window', () => {
+    expect(wipeReveal(-5)).toBe(0)
+    expect(wipeReveal(5)).toBe(1)
+    expect(wipeReveal(0.5, 0.5, 0.5)).toBe(1)
+    expect(wipeReveal(0.49, 0.5, 0.5)).toBe(0)
+  })
+})
 
 describe('clampProgress', () => {
   it('is 0 before the chapter enters the viewport', () => {

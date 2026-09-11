@@ -21,6 +21,13 @@ for (const [file, needles] of Object.entries(checks)) {
   if (!hasNight) { console.error(`${file}: no night poster reference found (picture/source for system-dark)`); failed++ }
   for (const n of needles) if (!html.includes(n)) { console.error(`${file}: missing "${n}"`); failed++ }
   if (/\[(scene|loop|сцена|петля):/.test(html)) { console.error(`${file}: service mark leaked`); failed++ }
+  // L2/L3: six outcome illustrations and three detour curtains per locale; the
+  // generation manifest's own marks ("Outcome of the …") must never reach the page.
+  const outcomes = new Set(html.match(/\/quest\/outcomes\/(boulder|temple|gates)-(scroller|builder)-day\.webp/g) ?? [])
+  if (outcomes.size !== 6) { console.error(`${file}: ${outcomes.size} outcome illustrations, expected 6`); failed++ }
+  const detours = new Set(html.match(/\/quest\/detours\/(boulder|temple|gates)-day\.webp/g) ?? [])
+  if (detours.size !== 3) { console.error(`${file}: ${detours.size} detour curtains, expected 3`); failed++ }
+  if (/Outcome of the (habit|detour)|Detour world at the|\bthe Builder on top of\b/i.test(html)) { console.error(`${file}: generation mark leaked`); failed++ }
 }
 {
   const ru = readFileSync(join(process.cwd(), 'out/index.html'), 'utf8')

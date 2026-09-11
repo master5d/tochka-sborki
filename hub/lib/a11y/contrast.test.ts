@@ -95,6 +95,20 @@ describe('quest chapter tints', () => {
   }
 })
 
+// L2: the outcomes act is a saturated full-width band per fork (the reference's
+// "Outcomes" strip). The band colours do not change with the theme — one
+// declaration in bare :root — so one assertion per band covers every state.
+describe('quest outcomes bands stay readable', () => {
+  it('band ink reads on every fork band (≥ 4.5, large display title)', () => {
+    const root = questTokensOf(':root {')
+    for (const k of ['fork1', 'fork2', 'fork3']) {
+      const band = root[`--quest-band-${k}`]
+      expect(band, `--quest-band-${k}`).toMatch(/^#[0-9a-f]{6}$/i)
+      expect(contrastRatio(root['--quest-band-ink'], band), `ink on --quest-band-${k}`).toBeGreaterThanOrEqual(4.5)
+    }
+  })
+})
+
 // The hero's copy panel (`.quest-hero-copy`, themes/quest.css) is painted solid from
 // `--quest-tint-hero` — no scrim over the art. This is the same token already covered
 // by the loop above (it's in TINTS), asserted again here under its own name so the

@@ -111,6 +111,25 @@ export function roadStrip(forkId: ForkId, guide: Guide, state: SceneState): stri
   return `/quest/roads/${forkId}-${guide}-${state}.webp`
 }
 
+/**
+ * L2: one tall illustration per road's outcome (640×960, NAUTILUS
+ * `outcomes-v3/outcome-<fork>-<habit|detour>-<state>.webp`), keyed on the site
+ * side by `Outcome.guide` like `roadStrip` — quest-assets.ps1 translates.
+ */
+export const OUTCOME_ART_SIZE = { width: 640, height: 960 } as const
+export function outcomeArt(forkId: ForkId, guide: Guide, state: SceneState): string {
+  return `/quest/outcomes/${forkId}-${guide}-${state}.webp`
+}
+
+/**
+ * L3: the detour's world for the curtain — shot from the fork scene's own camera
+ * and horizon, same 848×1264 frame, so it can be wiped over that scene in place.
+ */
+export const DETOUR_SCENE_SIZE = { width: 848, height: 1264 } as const
+export function detourScene(forkId: ForkId, state: SceneState): string {
+  return `/quest/detours/${forkId}-${state}.webp`
+}
+
 /** Day-state lookup table, mainly for exhaustive tests; components call `roadStrip` directly. */
 export const ROAD_STRIPS: Record<ForkId, Record<Guide, string>> = Object.fromEntries(
   FORK_IDS.map((forkId) => [

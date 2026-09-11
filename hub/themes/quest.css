@@ -17,6 +17,14 @@
   --quest-tint-about: #faefe1;
   --quest-card: #fbf9f4;
   --quest-plaque-ink: #2b1d12;
+  /* L2: the outcomes band — one saturated field per fork (the reference's
+     "Outcomes" strip), the chapter tint's hue at full strength. Same in both
+     themes on purpose: a saturated mid-tone reads on a light and a dark page
+     alike, so there is no second declaration to drift (contrast.test.ts). */
+  --quest-band-fork1: #8a5a00;
+  --quest-band-fork2: #a3401c;
+  --quest-band-fork3: #2f4bbf;
+  --quest-band-ink: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -200,9 +208,42 @@
    `.quest-opener` row (large centred title, a guide medallion each side) —
    reused, not reinvented — with the two stat cards underneath, capped at
    --content-max like every other capped block on the page. */
-.quest-outcomes-act { padding: var(--section-gap) 2rem; }
+/* L2: the band turns saturated (the reference's blue "Outcomes" strip) — one
+   hue per fork, `--quest-band-*` (contrast.test.ts: band ink ≥ 4.5 on each) —
+   and the two stat cards become two tall outcome illustrations, each with its
+   card as a caption underneath (the pair reads as one object: card surface,
+   one radius, no second border). A marked road's outcome wears an ink ring. */
+.quest-outcomes-act { padding: var(--section-gap) 2rem; background: var(--quest-band, transparent); }
+.quest-outcomes-act--boulder { --quest-band: var(--quest-band-fork1); }
+.quest-outcomes-act--temple { --quest-band: var(--quest-band-fork2); }
+.quest-outcomes-act--gates { --quest-band: var(--quest-band-fork3); }
+.quest-outcomes-act .quest-opener__title { color: var(--quest-band-ink); }
+.quest-outcomes-act .quest-opener__guide { border-color: var(--quest-band-ink); }
 .quest-outcomes-act__row { max-width: var(--content-max); margin: 0 auto; padding-bottom: clamp(1.5rem, 4vw, 2.5rem); }
-.quest-outcomes-act .quest-cards { max-width: var(--content-max); margin: 0 auto; }
+.quest-outcomes { max-width: 56rem; margin: 0 auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.25rem, 4vw, 3rem); align-items: start; }
+.quest-outcome { margin: 0; display: flex; flex-direction: column; background: var(--quest-card); border-radius: var(--radius); overflow: hidden; }
+.quest-outcome[data-chosen="true"] { box-shadow: 0 0 0 4px var(--quest-band-ink); }
+.quest-outcome__art { display: block; aspect-ratio: 640 / 960; }
+.quest-outcome__art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.quest-outcome__card { border: none; border-radius: 0; }
+@media (max-width: 720px) {
+  /* Stacked, art edge to edge; the title row and the cards keep their own gutter. */
+  .quest-outcomes-act { padding-inline: 0; }
+  .quest-outcomes-act__row { padding-inline: 1.25rem; }
+  .quest-outcomes { grid-template-columns: 1fr; gap: 1.5rem; }
+  .quest-outcome { border-radius: 0; }
+  .quest-outcome__card { padding-inline: 1.25rem; }
+}
+
+/* L3: the detour curtain (detour-curtain.tsx) — the detour's world over the
+   habit world inside the same scene box, clipped from the left edge by
+   `--wipe-left` (100% = hidden, 0% = fully drawn), so it enters at the right
+   edge and sweeps left. Above the poster and the loop video; the gate plaques
+   and the quip badge stay above it. */
+.quest-curtain { position: absolute; inset: 0; z-index: 1; clip-path: inset(0 0 0 var(--wipe-left, 100%)); }
+.quest-curtain picture { display: block; width: 100%; height: 100%; }
+.quest-plaque { z-index: 2; }
+.quest-scene__quip { z-index: 3; }
 
 /* Wave I: #gates — the two-roads composition. No large sticky scene: the two
    road strips (already Wave D/H art, one per guide) become tall rails pinned

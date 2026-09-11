@@ -5,6 +5,7 @@ import { quest, type Fork, type QuestContent } from '../../lib/quest/content'
 import type { PathMark } from '../../lib/quest/route'
 import { buildRoute, routeText } from '../../lib/quest/route'
 import { Chapter, type Tint } from './chapter'
+import { DetourCurtain } from './detour-curtain'
 import { GatePlaques } from './gate-plaques'
 import { OutcomeReveal } from './outcome-reveal'
 import { clampProgress } from './use-chapter-progress'
@@ -204,7 +205,7 @@ export function QuestHome({ locale }: Props) {
             <Para text={fork.bridge} />
           </div>
         )
-        const outcomesAct = <OutcomeReveal title={fork.outcomesTitle} outcomes={fork.outcomes} labels={c.labels} />
+        const outcomesAct = <OutcomeReveal forkId={fork.id} title={fork.outcomesTitle} outcomes={fork.outcomes} labels={c.labels} chosen={marks[fork.id]} />
 
         if (fork.id === 'gates') {
           return (
@@ -233,7 +234,9 @@ export function QuestHome({ locale }: Props) {
                   id={fork.scene}
                   locale={locale}
                   quip={quipFor(fork.id)}
-                />
+                >
+                  <DetourCurtain forkId={fork.id} />
+                </SceneLoop>
               )}
               steps={[
                 { key: `${fork.id}-setup`, body: fork.setup.map((p, i) => <Para key={i} text={p} lead />) },

@@ -40,6 +40,30 @@ export function lagPan(progress: number, rate = 0.6, catchupAt = 0.85): number {
   return lagEnd + ((p - catchupAt) / remaining) * (1 - lagEnd)
 }
 
+/**
+ * L3: 0…1 through the span a sticky child stays pinned inside its stage —
+ * `offset` is the child's top minus the stage's top (0 at pin start, grows
+ * while pinned), `travel` is stage height minus child height (the offset at
+ * release). Unlike `clampProgress` it ignores the entry/exit screens, so a
+ * window on it always lands while the child is actually on screen and still.
+ */
+export function pinProgress(offset: number, travel: number): number {
+  if (travel <= 0) return 0
+  return Math.min(1, Math.max(0, offset / travel))
+}
+
+/**
+ * L3: how far the detour's world has been drawn over the habit world, 0…1,
+ * from scroll progress. 0 until `start`, 1 from `end` on, linear between — the
+ * curtain (detour-curtain.tsx) turns it into `clip-path: inset(0 0 0 X%)`, so
+ * the new world enters from the right edge and sweeps left.
+ */
+export function wipeReveal(progress: number, start = 0.4, end = 0.7): number {
+  if (progress >= end) return 1
+  if (progress <= start) return 0
+  return (progress - start) / (end - start)
+}
+
 /** Scroll progress of `ref`'s element through the viewport, 0…1. SSR/no-observer default: 0. */
 export function useChapterProgress(ref: RefObject<HTMLElement | null>): number {
   const [progress, setProgress] = useState(0)
