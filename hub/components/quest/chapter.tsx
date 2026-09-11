@@ -83,7 +83,7 @@ export function Chapter({ id, tint, eyebrow, heading, children, bleed = false, g
   // shape everywhere it occurs.
   const vPadBottom = bleed ? '0' : 'var(--section-gap)'
   return (
-    <section id={id} className="hub-section" style={{ background: `var(--quest-tint-${tint})`, padding: `${vPadTop} ${bleed ? '0' : '2rem'} ${vPadBottom}`, borderTop: '1px solid var(--border-color)' }}>
+    <section id={id} className={bleed ? 'hub-section quest-bleed' : 'hub-section'} style={{ background: `var(--quest-tint-${tint})`, padding: `${vPadTop} ${bleed ? '0' : '2rem'} ${vPadBottom}`, borderTop: '1px solid var(--border-color)' }}>
       <div style={bleed ? undefined : { maxWidth: 'var(--content-max)', margin: '0 auto' }}>
         {guides ? (
           <div className="quest-opener" style={capStyle} ref={openerRef}>

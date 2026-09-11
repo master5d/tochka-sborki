@@ -10,6 +10,7 @@ import { OutcomeReveal } from './outcome-reveal'
 import { clampProgress } from './use-chapter-progress'
 import { useParallaxFrame, useReducedMotion } from './use-parallax'
 import { PathFork } from './path-fork'
+import { PinnedBackdrop } from './pinned-backdrop'
 import { RoadStrip } from './road-strip'
 import { SceneLoop } from './scene-loop'
 import { StickyStage } from './sticky-stage'
@@ -144,7 +145,7 @@ export function QuestHome({ locale }: Props) {
     <main>
       <style>{`
         @media (max-width: 720px) {
-          .hub-section { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+          .hub-section:not(.quest-bleed) { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
         }
         @media (max-width: 900px) {
           .quest-hero h1 { font-size: clamp(1.5rem, 6.5vw, 2.6rem) !important; }
@@ -176,21 +177,15 @@ export function QuestHome({ locale }: Props) {
         </div>
       </Chapter>
 
-      {/* 1. Intro: a full-width band of the camp scene (the whole frame, never
-          cropped), then the three paragraphs as a single narrow centred
-          column below it on the plain tint — the page's first breath, not
-          another split screen. */}
+      {/* 1. Intro: the camp scene pinned full-bleed for the whole chapter, the
+          three paragraphs travelling over it on their own tint panels — the
+          world never leaves the screen (Wave L1), and it is still not another
+          split screen. */}
       <Chapter id="intro" tint="intro" eyebrow={c.intro.eyebrow} heading={c.intro.heading} bleed>
-        <div className="quest-band">
-          <SceneLoop
-            id={c.intro.scene}
-            locale={locale}
-            quip={quipFor('intro')}
-          />
-        </div>
-        <div className="quest-narrow-copy">
-          {c.intro.paragraphs.map((p, i) => <Para key={i} text={p} lead />)}
-        </div>
+        <PinnedBackdrop
+          scene={<SceneLoop id={c.intro.scene} locale={locale} quip={quipFor('intro')} />}
+          panels={c.intro.paragraphs.map((p, i) => <Para key={i} text={p} lead />)}
+        />
       </Chapter>
 
       {/* 2–4. Forks: each gets its own composition below the shared chapter

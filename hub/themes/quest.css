@@ -150,7 +150,11 @@
 @media (prefers-reduced-motion: no-preference) { .quest-stage__step { transition: opacity 300ms ease; } }
 @media (max-width: 900px) {
   .quest-stage { grid-template-columns: 1fr; gap: 0; }
-  .quest-stage__media { height: 42vh; z-index: 1; }
+  /* Wave L1: in flow, not sticky. A pinned 42vh image on a single column let the
+     steps scroll UNDER it — the audit caught the first card line sliced at the
+     image's bottom edge (boulder/temple, 390x844). The steps' own text has no
+     opaque surface to ride over the art on, so the image simply leads the column. */
+  .quest-stage__media { position: relative; top: auto; height: 42vh; }
   .quest-stage__steps { padding: 1.5rem 2rem 3rem; gap: 2rem; }
   .quest-stage__step { min-height: 0; padding-block: 2rem; }
 }
@@ -169,16 +173,21 @@
   .quest-stage--mirror .quest-scene__quip { right: auto; left: 0.75rem; }
 }
 
-/* Wave I: #intro's new composition — a full-width band showing the WHOLE scene
-   frame (never cropped: object-fit:contain, letterboxed on the chapter's own
-   tint rather than the art's edges bleeding into a crop), then the chapter's
-   prose as a single narrow centred column below it, on the plain tint. No
-   sticky stage here — this is the page's first breath after the hero, meant
-   to read as a page turning, not another split screen. */
-.quest-band { width: 100%; margin-bottom: var(--section-gap); background: var(--bg-secondary); }
-.quest-band .quest-scene { aspect-ratio: auto; height: clamp(280px, 46vw, 620px); background: var(--quest-tint-intro); }
-.quest-band .quest-scene img, .quest-band .quest-scene video { object-fit: contain; }
-@media (max-width: 900px) { .quest-band .quest-scene { height: clamp(220px, 62vw, 420px); } }
+/* Wave L1: #intro's composition (pinned-backdrop.tsx). The Wave I band scrolled
+   away after one screen and left the chapter's middle as bare tint. Now the
+   scene is sticky full-bleed for the chapter's whole length; the copy column is
+   pulled up over it by exactly the scene's height (negative margin) and its
+   panels travel past on their own opaque tint surface. */
+.quest-backdrop { position: relative; }
+.quest-backdrop__scene { position: sticky; top: var(--quest-stage-top); height: calc(100vh - var(--quest-stage-top)); z-index: 0; }
+.quest-backdrop__scene .quest-scene { height: 100%; aspect-ratio: auto; }
+.quest-backdrop__copy { position: relative; z-index: 1; margin-top: calc(var(--quest-stage-top) - 100vh); padding: 40vh 2rem 45vh; display: flex; flex-direction: column; gap: 55vh; }
+.quest-backdrop__panel { max-width: 32rem; margin-left: auto; margin-right: clamp(0rem, 6vw, 6rem); padding: 1.75rem 2rem; background: var(--quest-tint-intro); border-radius: var(--radius); }
+.quest-backdrop__panel > p { margin-bottom: 0 !important; }
+@media (max-width: 900px) {
+  .quest-backdrop__copy { padding: 55vh 1.25rem 40vh; gap: 60vh; }
+  .quest-backdrop__panel { margin: 0; max-width: none; padding: 1.25rem 1.25rem; }
+}
 
 /* Shared narrow centred column — #intro's prose below its band, #finale's
    opening paragraphs above its title card. Plain tint behind, no card. */
