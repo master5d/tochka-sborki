@@ -41,6 +41,19 @@ export function lagPan(progress: number, rate = 0.6, catchupAt = 0.85): number {
 }
 
 /**
+ * Fix round (audit4 major): `#intro` pins a portrait scene (848×1264) in a
+ * landscape box (1440×848 on desktop) — cover-fit shows ~40% of the art's
+ * height, and a 0→1 pan spent most of the chapter on the sky while the two
+ * characters (source rows ~610–1110) were cropped to a helmet. The pan now
+ * stays inside the characters band (0.76…0.84) and still moves with the
+ * chapter. Temporary: a landscape camp frame would retire it.
+ */
+export function backdropPan(progress: number, from = 0.76, to = 0.84): number {
+  const p = Math.min(1, Math.max(0, progress))
+  return from + (to - from) * p
+}
+
+/**
  * L3: 0…1 through the span a sticky child stays pinned inside its stage —
  * `offset` is the child's top minus the stage's top (0 at pin start, grows
  * while pinned), `travel` is stage height minus child height (the offset at

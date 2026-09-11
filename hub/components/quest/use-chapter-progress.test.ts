@@ -1,5 +1,24 @@
 import { describe, expect, it } from 'vitest'
-import { clampProgress, lagPan, panOffset, pinProgress, wipeReveal } from './use-chapter-progress'
+import { backdropPan, clampProgress, lagPan, panOffset, pinProgress, wipeReveal } from './use-chapter-progress'
+
+describe('backdropPan (intro backdrop: a portrait scene in a landscape box)', () => {
+  it('holds the pan inside the characters band for the whole chapter', () => {
+    for (let p = 0; p <= 1; p += 0.05) {
+      const v = backdropPan(p)
+      expect(v).toBeGreaterThanOrEqual(0.76)
+      expect(v).toBeLessThanOrEqual(0.84)
+    }
+  })
+  it('still moves with the chapter (the world is alive), monotonically', () => {
+    expect(backdropPan(0)).toBeCloseTo(0.76, 5)
+    expect(backdropPan(1)).toBeCloseTo(0.84, 5)
+    expect(backdropPan(0.5)).toBeGreaterThan(backdropPan(0.2))
+  })
+  it('clamps progress outside 0..1', () => {
+    expect(backdropPan(-1)).toBeCloseTo(0.76, 5)
+    expect(backdropPan(2)).toBeCloseTo(0.84, 5)
+  })
+})
 
 describe('pinProgress (how far a sticky child has travelled inside its stage)', () => {
   it('is 0 at pin start and 1 at pin release', () => {

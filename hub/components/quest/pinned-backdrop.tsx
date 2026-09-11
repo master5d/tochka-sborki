@@ -1,6 +1,6 @@
 'use client'
 import { useRef, type CSSProperties, type ReactNode } from 'react'
-import { lagPan, useChapterProgress } from './use-chapter-progress'
+import { backdropPan, useChapterProgress } from './use-chapter-progress'
 import { useReducedMotion } from './use-parallax'
 
 interface Props {
@@ -16,14 +16,14 @@ interface Props {
  * scrolled away). Here the scene is pinned full-bleed for the WHOLE chapter and
  * the paragraphs travel over it, each on its own `--quest-tint-intro` panel (a
  * token surface already asserted readable in contrast.test.ts — text never sits
- * on the art itself). The art pans with the same lagged progress as the sticky
- * stage (`lagPan`), pinned at 0.33 under reduced motion.
+ * on the art itself). The art pans inside the characters band (`backdropPan`,
+ * see why there), held at the band's middle under reduced motion.
  */
 export function PinnedBackdrop({ scene, panels }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   const progress = useChapterProgress(ref)
   const reducedMotion = useReducedMotion()
-  const pan = reducedMotion ? 0.33 : lagPan(progress)
+  const pan = backdropPan(reducedMotion ? 0.5 : progress)
   return (
     <div className="quest-backdrop" ref={ref} style={{ '--pan': pan } as CSSProperties}>
       <div className="quest-backdrop__scene">{scene}</div>

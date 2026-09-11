@@ -38,6 +38,28 @@ async function checkReducedMotion() {
   await page.close()
 }
 
+// Fix round (audit4 blocker): no quest text block may hide its own copy behind an
+// inner scrollbar (the mobile hero hid 3 of 4 paragraphs that way). Any element
+// in <main> that scrolls on its own AND holds prose fails, on both viewports.
+async function checkNoInnerScroll(width, height) {
+  const page = await browser.newPage({ viewport: { width, height } })
+  await page.goto(base + '/', { waitUntil: 'networkidle' })
+  const offenders = await page.evaluate(() =>
+    [...document.querySelectorAll('main *')]
+      .filter((el) => {
+        const oy = getComputedStyle(el).overflowY
+        return (oy === 'auto' || oy === 'scroll') && el.scrollHeight > el.clientHeight + 1 && el.querySelector('p, h1, h2, h3')
+      })
+      .map((el) => `${el.className || el.tagName} (${el.scrollHeight}>${el.clientHeight})`),
+  )
+  const ok = offenders.length === 0
+  console.log(`inner-scroll ${width}x${height}: ${ok ? 'OK' : 'FAIL ' + offenders.join(', ')}`)
+  if (!ok) failed++
+  await page.close()
+}
+
+await checkNoInnerScroll(390, 844)
+await checkNoInnerScroll(1440, 900)
 await checkTheme('dark', '-night')
 await checkTheme('light', '-day')
 await checkReducedMotion()
