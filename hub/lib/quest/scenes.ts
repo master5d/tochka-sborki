@@ -110,25 +110,26 @@ export const ROAD_PAN: Record<'boulder' | 'temple' | 'gates', readonly [number, 
   gates: [0.45, 0.7, 0.6],
 }
 
-/** Wave D: the three forks that split into a habit road and a detour, each a narrow
- * vertical strip of the same world (768×1536, world-v3) continuing that fork's scene. */
+/** Wave D: the three forks that split into a habit road and a detour. */
 export type ForkId = 'boulder' | 'temple' | 'gates'
 export const FORK_IDS: ForkId[] = ['boulder', 'temple', 'gates']
-const ROAD_GUIDES: Guide[] = ['scroller', 'builder']
 
 /**
- * Path of a fork's road strip. `guide` matches `PathBlock.guide` (the habit road's
- * guide is the Scroller, the detour's is the Builder) — same day/night contract as
- * `sceneAssets`, driven by `useThemeState`, not the wall clock.
+ * The camp as a landscape frame (1264×848, NAUTILUS `camp-wide-v3`) for
+ * `#intro`'s pinned backdrop on desktop: cover-fitting the portrait 02-camp into
+ * a landscape box cropped the two characters to a helmet (audit4). Here both
+ * sit whole in x≈120–690 of 1264 and the right third is open land for the
+ * panels. Mobile keeps the portrait scene — its box is portrait too.
  */
-export function roadStrip(forkId: ForkId, guide: Guide, state: SceneState): string {
-  return `/quest/roads/${forkId}-${guide}-${state}.webp`
+export const CAMP_WIDE_SIZE = { width: 1264, height: 848 } as const
+export function campWide(state: SceneState): string {
+  return `/quest/scenes/02-camp-wide-${state}.webp`
 }
 
 /**
  * L2: one tall illustration per road's outcome (640×960, NAUTILUS
  * `outcomes-v3/outcome-<fork>-<habit|detour>-<state>.webp`), keyed on the site
- * side by `Outcome.guide` like `roadStrip` — quest-assets.ps1 translates.
+ * side by `Outcome.guide` (scroller/builder) — quest-assets.ps1 translates.
  */
 export const OUTCOME_ART_SIZE = { width: 640, height: 960 } as const
 export function outcomeArt(forkId: ForkId, guide: Guide, state: SceneState): string {
@@ -144,10 +145,3 @@ export function detourScene(forkId: ForkId, state: SceneState): string {
   return `/quest/detours/${forkId}-${state}.webp`
 }
 
-/** Day-state lookup table, mainly for exhaustive tests; components call `roadStrip` directly. */
-export const ROAD_STRIPS: Record<ForkId, Record<Guide, string>> = Object.fromEntries(
-  FORK_IDS.map((forkId) => [
-    forkId,
-    Object.fromEntries(ROAD_GUIDES.map((guide) => [guide, roadStrip(forkId, guide, 'day')])),
-  ]),
-) as Record<ForkId, Record<Guide, string>>

@@ -39,22 +39,22 @@ describe('panelReveal (Wave M: the curtain follows the detour panel into view)',
   })
 })
 
-describe('backdropPan (intro backdrop: a portrait scene in a landscape box)', () => {
+describe('backdropPan (intro backdrop: the camp pan keeps both characters whole)', () => {
   it('holds the pan inside the characters band for the whole chapter', () => {
     for (let p = 0; p <= 1; p += 0.05) {
       const v = backdropPan(p)
-      expect(v).toBeGreaterThanOrEqual(0.76)
-      expect(v).toBeLessThanOrEqual(0.84)
+      expect(v).toBeGreaterThanOrEqual(0.65)
+      expect(v).toBeLessThanOrEqual(1)
     }
   })
   it('still moves with the chapter (the world is alive), monotonically', () => {
-    expect(backdropPan(0)).toBeCloseTo(0.76, 5)
-    expect(backdropPan(1)).toBeCloseTo(0.84, 5)
+    expect(backdropPan(0)).toBeCloseTo(0.65, 5)
+    expect(backdropPan(1)).toBeCloseTo(1, 5)
     expect(backdropPan(0.5)).toBeGreaterThan(backdropPan(0.2))
   })
   it('clamps progress outside 0..1', () => {
-    expect(backdropPan(-1)).toBeCloseTo(0.76, 5)
-    expect(backdropPan(2)).toBeCloseTo(0.84, 5)
+    expect(backdropPan(-1)).toBeCloseTo(0.65, 5)
+    expect(backdropPan(2)).toBeCloseTo(1, 5)
   })
 })
 

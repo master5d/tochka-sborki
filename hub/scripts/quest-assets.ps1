@@ -6,12 +6,9 @@
 # don't fit the tall frame; Wave E regenerates loops for it). This script no
 # longer touches ffmpeg or the guide cut-outs; guides were a one-time asset.
 #
-# Wave D: three forks each split into a habit road (Scroller) and a detour
-# (Builder) — 12 narrow vertical strips (768x1536, world-v3/roads/) encoded to
-# `public/quest/roads/<fork>-<guide>-<state>.webp`. Source filenames use
-# habit/detour (the generation ids); the site registry (`roadStrip`) keys by
-# `guide` (scroller/builder) instead, matching `PathBlock.guide` — this script
-# is the one place that translates between the two vocabularies.
+# Wave D's 12 road strips were retired in Wave M (each road is now one pinned
+# scene). Generation ids stay habit/detour; the site keys outcome art by
+# `guide` (scroller/builder) — this script is the one place that translates.
 #
 # Wave E: 14 loops (7 scenes × day/night), built and rendered in NAUTILUS
 # `core/image-pool/worlds/mamaev-quest/loops-v3/<id>-<state>/loop.mp4`. This
@@ -37,13 +34,13 @@ param(
   [string]$Media = 'C:\telo\Efforts\Ongoing\NAUTILUS\core\desops\taste\_media\world-v3',
   [string]$Loops = 'C:\telo\Efforts\Ongoing\NAUTILUS\.worktrees\world-v3\core\image-pool\worlds\mamaev-quest\loops-v3',
   [string]$Plates = 'C:\telo\Efforts\Ongoing\NAUTILUS\.worktrees\world-v3\core\desops\taste\_media\world-v3\plates',
-  [string]$Outcomes = ''
+  [string]$Outcomes = '',
+  [string]$CampWide = ''
 )
 $ErrorActionPreference = 'Stop'
 $hub = Split-Path -Parent $PSScriptRoot
 $out = Join-Path $hub 'public\quest'
 New-Item -ItemType Directory -Force (Join-Path $out 'scenes') | Out-Null
-New-Item -ItemType Directory -Force (Join-Path $out 'roads') | Out-Null
 New-Item -ItemType Directory -Force (Join-Path $out 'loops') | Out-Null
 New-Item -ItemType Directory -Force (Join-Path $out 'plates') | Out-Null
 
@@ -65,17 +62,6 @@ Set-Content -Path $pyFile -Value $py -Encoding UTF8
 foreach ($id in $ids) {
   foreach ($state in $states) {
     python $pyFile (Join-Path $Media "$id-$state.png") (Join-Path $out "scenes\$id-$state.webp")
-  }
-}
-
-# 1b. Road strips → WebP q82 (native 768x1536, no resize), roads/<fork>-<guide>-<state>.webp.
-$roadsMedia = Join-Path $Media 'roads'
-foreach ($fork in $forks) {
-  foreach ($genId in $roadGuides.Keys) {
-    $guide = $roadGuides[$genId]
-    foreach ($state in $states) {
-      python $pyFile (Join-Path $roadsMedia "$fork-$genId-$state.png") (Join-Path $out "roads\$fork-$guide-$state.webp")
-    }
   }
 }
 
@@ -137,7 +123,7 @@ Write-Host "plates: split scenes = $($splitIds -join ', ')"
 #     WebP in NAUTILUS `core/image-pool/worlds/mamaev-quest/outcomes-v3/` (commit
 #     6d333921; the main NAUTILUS tree may sit on another branch — pass -Outcomes
 #     pointing at a checkout/archive of origin/main). Copied as-is (no re-encode),
-#     renamed habit/detour → scroller/builder like the road strips; the generation
+#     renamed habit/detour → scroller/builder; the generation
 #     manifest stays in NAUTILUS (its prompt marks are not page copy).
 if ($Outcomes) {
   New-Item -ItemType Directory -Force (Join-Path $out 'outcomes') | Out-Null
@@ -154,6 +140,18 @@ if ($Outcomes) {
   }
   Get-ChildItem (Join-Path $out 'outcomes'), (Join-Path $out 'detours') -File | Where-Object { $_.Length -gt $maxStillBytes } | ForEach-Object {
     throw "$($_.Name) is $($_.Length) bytes, over the $maxStillBytes byte ceiling"
+  }
+}
+
+# 1f. The landscape camp for #intro on desktop (NAUTILUS
+#     `core/image-pool/worlds/mamaev-quest/camp-wide-v3/`, commit 406b9a3f):
+#     already web WebP, copied as-is into scenes/ (pass -CampWide pointing at a
+#     checkout/archive of that folder).
+if ($CampWide) {
+  foreach ($state in $states) {
+    $dst = Join-Path $out "scenes\02-camp-wide-$state.webp"
+    Copy-Item (Join-Path $CampWide "02-camp-wide-$state.webp") $dst -Force
+    if ((Get-Item $dst).Length -gt 250 * 1024) { throw "02-camp-wide-$state.webp is over the 250 KB ceiling" }
   }
 }
 

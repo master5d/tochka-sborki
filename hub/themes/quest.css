@@ -145,6 +145,20 @@
   .quest-backdrop__copy { padding: 55vh 1.25rem 40vh; gap: 60vh; }
   .quest-backdrop__panel { margin: 0; max-width: none; padding: 1.25rem 1.25rem; }
 }
+/* #intro on desktop: the landscape camp (campWide) replaces the portrait
+   scene's art under the pin; the scene element stays on top, transparent, for
+   its quip. The panels narrow to keep clear of the characters (left ~55% of
+   the art at every desktop width; object-position holds them in frame when a
+   narrow desktop crops the sides). */
+.quest-backdrop__wide { display: none; }
+@media (min-width: 901px) {
+  .quest-backdrop--wide .quest-backdrop__wide { display: block; position: absolute; inset: 0; z-index: 0; overflow: hidden; background: var(--bg-secondary); }
+  .quest-backdrop--wide .quest-backdrop__wide picture { display: block; width: 100%; height: 100%; }
+  .quest-backdrop--wide .quest-backdrop__wide img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 35% calc(var(--pan, 0.8) * 100%); }
+  .quest-backdrop--wide .quest-backdrop__scene > .quest-scene { position: absolute; inset: 0; z-index: 1; background: none; }
+  .quest-backdrop--wide .quest-backdrop__scene > .quest-scene > :not(.quest-scene__quip) { display: none; }
+  .quest-backdrop--wide .quest-backdrop__panel { max-width: min(32rem, 34vw); }
+}
 
 /* Wave M: a fork's road scene (road-scene.tsx) — the intro's pinned backdrop,
    held for the whole road: three panels (setup on the chapter tint, then the

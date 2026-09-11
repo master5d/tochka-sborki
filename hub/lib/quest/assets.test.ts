@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { FORK_IDS, GUIDE_ASSETS, SCENE_IDS, detourScene, outcomeArt, roadStrip, sceneAssets } from './scenes'
+import { FORK_IDS, GUIDE_ASSETS, SCENE_IDS, campWide, detourScene, outcomeArt, sceneAssets } from './scenes'
 
 const PUBLIC = join(process.cwd(), 'public')
 const KB = 1024
@@ -47,14 +47,13 @@ describe('quest assets', () => {
   it('both guide cut-outs exist and are ≤ 200 KB', () => {
     for (const p of Object.values(GUIDE_ASSETS)) expect(sizeOf(p)).toBeLessThanOrEqual(200 * KB)
   })
-  it('wave D: every fork has twelve road strips (3 forks × 2 guides × 2 states), each ≤ 300 KB', () => {
-    for (const forkId of FORK_IDS) {
-      for (const guide of ['scroller', 'builder'] as const) {
-        for (const state of ['day', 'night'] as const) {
-          expect(sizeOf(roadStrip(forkId, guide, state)), `${forkId} ${guide} ${state}`).toBeLessThanOrEqual(300 * KB)
-        }
-      }
+  it('the landscape camp for #intro exists in both states, each ≤ 250 KB', () => {
+    for (const state of ['day', 'night'] as const) {
+      expect(sizeOf(campWide(state)), `camp-wide ${state}`).toBeLessThanOrEqual(250 * KB)
     }
+  })
+  it('Wave M retired the road strips: no roads/ folder ships', () => {
+    expect(existsSync(join(PUBLIC, 'quest', 'roads'))).toBe(false)
   })
   it('L2: six outcome illustrations (3 forks × 2 guides) in both states, each ≤ 250 KB', () => {
     for (const forkId of FORK_IDS) {

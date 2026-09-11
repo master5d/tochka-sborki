@@ -16,7 +16,7 @@ interface Props {
 }
 
 /**
- * L2/L3: the day/night `<picture>` contract of SceneLoop and RoadStrip, for a
+ * L2/L3: the day/night `<picture>` contract of SceneLoop, for a
  * plain still — a `<source media="(prefers-color-scheme: dark)">` gives night
  * for free in the system-theme, no-JS case; once mounted, an explicit theme
  * choice drops that source (a matching media query would otherwise beat the

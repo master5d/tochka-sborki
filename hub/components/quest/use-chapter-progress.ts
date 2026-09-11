@@ -41,14 +41,15 @@ export function lagPan(progress: number, rate = 0.6, catchupAt = 0.85): number {
 }
 
 /**
- * Fix round (audit4 major): `#intro` pins a portrait scene (848×1264) in a
- * landscape box (1440×848 on desktop) — cover-fit shows ~40% of the art's
- * height, and a 0→1 pan spent most of the chapter on the sky while the two
- * characters (source rows ~610–1110) were cropped to a helmet. The pan now
- * stays inside the characters band (0.76…0.84) and still moves with the
- * chapter. Temporary: a landscape camp frame would retire it.
+ * `#intro`'s pan through its pinned camp. On desktop the landscape frame
+ * (`campWide`, 1264×848) is cover-fit, so only a thin vertical margin is
+ * cropped (~13% of its height at 1440×848, ~26% at 1920×1000); 0.65→1 keeps
+ * both characters (rows ~0.46–0.9 of the art) whole at every width while the
+ * world still drifts with the chapter. The same range holds for the portrait
+ * scene in a portrait tablet box; a phone's box crops only the sides, so the
+ * pan is moot there. (Retires audit4's temporary 0.76–0.84 band.)
  */
-export function backdropPan(progress: number, from = 0.76, to = 0.84): number {
+export function backdropPan(progress: number, from = 0.65, to = 1): number {
   const p = Math.min(1, Math.max(0, progress))
   return from + (to - from) * p
 }

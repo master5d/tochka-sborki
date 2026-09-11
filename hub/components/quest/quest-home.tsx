@@ -9,6 +9,8 @@ import { useParallaxFrame, useReducedMotion } from './use-parallax'
 import { PinnedBackdrop } from './pinned-backdrop'
 import { RoadScene } from './road-scene'
 import { SceneLoop } from './scene-loop'
+import { ThemedPicture } from './themed-picture'
+import { CAMP_WIDE_SIZE, SCENES, campWide } from '../../lib/quest/scenes'
 import { usePathChoice } from './use-path-choice'
 import { useScrollMood } from './use-scroll-mood'
 
@@ -119,6 +121,7 @@ export function QuestHome({ locale }: Props) {
       <Chapter id="intro" tint="intro" eyebrow={c.intro.eyebrow} heading={c.intro.heading} bleed>
         <PinnedBackdrop
           scene={<SceneLoop id={c.intro.scene} locale={locale} quip={quipFor('intro')} />}
+          wide={<ThemedPicture day={campWide('day')} night={campWide('night')} width={CAMP_WIDE_SIZE.width} height={CAMP_WIDE_SIZE.height} alt={SCENES[c.intro.scene].alt[locale]} />}
           panels={c.intro.paragraphs.map((p, i) => <Para key={i} text={p} lead />)}
         />
       </Chapter>
