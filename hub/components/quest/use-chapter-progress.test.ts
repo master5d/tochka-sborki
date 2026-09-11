@@ -1,5 +1,43 @@
 import { describe, expect, it } from 'vitest'
-import { backdropPan, clampProgress, lagPan, panOffset, pinProgress, wipeReveal } from './use-chapter-progress'
+import { backdropPan, clampProgress, keyframePan, lagPan, panOffset, panelReveal, pinProgress, wipeReveal } from './use-chapter-progress'
+
+describe('keyframePan (Wave M: a road scene looks at each panel\'s subject in turn)', () => {
+  const stops = [0.1, 0.85, 0.3] as const
+  it('hits every stop exactly at its evenly spaced progress', () => {
+    expect(keyframePan(0, stops)).toBeCloseTo(0.1, 10)
+    expect(keyframePan(0.5, stops)).toBeCloseTo(0.85, 10)
+    expect(keyframePan(1, stops)).toBeCloseTo(0.3, 10)
+  })
+  it('interpolates linearly between neighbouring stops (and may turn back)', () => {
+    expect(keyframePan(0.25, stops)).toBeCloseTo(0.475, 10)
+    expect(keyframePan(0.75, stops)).toBeCloseTo(0.575, 10)
+  })
+  it('clamps progress and survives degenerate stop lists', () => {
+    expect(keyframePan(-1, stops)).toBeCloseTo(0.1, 10)
+    expect(keyframePan(2, stops)).toBeCloseTo(0.3, 10)
+    expect(keyframePan(0.4, [0.6])).toBe(0.6)
+    expect(keyframePan(0.4, [])).toBe(0.5)
+  })
+})
+
+describe('panelReveal (Wave M: the curtain follows the detour panel into view)', () => {
+  it('is 0 while the detour panel is still low in the viewport', () => {
+    expect(panelReveal(1200, 900)).toBe(0)
+    expect(panelReveal(0.9 * 900, 900)).toBe(0)
+  })
+  it('is 1 once the panel has climbed to the end line, and stays there', () => {
+    expect(panelReveal(0.35 * 900, 900)).toBe(1)
+    expect(panelReveal(-2000, 900)).toBe(1)
+  })
+  it('is monotonic as the panel rises', () => {
+    const xs = [900, 800, 700, 600, 500, 400, 300].map((t) => panelReveal(t, 900))
+    for (let i = 1; i < xs.length; i++) expect(xs[i]).toBeGreaterThanOrEqual(xs[i - 1])
+    expect(panelReveal(0.625 * 900, 900)).toBeCloseTo(0.5, 10)
+  })
+  it('returns 0 for a zero viewport', () => {
+    expect(panelReveal(100, 0)).toBe(0)
+  })
+})
 
 describe('backdropPan (intro backdrop: a portrait scene in a landscape box)', () => {
   it('holds the pan inside the characters band for the whole chapter', () => {

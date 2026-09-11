@@ -96,6 +96,20 @@ export const GATE_PLAQUES: [PlaqueBox, PlaqueBox] = [
   { left: 57, top: 44.7, width: 13.5, height: 1.8 },
 ]
 
+/**
+ * Wave M: where each fork's pinned road scene looks while each of its three
+ * panels (setup, habit road, detour) is read — object-position fractions of the
+ * 848×1264 art, read off the art's bands (keyframePan interpolates). boulder:
+ * the Scroller on top of the rock → the Builder under it → the Builder climbing
+ * the detour's steps. temple: the Builder's face in both worlds. gates: the
+ * lettered plaques stay in frame throughout (scenes.test.ts asserts it).
+ */
+export const ROAD_PAN: Record<'boulder' | 'temple' | 'gates', readonly [number, number, number]> = {
+  boulder: [0.1, 0.85, 0.3],
+  temple: [0.35, 0.6, 0.55],
+  gates: [0.45, 0.7, 0.6],
+}
+
 /** Wave D: the three forks that split into a habit road and a detour, each a narrow
  * vertical strip of the same world (768×1536, world-v3) continuing that fork's scene. */
 export type ForkId = 'boulder' | 'temple' | 'gates'

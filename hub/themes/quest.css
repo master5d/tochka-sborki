@@ -24,6 +24,7 @@
   --quest-band-fork1: #8a5a00;
   --quest-band-fork2: #a3401c;
   --quest-band-fork3: #2f4bbf;
+  --quest-band-about: #1d6a5a;
   --quest-band-ink: #ffffff;
 }
 
@@ -129,50 +130,6 @@
   .quest-hero-copy { width: 100%; min-width: 0; max-width: none; padding: 1.75rem 1.25rem; justify-content: flex-start; }
 }
 
-/* Sticky stage layout. Chapters that host it are rendered `bleed` (A1): the
-   band drops its own horizontal padding so this grid runs to the viewport
-   edge on wide screens — the media column starts flush left, the text
-   column caps its own line length locally (Para maxWidth etc.), plus a
-   little breathing room on the right so cards never touch the edge. */
-.quest-stage { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
-.quest-stage__media { position: sticky; top: var(--quest-stage-top); height: calc(100vh - var(--quest-stage-top)); display: flex; align-items: center; }
-.quest-stage__media > * { width: 100%; height: 100%; }
-.quest-stage__steps { display: flex; flex-direction: column; gap: clamp(2rem, 8vh, 5rem); padding: 12vh 2rem 18vh 0; }
-/* A3: a one-sentence step no longer forces a 28vh cell (the finale's void).
-   Height now follows content; the inter-step `gap` above already does the
-   heavy lifting for use-active-step's IntersectionObserver (threshold list +
-   -15% root margin, unchanged) — padding-block only adds a little breathing
-   room around each step's own text so it doesn't settle flush against gap. */
-.quest-stage__step { min-height: 0; padding-block: 4vh; display: flex; align-items: center; }
-.quest-stage__steps .quest-cards { grid-template-columns: 1fr; }
-.quest-stage__step[data-active="false"] { opacity: 0.8; } /* 0.8, not lower: primary text must stay ≥ 4.5:1 on light tints */
-.quest-stage__step[data-active="true"] { opacity: 1; }
-@media (prefers-reduced-motion: no-preference) { .quest-stage__step { transition: opacity 300ms ease; } }
-@media (max-width: 900px) {
-  .quest-stage { grid-template-columns: 1fr; gap: 0; }
-  /* Wave L1: in flow, not sticky. A pinned 42vh image on a single column let the
-     steps scroll UNDER it — the audit caught the first card line sliced at the
-     image's bottom edge (boulder/temple, 390x844). The steps' own text has no
-     opaque surface to ride over the art on, so the image simply leads the column. */
-  .quest-stage__media { position: relative; top: auto; height: 42vh; }
-  .quest-stage__steps { padding: 1.5rem 2rem 3rem; gap: 2rem; }
-  .quest-stage__step { min-height: 0; padding-block: 2rem; }
-}
-
-/* Wave I: #temple mirrors #boulder's device — sticky world on the RIGHT, steps
-   on the LEFT. A REAL mirror, not a hack: the media/steps swap grid position
-   (`order`, DOM stays the same so mobile collapse below needs no extra rule),
-   the steps' own padding reverses (breathing room moves to the side touching
-   the media), and the scene's own corner badge (quip) flips to the opposite
-   corner so it still reads as "the corner farthest from the steps". Scoped to
-   ≥900px only — below that the stage is already a single column in DOM
-   (reading) order and mirroring a stack means nothing. */
-@media (min-width: 900px) {
-  .quest-stage--mirror .quest-stage__media { order: 2; }
-  .quest-stage--mirror .quest-stage__steps { order: 1; padding: 12vh 0 18vh 2rem; }
-  .quest-stage--mirror .quest-scene__quip { right: auto; left: 0.75rem; }
-}
-
 /* Wave L1: #intro's composition (pinned-backdrop.tsx). The Wave I band scrolled
    away after one screen and left the chapter's middle as bare tint. Now the
    scene is sticky full-bleed for the chapter's whole length; the copy column is
@@ -182,11 +139,37 @@
 .quest-backdrop__scene { position: sticky; top: var(--quest-stage-top); height: calc(100vh - var(--quest-stage-top)); z-index: 0; }
 .quest-backdrop__scene .quest-scene { height: 100%; aspect-ratio: auto; }
 .quest-backdrop__copy { position: relative; z-index: 1; margin-top: calc(var(--quest-stage-top) - 100vh); padding: 40vh 2rem 45vh; display: flex; flex-direction: column; gap: 55vh; }
-.quest-backdrop__panel { max-width: 32rem; margin-left: auto; margin-right: clamp(0rem, 6vw, 6rem); padding: 1.75rem 2rem; background: var(--quest-tint-intro); border-radius: var(--radius); }
+.quest-backdrop__panel { max-width: 32rem; margin-left: auto; margin-right: clamp(0rem, 6vw, 6rem); padding: 1.75rem 2rem; background: var(--panel-bg, var(--quest-tint-intro)); border-radius: var(--radius); }
 .quest-backdrop__panel > p { margin-bottom: 0 !important; }
 @media (max-width: 900px) {
   .quest-backdrop__copy { padding: 55vh 1.25rem 40vh; gap: 60vh; }
   .quest-backdrop__panel { margin: 0; max-width: none; padding: 1.25rem 1.25rem; }
+}
+
+/* Wave M: a fork's road scene (road-scene.tsx) — the intro's pinned backdrop,
+   held for the whole road: three panels (setup on the chapter tint, then the
+   habit road and the detour as cards) travel 4–5 screens over one pinned
+   full-bleed world. `.quest-cover` lays the 848×1264 art out as a TRUE cover
+   box (container query units: the scene keeps its own aspect and is at least
+   as wide and as tall as the frame), so everything positioned in % of the
+   scene — the gate plaques, the curtain — stays glued to the art; `--pan`
+   (road-scene.tsx) slides it vertically between ROAD_PAN's stops. */
+.quest-cover { position: absolute; inset: 0; overflow: hidden; container-type: size; }
+.quest-backdrop__scene .quest-cover > .quest-scene { position: absolute; left: 50%; width: max(100cqw, calc(100cqh * 848 / 1264)); height: auto; aspect-ratio: 848 / 1264; top: calc((100cqh - max(100cqh, calc(100cqw * 1264 / 848))) * var(--pan, 0.5)); transform: translateX(-50%); }
+.quest-backdrop--road .quest-backdrop__copy { padding: 50vh 2rem 65vh; gap: 95vh; }
+.quest-backdrop--road .quest-backdrop__panel { max-width: 34rem; }
+.quest-backdrop--road[data-fork="boulder"] { --panel-bg: var(--quest-tint-fork1); }
+.quest-backdrop--road[data-fork="temple"] { --panel-bg: var(--quest-tint-fork2); }
+.quest-backdrop--road[data-fork="gates"] { --panel-bg: var(--quest-tint-fork3); }
+.quest-backdrop--mirror .quest-backdrop__panel { margin-left: clamp(0rem, 6vw, 6rem); margin-right: auto; }
+/* The two road cards are their own surface (.quest-card) — no second panel under them. */
+.quest-backdrop__panel--card { padding: 0; background: none; }
+/* The Scroller's remark sits on the frame's corner away from the panels. */
+.quest-backdrop--road .quest-backdrop__scene > .quest-scene__quip { left: 0.75rem; right: auto; }
+.quest-backdrop--mirror .quest-backdrop__scene > .quest-scene__quip { left: auto; right: 0.75rem; }
+@media (max-width: 900px) {
+  .quest-backdrop--road .quest-backdrop__copy { padding: 60vh 1.25rem 50vh; gap: 75vh; }
+  .quest-backdrop--mirror .quest-backdrop__panel { margin: 0; }
 }
 
 /* Shared narrow centred column — #intro's prose below its band, #finale's
@@ -236,48 +219,6 @@
 .quest-curtain picture { display: block; width: 100%; height: 100%; }
 .quest-plaque { z-index: 2; }
 .quest-scene__quip { z-index: 3; }
-
-/* Wave I: #gates — the two-roads composition. No large sticky scene: the two
-   road strips (already Wave D/H art, one per guide) become tall rails pinned
-   at the LEFT and RIGHT edges of the viewport for the chapter's length — same
-   sticky mechanic as `.quest-stage__media`, just two of them bracketing a
-   narrow centred text column instead of one beside a wide one. Below 900px
-   there is no room for edges, so the grid collapses to a single column in
-   DOM (reading) order: the habit rail, then the text, then the detour rail. */
-.quest-two-roads__rail .road-strip-frame { display: block; }
-.quest-two-roads__text { padding: 1.5rem 1.25rem; }
-@media (min-width: 900px) {
-  .quest-two-roads { display: grid; grid-template-columns: minmax(120px, 14vw) minmax(0, 1fr) minmax(120px, 14vw); gap: clamp(1rem, 3vw, 2rem); align-items: start; }
-  .quest-two-roads__rail { position: sticky; top: var(--quest-stage-top); height: calc(100vh - var(--quest-stage-top)); overflow: hidden; }
-  .quest-two-roads__rail .road-strip-frame { height: 100%; }
-  .quest-two-roads__rail .road-strip { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: 50% 50%; }
-  /* Wave J1 (item 2): the two rails move at different rates from each other
-     (one lagging, one leading the centred text) — `GatesRoads` (quest-home.tsx)
-     writes `--px-y` (±40px max, ~80px relative drift at the chapter's end)
-     straight onto each rail's own `<img>`. `scale(1.15)` is the same
-     oversize-and-clip trick as the hero (`.quest-two-roads__rail{overflow:
-     hidden}` above does the clipping), sized generously since this rail's
-     amplitude is the largest of the three new layers. */
-  @media (prefers-reduced-motion: no-preference) {
-    .quest-two-roads__rail .road-strip { transform: translate3d(0, var(--px-y, 0px), 0) scale(1.15); will-change: transform; }
-  }
-  .quest-two-roads__text { max-width: 42rem; margin: 0 auto; padding: 6vh 0; }
-  /* The habit/detour cards, inside this already-narrow column, stay a single
-     stack rather than the usual 2-up grid — there is no room for two columns
-     between two sticky rails, and the rails already carry the road art the
-     cards would otherwise repeat. */
-  .quest-two-roads__text .quest-cards { grid-template-columns: 1fr; }
-}
-/* The chapter's own gate-plaques art, kept but shrunk to a plain inline panel
-   (not sticky, not large) — its native 848×1264 aspect matches `.quest-scene`'s
-   default cover box exactly, so nothing crops and the plaques stay in place. */
-.quest-gate-scene { max-width: 18rem; margin: 0 auto 1.5rem; }
-/* Fix round (audit4 minor): below 900px the rails are gone and this panel was
-   the page's only image left with side gutters (52px each at 390) — it now runs
-   edge to edge like every other mobile image, cancelling the column's padding. */
-@media (max-width: 900px) {
-  .quest-gate-scene { max-width: none; margin-inline: -1.25rem; }
-}
 
 /* Wave I: #finale — a closing title card mirroring the hero's own pattern
    (A4): the scene full-bleed behind, the closing line + CTA on their OWN
@@ -329,7 +270,6 @@
 .quest-scene__plate--sky { z-index: 1; }
 .quest-scene__plate--land { z-index: 0; }
 .quest-scene__plate--land img { transform-origin: top; transform: translate3d(0, var(--px-land, 0px), 0) scale(1, var(--scale-land, 1)); will-change: transform; } /* --scale-land ramps 1 -> LAND_SCALE_Y with progress (scene-plates.tsx); defaults to 1 (identity) so no-JS/reduced-motion reproduce the original still exactly. transform-origin:top keeps the top edge's own displacement purely translate-driven — the scale's surplus grows only downward, where it's needed (land only ever drifts up) */
-.quest-stage__media .quest-scene { height: 100%; aspect-ratio: auto; }
 /* Wave G (G4): the About scene sits outside the sticky stage (no sticky text
    column beside it), so without an override it falls back to the 848/1264
    default at the FULL content-max width — at ~1100px wide that renders ~1640px
@@ -343,6 +283,18 @@
    already goes 2-up at ≥720px and stacks below it — unchanged). */
 #about .quest-scene { height: auto; aspect-ratio: 848 / 1264; max-width: 22rem; margin: 0 auto; }
 @media (max-width: 900px) { #about .quest-scene { max-width: 16rem; } }
+/* Wave M: #about is a saturated band (the reference's "About…" strip,
+   `--quest-band-about`, band ink asserted in contrast.test.ts) — the signs
+   scene and the two cards in one dense row, the footer in band ink below. */
+.quest-about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+#about .quest-about__art .quest-scene { max-width: none; margin: 0; border-radius: var(--radius); }
+.quest-about__cards { display: flex; flex-direction: column; gap: 1.25rem; }
+.quest-about__footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--quest-band-ink); font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.04em; color: var(--quest-band-ink); }
+@media (max-width: 900px) { .quest-about { grid-template-columns: 1fr; } }
+@media (max-width: 720px) {
+  .quest-about__art { margin-inline: -1.25rem; }
+  #about .quest-about__art .quest-scene { border-radius: 0; }
+}
 .quest-plaque { position: absolute; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: clamp(8px, 1.9cqw, 17px); letter-spacing: 0.06em; text-transform: lowercase; color: var(--quest-plaque-ink); text-align: center; line-height: 1.05; padding: 0 2%; overflow: visible; }
 
 /* Wave H (H2): the fork opener — a chapter change as an event, not a small
@@ -382,48 +334,6 @@
 
 /* Cards. */
 .quest-card { background: var(--quest-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem; }
-/* `align-items: start` (not the grid default `stretch`): a shorter card must
-   end where ITS OWN content ends, not get stretched to match a taller sibling
-   in the same row — a stretched-but-empty card reads as a mistake, not a
-   deliberate frame. `.quest-path`'s own `min-height` + internal `stretch`
-   (below) still make the road strip fill THAT card's own height, unaffected
-   by this — the corridor stays legible, it just isn't inflated by a neighbour. */
-.quest-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; align-items: start; }
-
-/* Wave D: fork road strips continue their path card — one object, no seam. The
-   border/radius/surface move to the group; the nested `.quest-card` goes flat so
-   its own border-radius and background can't draw a second edge under the strip. */
-.quest-path { display: flex; flex-direction: column; background: var(--quest-card); border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; }
-.quest-path .quest-card { border: none; border-radius: 0; background: transparent; }
-/* Wave H (H1): Wave G's cap (below) over-corrected — it capped the strip to a
-   574×220 landscape letterbox, which on this TALL corridor art (768×1536, road
-   running bottom-to-top, figure+action in the lower two thirds) shows nothing
-   but sky. Fix: at >=900px the strip becomes a VERTICAL band that shares the
-   card's row instead of sitting above it — a column ~28% of the card's width
-   running the card's FULL height. At that column's aspect (narrow and tall),
-   object-fit:cover only trims the LEFT/RIGHT edges of the art to fill the box;
-   the full corridor height (road, figure, horizon) stays in frame, so no
-   object-position tuning is needed there. `min-height` on the row is a floor
-   so a short card can't shrink the column below the 1.5 aspect the smoke
-   assertion checks. Below 900px there's no room for a side-by-side column, so
-   it falls back to a short horizontal band, same as before Wave H — but now
-   anchored low (object-position ~85% down) so that band shows the corridor's
-   lower two thirds (the action) instead of the sky the old top-anchored crop
-   (0%) showed. */
-.road-strip-frame { display: block; }
-.road-strip { display: block; width: 100%; height: auto; aspect-ratio: 3 / 1; object-fit: cover; object-position: 50% 85%; }
-@media (min-width: 900px) {
-  .quest-path { flex-direction: row; align-items: stretch; min-height: 26rem; }
-  .quest-path > .road-strip-frame { flex: 0 0 clamp(180px, 28%, 240px); align-self: stretch; }
-  .quest-path .road-strip { width: 100%; height: 100%; aspect-ratio: auto; object-position: 50% 50%; }
-  .quest-path .quest-card { flex: 1 1 auto; min-width: 0; }
-  /* Wave I round 2: `#gates` (hideRoad) has no strip to give a floor to — the
-     26rem min-height above exists ONLY to keep that strip's corridor legible,
-     so a road-less card must not inherit it (it would just be dead space
-     under the last line). Back to a plain column, sized to its own content. */
-  .quest-path--no-road { flex-direction: column; min-height: 0; }
-}
-@media (max-width: 720px) { .quest-cards { grid-template-columns: 1fr; } }
 .quest-chip { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
 .quest-chip img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: top; background: var(--bg-secondary); border: 1px solid var(--border-color); }
 .quest-number { font-family: var(--font-display), system-ui, sans-serif; font-weight: 900; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 0.95; letter-spacing: -0.03em; color: var(--text-primary); font-variant-numeric: tabular-nums; }

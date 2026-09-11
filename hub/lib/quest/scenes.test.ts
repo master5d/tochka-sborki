@@ -1,5 +1,28 @@
 import { describe, expect, it } from 'vitest'
-import { DETOUR_SCENE_SIZE, FORK_IDS, GATE_PLAQUES, OUTCOME_ART_SIZE, SCENES, SCENE_IDS, detourScene, outcomeArt, sceneAssets } from './scenes'
+import { DETOUR_SCENE_SIZE, FORK_IDS, GATE_PLAQUES, OUTCOME_ART_SIZE, ROAD_PAN, SCENES, SCENE_IDS, detourScene, outcomeArt, sceneAssets } from './scenes'
+
+describe('road scene pan stops (Wave M)', () => {
+  it('every fork has one stop per panel (setup, habit road, detour), each a valid object-position fraction', () => {
+    for (const f of FORK_IDS) {
+      expect(ROAD_PAN[f]).toHaveLength(3)
+      for (const v of ROAD_PAN[f]) {
+        expect(v).toBeGreaterThanOrEqual(0)
+        expect(v).toBeLessThanOrEqual(1)
+      }
+    }
+  })
+  it('#gates never pans the lettered plaques out of a 1440x848 frame', () => {
+    // cover-fit of the 848x1264 art at 1440 wide: the frame shows 848 / (1440 * 1264 / 848) of its height
+    const visible = 848 / ((1440 * 1264) / 848)
+    for (const pan of ROAD_PAN.gates) {
+      const top = pan * (1 - visible)
+      for (const box of GATE_PLAQUES) {
+        expect(box.top / 100).toBeGreaterThanOrEqual(top)
+        expect((box.top + box.height) / 100).toBeLessThanOrEqual(top + visible)
+      }
+    }
+  })
+})
 
 describe('quest outcome art + detour scenes (L2/L3)', () => {
   it('outcome art is keyed by fork, guide and state (habit road = scroller, detour = builder)', () => {

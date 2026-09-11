@@ -1,20 +1,14 @@
 'use client'
 import { useRef } from 'react'
 import type { Locale } from '../../lib/dictionaries'
-import { quest, type Fork, type QuestContent } from '../../lib/quest/content'
-import type { PathMark } from '../../lib/quest/route'
+import { quest, type Fork } from '../../lib/quest/content'
 import { buildRoute, routeText } from '../../lib/quest/route'
 import { Chapter, type Tint } from './chapter'
-import { DetourCurtain } from './detour-curtain'
-import { GatePlaques } from './gate-plaques'
 import { OutcomeReveal } from './outcome-reveal'
-import { clampProgress } from './use-chapter-progress'
 import { useParallaxFrame, useReducedMotion } from './use-parallax'
-import { PathFork } from './path-fork'
 import { PinnedBackdrop } from './pinned-backdrop'
-import { RoadStrip } from './road-strip'
+import { RoadScene } from './road-scene'
 import { SceneLoop } from './scene-loop'
-import { StickyStage } from './sticky-stage'
 import { usePathChoice } from './use-path-choice'
 import { useScrollMood } from './use-scroll-mood'
 
@@ -25,7 +19,6 @@ const FORK_TINT: Record<Fork['id'], Tint> = { boulder: 'fork1', temple: 'fork2',
 function Para({ text, lead = false }: { text: string; lead?: boolean }) {
   return <p className="quest-prose" style={{ fontSize: lead ? 'var(--text-lg)' : 'var(--text-base)', lineHeight: 1.7, color: 'var(--text-primary)', marginBottom: '1rem' }}>{text}</p>
 }
-
 /** Wave J1 fix (coordinator review): the first cut's rate (-0.984 vs the
  * copy's -1.0) was invisible in practice — ~14px of relative drift is below
  * the threshold of perception. Reworked to guarantee a fixed PIXEL
@@ -66,65 +59,6 @@ function useHeroDrift() {
     drift.style.setProperty('--px-y', `${progress * amplitude}px`)
   }, !reducedMotion)
   return { frameRef, driftRef }
-}
-
-/** Wave J1 (item 2): `#gates`' two road rails move at different rates from
- * each other (one lagging, one leading the centred text) so the fork visibly
- * splits as the reader descends — max ~80px of relative drift across the
- * chapter (±40px each), well under the "gimmick" ceiling in the brief.
- * `containerRef` measures the whole `.quest-two-roads` grid's own transit;
- * the two rail `<img>`s get their `--px-y` written directly, clipped by
- * `.quest-two-roads__rail{overflow:hidden}` + a static `scale(1.15)` in CSS
- * (same oversize-and-clip trick as the hero, sized generously since the rail
- * amplitude is larger). A standalone component (not a hook called inside
- * `c.forks.map`) so the hook obeys the rules of hooks regardless of fork
- * order. */
-function GatesRoads({
-  fork,
-  labels,
-  plaques,
-  locale,
-  quip,
-  mark,
-  onMark,
-}: {
-  fork: Fork
-  labels: QuestContent['labels']
-  plaques: [string, string]
-  locale: Locale
-  quip?: string
-  mark?: PathMark
-  onMark: (mark: PathMark) => void
-}) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const leftImgRef = useRef<HTMLImageElement>(null)
-  const rightImgRef = useRef<HTMLImageElement>(null)
-  const reducedMotion = useReducedMotion()
-  useParallaxFrame(() => {
-    const el = containerRef.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    const progress = clampProgress(rect.top, rect.height, window.innerHeight)
-    leftImgRef.current?.style.setProperty('--px-y', `${-40 * progress}px`)
-    rightImgRef.current?.style.setProperty('--px-y', `${40 * progress}px`)
-  }, !reducedMotion)
-  return (
-    <div className="quest-two-roads" ref={containerRef}>
-      <div className="quest-two-roads__rail quest-two-roads__rail--left">
-        <RoadStrip forkId={fork.id} guide={fork.habit.guide} imgRef={leftImgRef} />
-      </div>
-      <div className="quest-two-roads__text">
-        {fork.setup.map((p, i) => <Para key={i} text={p} lead />)}
-        <div className="quest-gate-scene">
-          <GatePlaques locale={locale} plaques={plaques} quip={quip} />
-        </div>
-        <PathFork fork={fork} labels={labels} mark={mark} onMark={onMark} hideRoad />
-      </div>
-      <div className="quest-two-roads__rail quest-two-roads__rail--right">
-        <RoadStrip forkId={fork.id} guide={fork.detour.guide} imgRef={rightImgRef} />
-      </div>
-    </div>
-  )
 }
 
 export function QuestHome({ locale }: Props) {
@@ -189,65 +123,30 @@ export function QuestHome({ locale }: Props) {
         />
       </Chapter>
 
-      {/* 2–4. Forks: each gets its own composition below the shared chapter
-          opener. #boulder keeps the workhorse sticky-stage (world left/steps
-          right); #temple is its real mirror (world right/steps left); #gates
-          drops the big sticky scene for two tall road rails bracketing a
-          narrow text column — the fork made visible. In all three, the
-          outcomes act breaks OUT into its own full-width band (echoing the
-          opener), and the CTA + bridge close the chapter as a narrow centred
-          column — neither is inside a sticky grid any more, so there is
-          nothing left to un-pin early. */}
-      {c.forks.map((fork) => {
-        const outro = (
+      {/* 2–4. Forks (Wave M): each road is ONE pinned full-bleed scene held for
+          the chapter's length — setup, the habit road and the detour travel
+          over it as panels, and the detour's world wipes in as its card rises
+          (road-scene.tsx). #temple mirrors the panels to the left. Then the
+          outcomes band breaks out full-width, and the CTA + bridge close the
+          chapter as a narrow centred column. */}
+      {c.forks.map((fork) => (
+        <Chapter key={fork.id} id={fork.id} tint={FORK_TINT[fork.id]} eyebrow={fork.eyebrow} heading={fork.obstacle} bleed guides>
+          <RoadScene
+            fork={fork}
+            locale={locale}
+            labels={c.labels}
+            setup={fork.setup.map((p, i) => <Para key={i} text={p} lead />)}
+            quip={quipFor(fork.id)}
+            mark={marks[fork.id]}
+            onMark={(m) => setMark(fork.id, m)}
+          />
+          <OutcomeReveal forkId={fork.id} title={fork.outcomesTitle} outcomes={fork.outcomes} labels={c.labels} chosen={marks[fork.id]} />
           <div className="quest-narrow-copy" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', alignItems: 'flex-start' }}>
             {fork.cta ? <a href={fork.cta.href} className="quest-cta">{fork.cta.label}</a> : null}
             <Para text={fork.bridge} />
           </div>
-        )
-        const outcomesAct = <OutcomeReveal forkId={fork.id} title={fork.outcomesTitle} outcomes={fork.outcomes} labels={c.labels} chosen={marks[fork.id]} />
-
-        if (fork.id === 'gates') {
-          return (
-            <Chapter key={fork.id} id={fork.id} tint={FORK_TINT[fork.id]} eyebrow={fork.eyebrow} heading={fork.obstacle} bleed guides>
-              <GatesRoads
-                fork={fork}
-                labels={c.labels}
-                plaques={c.labels.plaques}
-                locale={locale}
-                quip={quipFor(fork.id)}
-                mark={marks[fork.id]}
-                onMark={(m) => setMark(fork.id, m)}
-              />
-              {outcomesAct}
-              {outro}
-            </Chapter>
-          )
-        }
-
-        return (
-          <Chapter key={fork.id} id={fork.id} tint={FORK_TINT[fork.id]} eyebrow={fork.eyebrow} heading={fork.obstacle} bleed guides>
-            <StickyStage
-              mirror={fork.id === 'temple'}
-              media={() => (
-                <SceneLoop
-                  id={fork.scene}
-                  locale={locale}
-                  quip={quipFor(fork.id)}
-                >
-                  <DetourCurtain forkId={fork.id} />
-                </SceneLoop>
-              )}
-              steps={[
-                { key: `${fork.id}-setup`, body: fork.setup.map((p, i) => <Para key={i} text={p} lead />) },
-                { key: `${fork.id}-habit`, body: <PathFork fork={fork} labels={c.labels} mark={marks[fork.id]} onMark={(m) => setMark(fork.id, m)} /> },
-              ]}
-            />
-            {outcomesAct}
-            {outro}
-          </Chapter>
-        )
-      })}
+        </Chapter>
+      ))}
 
       {/* 5. Finale: a closing title card mirroring the hero's own pattern —
           the paragraphs (and, once all three forks are marked, the assembled
@@ -278,12 +177,15 @@ export function QuestHome({ locale }: Props) {
         </div>
       </Chapter>
 
-      {/* 6. About: the signs scene as a centred panel (no sticky stage), the
-          two About cards below it, side by side. */}
-      <Chapter id="about" tint="about">
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: '2rem' }}>
-          <SceneLoop id={c.about.scene} locale={locale} quip={quipFor('about')} />
-          <div className="quest-cards">
+      {/* 6. About (Wave M): a saturated full-width band (the reference's
+          "About…" strip) — the signs scene and the two About cards side by
+          side in one dense row, the footer in band ink underneath. */}
+      <Chapter id="about" tint="about" surface="var(--quest-band-about)">
+        <div className="quest-about">
+          <div className="quest-about__art">
+            <SceneLoop id={c.about.scene} locale={locale} quip={quipFor('about')} />
+          </div>
+          <div className="quest-about__cards">
             <article className="quest-card">
               <h3 style={{ fontFamily: 'var(--font-display), system-ui, sans-serif', fontWeight: 900, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>{c.about.author.heading}</h3>
               <p className="quest-prose" style={{ fontSize: 'var(--text-base)', lineHeight: 1.7, color: 'var(--text-primary)' }}>{c.about.author.text}</p>
@@ -295,11 +197,11 @@ export function QuestHome({ locale }: Props) {
             <article className="quest-card">
               <h3 style={{ fontFamily: 'var(--font-display), system-ui, sans-serif', fontWeight: 900, fontSize: 'var(--text-xl)', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>{c.about.course.heading}</h3>
               <p className="quest-prose" style={{ fontSize: 'var(--text-base)', lineHeight: 1.7, color: 'var(--text-primary)' }}>{c.about.course.text}</p>
-              <a href={c.about.course.href} className="quest-cta" style={{ alignSelf: 'flex-start', marginTop: 'auto' }}>{c.forks[2].detour.ctas?.[0]?.label ?? c.finale.cta.label}</a>
+              <a href={c.about.course.href} className="quest-cta" style={{ alignSelf: 'flex-start' }}>{c.forks[2].detour.ctas?.[0]?.label ?? c.finale.cta.label}</a>
             </article>
           </div>
         </div>
-        <footer style={{ marginTop: '4rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', letterSpacing: '0.04em' }}>
+        <footer className="quest-about__footer">
           {c.footer}
         </footer>
       </Chapter>

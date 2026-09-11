@@ -1,12 +1,9 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { DETOUR_SCENE_SIZE, detourScene, type ForkId } from '../../lib/quest/scenes'
 import { ThemedPicture } from './themed-picture'
-import { clampProgress, pinProgress, wipeReveal } from './use-chapter-progress'
+import { clampProgress, panelReveal, wipeReveal } from './use-chapter-progress'
 import { useParallaxFrame, useReducedMotion } from './use-parallax'
-
-/** Same breakpoint as `.quest-stage__media { position: sticky }` in quest.css. */
-const PINNED_MQ = '(min-width: 900px)'
 
 /**
  * L3: the reference's curtain — inside a fork's scene the habit road's world is
@@ -15,11 +12,11 @@ const PINNED_MQ = '(min-width: 900px)'
  * Rendered as a child of SceneLoop: it shares the scene's box, `object-fit` and
  * `--pan`, and sits over the poster and the loop video (z-index in quest.css).
  *
- * Progress source: where the scene is pinned (≥900px, sticky stage) the curtain
- * follows the pin's own travel (`pinProgress`) and completes at 60% of it, so
- * the detour's world then holds still on screen before the pin releases. Where it is not pinned (the stacked mobile
- * column, and #gates' inline panel at every width) it follows the scene's own
- * box instead — a stage-wide window would sweep while the image is off screen.
+ * Progress source (Wave M): inside a road scene (road-scene.tsx) the curtain
+ * follows the detour card — the panel marked `data-curtain-trigger` — into
+ * view (`panelReveal`), at every width: the world changes while the reader
+ * starts on the other road, then holds under that text. Anywhere else it
+ * falls back to the scene's own box crossing the viewport.
  * One shared rAF (useParallaxFrame), a CSS variable, no re-render.
  *
  * `prefers-reduced-motion: reduce`: not rendered — the habit world stays, and
@@ -28,26 +25,14 @@ const PINNED_MQ = '(min-width: 900px)'
 export function DetourCurtain({ forkId }: { forkId: ForkId }) {
   const ref = useRef<HTMLDivElement>(null)
   const reducedMotion = useReducedMotion()
-  const pinnedRef = useRef(false)
-
-  useEffect(() => {
-    const mq = window.matchMedia(PINNED_MQ)
-    const apply = () => { pinnedRef.current = mq.matches }
-    apply()
-    mq.addEventListener('change', apply)
-    return () => mq.removeEventListener('change', apply)
-  }, [])
 
   useParallaxFrame(() => {
     const el = ref.current
     if (!el) return
-    const stage = pinnedRef.current ? el.closest<HTMLElement>('.quest-stage') : null
-    const media = stage ? el.closest<HTMLElement>('.quest-stage__media') : null
+    const trigger = el.closest('.quest-backdrop')?.querySelector<HTMLElement>('[data-curtain-trigger]')
     let reveal: number
-    if (stage && media) {
-      const s = stage.getBoundingClientRect()
-      const m = media.getBoundingClientRect()
-      reveal = wipeReveal(pinProgress(m.top - s.top, s.height - m.height), 0.25, 0.6)
+    if (trigger) {
+      reveal = panelReveal(trigger.getBoundingClientRect().top, window.innerHeight)
     } else {
       const r = (el.parentElement ?? el).getBoundingClientRect()
       reveal = wipeReveal(clampProgress(r.top, r.height, window.innerHeight), 0.35, 0.65)
@@ -64,6 +49,7 @@ export function DetourCurtain({ forkId }: { forkId: ForkId }) {
         width={DETOUR_SCENE_SIZE.width}
         height={DETOUR_SCENE_SIZE.height}
         alt=""
+        eager
       />
     </div>
   )

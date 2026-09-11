@@ -9,6 +9,10 @@ interface Props {
   height: number
   alt: string
   className?: string
+  /** Wave M: load at once instead of `lazy` — for a still that must be ready
+   *  BEFORE it is uncovered (the curtain: a lazy image inside a fully clipped
+   *  box never loads until the wipe starts, so the new world came in blank). */
+  eager?: boolean
 }
 
 /**
@@ -16,7 +20,7 @@ interface Props {
  * plain still — a `<source media="(prefers-color-scheme: dark)">` gives night
  * for free in the system-theme, no-JS case; once mounted, an explicit theme
  * choice drops that source (a matching media query would otherwise beat the
- * `<img>`'s own src). Always lazy: nothing that uses it sits in the first screen.
+ * `<img>`'s own src). Lazy by default; `eager` for a still hidden behind a clip.
  *
  * Fix round (audit4 minor): swapping `src` on a lazy, async-decoded `<img>`
  * painted one empty frame (~15 ms) on an explicit theme flip — SceneLoop never
@@ -25,7 +29,7 @@ interface Props {
  * that never loaded yet (still below the fold) swaps immediately — there is
  * nothing on screen to blank, and forcing its download would defeat `lazy`.
  */
-export function ThemedPicture({ day, night, width, height, alt, className }: Props) {
+export function ThemedPicture({ day, night, width, height, alt, className, eager = false }: Props) {
   const theme = useThemeState()
   const target = theme === 'night' ? night : day
   const [shown, setShown] = useState(target)
@@ -53,7 +57,7 @@ export function ThemedPicture({ day, night, width, height, alt, className }: Pro
   return (
     <picture className={className}>
       {explicitTheme ? null : <source media="(prefers-color-scheme: dark)" srcSet={night} />}
-      <img ref={imgRef} src={shown} width={width} height={height} alt={alt} loading="lazy" decoding="async" data-world={theme} />
+      <img ref={imgRef} src={shown} width={width} height={height} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" data-world={theme} />
     </picture>
   )
 }

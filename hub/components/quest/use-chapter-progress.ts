@@ -77,6 +77,34 @@ export function wipeReveal(progress: number, start = 0.4, end = 0.7): number {
   return (progress - start) / (end - start)
 }
 
+/**
+ * Wave M: a fork's road scene is pinned full-bleed for the whole chapter and
+ * three panels (setup, habit road, detour) travel over it. The art is portrait
+ * in a landscape frame, so only ~40% of its height is on screen — the pan
+ * "looks at" each panel's subject in turn: `stops` are object-position
+ * fractions spaced evenly over pin progress, linear between neighbours. It may
+ * turn back (the detour's figure can sit higher than the habit road's).
+ * Empty stops → centred (0.5), one stop → held.
+ */
+export function keyframePan(progress: number, stops: readonly number[]): number {
+  if (stops.length === 0) return 0.5
+  if (stops.length === 1) return stops[0]
+  const p = Math.min(1, Math.max(0, progress)) * (stops.length - 1)
+  const i = Math.min(stops.length - 2, Math.floor(p))
+  return stops[i] + (stops[i + 1] - stops[i]) * (p - i)
+}
+
+/**
+ * Wave M: the curtain inside a road scene follows the DETOUR panel into view —
+ * 0 while its top is below `start` of the viewport, 1 once it has climbed to
+ * `end`, linear between. The world changes exactly while the reader starts
+ * reading about the other road, and then holds still under that text.
+ */
+export function panelReveal(panelTop: number, viewport: number, start = 0.9, end = 0.35): number {
+  if (viewport <= 0) return 0
+  return wipeReveal(1 - panelTop / viewport, 1 - start, 1 - end)
+}
+
 /** Scroll progress of `ref`'s element through the viewport, 0…1. SSR/no-observer default: 0. */
 export function useChapterProgress(ref: RefObject<HTMLElement | null>): number {
   const [progress, setProgress] = useState(0)
