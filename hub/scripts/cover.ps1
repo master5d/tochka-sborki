@@ -51,14 +51,11 @@ function Invoke-Wrangler([string[]]$argv) {
   return @{ code = $LASTEXITCODE; text = ($out -join "`n") }
 }
 
+. (Join-Path $PSScriptRoot 'cover-kv.ps1')
+
 function Get-KvConfig([string]$id) {
   $r = Invoke-Wrangler @('kv', 'key', 'get', 'config', '--namespace-id', $id, '--remote')
-  if ($r.code -ne 0) {
-    if ($r.text -match 'not found') { return '(no key: middleware default)' }
-    throw "wrangler kv key get failed (exit $($r.code)):`n$($r.text)"
-  }
-  if ($r.text -match '^Value not found') { return '(no key: middleware default)' }
-  return $r.text
+  return Resolve-KvGet $r.code $r.text
 }
 
 # Refuse before touching anything remote.

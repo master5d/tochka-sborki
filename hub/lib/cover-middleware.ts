@@ -56,6 +56,9 @@ export async function handleCover(
   next: () => Promise<Response>,
   rand: () => number = Math.random,
 ): Promise<Response> {
+  // Only reads are served a cover; any other method reaches the assets exactly as
+  // it would on the floor (a static site answers them 405).
+  if (request.method !== 'GET' && request.method !== 'HEAD') return next()
   const url = new URL(request.url)
   const home = homeOf(url.pathname)
   if (!home) return next()

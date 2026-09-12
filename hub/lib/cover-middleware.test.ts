@@ -99,6 +99,15 @@ describe('handleCover', () => {
     expect(res.headers.get('x-mc-cover')).toBe(COVER)
     expect(await res.text()).toBe('')
   })
+  it('non-GET/HEAD on a cover home passes through untouched, like the floor', async () => {
+    const e = env({ defaultCover: COVER })
+    for (const method of ['POST', 'PUT', 'DELETE', 'OPTIONS']) {
+      const res = await handleCover(new Request('https://x.test/', { method }), e, async () => new Response(null, { status: 405 }))
+      expect(res.status).toBe(405)
+      expect(res.headers.get('x-mc-cover')).toBeNull()
+    }
+    expect(e.fetched).toEqual([])
+  })
   it('query string does not change the decision', async () => {
     const e = env({ defaultCover: COVER })
     const res = await handleCover(req('/?utm_source=x'), e, floor)

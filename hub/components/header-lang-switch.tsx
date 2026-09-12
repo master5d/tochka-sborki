@@ -1,24 +1,19 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { langSwitchTarget } from '@/lib/lang-switch'
 
 /**
- * Inline EN/RU switch for the top bar. Infers the current locale from the path
- * (so the shared header needs no locale prop), and links to the mirrored route.
- * trailingSlash-safe: '/' ↔ '/en/', '/blog/x/' ↔ '/en/blog/x/'.
+ * Inline EN/RU switch for the top bar. Target rules live in lib/lang-switch.ts:
+ * a switch that lands on a home page is a full document load, so the backend
+ * cover function picks the home (and no prefetch is spent on it).
  */
 export function HeaderLangSwitch() {
-  const pathname = usePathname() || '/'
-  const isEn = pathname === '/en' || pathname.startsWith('/en/')
-  const href = isEn
-    ? pathname.replace(/^\/en(\/|$)/, '/') || '/'
-    : pathname === '/'
-      ? '/en/'
-      : '/en' + pathname
-  const label = isEn ? 'RU' : 'EN'
+  const { href, label, isEn, document } = langSwitchTarget(usePathname() || '/')
+  const Tag = document ? 'a' : Link
 
   return (
-    <Link
+    <Tag
       href={href}
       aria-label={isEn ? 'Switch to Russian' : 'Переключить на английский'}
       style={{
@@ -36,6 +31,6 @@ export function HeaderLangSwitch() {
       }}
     >
       {label}
-    </Link>
+    </Tag>
   )
 }
