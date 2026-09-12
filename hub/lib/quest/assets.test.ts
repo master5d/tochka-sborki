@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { FORK_IDS, GUIDE_ASSETS, SCENE_IDS, campWide, detourScene, outcomeArt, sceneAssets } from './scenes'
+import { FORK_IDS, GUIDE_ASSETS, SCENE_IDS, campWide, campWideLoop, detourScene, outcomeArt, sceneAssets } from './scenes'
 
 const PUBLIC = join(process.cwd(), 'public')
 const KB = 1024
@@ -50,6 +50,11 @@ describe('quest assets', () => {
   it('the landscape camp for #intro exists in both states, each ≤ 250 KB', () => {
     for (const state of ['day', 'night'] as const) {
       expect(sizeOf(campWide(state)), `camp-wide ${state}`).toBeLessThanOrEqual(250 * KB)
+    }
+  })
+  it('the landscape camp has a day and a night loop, each ≤ 900 KB', () => {
+    for (const state of ['day', 'night'] as const) {
+      expect(sizeOf(campWideLoop(state)), `camp-wide loop ${state}`).toBeLessThanOrEqual(900 * KB)
     }
   })
   it('Wave M retired the road strips: no roads/ folder ships', () => {

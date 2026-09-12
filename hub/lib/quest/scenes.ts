@@ -125,6 +125,10 @@ export const CAMP_WIDE_SIZE = { width: 1264, height: 848 } as const
 export function campWide(state: SceneState): string {
   return `/quest/scenes/02-camp-wide-${state}.webp`
 }
+/** Its loop (NAUTILUS `loops-v3/02-camp-wide-<state>`); frame 0 is the still above. */
+export function campWideLoop(state: SceneState): string {
+  return `/quest/loops/02-camp-wide-${state}.mp4`
+}
 
 /**
  * L2: one tall illustration per road's outcome (640×960, NAUTILUS
