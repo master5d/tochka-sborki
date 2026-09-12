@@ -1,0 +1,363 @@
+import { getDictionary, type Locale } from '../lib/dictionaries'
+import { LangSwitcher } from './lang-switcher'
+
+interface Props { locale: Locale }
+
+export function HomePage({ locale }: Props) {
+  const t = getDictionary(locale)
+
+  return (
+    <main>
+      <LangSwitcher locale={locale} />
+      <style>{`
+        @media (max-width: 720px) {
+          .hub-hero { padding: 3rem 1.25rem 2rem !important; }
+          .hub-hero h1 {
+            font-size: clamp(1.85rem, 8.5vw, 4rem) !important;
+            letter-spacing: -0.03em !important;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            line-height: 0.95 !important;
+          }
+          .hub-section { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+        }
+      `}</style>
+
+      {/* ── HERO ────────────────────────────────────────────────── */}
+      <section className="hub-hero" style={{
+        padding: '6rem 2rem 3rem',
+        maxWidth: 'var(--content-max)',
+        margin: '0 auto',
+        position: 'relative',
+        overflow: 'hidden',
+      }}>
+        <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'var(--hero-glow)', pointerEvents: 'none', zIndex: 0 }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+        <div style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: 'var(--section-label-size)',
+          background: 'var(--accent-gradient)',
+          WebkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+          color: 'transparent',
+          WebkitTextFillColor: 'transparent',
+          textTransform: 'uppercase',
+          letterSpacing: '0.15em',
+          marginBottom: '1.5rem',
+        }}>
+          {t.tagline}
+        </div>
+        {/* Кегль берём из токена --display-size, а не из своего clamp: инлайновый
+            clamp(3rem, 11vw, 9rem) давал 144px на 1440px, и «АЛЕКСАНДР» не влезал
+            в --content-max (1141 > 1036 → буква срезалась). Токен рассчитан под
+            эту ширину. Длинные слова в кириллице дополнительно страхуем переносом. */}
+        <h1 style={{
+          fontFamily: 'var(--font-display), system-ui, sans-serif',
+          fontSize: 'var(--display-size)',
+          fontWeight: 900,
+          lineHeight: 0.85,
+          color: 'var(--text-primary)',
+          textTransform: 'uppercase',
+          letterSpacing: '-0.04em',
+          marginBottom: '2rem',
+          whiteSpace: 'pre-line',
+          overflowWrap: 'break-word',
+        }}>
+          {t.name}
+        </h1>
+        <p style={{
+          fontSize: 'var(--text-lg)',
+          color: 'var(--text-secondary)',
+          maxWidth: '560px',
+          lineHeight: 1.7,
+          marginBottom: '0',
+        }}>
+          {t.bio}
+        </p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginTop: '1.75rem' }}>
+          {t.heroBadges.map(b => (
+            <span key={b} style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: 'var(--text-xs)',
+              color: 'var(--text-secondary)',
+              background: 'var(--bg-secondary)',
+              border: '1px solid var(--border-color)',
+              borderRadius: 'var(--radius)',
+              padding: '0.4rem 0.8rem',
+              letterSpacing: '0.04em',
+            }}>{b}</span>
+          ))}
+        </div>
+        <p style={{ marginTop: '2rem', display: 'flex', gap: '1.5rem' }}>
+          <a href="/blog/" style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--text-sm)',
+            color: 'var(--text-accent)',
+            textDecoration: 'none',
+            letterSpacing: '0.04em',
+          }}>
+            → Блог
+          </a>
+          <a href={locale === 'en' ? '/en/events/' : '/events/'} style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--text-sm)',
+            color: 'var(--text-accent)',
+            textDecoration: 'none',
+            letterSpacing: '0.04em',
+          }}>
+            {locale === 'en' ? '→ Events' : '→ События'}
+          </a>
+        </p>
+        </div>
+      </section>
+
+      {/* ── PITCH (doom-scroll → vibe coding) ──────────────────── */}
+      <section className="hub-section" style={{
+        padding: 'var(--section-gap) 2rem',
+        borderTop: '1px solid var(--border-color)',
+      }}>
+        <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
+          <div style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--section-label-size)',
+            color: 'var(--text-accent)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.15em',
+            marginBottom: '1.25rem',
+          }}>
+            {t.pitch.eyebrow}
+          </div>
+          <p style={{
+            fontSize: 'clamp(1.3rem, 3vw, 1.9rem)',
+            fontWeight: 700,
+            color: 'var(--text-primary)',
+            maxWidth: '720px',
+            lineHeight: 1.4,
+            letterSpacing: '-0.02em',
+            margin: '0 0 1.75rem',
+          }}>
+            {t.pitch.body}
+          </p>
+          <a href={t.blog.courseUrl} style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--text-base)',
+            color: 'var(--text-accent)',
+            textDecoration: 'none',
+            letterSpacing: '0.04em',
+          }}>
+            {t.pitch.cta}
+          </a>
+        </div>
+      </section>
+
+      {/* ── FOUNDER STORY (lived transformation) ───────────────── */}
+      <section className="hub-section" style={{
+        padding: 'var(--section-gap) 2rem',
+        borderTop: '1px solid var(--border-color)',
+      }}>
+        <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
+          <div style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--section-label-size)',
+            color: 'var(--text-accent)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.15em',
+            marginBottom: '1.25rem',
+          }}>
+            {t.founder.eyebrow}
+          </div>
+          <h2 style={{
+            fontFamily: 'var(--font-display), system-ui, sans-serif',
+            fontSize: 'clamp(1.75rem, 4vw, 3rem)',
+            fontWeight: 900,
+            lineHeight: 1.0,
+            color: 'var(--text-primary)',
+            letterSpacing: '-0.03em',
+            margin: '0 0 1.75rem',
+          }}>
+            {t.founder.heading}
+          </h2>
+          {t.founder.paragraphs.map((p, i) => (
+            <p key={i} style={{
+              fontSize: 'var(--text-base)',
+              color: 'var(--text-secondary)',
+              maxWidth: '720px',
+              lineHeight: 1.7,
+              margin: '0 0 1.25rem',
+            }}>
+              {p}
+            </p>
+          ))}
+        </div>
+      </section>
+
+      {/* ── PROJECTS ───────────────────────────────────────────── */}
+      <section className="hub-section" style={{
+        padding: 'var(--section-gap) 2rem',
+        borderTop: '1px solid var(--border-color)',
+      }}>
+        <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
+          <div style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--section-label-size)',
+            color: 'var(--text-secondary)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.12em',
+            marginBottom: '3rem',
+          }}>
+            {t.projectsLabel}
+          </div>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '2rem',
+          }}>
+            {t.projects.map(p => (
+              <a
+                key={p.href}
+                href={p.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: '2rem',
+                  background: 'var(--bg-secondary)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: 'var(--radius)',
+                  color: 'inherit',
+                  textDecoration: 'none',
+                  minHeight: '280px',
+                  transition: 'border-color 0.2s, transform 0.2s',
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}
+              >
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '3px',
+                  height: '100%',
+                  background: `linear-gradient(180deg, ${p.color}, transparent)`,
+                }} />
+
+                <div style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 'var(--text-xs)',
+                  color: p.color,
+                  letterSpacing: '0.15em',
+                  marginBottom: '1.5rem',
+                }}>
+                  {p.badge}
+                </div>
+                <h2 style={{
+                  fontFamily: 'var(--font-display), system-ui, sans-serif',
+                  fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)',
+                  fontWeight: 900,
+                  lineHeight: 0.95,
+                  color: 'var(--text-primary)',
+                  letterSpacing: '-0.03em',
+                  textTransform: 'uppercase',
+                  marginBottom: '1rem',
+                }}>
+                  {p.title}
+                </h2>
+                <p style={{
+                  fontSize: 'var(--text-base)',
+                  color: 'var(--text-secondary)',
+                  lineHeight: 1.6,
+                  marginBottom: '2rem',
+                  flexGrow: 1,
+                }}>
+                  {p.subtitle}
+                </p>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'baseline',
+                  paddingTop: '1rem',
+                  borderTop: '1px solid var(--border-color)',
+                }}>
+                  <span style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 'var(--text-xs)',
+                    color: 'var(--text-secondary)',
+                    letterSpacing: '0.08em',
+                  }}>
+                    {p.status}
+                  </span>
+                  <span style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 'var(--text-sm)',
+                    color: p.color,
+                    fontWeight: 700,
+                  }}>
+                    {p.cta}
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── ABOUT / SOCIALS ────────────────────────────────────── */}
+      <section style={{
+        padding: 'var(--section-gap) 2rem',
+        background: 'var(--bg-secondary)',
+        borderTop: '1px solid var(--border-color)',
+      }}>
+        <div style={{ maxWidth: 'var(--content-max)', margin: '0 auto' }}>
+          <div style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--section-label-size)',
+            color: 'var(--text-secondary)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.12em',
+            marginBottom: '2rem',
+          }}>
+            {t.contactsLabel}
+          </div>
+          <div style={{
+            display: 'flex',
+            gap: '2rem',
+            flexWrap: 'wrap',
+          }}>
+            {t.socials.map(s => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 'var(--text-sm)',
+                  color: 'var(--text-accent)',
+                  padding: '0.75rem 1.25rem',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: 'var(--radius)',
+                }}
+              >
+                → {s.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOOTER ─────────────────────────────────────────────── */}
+      <footer style={{
+        padding: '2rem',
+        borderTop: '1px solid var(--border-color)',
+        textAlign: 'center',
+        fontFamily: 'var(--font-mono)',
+        fontSize: 'var(--text-xs)',
+        color: 'var(--text-secondary)',
+        letterSpacing: '0.05em',
+      }}>
+        © {new Date().getFullYear()} · mamaev.coach · {t.footerTagline}
+      </footer>
+    </main>
+  )
+}
