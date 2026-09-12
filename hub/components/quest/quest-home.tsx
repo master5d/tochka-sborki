@@ -6,6 +6,7 @@ import { buildRoute, routeText } from '../../lib/quest/route'
 import { Chapter, type Tint } from './chapter'
 import { OutcomeReveal } from './outcome-reveal'
 import { useParallaxFrame, useReducedMotion } from './use-parallax'
+import { HeroTitle } from './hero-title'
 import { PinnedBackdrop } from './pinned-backdrop'
 import { RoadScene } from './road-scene'
 import { SceneLoop } from './scene-loop'
@@ -106,7 +107,7 @@ export function QuestHome({ locale }: Props) {
               {c.hero.name} · {c.hero.role}
             </div>
             <h1 style={{ fontFamily: 'var(--font-display), system-ui, sans-serif', fontWeight: 900, fontSize: 'clamp(1.9rem, 4.6vw, 3.6rem)', lineHeight: 1.02, letterSpacing: '-0.035em', color: 'var(--text-primary)', marginBottom: '1.25rem', textWrap: 'balance' }}>
-              {c.hero.lines[0]}
+              <HeroTitle text={c.hero.lines[0]} />
             </h1>
             {c.hero.lines.slice(1).map((l) => <Para key={l} text={l} lead />)}
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', marginTop: '1.5rem' }}>{c.hero.bio}</p>

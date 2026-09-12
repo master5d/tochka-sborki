@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { Locale } from '../../lib/dictionaries'
+import { shouldPlayLoop } from '../../lib/quest/loop-playback'
 import { isSplitScene } from '../../lib/quest/plates'
 import { SCENES, sceneAssets, type SceneId } from '../../lib/quest/scenes'
 import { ScenePlates } from './scene-plates'
@@ -74,6 +75,33 @@ export function SceneLoop({ id, locale, quip, children, eager = false, className
 
   // Wave K: a split scene renders two still plates instead (ScenePlates below) —
   // there's no loop video for it to drive, so this effect is a no-op for it.
+  // Cover motion: a loop runs only while its scene is on screen and the tab is
+  // visible (shouldPlayLoop). Before this, all three road loops kept decoding
+  // off screen for the whole page. `playAllowed` is what the loader below
+  // consults, so a day/night switch off screen loads the track without starting it.
+  const playAllowed = useRef(false)
+  useEffect(() => {
+    if (split || reducedMotion) return
+    const video = videoRef.current
+    if (!video) return
+    let onScreen = false
+    const apply = () => {
+      playAllowed.current = shouldPlayLoop({ onScreen, pageVisible: document.visibilityState !== 'hidden', reducedMotion })
+      if (playAllowed.current) video.play().catch(() => {})
+      else video.pause()
+    }
+    const io = typeof IntersectionObserver === 'undefined'
+      ? null
+      : new IntersectionObserver(([entry]) => { onScreen = entry.isIntersecting; apply() }, { rootMargin: '200px 0px' })
+    if (io) io.observe(video)
+    else { onScreen = true; apply() }
+    document.addEventListener('visibilitychange', apply)
+    return () => {
+      io?.disconnect()
+      document.removeEventListener('visibilitychange', apply)
+    }
+  }, [split, reducedMotion])
+
   useEffect(() => {
     if (split) return
     if (reducedMotion) return
@@ -83,10 +111,12 @@ export function SceneLoop({ id, locale, quip, children, eager = false, className
     const wasStarted = video.readyState > 0
     const onLoaded = () => {
       if (wasStarted) video.currentTime = resumeAt
-      video.play().catch(() => {
-        // Autoplay can be blocked before the first user gesture; the poster frame
-        // (matching this same state) stands in until playback is possible.
-      })
+      if (playAllowed.current) {
+        video.play().catch(() => {
+          // Autoplay can be blocked before the first user gesture; the poster frame
+          // (matching this same state) stands in until playback is possible.
+        })
+      }
       video.removeEventListener('loadedmetadata', onLoaded)
     }
     video.addEventListener('loadedmetadata', onLoaded)

@@ -31,7 +31,10 @@ for (const [file, needles] of Object.entries(coverChecks)) {
   if (scenes.size < 7) { console.error(`${file}: only ${scenes.size} distinct scene posters, expected ≥ 7`); failed++ }
   const hasNight = sceneMatches.some((m) => m.endsWith('-night.webp')) || plateMatches.some((m) => m.includes('-night-'))
   if (!hasNight) { console.error(`${file}: no night poster reference found (picture/source for system-dark)`); failed++ }
-  for (const n of needles) if (!html.includes(n)) { console.error(`${file}: missing "${n}"`); failed++ }
+  // Cover motion: the hero line is split into one <span> per word (hero-title.tsx),
+  // so a canon phrase is checked against the page's TEXT, tags stripped, too.
+  const text = html.replace(/<!--[\s\S]*?-->/g, '').replace(/<[^>]+>/g, '')
+  for (const n of needles) if (!html.includes(n) && !text.includes(n)) { console.error(`${file}: missing "${n}"`); failed++ }
   if (/\[(scene|loop|сцена|петля):/.test(html)) { console.error(`${file}: service mark leaked`); failed++ }
   // L2/L3: six outcome illustrations and three detour curtains per locale; the
   // generation manifest's own marks ("Outcome of the …") must never reach the page.

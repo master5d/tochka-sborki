@@ -106,6 +106,19 @@
 .quest-hero-frame .quest-scene.quest-hero-scene { position: absolute; top: 0; left: 0; right: 0; height: calc(100vh - var(--quest-stage-top)); aspect-ratio: auto; border: none; border-radius: 0; z-index: 0; }
 .quest-hero-frame .quest-scene.quest-hero-scene img { object-position: 50% 78%; }
 .quest-hero-copy { position: relative; z-index: 2; width: 45%; min-width: 22rem; max-width: 34rem; padding: 3rem 2.5rem; background: var(--quest-tint-hero); display: flex; flex-direction: column; justify-content: center; }
+/* Cover motion: the hero line lands word by word (hero-title.tsx sets each
+   word's --d). Transform + opacity only — composited, no layout per frame.
+   At rest (and under reduced motion) the words simply stand; the rise plays
+   once on load and never again. */
+.quest-title-word { display: inline-block; }
+@media (prefers-reduced-motion: no-preference) {
+  .quest-title-word { animation: quest-word-land 780ms cubic-bezier(0.2, 0.75, 0.15, 1) var(--d, 0ms) both; }
+}
+@keyframes quest-word-land {
+  from { opacity: 0; transform: translate3d(0, 0.42em, 0) rotate(-2deg); }
+  60% { opacity: 1; }
+  to { opacity: 1; transform: none; }
+}
 @media (max-width: 900px) {
   .quest-hero-frame { flex-direction: column; min-height: calc(100svh - var(--quest-stage-top)); }
   .quest-hero-frame .quest-scene.quest-hero-scene { height: calc(100svh - var(--quest-stage-top)); }
