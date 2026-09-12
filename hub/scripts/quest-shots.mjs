@@ -26,11 +26,11 @@ if (!base || !outDir) { console.error('usage: quest-shots.mjs <baseUrl> <outDir>
 mkdirSync(outDir, { recursive: true })
 const browser = await chromium.launch()
 for (const [name, viewport] of [['desktop', { width: 1440, height: 900 }], ['mobile', { width: 390, height: 844 }]]) {
-  for (const path of ['/', '/en/']) {
+  for (const path of ['/cover/trend-adweek-2026-09/', '/en/cover/trend-adweek-2026-09/']) {
     for (const theme of ['light', 'dark']) {
       const page = await browser.newPage({ viewport, reducedMotion: 'reduce', colorScheme: theme })
       await page.goto(base + path, { waitUntil: 'networkidle' })
-      const loc = path === '/' ? 'ru' : 'en'
+      const loc = path.startsWith('/en/') ? 'en' : 'ru'
       for (const id of ['hero', 'intro', 'boulder', 'temple', 'gates', 'finale', 'about']) {
         const locator = page.locator(`#${id}`)
         await locator.scrollIntoViewIfNeeded()

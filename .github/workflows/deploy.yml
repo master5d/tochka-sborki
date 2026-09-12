@@ -63,11 +63,14 @@ jobs:
         # Cloudflare throttles shared GitHub runner IPs (code 10429) while the same
         # token deploys fine from elsewhere (2026-09-11: 3 runs failed, laptop deploy ok).
         # Retry only on that code, with backoff; any other error fails at once.
+        # From hub/: wrangler ships functions/ (the cover switch) and reads
+        # hub/wrangler.toml (pages_build_output_dir = ./out) only from its cwd.
+        working-directory: hub
         run: |
           set -o pipefail
           for wait in 0 60 120 240; do
             sleep "$wait"
-            if npx wrangler pages deploy hub/out \
+            if npx wrangler pages deploy \
                 --project-name=mamaev-coach-hub \
                 --branch=main \
                 --commit-message="${{ github.sha }}" 2>&1 | tee deploy.log; then
