@@ -123,7 +123,7 @@ interface Props {
  * CSS default (0px, unset) — the two stills then reproduce the original
  * frame exactly, matching the split script's own recompose measurement.
  * `role="img"`/`aria-label` on the wrapper carries the scene's real alt text;
- * the two inner `<img>`s are `alt=""` so assistive tech doesn't announce a
+ * the two inner img elements are `alt=""` so assistive tech doesn't announce a
  * composited image twice. 2K world: 01-map and 06-wall also carry a landscape
  * pair (`widePlates`) served on desktop — see PlatePicture.
  */
