@@ -1,5 +1,5 @@
 {
   "version": 1,
-  "include": ["/", "/en/"],
+  "include": ["/", "/en/", "/index.txt", "/__next.*", "/en/index.txt", "/en/__next.*"],
   "exclude": []
 }

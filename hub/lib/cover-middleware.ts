@@ -39,6 +39,17 @@ async function readConfig(env: CoverEnv): Promise<string | null> {
   return env.COVER_CONFIG ?? null
 }
 
+// Which home a request belongs to. Besides the documents `/` and `/en/`, the
+// client router fetches the home page as RSC files (`/index.txt`,
+// `/__next.<segment>.txt`, and their `/en/` twins) when a <Link> navigates
+// there. Those files are the floor's; a cover visitor must never be handed them.
+export function homeOf(pathname: string): { locale: 'ru' | 'en'; rsc: boolean } | null {
+  if (pathname === '/') return { locale: 'ru', rsc: false }
+  if (pathname === '/en/') return { locale: 'en', rsc: false }
+  const m = /^(\/en)?\/(index\.txt|__next\.[^/]+\.txt)$/.exec(pathname)
+  return m ? { locale: m[1] ? 'en' : 'ru', rsc: true } : null
+}
+
 export async function handleCover(
   request: Request,
   env: CoverEnv,
@@ -46,8 +57,9 @@ export async function handleCover(
   rand: () => number = Math.random,
 ): Promise<Response> {
   const url = new URL(request.url)
-  const locale = url.pathname === '/' ? 'ru' : url.pathname === '/en/' ? 'en' : null
-  if (!locale) return next()
+  const home = homeOf(url.pathname)
+  if (!home) return next()
+  const { locale } = home
 
   const choice = chooseVariant({
     raw: await readConfig(env),
@@ -60,11 +72,18 @@ export async function handleCover(
   if (choice.variant === FLOOR) {
     const passthrough = await next()
     res = new Response(passthrough.body, passthrough)
+  } else if (home.rsc) {
+    // Answer the router's RSC fetch with a redirect to the home document: the
+    // followed response is HTML, not a flight payload, so Next falls back to a
+    // full page load of `/` or `/en/` — which comes back through this function.
+    res = new Response(null, { status: 307, headers: { location: locale === 'en' ? '/en/' : '/' } })
   } else {
     const asset = await env.ASSETS.fetch(new URL(coverPath(choice.variant, locale), url))
     // The cover lives at a noindex path; served at `/` it must not deindex home.
     const html = (await asset.text()).replace(ROBOTS_META, '').replace(COVER_HREF, 'href="$1/"')
-    res = new Response(html, asset)
+    res = new Response(request.method === 'HEAD' ? null : html, asset)
+    // The body was rewritten: the asset's validators and length no longer describe it.
+    for (const h of ['etag', 'last-modified', 'content-length']) res.headers.delete(h)
   }
   res.headers.set('x-mc-cover', choice.variant)
   res.headers.set('vary', 'Cookie')

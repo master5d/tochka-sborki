@@ -86,4 +86,60 @@ describe('handleCover', () => {
     expect(res.headers.get('x-mc-cover')).toBe(COVER)
     expect(res.headers.get('set-cookie')).toBeNull()
   })
+  it('forged or unknown-cover cookie is re-rolled, never trusted', async () => {
+    const raw = `{"active":"floor","ab":{"cover":"${COVER}","share":50}}`
+    for (const c of ['mc_variant=bogus.50', 'mc_variant=removed-cover.50', `mc_variant=${COVER}.99`, 'mc_variant=']) {
+      const res = await handleCover(req('/', c), env({ raw }), floor, () => 0.9)
+      expect(res.headers.get('x-mc-cover')).toBe('floor')
+      expect(res.headers.get('set-cookie')).toMatch(/^mc_variant=floor\.50;/)
+    }
+  })
+  it('HEAD on a cover home: cover headers, empty body', async () => {
+    const res = await handleCover(new Request('https://x.test/', { method: 'HEAD' }), env({ defaultCover: COVER }), floor)
+    expect(res.headers.get('x-mc-cover')).toBe(COVER)
+    expect(await res.text()).toBe('')
+  })
+  it('query string does not change the decision', async () => {
+    const e = env({ defaultCover: COVER })
+    const res = await handleCover(req('/?utm_source=x'), e, floor)
+    expect(res.headers.get('x-mc-cover')).toBe(COVER)
+    expect(e.fetched).toEqual([`/cover/${COVER}/`])
+  })
+  it('rewritten cover body drops the asset validators and length', async () => {
+    const e = env({ defaultCover: COVER })
+    e.ASSETS.fetch = async () =>
+      new Response(COVER_HTML, { headers: { 'content-type': 'text/html', etag: '"abc"', 'last-modified': 'x', 'content-length': '999' } })
+    const res = await handleCover(req('/'), e, floor)
+    expect(res.headers.get('etag')).toBeNull()
+    expect(res.headers.get('last-modified')).toBeNull()
+    expect(res.headers.get('content-length')).toBeNull()
+  })
+  // Client-side <Link> navigation to home fetches RSC files, not the document.
+  // Before the fix these bypassed the choice and handed a cover visitor the floor.
+  it('cover visitor: home RSC fetches redirect to the home document (both locales)', async () => {
+    for (const [path, target] of [
+      ['/index.txt', '/'], ['/__next._tree.txt', '/'], ['/__next.__PAGE__.txt', '/'],
+      ['/en/index.txt', '/en/'], ['/en/__next._tree.txt', '/en/'],
+    ]) {
+      const e = env({ defaultCover: COVER })
+      const res = await handleCover(req(path), e, floor)
+      expect(res.status, path).toBe(307)
+      expect(res.headers.get('location'), path).toBe(target)
+      expect(res.headers.get('x-mc-cover')).toBe(COVER)
+      expect(res.headers.get('cache-control')).toMatch(/private/)
+      expect(e.fetched).toEqual([])
+    }
+  })
+  it('floor visitor: home RSC fetches pass through untouched', async () => {
+    const rsc = async () => new Response('0:rsc', { headers: { 'content-type': 'text/x-component' } })
+    const res = await handleCover(req('/en/__next._tree.txt'), env({ kv: false }), rsc)
+    expect(res.status).toBe(200)
+    expect(await res.text()).toBe('0:rsc')
+    expect(res.headers.get('x-mc-cover')).toBe('floor')
+  })
+  it('RSC files of other pages are untouched', async () => {
+    const e = env({ defaultCover: COVER })
+    const res = await handleCover(req('/store/__next._tree.txt'), e, floor)
+    expect(res.headers.get('x-mc-cover')).toBeNull()
+  })
 })

@@ -3,6 +3,7 @@
 // the quest is a trend cover at a hidden, noindex, unlinked path.
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
+import { spawnSync } from 'node:child_process'
 
 const COVER = 'trend-adweek-2026-09'
 const ROBOTS_NOINDEX = /<meta name="robots" content="noindex/
@@ -70,8 +71,22 @@ for (const file of walk(join(process.cwd(), 'out')).filter((f) => !coverDirs.som
   if (/href="(\/en)?\/cover\//.test(readFileSync(file, 'utf8'))) { console.error(`${file}: links to a cover path`); failed++ }
 }
 
-// The Function must only wake for the two home paths.
+// The Function wakes only for the home documents and their RSC files (_routes.json;
+// lib/routes.test.ts holds the list).
 if (!existsSync(join(process.cwd(), 'out/_routes.json'))) { console.error('out/_routes.json missing'); failed++ }
+else {
+  const inc = JSON.parse(read('out/_routes.json')).include ?? []
+  for (const r of ['/', '/en/', '/index.txt', '/__next.*', '/en/index.txt', '/en/__next.*']) {
+    if (!inc.includes(r)) { console.error(`out/_routes.json: missing include "${r}"`); failed++ }
+  }
+}
+
+// What a visitor receives at / and /en/ when the cover is served there, over the
+// real build: no robots meta, no /cover/ link (lib/cover-build.test.ts).
+{
+  const r = spawnSync('npx', ['vitest', 'run', 'lib/cover-build.test.ts'], { env: { ...process.env, COVER_BUILD: '1' }, encoding: 'utf8', shell: true })
+  if (r.status !== 0 || /skipped/.test(r.stdout) && !/passed/.test(r.stdout)) { console.error(`cover-build check failed:\n${r.stdout}${r.stderr}`); failed++ }
+}
 
 console.log(failed ? `smoke: ${failed} miss(es)` : 'smoke: ok')
 process.exit(failed ? 1 : 0)
