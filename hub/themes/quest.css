@@ -108,8 +108,16 @@
   .quest-hero-frame .quest-hero-drift .quest-scene.quest-hero-scene { top: -22%; }
 }
 .quest-hero-frame .quest-scene.quest-hero-scene { position: absolute; top: 0; left: 0; right: 0; height: calc(100vh - var(--quest-stage-top)); aspect-ratio: auto; border: none; border-radius: 0; z-index: 0; }
-/* 2K world: on desktop (>=901px) the hero is the LANDSCAPE map (plates/wide, scene-plates.tsx). The Scroller and the Builder stand at ~56-89% of its width and ~53-98% of its height. x=72%: at 1440 and 1920 both stand whole right of the copy panel; 1024 is the one tight width (the tall copy makes the frame 972 px, the band 587 px wide against 563 px of open art) and 72% splits the shortfall, ~12 px each side. y=100%: whenever the box leaves vertical slack (1920, reduced motion) it goes to the characters' bottom half. */
-.quest-hero-frame .quest-scene.quest-hero-scene img { object-position: 72% 100%; }
+/* 2K world: on desktop (>=901px) the hero is the LANDSCAPE map (plates/wide, scene-plates.tsx). The Scroller and the Builder stand at ~56-89% of its width and ~53-98% of its height. x=85% (was 72%): see the framing fix below — 901-1279 now stacks, so side by side starts at 1280, where the guides fit with margin on both sides. y=100%: whenever the box leaves vertical slack (1920, reduced motion) it goes to the characters' bottom half. */
+.quest-hero-frame .quest-scene.quest-hero-scene img { object-position: 85% 100%; }
+/* Framing fix (2026-09-12, scripts/quest-framing.mjs): side by side, the copy (capped at 34rem) and the two guides (~39% of the map's width, height-driven in the 122% box) only both fit from ~1280 px; at 1024 the band needed ~700 px against ~560 px of open art. So 901-1279 stacks like the phone — the landscape map on top, width-driven, both guides whole — and the copy follows it at a readable measure. From 1280 the free-space window for the guides is x ~72%..118%; 85% sits inside it with margin on both sides. */
+@media (min-width: 901px) and (max-width: 1279px) {
+  .quest-hero-frame { flex-direction: column; min-height: 0; }
+  .quest-hero-drift { position: relative; inset: auto; height: 58svh; flex-shrink: 0; }
+  .quest-hero-frame .quest-scene.quest-hero-scene { height: 100%; }
+  .quest-hero-frame .quest-scene.quest-hero-scene img { object-position: 70% 100%; }
+  .quest-hero-copy { width: 100%; min-width: 0; max-width: none; padding: 2.5rem max(2.5rem, calc((100% - 40rem) / 2)); justify-content: flex-start; }
+}
 .quest-hero-copy { position: relative; z-index: 2; width: 45%; min-width: 22rem; max-width: 34rem; padding: 3rem 2.5rem; background: var(--quest-tint-hero); display: flex; flex-direction: column; justify-content: center; }
 /* Cover motion: the hero line lands word by word (hero-title.tsx sets each
    word's --d). Transform + opacity only — composited, no layout per frame.
@@ -263,6 +271,13 @@
 /* 2K world: desktop shows the LANDSCAPE wall (plates/wide); the two stand at the right, heads ~43% and feet ~95% of its height, so the window sits low. Mobile keeps the tall art at its old 55%. */
 .quest-finale-frame .quest-scene.quest-finale-scene img { object-position: 50% 92%; }
 .quest-finale-copy { position: relative; z-index: 2; max-width: 28rem; margin: 2rem; padding: 2.5rem 2rem; background: var(--quest-tint-finale); border-radius: var(--radius); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
+/* Framing fix (2026-09-12): the guides stand at the RIGHT of the landscape wall (x ~72-96%, y ~42-94%), so on desktop the card moves to the left, where it can never meet them (it touched the Scroller by 37 px when centred at 1024), and the frame keeps at least ~38% of the width in height so a width-driven 1920 frame still holds the Builder from helmet to boots. */
+@media (min-width: 901px) {
+  .quest-finale-frame { justify-content: flex-start; min-height: max(min(70vh, 640px), 38vw); }
+  .quest-finale-copy { margin-left: clamp(2rem, 5vw, 5rem); }
+  /* Height-driven at 901-1100, the frame has spare width only on the art's sides; x=100% spends it on the left, away from the guides and the land plate's zoom. */
+  .quest-finale-frame .quest-scene.quest-finale-scene img { object-position: 100% 92%; }
+}
 @media (max-width: 900px) {
   .quest-finale-frame { min-height: 56vh; }
   .quest-finale-frame .quest-scene.quest-finale-scene img { object-position: 50% 55%; }

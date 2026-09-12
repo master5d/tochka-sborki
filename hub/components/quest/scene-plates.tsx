@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState, type RefObject } from 'react'
 import type { Locale } from '../../lib/dictionaries'
 import { srcSetOrSrc, type Art } from '../../lib/quest/art'
-import { coverRowY, landDrift, type Box } from '../../lib/quest/drift'
+import { coverRowY, landDrift, pageTopProgress, type Box } from '../../lib/quest/drift'
 import { plateGeometry, widePlates, type PlateGeometry, type WidePlates } from '../../lib/quest/plates'
 import type { SceneId, SceneState } from '../../lib/quest/scenes'
 import { clampProgress } from './use-chapter-progress'
@@ -34,7 +34,7 @@ const WIDE_MEDIA = '(min-width: 901px)'
  * seam row and object-position), so the geometry follows whichever variant the
  * `<picture>` is showing — keyed on the same media query as its `<source>`.
  */
-function usePlateDrift(tall: PlateGeometry, wide: WidePlates | null) {
+function usePlateDrift(tall: PlateGeometry, wide: WidePlates | null, progressMode: 'viewport' | 'page-top') {
   const containerRef = useRef<HTMLDivElement>(null)
   const landImgRef = useRef<HTMLImageElement>(null)
   const posY = useRef<{ variant: string; y: number } | null>(null)
@@ -56,7 +56,8 @@ function usePlateDrift(tall: PlateGeometry, wide: WidePlates | null) {
     }
     const rect = el.getBoundingClientRect()
     const box = { w: rect.width, h: rect.height }
-    const d = landDrift(clampProgress(rect.top, rect.height, window.innerHeight), box, coverRowY(box, geo.natural, posY.current.y, geo.row))
+    const progress = progressMode === 'page-top' ? pageTopProgress(window.scrollY, rect.height) : clampProgress(rect.top, rect.height, window.innerHeight)
+    const d = landDrift(progress, box, coverRowY(box, geo.natural, posY.current.y, geo.row))
     land.style.setProperty('--px-land', `${d.translateY}px`)
     land.style.setProperty('--scale-land', `${d.scale}`)
     land.style.setProperty('--origin-land', `${d.originY}px`)
@@ -108,6 +109,8 @@ interface Props {
   eager?: boolean
   /** `sizes` for the landscape plates (ART_SIZES.heroWide / .full). */
   wideSizes?: string
+  /** `page-top` for the hero: progress = scrollY / height, so the land plate rests UNzoomed at the top of the page (the viewport-relative rule starts the hero ~50% through, and its 5% zoom pushed the Builder out of the frame — quest-framing.mjs). */
+  progress?: 'viewport' | 'page-top'
 }
 
 /**
@@ -124,13 +127,13 @@ interface Props {
  * composited image twice. 2K world: 01-map and 06-wall also carry a landscape
  * pair (`widePlates`) served on desktop — see PlatePicture.
  */
-export function ScenePlates({ id, state, locale, alt, width, height, explicitTheme, eager = false, wideSizes = '100vw' }: Props) {
+export function ScenePlates({ id, state, locale, alt, width, height, explicitTheme, eager = false, wideSizes = '100vw', progress = 'viewport' }: Props) {
   const geo = plateGeometry(id, state)
   const nightGeo = plateGeometry(id, 'night')
   const wide = widePlates(id, state)
   const wideNight = widePlates(id, 'night')
   const fallback: PlateGeometry = geo ?? { horizonRow: 0, feather: 0, width, height, sky: '', land: '' }
-  const { containerRef, landImgRef } = usePlateDrift(fallback, wide)
+  const { containerRef, landImgRef } = usePlateDrift(fallback, wide, progress)
   // The wrapper exposes which frame the picture is showing (tests, the pixel guard).
   const [variant, setVariant] = useState<'tall' | 'wide'>('tall')
   useEffect(() => {

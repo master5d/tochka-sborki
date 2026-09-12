@@ -61,3 +61,8 @@ export function landDrift(progress: number, box: Box, originY: number, target = 
   const amplitude = Math.min(target, 0.85 * (zoomMax - 1) * below)
   return { translateY: -p * amplitude, scale: 1 + p * (zoomMax - 1), originY: oy }
 }
+
+/** Progress of a scene that starts at the very top of the page (the hero): 0 at rest, 1 once scrolled by its own height. */
+export function pageTopProgress(scrollY: number, height: number): number {
+  return height > 0 ? clamp(scrollY / height, 0, 1) : 0
+}

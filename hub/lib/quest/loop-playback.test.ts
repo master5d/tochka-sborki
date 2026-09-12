@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { shouldPlayLoop, wideLoopSource } from './loop-playback'
+import { loopAction, PAUSE_AFTER_SCROLL_IDLE_MS, shouldPlayLoop, wideLoopSource } from './loop-playback'
 
 describe('wideLoopSource', () => {
   it('desktop, motion allowed: the landscape camp loop of the current state (day is 2K, night still waits)', () => {
@@ -28,5 +28,23 @@ describe('shouldPlayLoop', () => {
   })
   it('never plays under reduced motion', () => {
     expect(shouldPlayLoop({ onScreen: true, pageVisible: true, reducedMotion: true })).toBe(false)
+  })
+})
+
+describe('loopAction — pause a loop that left the screen only once the scroll is idle', () => {
+  const base = { onScreen: false, pageVisible: true, reducedMotion: false }
+  it('plays a loop on screen', () => {
+    expect(loopAction({ ...base, onScreen: true, scrollIdleMs: 0 })).toBe('play')
+  })
+  it('keeps an off-screen loop running while the reader is still scrolling (a pause mid-scroll stalls the GPU ~100 ms on 2K hardware-decoded video)', () => {
+    expect(loopAction({ ...base, scrollIdleMs: 0 })).toBe('keep')
+    expect(loopAction({ ...base, scrollIdleMs: PAUSE_AFTER_SCROLL_IDLE_MS - 1 })).toBe('keep')
+  })
+  it('pauses an off-screen loop once the scroll has been idle long enough', () => {
+    expect(loopAction({ ...base, scrollIdleMs: PAUSE_AFTER_SCROLL_IDLE_MS })).toBe('pause')
+  })
+  it('pauses at once in a hidden tab or under reduced motion, scrolling or not', () => {
+    expect(loopAction({ ...base, onScreen: true, pageVisible: false, scrollIdleMs: 0 })).toBe('pause')
+    expect(loopAction({ ...base, onScreen: true, reducedMotion: true, scrollIdleMs: 0 })).toBe('pause')
   })
 })

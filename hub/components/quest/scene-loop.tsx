@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { Locale } from '../../lib/dictionaries'
 import { pickDensity, srcSetOf, srcSetOrSrc } from '../../lib/quest/art'
-import { shouldPlayLoop } from '../../lib/quest/loop-playback'
+import { useLoopPlayback } from './use-loop-playback'
 import { isSplitScene } from '../../lib/quest/plates'
 import { ART_SIZES, SCENES, sceneAssets, type SceneId } from '../../lib/quest/scenes'
 import { ScenePlates } from './scene-plates'
@@ -40,6 +40,8 @@ interface Props {
   sizes?: string
   /** `sizes` for a split scene's landscape plates on desktop (hero / finale). */
   wideSizes?: string
+  /** How a split scene's land drift measures progress — see ScenePlates. */
+  plateProgress?: 'viewport' | 'page-top'
 }
 
 /**
@@ -63,7 +65,7 @@ interface Props {
  * `poster` attribute: it would fetch a second copy of the still; until the first
  * frame paints, the transparent video shows the `<picture>` underneath.
  */
-export function SceneLoop({ id, locale, quip, children, eager = false, className, sizes = ART_SIZES.full, wideSizes = ART_SIZES.full }: Props) {
+export function SceneLoop({ id, locale, quip, children, eager = false, className, sizes = ART_SIZES.full, wideSizes = ART_SIZES.full, plateProgress = 'viewport' }: Props) {
   const scene = SCENES[id]
   const theme = useThemeState()
   const assets = sceneAssets(id, theme)
@@ -90,28 +92,8 @@ export function SceneLoop({ id, locale, quip, children, eager = false, className
   // visible (shouldPlayLoop). Before this, all three road loops kept decoding
   // off screen for the whole page. `playAllowed` is what the loader below
   // consults, so a day/night switch off screen loads the track without starting it.
-  const playAllowed = useRef(false)
-  useEffect(() => {
-    if (split || reducedMotion) return
-    const video = videoRef.current
-    if (!video) return
-    let onScreen = false
-    const apply = () => {
-      playAllowed.current = shouldPlayLoop({ onScreen, pageVisible: document.visibilityState !== 'hidden', reducedMotion })
-      if (playAllowed.current) video.play().catch(() => {})
-      else video.pause()
-    }
-    const io = typeof IntersectionObserver === 'undefined'
-      ? null
-      : new IntersectionObserver(([entry]) => { onScreen = entry.isIntersecting; apply() }, { rootMargin: '200px 0px' })
-    if (io) io.observe(video)
-    else { onScreen = true; apply() }
-    document.addEventListener('visibilitychange', apply)
-    return () => {
-      io?.disconnect()
-      document.removeEventListener('visibilitychange', apply)
-    }
-  }, [split, reducedMotion])
+  // Pixel/perf round (2026-09-12): the pause of a loop that left the screen waits for the scroll to go still (use-loop-playback.ts).
+  const playAllowed = useLoopPlayback(videoRef, !split && !reducedMotion, reducedMotion)
 
   useEffect(() => {
     if (split) return
@@ -151,6 +133,7 @@ export function SceneLoop({ id, locale, quip, children, eager = false, className
           explicitTheme={explicitTheme}
           eager={eager}
           wideSizes={wideSizes}
+          progress={plateProgress}
         />
       ) : (
         <>

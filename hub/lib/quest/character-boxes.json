@@ -1,0 +1,11 @@
+{
+  "_note": "Where the two guides stand in each LANDSCAPE plate the hero/finale show on desktop, as fractions of the frame (x = left..right of width, y = top..bottom of height). Measured by eye on the @1x land plates (01-map-wide 1209x806, 06-wall-wide 1264x848) around cushion, backpack, robot arm and boots, then widened by ~0.4% a side. Night frames share the geometry (0-1 px shift, NAUTILUS v4-2k manifest). Read by scripts/quest-framing.mjs: both boxes must sit whole inside the visible frame and clear of the copy panel.",
+  "01-map-wide": [
+    { "who": "scroller", "x": [0.558, 0.714], "y": [0.705, 0.960] },
+    { "who": "builder", "x": [0.773, 0.951], "y": [0.525, 0.988] }
+  ],
+  "06-wall-wide": [
+    { "who": "scroller", "x": [0.716, 0.855], "y": [0.677, 0.918] },
+    { "who": "builder", "x": [0.819, 0.957], "y": [0.420, 0.942] }
+  ]
+}

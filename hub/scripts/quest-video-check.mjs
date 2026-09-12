@@ -8,6 +8,7 @@
 // Usage: node scripts/quest-video-check.mjs <baseUrl> [path]  (default: the trend cover's hidden page)
 import { chromium } from 'playwright'
 import { checkPixels } from './quest-pixels.mjs'
+import { checkFraming } from './quest-framing.mjs'
 
 const [base, path = '/cover/trend-adweek-2026-09/'] = process.argv.slice(2)
 if (!base) { console.error('usage: quest-video-check.mjs <baseUrl>'); process.exit(2) }
@@ -67,6 +68,9 @@ await checkReducedMotion()
 // 2026-09-12 pixel audit: no one-axis stretch anywhere (hard); upscale/crop reported,
 // strict by default since the 2K world is in; STRICT_PIXELS=0 reports only (scripts/quest-pixels.mjs).
 failed += await checkPixels(browser, base, path, { strict: process.env.STRICT_PIXELS !== '0' })
+// 2026-09-12: the landscape hero/finale must show both guides whole and clear of the copy
+// at every desktop width (scripts/quest-framing.mjs) — hard.
+failed += await checkFraming(browser, base, path)
 
 await browser.close()
 console.log(failed ? `quest-video-check: ${failed} failure(s)` : 'quest-video-check: ok')

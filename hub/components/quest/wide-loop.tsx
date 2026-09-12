@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { pickDensity } from '../../lib/quest/art'
-import { shouldPlayLoop, wideLoopSource } from '../../lib/quest/loop-playback'
+import { wideLoopSource } from '../../lib/quest/loop-playback'
+import { useLoopPlayback } from './use-loop-playback'
 import { ART_SIZES, CAMP_WIDE_SIZE, campWide } from '../../lib/quest/scenes'
 import { ThemedPicture } from './themed-picture'
 import { useReducedMotion } from './use-parallax'
@@ -39,29 +40,9 @@ export function WideLoop({ alt }: { alt: string }) {
   const desktop = useDesktop()
   const loop = wideLoopSource({ desktop, reducedMotion, state: theme })
   const videoRef = useRef<HTMLVideoElement>(null)
-  const playAllowed = useRef(false)
   const mounted = loop !== null
 
-  useEffect(() => {
-    const video = videoRef.current
-    if (!mounted || !video) return
-    let onScreen = false
-    const apply = () => {
-      playAllowed.current = shouldPlayLoop({ onScreen, pageVisible: document.visibilityState !== 'hidden', reducedMotion })
-      if (playAllowed.current) video.play().catch(() => {})
-      else video.pause()
-    }
-    const io = typeof IntersectionObserver === 'undefined'
-      ? null
-      : new IntersectionObserver(([entry]) => { onScreen = entry.isIntersecting; apply() }, { rootMargin: '200px 0px' })
-    if (io) io.observe(video)
-    else { onScreen = true; apply() }
-    document.addEventListener('visibilitychange', apply)
-    return () => {
-      io?.disconnect()
-      document.removeEventListener('visibilitychange', apply)
-    }
-  }, [mounted, reducedMotion])
+  const playAllowed = useLoopPlayback(videoRef, mounted, reducedMotion)
 
   const loopKey = loop?.x1 ?? null
   useEffect(() => {

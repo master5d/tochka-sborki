@@ -84,6 +84,7 @@ export function QuestHome({ locale }: Props) {
               eager
               className="quest-hero-scene"
               wideSizes={ART_SIZES.heroWide}
+              plateProgress="page-top"
               quip={quipFor('hero')}
             />
           </div>
