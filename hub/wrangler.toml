@@ -2,16 +2,27 @@
 #   npx wrangler pages deploy --project-name=mamaev-coach-hub --branch=<branch>
 # Only then does functions/ ship with the static export.
 #
-# Production (top level) has NO cover binding and NO variables on purpose: the
-# middleware then serves the floor. Switching a cover on production is the
-# owner's command — it needs a KV namespace (SITE_COVER) or a COVER_CONFIG value,
-# neither of which exists yet. The deploy token cannot create KV today
-# (Authentication error 10000 on /storage/kv/namespaces, checked 2026-09-11).
+# Cover switch = the `config` key of the SITE_COVER KV namespace, written by
+# hub/scripts/cover.ps1 on the owner's command (no rebuild, live in seconds).
+# Source order in the middleware: KV → COVER_CONFIG → COVER_DEFAULT → floor.
+# Production KV is seeded {"active":"floor"}; a missing or broken key also means
+# the floor. Pages does not inherit bindings into env.preview, so the preview
+# namespace is declared separately (a preview run can never reach production).
 name = "mamaev-coach-hub"
 pages_build_output_dir = "./out"
 compatibility_date = "2026-05-16"
 
+# Production: KV mc-site-cover.
+[[kv_namespaces]]
+binding = "SITE_COVER"
+id = "bf31826576e54a6b9912b68b1e3db9d0"
+
 # Preview deployments show the cover the design work is happening on.
-# COVER_CONFIG may be added here to rehearse A/B and broken-config paths.
+# COVER_DEFAULT is the fallback when the preview KV has no `config` key.
 [env.preview.vars]
 COVER_DEFAULT = "trend-adweek-2026-09"
+
+# Preview: KV mc-site-cover-preview.
+[[env.preview.kv_namespaces]]
+binding = "SITE_COVER"
+id = "9466f652f8be4e6ebea979cfccd72aad"

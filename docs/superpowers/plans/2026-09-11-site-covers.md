@@ -81,6 +81,7 @@ Tests cover: null raw + no default → floor; null raw + preview default → cov
 Tests with a fake env: floor passthrough; default cover rewrite + noindex stripped; KV throws → floor; `/en/` maps to the EN cover path; other paths untouched; A/B sets cookie.
 `_routes.json`: `{"version":1,"include":["/","/en/","/index.txt","/__next.*","/en/index.txt","/en/__next.*"],"exclude":[]}` (RSC paths added after review).
 `wrangler.toml`: name, `pages_build_output_dir = "./out"`, `compatibility_date = "2026-05-16"` (the dashboard value), `[env.preview.vars] COVER_DEFAULT`, `[[env.preview.kv_namespaces]] SITE_COVER` = the preview namespace. **No top-level binding** → production serves the floor until the owner orders a namespace.
+**Update 2026-09-12 (owner granted `cf-deploy` Workers KV Storage:Edit):** the env-var deviation is closed. Top-level `[[kv_namespaces]] SITE_COVER` = `mc-site-cover` (`bf31826576e54a6b9912b68b1e3db9d0`, seeded `{"active":"floor"}` — production behaviour unchanged); `[[env.preview.kv_namespaces]] SITE_COVER` = `mc-site-cover-preview` (`9466f652f8be4e6ebea979cfccd72aad`, seeded with the cover active). `COVER_DEFAULT` stays as the preview fallback when the key is missing.
 
 ### Task 5: Pages — floor at home, cover at a hidden path
 
@@ -91,7 +92,7 @@ Cover pages: `generateStaticParams` from `trendCovers()`, `dynamicParams = false
 
 **Files:** Modify `hub/scripts/quest-smoke.mjs`, `quest-video-check.mjs`, `quest-shots.mjs`; create `hub/scripts/cover.ps1`.
 Smoke: quest checks move to `out/cover/<id>/index.html` + EN; floor needles on `out/index.html` + EN; cover HTML has robots noindex, floor has none; **no HTML file anywhere in `out/` links to `/cover/`**. Playwright tools take an optional path (default: the cover).
-`cover.ps1 -Env preview|production status|ab <id> <share>|promote <id>|rollback`: writes `config` in KV with wrangler; production requires `-NamespaceId` (none exists yet) and prints before/after.
+`cover.ps1 -Env preview|production status|ab <id> <share>|promote <id>|rollback`: writes `config` in KV with wrangler; production requires `-NamespaceId` (none exists yet) and prints before/after. (Superseded after review: the namespace id is read from `wrangler.toml` per `-Env`, and production writes need `-ConfirmProduction`.)
 
 ### Task 7: CI deploys from `hub/` so the Function ships
 
