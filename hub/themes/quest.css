@@ -91,17 +91,17 @@
    so any scroll-to leaves that much clearance instead of tucking content under it. */
 #hero { scroll-margin-top: var(--quest-stage-top); }
 .quest-hero-frame { position: relative; min-height: calc(100vh - var(--quest-stage-top)); display: flex; align-items: stretch; overflow: hidden; }
-/* Wave J1 fix: the hero art's own vertical drift lives on this wrapper, not
-   on `.quest-hero-scene` itself. `scaleY` (not a uniform `scale`) gives the
-   drift vertical surplus to move within without ever touching the LEFT/RIGHT
-   framing — the hero art already runs a character to the frame's right edge,
-   so a uniform zoom would risk cropping it; `scaleY` only stretches/reveals
-   vertically. `.quest-hero-frame` above clips the surplus at top/bottom.
-   `useHeroDrift` (quest-home.tsx) writes `--px-y`, capped so it can never
-   exceed the surplus this scale provides (never exposes a gap). */
-.quest-hero-drift { position: absolute; inset: 0; }
+/* Pixel-audit fix (2026-09-12): the hero drift used to buy vertical room with
+   scaleY(1.22) on this wrapper — a one-axis stretch of the art (up to 1.39× with
+   the land plate's own stretch on top). Now the room is REAL pixels: the scene
+   inside is 22% taller than the wrapper (11% past each edge, `HERO_SURPLUS` in
+   lib/quest/drift.ts) and the drift is a pure translate on the scene; the
+   wrapper clips. `useHeroDrift` (quest-home.tsx) writes `--px-y`, capped at 85%
+   of that surplus so an edge is never exposed. Reduced motion: none of this
+   applies — the scene sits exactly in the wrapper, as before. */
+.quest-hero-drift { position: absolute; inset: 0; overflow: hidden; }
 @media (prefers-reduced-motion: no-preference) {
-  .quest-hero-drift { transform: translate3d(0, var(--px-y, 0px), 0) scaleY(1.22); will-change: transform; }
+  .quest-hero-frame .quest-hero-drift .quest-scene.quest-hero-scene { top: -11%; height: 122%; transform: translate3d(0, var(--px-y, 0px), 0); will-change: transform; }
 }
 .quest-hero-frame .quest-scene.quest-hero-scene { position: absolute; top: 0; left: 0; right: 0; height: calc(100vh - var(--quest-stage-top)); aspect-ratio: auto; border: none; border-radius: 0; z-index: 0; }
 .quest-hero-frame .quest-scene.quest-hero-scene img { object-position: 50% 78%; }
@@ -297,7 +297,7 @@
 .quest-scene__plate { position: absolute; inset: 0; overflow: hidden; }
 .quest-scene__plate--sky { z-index: 1; }
 .quest-scene__plate--land { z-index: 0; }
-.quest-scene__plate--land img { transform-origin: top; transform: translate3d(0, var(--px-land, 0px), 0) scale(1, var(--scale-land, 1)); will-change: transform; } /* --scale-land ramps 1 -> LAND_SCALE_Y with progress (scene-plates.tsx); defaults to 1 (identity) so no-JS/reduced-motion reproduce the original still exactly. transform-origin:top keeps the top edge's own displacement purely translate-driven — the scale's surplus grows only downward, where it's needed (land only ever drifts up) */
+.quest-scene__plate--land img { transform-origin: 50% var(--origin-land, 50%); transform: translate3d(0, var(--px-land, 0px), 0) scale(var(--scale-land, 1)); will-change: transform; } /* Pixel-audit fix (2026-09-12): ONE scale for both axes, about the seam line (`--origin-land`, lib/quest/drift.ts landDrift) — it ramps 1 -> LAND_ZOOM_MAX with progress and grows fresh land below the seam, which is the room the upward drift needs; the old scale(1, y) stretched the plate vertically by up to 1.15. Unset vars = identity, so no-JS/reduced-motion still reproduce the split still exactly. */
 /* Wave G (G4): the About scene sits outside the sticky stage (no sticky text
    column beside it), so without an override it falls back to the 848/1264
    default at the FULL content-max width — at ~1100px wide that renders ~1640px

@@ -1,6 +1,7 @@
 'use client'
 import { useRef } from 'react'
 import type { Locale } from '../../lib/dictionaries'
+import { coverRowY, landDrift, type Box } from '../../lib/quest/drift'
 import { plateGeometry } from '../../lib/quest/plates'
 import type { SceneId, SceneState } from '../../lib/quest/scenes'
 import { clampProgress } from './use-chapter-progress'
@@ -8,60 +9,42 @@ import { useParallaxFrame, useReducedMotion } from './use-parallax'
 
 /**
  * Wave K: the land plane's own upward drift across the chapter, relative to
- * the sky plane, which never moves. The split script's own alpha measurement
- * (see plates/manifest.json's `feather`) showed sky is fully OPAQUE through
- * `horizon_row` and fully TRANSPARENT from `horizon_row + feather` on — land
- * is the exact mirror. Moving land UP (`--px-land` always <= 0, toward the
- * sky) only ever pulls MORE of land's own opaque interior into that seam band
- * — it can only grow the overlap the manifest already guarantees at rest,
- * never shrink it below zero. Moving land DOWN would do the opposite (shrink
- * the overlap toward zero and past it) — never do that here.
+ * the sky plane, which never moves. The split script's alpha measurement (see
+ * plates/manifest.json's `feather`) showed sky fully OPAQUE through
+ * `horizon_row` and fully TRANSPARENT from `horizon_row + feather` on — land is
+ * the mirror. Moving land UP only pulls MORE of its own opaque interior into
+ * that seam band, so it can only grow the overlap the manifest guarantees at
+ * rest, never shrink it. Never move land down.
  *
- * `LAND_DRIFT_TARGET` sits inside the brief's 40-70px band and is what a
- * measurement of the land plate's own TOP edge should show, start to end of
- * the chapter — which is exactly why the CSS uses `transform-origin: top`
- * (see themes/quest.css): land only ever moves UP, which only ever needs
- * fresh content at the plate's BOTTOM, never its top. Scaling about the
- * default centre origin would have grown the box upward too, on top of the
- * translate, inflating the top edge's own measured displacement well past
- * the target (measured directly: it did, ~150px instead of ~55px, before
- * this was caught) — `transform-origin: top` pins the top edge exactly to
- * the translate value and puts 100% of the surplus at the bottom, where it's
- * actually needed. `LAND_SCALE_Y` is the land plate's own image vertical
- * surplus AT THE END of the chapter (same oversize-and-clip trick as
- * `useHeroDrift`/`GatesRoads` in quest-home.tsx), so translating it never
- * exposes the plate's own bottom edge — but unlike those, the scale here
- * RAMPS WITH PROGRESS (identity at progress 0, `LAND_SCALE_Y` at progress 1)
- * rather than sitting at a constant stretch: `prefers-reduced-motion`/no-JS
- * leave both `--px-land` and `--scale-land` at their unset CSS defaults (0px
- * / 1, i.e. no-op), and the brief requires that state to reproduce the split
- * script's own recompose (byte-exact original still) — a CONSTANT scale
- * would have stretched the land plate even at rest. `amplitude` is capped at
- * 85% of the (bottom-only) surplus available AT THAT PROGRESS (both ramp
- * together, linearly, from 0), same margin `useHeroDrift` uses, so a very
- * short/narrow render of the scene shrinks the drift instead of ever
- * exposing an edge, at every progress value, not just at the end.
+ * Pixel-audit fix (2026-09-12): the room for the rise used to come from
+ * `scale(1, y)` — a vertical stretch of the plate up to 1.15×. Now it is ONE
+ * scale for both axes about the seam line (`landDrift` in lib/quest/drift.ts):
+ * the seam row stays put (then rises with the translate), fresh land grows
+ * below it, and the zoom's growth under the seam always covers the rise. The
+ * seam's box-space y comes from the manifest's `horizon_row` mapped through the
+ * plate's own `object-fit: cover` and `object-position` (`coverRowY`), read once
+ * per size. `prefers-reduced-motion`/no-JS leave every CSS var unset —
+ * identity — so the two stills still reproduce the split's recompose exactly.
  */
-const LAND_DRIFT_TARGET = 55
-const LAND_SCALE_Y = 1.15
-
-function usePlateDrift() {
+function usePlateDrift(horizonRow: number, natural: Box) {
   const containerRef = useRef<HTMLDivElement>(null)
   const landImgRef = useRef<HTMLImageElement>(null)
+  const posYRef = useRef<number | null>(null)
   const reducedMotion = useReducedMotion()
   useParallaxFrame(() => {
     const el = containerRef.current
     const land = landImgRef.current
     if (!el || !land) return
+    if (posYRef.current === null) {
+      const m = /(-?[\d.]+)%\s*$/.exec(getComputedStyle(land).objectPosition)
+      posYRef.current = m ? Number(m[1]) / 100 : 0.5
+    }
     const rect = el.getBoundingClientRect()
-    // transform-origin: top means ALL the surplus from scaling lands at the
-    // bottom (no /2 split with the top, unlike the centre-origin hero drift).
-    const fullBottomSurplus = rect.height * (LAND_SCALE_Y - 1)
-    const amplitude = Math.min(LAND_DRIFT_TARGET, fullBottomSurplus * 0.85)
-    const progress = clampProgress(rect.top, rect.height, window.innerHeight)
-    const scale = 1 + progress * (LAND_SCALE_Y - 1)
-    land.style.setProperty('--px-land', `${-progress * amplitude}px`)
-    land.style.setProperty('--scale-land', `${scale}`)
+    const box = { w: rect.width, h: rect.height }
+    const d = landDrift(clampProgress(rect.top, rect.height, window.innerHeight), box, coverRowY(box, natural, posYRef.current, horizonRow))
+    land.style.setProperty('--px-land', `${d.translateY}px`)
+    land.style.setProperty('--scale-land', `${d.scale}`)
+    land.style.setProperty('--origin-land', `${d.originY}px`)
   }, !reducedMotion)
   return { containerRef, landImgRef }
 }
@@ -95,7 +78,7 @@ interface Props {
 export function ScenePlates({ id, state, locale, alt, width, height, explicitTheme, eager = false }: Props) {
   const geo = plateGeometry(id, state)
   const nightGeo = plateGeometry(id, 'night')
-  const { containerRef, landImgRef } = usePlateDrift()
+  const { containerRef, landImgRef } = usePlateDrift(geo?.horizonRow ?? 0, { w: geo?.width ?? width, h: geo?.height ?? height })
   if (!geo || !nightGeo) return null // caller checks isSplitScene first; this is a same-answer guard
   return (
     <div

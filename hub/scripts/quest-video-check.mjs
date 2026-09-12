@@ -7,6 +7,7 @@
 //
 // Usage: node scripts/quest-video-check.mjs <baseUrl> [path]  (default: the trend cover's hidden page)
 import { chromium } from 'playwright'
+import { checkPixels } from './quest-pixels.mjs'
 
 const [base, path = '/cover/trend-adweek-2026-09/'] = process.argv.slice(2)
 if (!base) { console.error('usage: quest-video-check.mjs <baseUrl>'); process.exit(2) }
@@ -63,6 +64,9 @@ await checkNoInnerScroll(1440, 900)
 await checkTheme('dark', '-night')
 await checkTheme('light', '-day')
 await checkReducedMotion()
+// 2026-09-12 pixel audit: no one-axis stretch anywhere (hard); upscale/crop reported,
+// hard only with STRICT_PIXELS=1 once the 2K world is in (scripts/quest-pixels.mjs).
+failed += await checkPixels(browser, base, path, { strict: process.env.STRICT_PIXELS === '1' })
 
 await browser.close()
 console.log(failed ? `quest-video-check: ${failed} failure(s)` : 'quest-video-check: ok')

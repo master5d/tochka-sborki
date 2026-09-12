@@ -11,6 +11,7 @@ import { PinnedBackdrop } from './pinned-backdrop'
 import { RoadScene } from './road-scene'
 import { SceneLoop } from './scene-loop'
 import { WideLoop } from './wide-loop'
+import { heroDrift as heroDriftPx } from '../../lib/quest/drift'
 import { SCENES } from '../../lib/quest/scenes'
 import { usePathChoice } from './use-path-choice'
 import { useScrollMood } from './use-scroll-mood'
@@ -22,31 +23,16 @@ const FORK_TINT: Record<Fork['id'], Tint> = { boulder: 'fork1', temple: 'fork2',
 function Para({ text, lead = false }: { text: string; lead?: boolean }) {
   return <p className="quest-prose" style={{ fontSize: lead ? 'var(--text-lg)' : 'var(--text-base)', lineHeight: 1.7, color: 'var(--text-primary)', marginBottom: '1rem' }}>{text}</p>
 }
-/** Wave J1 fix (coordinator review): the first cut's rate (-0.984 vs the
- * copy's -1.0) was invisible in practice — ~14px of relative drift is below
- * the threshold of perception. Reworked to guarantee a fixed PIXEL
- * displacement instead of a small rate: `HERO_DRIFT_TARGET` (80px) is what
- * the art lags BEHIND its own natural scroll position by the time the hero
- * has fully scrolled past — i.e. `relativeDisplacement(art, copy) ===
- * HERO_DRIFT_TARGET` exactly at that point (copy has no added transform, so
- * its own displacement over the same window is the plain -scrollDelta; the
- * art's is that same -scrollDelta + amplitude — the difference IS the
- * amplitude, by construction). `frameRef` measures `.quest-hero-frame`'s own
- * box directly (local scroll = `-rect.top`, progress = that ÷ the frame's own
- * height — NOT `clampProgress`, whose viewport-relative formula starts the
- * hero already ~50% "through" its transit at scrollY=0, which was hiding
- * most of the usable range). `driftRef` is the wrapper around the hero
- * `SceneLoop`. The wrapper is scaled vertically only (`scaleY`, not a
- * uniform `scale`) in CSS — a uniform zoom would also crop the LEFT/RIGHT
- * edges, and the hero art already runs a character (the robot) right to the
- * frame's right edge; `scaleY` gives vertical surplus for the drift without
- * touching horizontal framing at all. `amplitude` is capped at 85% of that
- * surplus so the drift can never expose a gap at the top/bottom edge — on a
- * short viewport where the full 80px doesn't fit, it quietly shrinks instead
- * (per the brief: stay subtle rather than break the frame). */
-const HERO_DRIFT_TARGET = 80
-const HERO_SCALE_Y = 1.22 // ±11% of the frame's own height as vertical surplus, scaleY only (no horizontal crop change)
-
+/** Hero art drift: the art lags BEHIND its natural scroll position by up to
+ * `HERO_DRIFT_TARGET` px as the hero scrolls past (wave J1). Since the
+ * 2026-09-12 pixel audit the room for that lag is real pixels, not a stretch:
+ * the scene is 11% taller than its wrapper past each edge (`HERO_SURPLUS`, CSS
+ * in themes/quest.css) and the drift is a translate on the scene only — the old
+ * `scaleY(1.22)` stretched the art on one axis. Progress comes from the frame's
+ * own box (local scroll = `-rect.top` ÷ its height, not `clampProgress`, whose
+ * viewport-relative formula starts the hero ~50% "through"); the surplus is
+ * measured on the drift wrapper, which is shorter than the frame on mobile
+ * (image in flow above the copy), so the cap follows the box that clips. */
 function useHeroDrift() {
   const frameRef = useRef<HTMLDivElement>(null)
   const driftRef = useRef<HTMLDivElement>(null)
@@ -56,10 +42,8 @@ function useHeroDrift() {
     const drift = driftRef.current
     if (!frame || !drift) return
     const rect = frame.getBoundingClientRect()
-    const surplusPerSide = (rect.height * (HERO_SCALE_Y - 1)) / 2
-    const amplitude = Math.min(HERO_DRIFT_TARGET, surplusPerSide * 0.85)
     const progress = Math.min(1, Math.max(0, -rect.top / rect.height))
-    drift.style.setProperty('--px-y', `${progress * amplitude}px`)
+    drift.style.setProperty('--px-y', `${heroDriftPx(progress, drift.getBoundingClientRect().height)}px`)
   }, !reducedMotion)
   return { frameRef, driftRef }
 }
