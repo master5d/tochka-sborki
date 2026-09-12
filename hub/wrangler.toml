@@ -1,0 +1,17 @@
+# Pages project config (spec 2026-09-11-site-covers-floor-ab). Deploy from hub/:
+#   npx wrangler pages deploy --project-name=mamaev-coach-hub --branch=<branch>
+# Only then does functions/ ship with the static export.
+#
+# Production (top level) has NO cover binding and NO variables on purpose: the
+# middleware then serves the floor. Switching a cover on production is the
+# owner's command — it needs a KV namespace (SITE_COVER) or a COVER_CONFIG value,
+# neither of which exists yet. The deploy token cannot create KV today
+# (Authentication error 10000 on /storage/kv/namespaces, checked 2026-09-11).
+name = "mamaev-coach-hub"
+pages_build_output_dir = "./out"
+compatibility_date = "2026-05-16"
+
+# Preview deployments show the cover the design work is happening on.
+# COVER_CONFIG may be added here to rehearse A/B and broken-config paths.
+[env.preview.vars]
+COVER_DEFAULT = "trend-adweek-2026-09"
