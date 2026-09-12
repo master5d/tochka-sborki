@@ -60,9 +60,12 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ env.CF_ACCOUNT }}
-        # Cloudflare throttles shared GitHub runner IPs (code 10429) while the same
-        # token deploys fine from elsewhere (2026-09-11: 3 runs failed, laptop deploy ok).
-        # Retry only on that code, with backoff; any other error fails at once.
+        # A 10429 ("Rate limited") can also mean a DEAD token: Cloudflare answered the
+        # token revoked on 2026-09-04 with 10429, not an auth error, and five deploys
+        # failed until the repo secret was reset (2026-09-12; the next run went green
+        # first try). On repeated 10429 check `gh secret list` (secret date) first.
+        # This retry is only a cushion for a genuine transient throttle: it retries
+        # on 10429 with backoff; any other error fails at once.
         # From hub/: wrangler ships functions/ (the cover switch) and reads
         # hub/wrangler.toml (pages_build_output_dir = ./out) only from its cwd.
         working-directory: hub
@@ -111,9 +114,12 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ env.CF_ACCOUNT }}
-        # Cloudflare throttles shared GitHub runner IPs (code 10429) while the same
-        # token deploys fine from elsewhere (2026-09-11: 3 runs failed, laptop deploy ok).
-        # Retry only on that code, with backoff; any other error fails at once.
+        # A 10429 ("Rate limited") can also mean a DEAD token: Cloudflare answered the
+        # token revoked on 2026-09-04 with 10429, not an auth error, and five deploys
+        # failed until the repo secret was reset (2026-09-12; the next run went green
+        # first try). On repeated 10429 check `gh secret list` (secret date) first.
+        # This retry is only a cushion for a genuine transient throttle: it retries
+        # on 10429 with backoff; any other error fails at once.
         run: |
           set -o pipefail
           for wait in 0 60 120 240; do
