@@ -38,10 +38,10 @@
 
 **Files:** Restore `hub/components/home-page.tsx`, `hub/lib/dictionaries.ts` fields, `hub/lib/dictionaries.founder.test.ts`, `hub/lib/dictionaries.hero-badges.test.ts`.
 
-- [ ] `git checkout afea700^ -- hub/components/home-page.tsx`
-- [ ] `git show c9f6d08 | git apply -R` (reverses exactly the dead-field removal: fields, interfaces, both tests)
-- [ ] `npx vitest run lib/dictionaries` → PASS (founder + hero-badges suites back)
-- [ ] Commit.
+- [x] `git checkout afea700^ -- hub/components/home-page.tsx`
+- [x] `git show c9f6d08 | git apply -R` (reverses exactly the dead-field removal: fields, interfaces, both tests)
+- [x] `npx vitest run lib/dictionaries` → PASS (founder + hero-badges suites back)
+- [x] Commit.
 
 ### Task 2: Covers registry (data only, no React — the Function imports it)
 
