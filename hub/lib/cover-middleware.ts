@@ -15,6 +15,9 @@ export interface CoverEnv {
 
 const COOKIE = 'mc_variant'
 const ROBOTS_META = /<meta name="robots" content="[^"]*"\s*\/?>/g
+// The cover's own locale-twin link (header language switch) points at the hidden
+// path; served at the home page it must point at the home page.
+const COVER_HREF = /href="(\/en)?\/cover\/[a-z0-9-]+\/"/g
 
 function readCookie(header: string | null): string | null {
   if (!header) return null
@@ -60,7 +63,7 @@ export async function handleCover(
   } else {
     const asset = await env.ASSETS.fetch(new URL(coverPath(choice.variant, locale), url))
     // The cover lives at a noindex path; served at `/` it must not deindex home.
-    const html = (await asset.text()).replace(ROBOTS_META, '')
+    const html = (await asset.text()).replace(ROBOTS_META, '').replace(COVER_HREF, 'href="$1/"')
     res = new Response(html, asset)
   }
   res.headers.set('x-mc-cover', choice.variant)

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { handleCover, type CoverEnv } from './cover-middleware'
 
 const COVER = 'trend-adweek-2026-09'
-const COVER_HTML = '<html><head><title>q</title><meta name="robots" content="noindex, nofollow"/></head><body>quest</body></html>'
+const COVER_HTML = '<html><head><title>q</title><meta name="robots" content="noindex, nofollow"/></head><body>quest <a href="/en/cover/trend-adweek-2026-09/">EN</a> <a href="/cover/trend-adweek-2026-09/">RU</a></body></html>'
 
 function env(opts: { raw?: string | null; throws?: boolean; defaultCover?: string; kv?: boolean } = {}): CoverEnv & { fetched: string[] } {
   const fetched: string[] = []
@@ -43,6 +43,9 @@ describe('handleCover', () => {
     expect(e.fetched).toEqual([`/cover/${COVER}/`])
     expect(html).toContain('quest')
     expect(html).not.toMatch(/name="robots"/)
+    expect(html).not.toMatch(/\/cover\//)
+    expect(html).toContain('href="/en/"')
+    expect(html).toContain('href="/"')
     expect(res.headers.get('x-mc-cover')).toBe(COVER)
     expect(res.headers.get('vary')).toMatch(/cookie/i)
   })

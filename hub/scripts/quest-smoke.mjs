@@ -53,7 +53,9 @@ for (const [file, lang] of [['out/index.html', 'ru'], ['out/en/index.html', 'en'
   if (!read(file).includes(`lang="${lang}"`)) { console.error(`${file}: missing lang="${lang}"`); failed++ }
 }
 
-// No visitor switcher: nothing anywhere in the export may link to a cover path.
+// No visitor switcher: nothing outside the cover pages may link to a cover path.
+// (A cover page's own locale-twin link is rewritten to / and /en/ by the Function
+// when it is served at home - lib/cover-middleware.test.ts holds that.)
 function walk(dir) {
   let files = []
   for (const entry of readdirSync(dir)) {
@@ -63,7 +65,8 @@ function walk(dir) {
   }
   return files
 }
-for (const file of walk(join(process.cwd(), 'out'))) {
+const coverDirs = [join(process.cwd(), 'out', 'cover'), join(process.cwd(), 'out', 'en', 'cover')]
+for (const file of walk(join(process.cwd(), 'out')).filter((f) => !coverDirs.some((d) => f.startsWith(d)))) {
   if (/href="(\/en)?\/cover\//.test(readFileSync(file, 'utf8'))) { console.error(`${file}: links to a cover path`); failed++ }
 }
 
