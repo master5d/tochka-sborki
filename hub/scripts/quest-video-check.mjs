@@ -23,7 +23,7 @@ async function checkTheme(colorScheme, expectSuffix) {
   // Give the src-swap effect + loadedmetadata a moment to settle.
   await page.waitForTimeout(800)
   const currentSrc = await video.evaluate((el) => el.currentSrc)
-  const ok = currentSrc.endsWith(`${expectSuffix}.mp4`)
+  const ok = new RegExp(`${expectSuffix}(@[12]x)?\\.mp4$`).test(currentSrc)
   console.log(`${colorScheme}: currentSrc=${currentSrc} -> ${ok ? 'OK' : 'FAIL'} (expected suffix ${expectSuffix}.mp4)`)
   if (!ok) failed++
   await page.close()
@@ -65,8 +65,8 @@ await checkTheme('dark', '-night')
 await checkTheme('light', '-day')
 await checkReducedMotion()
 // 2026-09-12 pixel audit: no one-axis stretch anywhere (hard); upscale/crop reported,
-// hard only with STRICT_PIXELS=1 once the 2K world is in (scripts/quest-pixels.mjs).
-failed += await checkPixels(browser, base, path, { strict: process.env.STRICT_PIXELS === '1' })
+// strict by default since the 2K world is in; STRICT_PIXELS=0 reports only (scripts/quest-pixels.mjs).
+failed += await checkPixels(browser, base, path, { strict: process.env.STRICT_PIXELS !== '0' })
 
 await browser.close()
 console.log(failed ? `quest-video-check: ${failed} failure(s)` : 'quest-video-check: ok')

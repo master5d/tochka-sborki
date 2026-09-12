@@ -1,6 +1,6 @@
 'use client'
 import { useRef } from 'react'
-import { DETOUR_SCENE_SIZE, detourScene, type ForkId } from '../../lib/quest/scenes'
+import { ART_SIZES, DETOUR_SCENE_SIZE, detourScene, type ForkId } from '../../lib/quest/scenes'
 import { ThemedPicture } from './themed-picture'
 import { clampProgress, panelReveal, wipeReveal } from './use-chapter-progress'
 import { useParallaxFrame, useReducedMotion } from './use-parallax'
@@ -18,11 +18,12 @@ import { useParallaxFrame, useReducedMotion } from './use-parallax'
  * starts on the other road, then holds under that text. Anywhere else it
  * falls back to the scene's own box crossing the viewport.
  * One shared rAF (useParallaxFrame), a CSS variable, no re-render.
+ * 2K world: the detour frame is drawn in the road's cover box — ART_SIZES.road.
  *
  * `prefers-reduced-motion: reduce`: not rendered — the habit world stays, and
  * the detour's world is still shown, still, in the outcomes band below.
  */
-export function DetourCurtain({ forkId }: { forkId: ForkId }) {
+export function DetourCurtain({ forkId, sizes = ART_SIZES.road }: { forkId: ForkId; sizes?: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const reducedMotion = useReducedMotion()
 
@@ -49,6 +50,7 @@ export function DetourCurtain({ forkId }: { forkId: ForkId }) {
         width={DETOUR_SCENE_SIZE.width}
         height={DETOUR_SCENE_SIZE.height}
         alt=""
+        sizes={sizes}
         eager
       />
     </div>

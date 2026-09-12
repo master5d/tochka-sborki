@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { DETOUR_SCENE_SIZE, FORK_IDS, GATE_PLAQUES, OUTCOME_ART_SIZE, ROAD_PAN, SCENES, SCENE_IDS, detourScene, outcomeArt, sceneAssets } from './scenes'
+import { ART_SIZES, DETOUR_SCENE_SIZE, FORK_IDS, GATE_PLAQUES, OUTCOME_ART_SIZE, ROAD_PAN, SCENES, SCENE_IDS, detourScene, outcomeArt, sceneAssets } from './scenes'
 
 describe('road scene pan stops (Wave M)', () => {
   it('every fork has one stop per panel (setup, habit road, detour), each a valid object-position fraction', () => {
@@ -29,11 +29,10 @@ describe('quest outcome art + detour scenes (L2/L3)', () => {
     expect(outcomeArt('boulder', 'scroller', 'day')).toBe('/quest/outcomes/boulder-scroller-day.webp')
     expect(outcomeArt('gates', 'builder', 'night')).toBe('/quest/outcomes/gates-builder-night.webp')
   })
-  it('every fork has a detour scene in both states', () => {
-    for (const f of FORK_IDS) {
-      expect(detourScene(f, 'day')).toBe(`/quest/detours/${f}-day.webp`)
-      expect(detourScene(f, 'night')).toBe(`/quest/detours/${f}-night.webp`)
-    }
+  it('every fork has a detour scene in both states — a 2K pair, or the 1K file while it waits', () => {
+    expect(detourScene('boulder', 'day')).toEqual({ x1: '/quest/detours/boulder-day@1x.webp', x2: '/quest/detours/boulder-day@2x.webp', w1: 848, h1: 1264 })
+    expect(detourScene('gates', 'night')).toEqual({ x1: '/quest/detours/gates-night.webp', w1: 848, h1: 1264 })
+    for (const f of FORK_IDS) for (const s of ['day', 'night'] as const) expect(detourScene(f, s).x1).toMatch(new RegExp(`^/quest/detours/${f}-${s}(@1x)?\\.webp$`))
   })
   it('outcome art is tall (2:3) and the detour scene shares the chapter scene frame', () => {
     expect(OUTCOME_ART_SIZE).toEqual({ width: 640, height: 960 })
@@ -52,13 +51,15 @@ describe('quest scenes registry', () => {
       expect(SCENES[id].alt.en.trim().length, `${id} en alt`).toBeGreaterThan(10)
     }
   })
-  it('asset paths are under /quest/ and keyed by state', () => {
-    const day = sceneAssets('02-camp', 'day')
-    expect(day.poster).toBe('/quest/scenes/02-camp-day.webp')
-    expect(day.loop).toBe('/quest/loops/02-camp-day.mp4')
-    const night = sceneAssets('02-camp', 'night')
-    expect(night.poster).toBe('/quest/scenes/02-camp-night.webp')
-    expect(night.loop).toBe('/quest/loops/02-camp-night.mp4')
+  it('asset paths are under /quest/, keyed by state, and a 2K pair doubles the @1x frame', () => {
+    const day = sceneAssets('03-boulder', 'day')
+    expect(day.poster).toEqual({ x1: '/quest/scenes/03-boulder-day@1x.webp', x2: '/quest/scenes/03-boulder-day@2x.webp', w1: 848, h1: 1264 })
+    expect(day.loop).toEqual({ x1: '/quest/loops/03-boulder-day@1x.mp4', x2: '/quest/loops/03-boulder-day@2x.mp4', w1: 848, h1: 1264 })
+    const waiting = sceneAssets('04-temple', 'night')
+    expect(waiting.poster).toEqual({ x1: '/quest/scenes/04-temple-night.webp', w1: 848, h1: 1264 })
+  })
+  it('every sizes string names the drawn width in viewport units (the browser has no layout yet)', () => {
+    for (const s of Object.values(ART_SIZES)) expect(s).toMatch(/vw|vh/)
   })
   it('gate plaques sit inside the frame and do not overlap', () => {
     for (const p of GATE_PLAQUES) {

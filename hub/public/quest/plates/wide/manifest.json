@@ -1,0 +1,96 @@
+{
+  "feather": 48,
+  "band": [
+    0.12,
+    0.6
+  ],
+  "scenes": [
+    {
+      "id": "01-map-wide",
+      "state": "day",
+      "size": [
+        2418,
+        1612
+      ],
+      "horizon_row": 388,
+      "feather": 48,
+      "unsplit": false,
+      "recompose_max_channel_diff": 1.52587890625e-05,
+      "recompose_frac_over_4": 0.0,
+      "sky_2x": "01-map-wide-day-sky@2x.webp",
+      "sky_1x": "01-map-wide-day-sky@1x.webp",
+      "land_2x": "01-map-wide-day-land@2x.webp",
+      "land_1x": "01-map-wide-day-land@1x.webp"
+    },
+    {
+      "id": "01-map-wide",
+      "state": "night",
+      "size": [
+        2418,
+        1612
+      ],
+      "horizon_row": 386,
+      "feather": 48,
+      "unsplit": false,
+      "recompose_max_channel_diff": 1.52587890625e-05,
+      "recompose_frac_over_4": 0.0,
+      "sky_2x": "01-map-wide-night-sky@2x.webp",
+      "sky_1x": "01-map-wide-night-sky@1x.webp",
+      "land_2x": "01-map-wide-night-land@2x.webp",
+      "land_1x": "01-map-wide-night-land@1x.webp"
+    },
+    {
+      "id": "06-wall-wide",
+      "state": "day",
+      "size": [
+        2528,
+        1696
+      ],
+      "horizon_row": 478,
+      "feather": 48,
+      "unsplit": false,
+      "recompose_max_channel_diff": 1.52587890625e-05,
+      "recompose_frac_over_4": 0.0,
+      "sky_2x": "06-wall-wide-day-sky@2x.webp",
+      "sky_1x": "06-wall-wide-day-sky@1x.webp",
+      "land_2x": "06-wall-wide-day-land@2x.webp",
+      "land_1x": "06-wall-wide-day-land@1x.webp"
+    },
+    {
+      "id": "06-wall-wide",
+      "state": "night",
+      "size": [
+        2528,
+        1696
+      ],
+      "horizon_row": 481,
+      "feather": 48,
+      "unsplit": false,
+      "recompose_max_channel_diff": 1.52587890625e-05,
+      "recompose_frac_over_4": 0.0,
+      "sky_2x": "06-wall-wide-night-sky@2x.webp",
+      "sky_1x": "06-wall-wide-night-sky@1x.webp",
+      "land_2x": "06-wall-wide-night-land@2x.webp",
+      "land_1x": "06-wall-wide-night-land@1x.webp"
+    },
+    {
+      "id": "07-signs",
+      "state": "day",
+      "unsplit": true,
+      "reason": "symmetry rule: skyline seam day row 793 vs night row 1162 (2528 px frame) - not the same horizon, so no two-plane split"
+    },
+    {
+      "id": "07-signs",
+      "state": "night",
+      "unsplit": true,
+      "reason": "symmetry rule: skyline seam day row 793 vs night row 1162 (2528 px frame) - not the same horizon, so no two-plane split"
+    }
+  ],
+  "web": {
+    "format": "RGBA WebP q82",
+    "total_bytes": {
+      "2x": 2180450,
+      "1x": 827768
+    }
+  }
+}

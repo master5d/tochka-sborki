@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
+import { pickDensity } from '../../lib/quest/art'
 import { shouldPlayLoop, wideLoopSource } from '../../lib/quest/loop-playback'
-import { CAMP_WIDE_SIZE, campWide } from '../../lib/quest/scenes'
+import { ART_SIZES, CAMP_WIDE_SIZE, campWide } from '../../lib/quest/scenes'
 import { ThemedPicture } from './themed-picture'
 import { useReducedMotion } from './use-parallax'
 import { useThemeState } from './use-theme-state'
@@ -29,15 +30,17 @@ function useDesktop(): boolean {
  * Same playback rules as SceneLoop: only on screen, only in a visible tab; the
  * track resumes at the old time on a theme flip. Mobile and reduced motion get
  * no <video> at all (wideLoopSource → null), so nothing is downloaded there.
+ * 2K world: the still is a srcset (`ART_SIZES.campWide`) and the loop's density
+ * comes from the video's own box by the same rule (`pickDensity`).
  */
 export function WideLoop({ alt }: { alt: string }) {
   const theme = useThemeState()
   const reducedMotion = useReducedMotion()
   const desktop = useDesktop()
-  const src = wideLoopSource({ desktop, reducedMotion, state: theme })
+  const loop = wideLoopSource({ desktop, reducedMotion, state: theme })
   const videoRef = useRef<HTMLVideoElement>(null)
   const playAllowed = useRef(false)
-  const mounted = src !== null
+  const mounted = loop !== null
 
   useEffect(() => {
     const video = videoRef.current
@@ -60,9 +63,10 @@ export function WideLoop({ alt }: { alt: string }) {
     }
   }, [mounted, reducedMotion])
 
+  const loopKey = loop?.x1 ?? null
   useEffect(() => {
     const video = videoRef.current
-    if (!src || !video) return
+    if (!loop || !video) return
     const resumeAt = video.currentTime || 0
     const wasStarted = video.readyState > 0
     const onLoaded = () => {
@@ -71,14 +75,15 @@ export function WideLoop({ alt }: { alt: string }) {
       video.removeEventListener('loadedmetadata', onLoaded)
     }
     video.addEventListener('loadedmetadata', onLoaded)
-    video.src = src
+    video.src = pickDensity(loop, { w: video.clientWidth, h: video.clientHeight }, window.devicePixelRatio || 1)
     video.load()
     return () => video.removeEventListener('loadedmetadata', onLoaded)
-  }, [src])
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-run on an actual source change
+  }, [loopKey])
 
   return (
     <>
-      <ThemedPicture day={campWide('day')} night={campWide('night')} width={CAMP_WIDE_SIZE.width} height={CAMP_WIDE_SIZE.height} alt={alt} />
+      <ThemedPicture day={campWide('day')} night={campWide('night')} width={CAMP_WIDE_SIZE.width} height={CAMP_WIDE_SIZE.height} alt={alt} sizes={ART_SIZES.campWide} />
       {mounted ? (
         <video
           ref={videoRef}

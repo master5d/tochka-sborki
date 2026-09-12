@@ -12,7 +12,7 @@ import { RoadScene } from './road-scene'
 import { SceneLoop } from './scene-loop'
 import { WideLoop } from './wide-loop'
 import { heroDrift as heroDriftPx } from '../../lib/quest/drift'
-import { SCENES } from '../../lib/quest/scenes'
+import { ART_SIZES, SCENES } from '../../lib/quest/scenes'
 import { usePathChoice } from './use-path-choice'
 import { useScrollMood } from './use-scroll-mood'
 
@@ -83,6 +83,7 @@ export function QuestHome({ locale }: Props) {
               locale={locale}
               eager
               className="quest-hero-scene"
+              wideSizes={ART_SIZES.heroWide}
               quip={quipFor('hero')}
             />
           </div>

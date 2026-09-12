@@ -3,7 +3,7 @@ import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react'
 import type { Locale } from '../../lib/dictionaries'
 import type { Fork, QuestContent } from '../../lib/quest/content'
 import type { PathMark } from '../../lib/quest/route'
-import { ROAD_PAN } from '../../lib/quest/scenes'
+import { ART_SIZES, ROAD_PAN } from '../../lib/quest/scenes'
 import { DetourCurtain } from './detour-curtain'
 import { GatePlaques } from './gate-plaques'
 import { PathCard } from './path-fork'
@@ -31,11 +31,11 @@ interface Props {
  * follows the detour card into view (`data-curtain-trigger`, see
  * detour-curtain.tsx), so the world changes exactly as the other road is read.
  *
- * The art (848×1264) is laid out by `.quest-cover` as a true cover box — the
- * scene keeps its own aspect, so the gate plaques and the curtain stay glued to
- * the art — and `--pan` moves it vertically through `ROAD_PAN` as the pin
- * travels (one shared rAF, no re-render). Reduced motion: held on the habit
- * road's stop, no curtain (DetourCurtain renders nothing), panels unchanged.
+ * The art (848×1264 at @1x, 2K at @2x) is laid out by `.quest-cover` as a true
+ * cover box — the scene keeps its own aspect, so the gate plaques and the curtain
+ * stay glued to the art — and `--pan` moves it vertically through `ROAD_PAN` as
+ * the pin travels (one shared rAF, no re-render). Reduced motion: held on the
+ * habit road's stop, no curtain (DetourCurtain renders nothing), panels unchanged.
  */
 export function RoadScene({ fork, locale, labels, setup, quip, mark, onMark }: Props) {
   const stageRef = useRef<HTMLDivElement>(null)
@@ -68,7 +68,7 @@ export function RoadScene({ fork, locale, labels, setup, quip, mark, onMark }: P
           {fork.id === 'gates' ? (
             <GatePlaques locale={locale} plaques={labels.plaques} />
           ) : (
-            <SceneLoop id={fork.scene} locale={locale}>
+            <SceneLoop id={fork.scene} locale={locale} sizes={ART_SIZES.road}>
               <DetourCurtain forkId={fork.id} />
             </SceneLoop>
           )}

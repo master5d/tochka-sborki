@@ -103,8 +103,13 @@
 @media (prefers-reduced-motion: no-preference) {
   .quest-hero-frame .quest-hero-drift .quest-scene.quest-hero-scene { top: -11%; height: 122%; transform: translate3d(0, var(--px-y, 0px), 0); will-change: transform; }
 }
+/* 2K world, desktop: the landscape map is height-driven in that 122% box (no vertical slack for object-position), and its characters live in the bottom half — so the whole surplus goes ABOVE the frame (top: -22%, bottom edge on the frame's). The drift only ever moves the art DOWN (useHeroDrift), which keeps the bottom edge out of view and eats into a top surplus of 22% ≥ the 11% it needs. */
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .quest-hero-frame .quest-hero-drift .quest-scene.quest-hero-scene { top: -22%; }
+}
 .quest-hero-frame .quest-scene.quest-hero-scene { position: absolute; top: 0; left: 0; right: 0; height: calc(100vh - var(--quest-stage-top)); aspect-ratio: auto; border: none; border-radius: 0; z-index: 0; }
-.quest-hero-frame .quest-scene.quest-hero-scene img { object-position: 50% 78%; }
+/* 2K world: on desktop (>=901px) the hero is the LANDSCAPE map (plates/wide, scene-plates.tsx). The Scroller and the Builder stand at ~56-89% of its width and ~53-98% of its height. x=72%: at 1440 and 1920 both stand whole right of the copy panel; 1024 is the one tight width (the tall copy makes the frame 972 px, the band 587 px wide against 563 px of open art) and 72% splits the shortfall, ~12 px each side. y=100%: whenever the box leaves vertical slack (1920, reduced motion) it goes to the characters' bottom half. */
+.quest-hero-frame .quest-scene.quest-hero-scene img { object-position: 72% 100%; }
 .quest-hero-copy { position: relative; z-index: 2; width: 45%; min-width: 22rem; max-width: 34rem; padding: 3rem 2.5rem; background: var(--quest-tint-hero); display: flex; flex-direction: column; justify-content: center; }
 /* Cover motion: the hero line lands word by word (hero-title.tsx sets each
    word's --d). Transform + opacity only — composited, no layout per frame.
@@ -255,10 +260,12 @@
    button to hold, not a whole bio. */
 .quest-finale-frame { position: relative; min-height: min(70vh, 640px); display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .quest-finale-frame .quest-scene.quest-finale-scene { position: absolute; inset: 0; aspect-ratio: auto; width: 100%; height: 100%; border: none; border-radius: 0; z-index: 0; }
-.quest-finale-frame .quest-scene.quest-finale-scene img { object-position: 50% 55%; }
+/* 2K world: desktop shows the LANDSCAPE wall (plates/wide); the two stand at the right, heads ~43% and feet ~95% of its height, so the window sits low. Mobile keeps the tall art at its old 55%. */
+.quest-finale-frame .quest-scene.quest-finale-scene img { object-position: 50% 92%; }
 .quest-finale-copy { position: relative; z-index: 2; max-width: 28rem; margin: 2rem; padding: 2.5rem 2rem; background: var(--quest-tint-finale); border-radius: var(--radius); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
 @media (max-width: 900px) {
   .quest-finale-frame { min-height: 56vh; }
+  .quest-finale-frame .quest-scene.quest-finale-scene img { object-position: 50% 55%; }
   .quest-finale-copy { margin: 1.25rem; padding: 1.5rem 1.25rem; }
 }
 

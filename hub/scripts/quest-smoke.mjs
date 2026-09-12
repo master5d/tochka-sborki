@@ -25,11 +25,11 @@ for (const [file, needles] of Object.entries(coverChecks)) {
   // stills (quest/plates/<id>-<state>-{sky,land}.webp) instead of a flat poster —
   // both reference forms count toward the same "distinct scene id" tally, and
   // either one satisfies the night-reference check.
-  const sceneMatches = html.match(/\/quest\/scenes\/(0\d-[a-z]+)-(day|night)\.webp/g) ?? []
-  const plateMatches = html.match(/\/quest\/plates\/(0\d-[a-z]+)-(day|night)-(sky|land)\.webp/g) ?? []
+  const sceneMatches = html.match(/\/quest\/scenes\/(0\d-[a-z]+)-(day|night)(@[12]x)?\.webp/g) ?? []
+  const plateMatches = html.match(/\/quest\/plates\/(wide\/)?(0\d-[a-z]+)(-wide)?-(day|night)-(sky|land)(@[12]x)?\.webp/g) ?? []
   const scenes = new Set([...sceneMatches, ...plateMatches].map((m) => m.match(/0\d-[a-z]+/)[0]))
   if (scenes.size < 7) { console.error(`${file}: only ${scenes.size} distinct scene posters, expected ≥ 7`); failed++ }
-  const hasNight = sceneMatches.some((m) => m.endsWith('-night.webp')) || plateMatches.some((m) => m.includes('-night-'))
+  const hasNight = sceneMatches.some((m) => /-night(@[12]x)?\.webp$/.test(m)) || plateMatches.some((m) => m.includes('-night-'))
   if (!hasNight) { console.error(`${file}: no night poster reference found (picture/source for system-dark)`); failed++ }
   // Cover motion: the hero line is split into one <span> per word (hero-title.tsx),
   // so a canon phrase is checked against the page's TEXT, tags stripped, too.
@@ -40,7 +40,7 @@ for (const [file, needles] of Object.entries(coverChecks)) {
   // generation manifest's own marks ("Outcome of the …") must never reach the page.
   const outcomes = new Set(html.match(/\/quest\/outcomes\/(boulder|temple|gates)-(scroller|builder)-day\.webp/g) ?? [])
   if (outcomes.size !== 6) { console.error(`${file}: ${outcomes.size} outcome illustrations, expected 6`); failed++ }
-  const detours = new Set(html.match(/\/quest\/detours\/(boulder|temple|gates)-day\.webp/g) ?? [])
+  const detours = new Set((html.match(/\/quest\/detours\/(boulder|temple|gates)-day(@1x)?\.webp/g) ?? []).map((m) => m.replace('@1x', '')))
   if (detours.size !== 3) { console.error(`${file}: ${detours.size} detour curtains, expected 3`); failed++ }
   if (/Outcome of the (habit|detour)|Detour world at the|\bthe Builder on top of\b/i.test(html)) { console.error(`${file}: generation mark leaked`); failed++ }
   // The cover is a showcase at a hidden path: never indexable there.

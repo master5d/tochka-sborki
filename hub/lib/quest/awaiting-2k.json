@@ -1,0 +1,23 @@
+{
+  "note": "ждёт генерации, баланс Google: v4-2k (NAUTILUS dc90d740) stopped on 'prepayment credits depleted' after 22 billed frames on 2026-09-12. Each path below is still the 1K world-v3 file and ships as a single candidate. When its 2K pair lands as <base>@1x/@2x, delete the line here: art.ts then serves the srcset and quest-pixels.mjs gates it strictly.",
+  "paths": [
+    "/quest/scenes/04-temple-night.webp",
+    "/quest/loops/04-temple-night.mp4",
+    "/quest/detours/temple-night.webp",
+    "/quest/detours/gates-night.webp",
+    "/quest/scenes/02-camp-wide-night.webp",
+    "/quest/loops/02-camp-wide-night.mp4",
+    "/quest/outcomes/boulder-scroller-day.webp",
+    "/quest/outcomes/boulder-scroller-night.webp",
+    "/quest/outcomes/boulder-builder-day.webp",
+    "/quest/outcomes/boulder-builder-night.webp",
+    "/quest/outcomes/temple-scroller-day.webp",
+    "/quest/outcomes/temple-scroller-night.webp",
+    "/quest/outcomes/temple-builder-day.webp",
+    "/quest/outcomes/temple-builder-night.webp",
+    "/quest/outcomes/gates-scroller-day.webp",
+    "/quest/outcomes/gates-scroller-night.webp",
+    "/quest/outcomes/gates-builder-day.webp",
+    "/quest/outcomes/gates-builder-night.webp"
+  ]
+}

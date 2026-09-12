@@ -2,9 +2,10 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { Locale } from '../../lib/dictionaries'
+import { pickDensity, srcSetOf, srcSetOrSrc } from '../../lib/quest/art'
 import { shouldPlayLoop } from '../../lib/quest/loop-playback'
 import { isSplitScene } from '../../lib/quest/plates'
-import { SCENES, sceneAssets, type SceneId } from '../../lib/quest/scenes'
+import { ART_SIZES, SCENES, sceneAssets, type SceneId } from '../../lib/quest/scenes'
 import { ScenePlates } from './scene-plates'
 import { useThemeState } from './use-theme-state'
 
@@ -35,6 +36,10 @@ interface Props {
   eager?: boolean
   /** Extra class appended to the `.quest-scene` wrapper (e.g. the hero backdrop variant). */
   className?: string
+  /** `sizes` for a flat scene's poster srcset (ART_SIZES.road inside a road's cover box). */
+  sizes?: string
+  /** `sizes` for a split scene's landscape plates on desktop (hero / finale). */
+  wideSizes?: string
 }
 
 /**
@@ -51,8 +56,14 @@ interface Props {
  * track's `currentTime` before playing — so the world's motion doesn't jump to
  * zero when the reader flips the theme mid-loop. `prefers-reduced-motion:
  * reduce` never renders the `<video>` at all — the poster is what shows.
+ *
+ * 2K world: the poster is a srcset (@1x/@2x, `sizes` = the drawn width) and the
+ * loop's density is picked by `pickDensity` from the video's own box — the same
+ * rule — so still and motion carry the same sharpness. The `<video>` has no
+ * `poster` attribute: it would fetch a second copy of the still; until the first
+ * frame paints, the transparent video shows the `<picture>` underneath.
  */
-export function SceneLoop({ id, locale, quip, children, eager = false, className }: Props) {
+export function SceneLoop({ id, locale, quip, children, eager = false, className, sizes = ART_SIZES.full, wideSizes = ART_SIZES.full }: Props) {
   const scene = SCENES[id]
   const theme = useThemeState()
   const assets = sceneAssets(id, theme)
@@ -120,12 +131,13 @@ export function SceneLoop({ id, locale, quip, children, eager = false, className
       video.removeEventListener('loadedmetadata', onLoaded)
     }
     video.addEventListener('loadedmetadata', onLoaded)
-    video.src = assets.loop
+    video.src = pickDensity(assets.loop, { w: video.clientWidth, h: video.clientHeight }, window.devicePixelRatio || 1)
     video.load()
     return () => video.removeEventListener('loadedmetadata', onLoaded)
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-run on an actual source change
-  }, [assets.loop, reducedMotion, split])
+  }, [assets.loop.x1, reducedMotion, split])
 
+  const posterSet = srcSetOf(assets.poster)
   return (
     <div className={className ? `quest-scene ${className}` : 'quest-scene'} data-scene={id} data-world={theme}>
       {split ? (
@@ -138,13 +150,18 @@ export function SceneLoop({ id, locale, quip, children, eager = false, className
           height={scene.height}
           explicitTheme={explicitTheme}
           eager={eager}
+          wideSizes={wideSizes}
         />
       ) : (
         <>
           <picture>
-            {explicitTheme ? null : <source media="(prefers-color-scheme: dark)" srcSet={nightAssets.poster} />}
+            {explicitTheme ? null : (
+              <source media="(prefers-color-scheme: dark)" srcSet={srcSetOrSrc(nightAssets.poster)} sizes={srcSetOf(nightAssets.poster) ? sizes : undefined} />
+            )}
             <img
-              src={assets.poster}
+              src={assets.poster.x1}
+              srcSet={posterSet}
+              sizes={posterSet ? sizes : undefined}
               width={scene.width}
               height={scene.height}
               alt={scene.alt[locale]}
@@ -157,7 +174,6 @@ export function SceneLoop({ id, locale, quip, children, eager = false, className
               className="quest-scene__video"
               width={scene.width}
               height={scene.height}
-              poster={assets.poster}
               muted
               loop
               playsInline

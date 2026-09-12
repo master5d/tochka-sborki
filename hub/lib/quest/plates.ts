@@ -9,6 +9,8 @@
 // retyped into CSS, and a future re-split (flipping a scene's `unsplit` flag)
 // changes `isSplitScene`'s answer automatically.
 import manifest from '../../public/quest/plates/manifest.json'
+import wideManifest from '../../public/quest/plates/wide/manifest.json'
+import type { Art } from './art'
 import { SCENE_IDS, type SceneId, type SceneState } from './scenes'
 
 interface ManifestFrame {
@@ -72,5 +74,68 @@ export function plateGeometry(id: SceneId, state: SceneState): PlateGeometry | n
     height: f.size[1],
     sky: `/quest/plates/${f.sky}`,
     land: `/quest/plates/${f.land}`,
+  }
+}
+
+/**
+ * 2K world (NAUTILUS v4-2k): the hero map and the finale wall re-composed for a
+ * LANDSCAPE frame (3:2, 2K). On desktop (≥901px) they replace the tall art, which
+ * cover-fit into the wide hero/finale boxes showed 22–52 % of itself at up to 4.7×
+ * device-px upscale (2026-09-12 pixel audit). Split into sky/land by the same
+ * script under the same symmetry rule; read from `public/quest/plates/wide/manifest.json`
+ * (the NAUTILUS plates manifest, copied as-is). `width`/`height`/`horizonRow` are in
+ * the @2x file's pixels; @1x is exactly half.
+ */
+interface WideFrame {
+  id: string
+  state: 'day' | 'night'
+  size?: number[]
+  horizon_row?: number
+  feather?: number
+  unsplit: boolean
+  sky_1x?: string
+  sky_2x?: string
+  land_1x?: string
+  land_2x?: string
+}
+const WIDE_FRAMES = wideManifest.scenes as WideFrame[]
+const WIDE_ID: Partial<Record<SceneId, string>> = { '01-map': '01-map-wide', '06-wall': '06-wall-wide' }
+
+export interface WidePlates {
+  horizonRow: number
+  feather: number
+  width: number
+  height: number
+  sky: Art
+  land: Art
+}
+
+function wideFrame(id: SceneId, state: SceneState): WideFrame | undefined {
+  const wideId = WIDE_ID[id]
+  return wideId ? WIDE_FRAMES.find((f) => f.id === wideId && f.state === state) : undefined
+}
+
+function wideOk(f: WideFrame | undefined): f is Required<WideFrame> {
+  return !!f && !f.unsplit && !!f.size && f.horizon_row !== undefined && f.feather !== undefined &&
+    !!f.sky_1x && !!f.sky_2x && !!f.land_1x && !!f.land_2x
+}
+
+/** `null` unless BOTH states of this scene's landscape version split cleanly (symmetry rule). */
+export function widePlates(id: SceneId, state: SceneState): WidePlates | null {
+  const day = wideFrame(id, 'day')
+  const night = wideFrame(id, 'night')
+  if (!wideOk(day) || !wideOk(night)) return null
+  const f = state === 'day' ? day : night
+  const [w, h] = f.size
+  const w1 = Math.round(w / 2)
+  const h1 = Math.round(h / 2)
+  const at = (p: string) => `/quest/plates/wide/${p}`
+  return {
+    horizonRow: f.horizon_row,
+    feather: f.feather,
+    width: w,
+    height: h,
+    sky: { x1: at(f.sky_1x), x2: at(f.sky_2x), w1, h1 },
+    land: { x1: at(f.land_1x), x2: at(f.land_2x), w1, h1 },
   }
 }

@@ -1,11 +1,15 @@
 'use client'
-import { useRef } from 'react'
+import { useEffect, useRef, useState, type RefObject } from 'react'
 import type { Locale } from '../../lib/dictionaries'
+import { srcSetOrSrc, type Art } from '../../lib/quest/art'
 import { coverRowY, landDrift, type Box } from '../../lib/quest/drift'
-import { plateGeometry } from '../../lib/quest/plates'
+import { plateGeometry, widePlates, type PlateGeometry, type WidePlates } from '../../lib/quest/plates'
 import type { SceneId, SceneState } from '../../lib/quest/scenes'
 import { clampProgress } from './use-chapter-progress'
 import { useParallaxFrame, useReducedMotion } from './use-parallax'
+
+/** Where the landscape (2K) plates take over from the tall ones — same edge as quest.css's hero/finale rules. */
+const WIDE_MEDIA = '(min-width: 901px)'
 
 /**
  * Wave K: the land plane's own upward drift across the chapter, relative to
@@ -25,28 +29,70 @@ import { useParallaxFrame, useReducedMotion } from './use-parallax'
  * plate's own `object-fit: cover` and `object-position` (`coverRowY`), read once
  * per size. `prefers-reduced-motion`/no-JS leave every CSS var unset —
  * identity — so the two stills still reproduce the split's recompose exactly.
+ *
+ * 2K world: on desktop the plates are the landscape pair (a different frame,
+ * seam row and object-position), so the geometry follows whichever variant the
+ * `<picture>` is showing — keyed on the same media query as its `<source>`.
  */
-function usePlateDrift(horizonRow: number, natural: Box) {
+function usePlateDrift(tall: PlateGeometry, wide: WidePlates | null) {
   const containerRef = useRef<HTMLDivElement>(null)
   const landImgRef = useRef<HTMLImageElement>(null)
-  const posYRef = useRef<number | null>(null)
+  const posY = useRef<{ variant: string; y: number } | null>(null)
+  const wideMq = useRef<MediaQueryList | null>(null)
   const reducedMotion = useReducedMotion()
   useParallaxFrame(() => {
     const el = containerRef.current
     const land = landImgRef.current
     if (!el || !land) return
-    if (posYRef.current === null) {
+    if (!wideMq.current) wideMq.current = window.matchMedia(WIDE_MEDIA)
+    const useWide = !!wide && wideMq.current.matches
+    const variant = useWide ? 'wide' : 'tall'
+    const geo: { row: number; natural: Box } = useWide && wide
+      ? { row: wide.horizonRow, natural: { w: wide.width, h: wide.height } }
+      : { row: tall.horizonRow, natural: { w: tall.width, h: tall.height } }
+    if (!posY.current || posY.current.variant !== variant) {
       const m = /(-?[\d.]+)%\s*$/.exec(getComputedStyle(land).objectPosition)
-      posYRef.current = m ? Number(m[1]) / 100 : 0.5
+      posY.current = { variant, y: m ? Number(m[1]) / 100 : 0.5 }
     }
     const rect = el.getBoundingClientRect()
     const box = { w: rect.width, h: rect.height }
-    const d = landDrift(clampProgress(rect.top, rect.height, window.innerHeight), box, coverRowY(box, natural, posYRef.current, horizonRow))
+    const d = landDrift(clampProgress(rect.top, rect.height, window.innerHeight), box, coverRowY(box, geo.natural, posY.current.y, geo.row))
     land.style.setProperty('--px-land', `${d.translateY}px`)
     land.style.setProperty('--scale-land', `${d.scale}`)
     land.style.setProperty('--origin-land', `${d.originY}px`)
   }, !reducedMotion)
   return { containerRef, landImgRef }
+}
+
+interface PlateProps {
+  tall: string
+  tallNight: string
+  wide: Art | null
+  wideNight: Art | null
+  explicitTheme: boolean
+  sizes: string
+  width: number
+  height: number
+  eager: boolean
+  imgRef?: RefObject<HTMLImageElement | null>
+}
+
+/**
+ * One plate as an art-directed `<picture>`: the landscape 2K pair on desktop (a
+ * `min-width` source, with its own night twin for the no-JS system-dark case),
+ * the tall plate below that width. Sources are tried in order, so the first
+ * match wins and exactly one file is fetched. An explicit theme choice drops both
+ * dark-media sources (as everywhere else) and the src/srcset follow the state.
+ */
+function PlatePicture({ tall, tallNight, wide, wideNight, explicitTheme, sizes, width, height, eager, imgRef }: PlateProps) {
+  return (
+    <picture>
+      {wideNight && !explicitTheme ? <source media={`${WIDE_MEDIA} and (prefers-color-scheme: dark)`} srcSet={srcSetOrSrc(wideNight)} sizes={sizes} /> : null}
+      {wide ? <source media={WIDE_MEDIA} srcSet={srcSetOrSrc(wide)} sizes={sizes} /> : null}
+      {explicitTheme ? null : <source media="(prefers-color-scheme: dark)" srcSet={tallNight} />}
+      <img ref={imgRef} src={tall} width={width} height={height} alt="" loading={eager ? 'eager' : 'lazy'} />
+    </picture>
+  )
 }
 
 interface Props {
@@ -60,6 +106,8 @@ interface Props {
    *  night `<source media>` must stop competing with the day/night `src`. */
   explicitTheme: boolean
   eager?: boolean
+  /** `sizes` for the landscape plates (ART_SIZES.heroWide / .full). */
+  wideSizes?: string
 }
 
 /**
@@ -73,12 +121,26 @@ interface Props {
  * frame exactly, matching the split script's own recompose measurement.
  * `role="img"`/`aria-label` on the wrapper carries the scene's real alt text;
  * the two inner `<img>`s are `alt=""` so assistive tech doesn't announce a
- * composited image twice.
+ * composited image twice. 2K world: 01-map and 06-wall also carry a landscape
+ * pair (`widePlates`) served on desktop — see PlatePicture.
  */
-export function ScenePlates({ id, state, locale, alt, width, height, explicitTheme, eager = false }: Props) {
+export function ScenePlates({ id, state, locale, alt, width, height, explicitTheme, eager = false, wideSizes = '100vw' }: Props) {
   const geo = plateGeometry(id, state)
   const nightGeo = plateGeometry(id, 'night')
-  const { containerRef, landImgRef } = usePlateDrift(geo?.horizonRow ?? 0, { w: geo?.width ?? width, h: geo?.height ?? height })
+  const wide = widePlates(id, state)
+  const wideNight = widePlates(id, 'night')
+  const fallback: PlateGeometry = geo ?? { horizonRow: 0, feather: 0, width, height, sky: '', land: '' }
+  const { containerRef, landImgRef } = usePlateDrift(fallback, wide)
+  // The wrapper exposes which frame the picture is showing (tests, the pixel guard).
+  const [variant, setVariant] = useState<'tall' | 'wide'>('tall')
+  useEffect(() => {
+    if (!wide) return
+    const mq = window.matchMedia(WIDE_MEDIA)
+    const apply = () => setVariant(mq.matches ? 'wide' : 'tall')
+    apply()
+    mq.addEventListener('change', apply)
+    return () => mq.removeEventListener('change', apply)
+  }, [wide])
   if (!geo || !nightGeo) return null // caller checks isSplitScene first; this is a same-answer guard
   return (
     <div
@@ -87,20 +149,36 @@ export function ScenePlates({ id, state, locale, alt, width, height, explicitThe
       role="img"
       aria-label={alt}
       data-locale={locale}
-      data-horizon-row={geo.horizonRow}
-      data-feather={geo.feather}
+      data-horizon-row={variant === 'wide' && wide ? wide.horizonRow : geo.horizonRow}
+      data-feather={variant === 'wide' && wide ? wide.feather : geo.feather}
+      data-frame={variant}
     >
       <div className="quest-scene__plate quest-scene__plate--land">
-        <picture>
-          {explicitTheme ? null : <source media="(prefers-color-scheme: dark)" srcSet={nightGeo.land} />}
-          <img ref={landImgRef} src={geo.land} width={width} height={height} alt="" loading={eager ? 'eager' : 'lazy'} />
-        </picture>
+        <PlatePicture
+          tall={geo.land}
+          tallNight={nightGeo.land}
+          wide={wide?.land ?? null}
+          wideNight={wideNight?.land ?? null}
+          explicitTheme={explicitTheme}
+          sizes={wideSizes}
+          width={width}
+          height={height}
+          eager={eager}
+          imgRef={landImgRef}
+        />
       </div>
       <div className="quest-scene__plate quest-scene__plate--sky">
-        <picture>
-          {explicitTheme ? null : <source media="(prefers-color-scheme: dark)" srcSet={nightGeo.sky} />}
-          <img src={geo.sky} width={width} height={height} alt="" loading={eager ? 'eager' : 'lazy'} />
-        </picture>
+        <PlatePicture
+          tall={geo.sky}
+          tallNight={nightGeo.sky}
+          wide={wide?.sky ?? null}
+          wideNight={wideNight?.sky ?? null}
+          explicitTheme={explicitTheme}
+          sizes={wideSizes}
+          width={width}
+          height={height}
+          eager={eager}
+        />
       </div>
     </div>
   )

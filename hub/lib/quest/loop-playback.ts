@@ -1,3 +1,4 @@
+import type { Art } from './art'
 import { campWideLoop, type SceneState } from './scenes'
 
 /**
@@ -19,8 +20,9 @@ export function shouldPlayLoop({ onScreen, pageVisible, reducedMotion }: Playbac
 /**
  * The landscape camp loop behind #intro. It lives in a box that only shows on
  * desktop (>=901px, quest.css), so mobile must not even download it; reduced
- * motion keeps the still. `null` = render no <video>.
+ * motion keeps the still. `null` = render no <video>. The density (@1x/@2x) is
+ * picked where the box is known — `pickDensity` in art.ts.
  */
-export function wideLoopSource({ desktop, reducedMotion, state }: { desktop: boolean; reducedMotion: boolean; state: SceneState }): string | null {
+export function wideLoopSource({ desktop, reducedMotion, state }: { desktop: boolean; reducedMotion: boolean; state: SceneState }): Art | null {
   return desktop && !reducedMotion ? campWideLoop(state) : null
 }

@@ -1,4 +1,5 @@
 import type { Locale } from '../dictionaries'
+import { art, type Art } from './art'
 import type { Guide } from './content'
 
 export type SceneId = '01-map' | '02-camp' | '03-boulder' | '04-temple' | '05-gates' | '06-wall' | '07-signs'
@@ -8,7 +9,7 @@ export type SceneState = 'day' | 'night'
 
 export interface Scene {
   id: SceneId
-  /** Native pixel size of the generated art (all scenes share it, both states). */
+  /** Native pixel size of the tall art at @1x (all scenes share it, both states; @2x is double). */
   width: 848
   height: 1264
   alt: Record<Locale, string>
@@ -68,17 +69,38 @@ export const SCENES: Record<SceneId, Scene> = {
   },
 }
 
-export interface SceneAssets { poster: string; loop: string }
+export interface SceneAssets { poster: Art; loop: Art }
 
 /**
  * `state` is the world's current light — day or night — driven by the reader's
- * theme (useThemeState), not the wall clock. Loops are absent this wave: the old
- * horizontal loops don't fit the tall frame, so the path is declared for
- * forward-compat but never rendered (see LOOPS_ENABLED in scene-loop.tsx).
+ * theme (useThemeState), not the wall clock. Only the FLAT scenes (03/04/05 —
+ * `isSplitScene` false) use these: a split scene renders its two plates instead
+ * (plates.ts), so no poster or loop ships for 01/02/06/07. 2K world (art.ts):
+ * `<id>-<state>@1x|@2x`, unless the frame is still waiting for its 2K pair.
  */
 export function sceneAssets(id: SceneId, state: SceneState): SceneAssets {
-  return { poster: `/quest/scenes/${id}-${state}.webp`, loop: `/quest/loops/${id}-${state}.mp4` }
+  return {
+    poster: art(`/quest/scenes/${id}-${state}`, 'webp', 848, 1264),
+    loop: art(`/quest/loops/${id}-${state}`, 'mp4', 848, 1264),
+  }
 }
+
+/**
+ * `sizes` for the art, per place it is drawn: the CSS width the frame is drawn at
+ * under cover-fit, so the browser's srcset pick agrees with `pickDensity` for the
+ * loops. Stage top = 3.25rem (`--quest-stage-top`).
+ *  - road: the 848×1264 cover box over 100vw × (100vh − top) — drawn at the wider of
+ *    100vw and the box height × 848/1264.
+ *  - campWide: the landscape camp in the same box, art 1264×848.
+ *  - heroWide: the landscape map under the hero drift (box 122% of 100vh − top), art 3:2.
+ *  - full: the finale frame (always wider than 3:2) — the viewport width.
+ */
+export const ART_SIZES = {
+  road: '(min-aspect-ratio: 848/1264) 100vw, calc((100vh - 3.25rem) * 0.6709)',
+  campWide: '(min-aspect-ratio: 3/2) 100vw, calc((100vh - 3.25rem) * 1.4906)',
+  heroWide: '(min-aspect-ratio: 183/100) 100vw, calc((100vh - 3.25rem) * 1.83)',
+  full: '100vw',
+} as const
 
 export const GUIDE_ASSETS = {
   scroller: '/quest/guides/scroller.png',
@@ -89,6 +111,8 @@ export const GUIDE_ASSETS = {
  * Blank plaques on scene 05, measured on the 848×1264 world-v3 art (day state; the
  * night state shares the same composition) by flood-filling the plaque colour
  * (left 215–358 × 555–594, right 479–602 × 561–589), inset ~1pp. Percent of frame.
+ * The v4-2k redraw keeps the frame exactly (phase-correlation shift 0 px), so the
+ * percentages hold for both densities.
  */
 export interface PlaqueBox { left: number; top: number; width: number; height: number }
 export const GATE_PLAQUES: [PlaqueBox, PlaqueBox] = [
@@ -115,25 +139,26 @@ export type ForkId = 'boulder' | 'temple' | 'gates'
 export const FORK_IDS: ForkId[] = ['boulder', 'temple', 'gates']
 
 /**
- * The camp as a landscape frame (1264×848, NAUTILUS `camp-wide-v3`) for
- * `#intro`'s pinned backdrop on desktop: cover-fitting the portrait 02-camp into
- * a landscape box cropped the two characters to a helmet (audit4). Here both
- * sit whole in x≈120–690 of 1264 and the right third is open land for the
- * panels. Mobile keeps the portrait scene — its box is portrait too.
+ * The camp as a landscape frame (1264×848 at @1x) for `#intro`'s pinned backdrop
+ * on desktop: cover-fitting the portrait 02-camp into a landscape box cropped the
+ * two characters to a helmet (audit4). Here both sit whole in the left half and
+ * the right third is open land for the panels. Mobile keeps the portrait scene —
+ * its box is portrait too.
  */
 export const CAMP_WIDE_SIZE = { width: 1264, height: 848 } as const
-export function campWide(state: SceneState): string {
-  return `/quest/scenes/02-camp-wide-${state}.webp`
+export function campWide(state: SceneState): Art {
+  return art(`/quest/scenes/02-camp-wide-${state}`, 'webp', CAMP_WIDE_SIZE.width, CAMP_WIDE_SIZE.height)
 }
-/** Its loop (NAUTILUS `loops-v3/02-camp-wide-<state>`); frame 0 is the still above. */
-export function campWideLoop(state: SceneState): string {
-  return `/quest/loops/02-camp-wide-${state}.mp4`
+/** Its loop; frame 0 is the still above (same pair of sizes). */
+export function campWideLoop(state: SceneState): Art {
+  return art(`/quest/loops/02-camp-wide-${state}`, 'mp4', CAMP_WIDE_SIZE.width, CAMP_WIDE_SIZE.height)
 }
 
 /**
  * L2: one tall illustration per road's outcome (640×960, NAUTILUS
  * `outcomes-v3/outcome-<fork>-<habit|detour>-<state>.webp`), keyed on the site
  * side by `Outcome.guide` (scroller/builder) — quest-assets.ps1 translates.
+ * All twelve still wait for their 2K pair (awaiting-2k.json) and ship at 1K.
  */
 export const OUTCOME_ART_SIZE = { width: 640, height: 960 } as const
 export function outcomeArt(forkId: ForkId, guide: Guide, state: SceneState): string {
@@ -145,7 +170,6 @@ export function outcomeArt(forkId: ForkId, guide: Guide, state: SceneState): str
  * and horizon, same 848×1264 frame, so it can be wiped over that scene in place.
  */
 export const DETOUR_SCENE_SIZE = { width: 848, height: 1264 } as const
-export function detourScene(forkId: ForkId, state: SceneState): string {
-  return `/quest/detours/${forkId}-${state}.webp`
+export function detourScene(forkId: ForkId, state: SceneState): Art {
+  return art(`/quest/detours/${forkId}-${state}`, 'webp', DETOUR_SCENE_SIZE.width, DETOUR_SCENE_SIZE.height)
 }
-
