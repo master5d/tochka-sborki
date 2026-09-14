@@ -1,7 +1,7 @@
 # Agent Description — mamaev.coach
 
 ## What this site is
-Личный сайт Александра Мамаева: AI builder, vibe coder, coach.
+Личный сайт Александра Мамаева: AI Solution Architect, vibe coder, coach; агентский инжиниринг — услуга для бизнеса.
 Содержит лендинг, блог (эссе/лонгриды об AI, практике и агентском инжиниринге)
 и ссылки на курс «Точка Сборки» (ai.synergify.com).
 

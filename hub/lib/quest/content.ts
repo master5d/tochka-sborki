@@ -182,7 +182,7 @@ const en: QuestContent = {
     scene: '07-signs',
     author: {
       heading: 'About the author',
-      text: 'Alexander Mamaev — vibe coder, AI builder, coach. Builds agent systems on Claude Code + n8n and teaches others to do the same. A former kundalini yoga teacher who carried the main principle from the hall into code: a strong teacher grows another teacher. For teams, ⚙ Agent engineering: production agent systems from spec to n8n + observability, b2b · on request.',
+      text: 'Alexander Mamaev — AI Solution Architect, vibe coder, coach. Builds agent systems on Claude Code + n8n and teaches others to do the same. A former kundalini yoga teacher who carried the main principle from the hall into code: a strong teacher grows another teacher. For teams, ⚙ Agent engineering: production agent systems from spec to n8n + observability, b2b · on request.',
       cta: { label: 'Learn more →', href: MENTOR_EN },
       links: [
         { label: 'GitHub', href: 'https://github.com/master5d' },
@@ -346,7 +346,7 @@ const ru: QuestContent = {
     scene: '07-signs',
     author: {
       heading: 'Об авторе',
-      text: 'Александр Мамаев — vibe coder, AI builder, коуч. Строит agent-системы на Claude Code + n8n и учит других делать то же самое. Бывший учитель кундалини-йоги, который перенёс главный принцип из зала в код: сильный учитель растит другого учителя. Для команд ⚙ Агентский инжиниринг: production agent-системы от спецификации до n8n + observability, b2b · по запросу.',
+      text: 'Александр Мамаев — AI Solution Architect, vibe coder, коуч. Строит agent-системы на Claude Code + n8n и учит других делать то же самое. Бывший учитель кундалини-йоги, который перенёс главный принцип из зала в код: сильный учитель растит другого учителя. Для команд ⚙ Агентский инжиниринг: production agent-системы от спецификации до n8n + observability, b2b · по запросу.',
       cta: { label: 'Узнай больше →', href: MENTOR_RU },
       links: [
         { label: 'GitHub', href: 'https://github.com/master5d' },

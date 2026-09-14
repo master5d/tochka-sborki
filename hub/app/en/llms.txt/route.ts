@@ -6,7 +6,7 @@ export function GET() {
   const posts = manifestPosts('en')
   const body = `# ${SITE.nameEn}
 
-Personal site: AI builder, vibe coder, coach. Landing, blog, and links to the course "Tochka Sborki" (ai.synergify.com).
+Personal site: AI Solution Architect, vibe coder, coach; agent engineering as a service for business. Landing, blog, and links to the course "Tochka Sborki" (ai.synergify.com).
 
 ## Sections
 - Home: ${SITE.url}/en/

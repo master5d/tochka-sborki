@@ -75,7 +75,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
   ru: {
     tagline: '// mamaev.coach',
     name: 'Александр\nМамаев',
-    bio: 'Vibe coder, AI builder, коуч. Строю agent-системы на Claude Code + n8n. Учу других делать то же самое.',
+    bio: 'AI Solution Architect, vibe coder, коуч. Строю agent-системы на Claude Code + n8n. Учу других делать то же самое.',
     heroBadges: ['9 модулей', 'RU · EN', 'бесплатно', 'agent-agnostic'],
     pitch: {
       eyebrow: 'замена залипанию',
@@ -156,7 +156,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
   en: {
     tagline: '// mamaev.coach',
     name: 'Alexander\nMamaev',
-    bio: 'Vibe coder, AI builder, coach. I build agent systems on Claude Code + n8n. I teach others to do the same.',
+    bio: 'AI Solution Architect, vibe coder, coach. I build agent systems on Claude Code + n8n. I teach others to do the same.',
     heroBadges: ['9 modules', 'RU · EN', 'free', 'agent-agnostic'],
     pitch: {
       eyebrow: 'a swap for the scroll',

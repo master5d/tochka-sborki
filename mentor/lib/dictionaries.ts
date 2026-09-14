@@ -59,7 +59,7 @@ export const CONTACT_EMAIL = 'sasha@mamaev.coach'
 export const dictionaries: Record<Locale, Dictionary> = {
   ru: {
     hero: {
-      tagline: '⚙  Agent Engineering · для бизнеса',
+      tagline: '⚙  AI Solution Architect · агентский инжиниринг для бизнеса',
       titleLines: ['Когда промпт', 'перестаёт', 'работать'],
       subtitleLead: 'Проектирую и собираю ',
       subtitleBoldFragment: 'production agent-системы',
@@ -161,7 +161,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
   },
   en: {
     hero: {
-      tagline: '⚙  Agent Engineering · for business',
+      tagline: '⚙  AI Solution Architect · agent engineering for business',
       titleLines: ['When the prompt', 'stops', 'working'],
       subtitleLead: 'I design and build ',
       subtitleBoldFragment: 'production agent systems',

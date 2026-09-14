@@ -6,7 +6,7 @@ export function GET() {
   const posts = manifestPosts('ru')
   const body = `# ${SITE.name}
 
-Личный сайт: AI builder, vibe coder, coach. Лендинг, блог и ссылки на курс «Точка Сборки» (ai.synergify.com).
+Личный сайт: AI Solution Architect, vibe coder, coach; агентский инжиниринг — услуга для бизнеса. Лендинг, блог и ссылки на курс «Точка Сборки» (ai.synergify.com).
 
 ## Разделы
 - Главная: ${SITE.url}/
