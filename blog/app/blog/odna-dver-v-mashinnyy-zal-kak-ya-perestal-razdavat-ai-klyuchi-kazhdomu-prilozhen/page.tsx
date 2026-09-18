@@ -82,6 +82,12 @@ const content = [
   '**Остаётся твоим:** решить, какие виды работы существуют, где проходит граница приватности и какой отказ честнее тихой подмены.',
   '',
   'Дверь делает правила видимыми; видимые можно проверять, менять и держать одинаковыми для всех — пока не пришёл стажёр. Сделай шлюз своим.',
+  '',
+  '## Если ты поднимаешь gateway сам',
+  '',
+  '> Пост даёт ментальную модель. Для перехода к собственной лаборатории я собрал отдельный handoff для агента-оператора: аудит узлов и trust boundaries, capability-пулы, privacy-aware fallback, observability от ingress до backend, contract probes, rollout и rollback.',
+  '>',
+  '> [Открыть handoff: как поднять суверенный gateway в лабе](https://github.com/master5d/tochka-sborki/blob/main/docs/handoffs/sovereign-gateway-handoff.md)',
 ].join('\n')
 
 export const metadata: Metadata = {
