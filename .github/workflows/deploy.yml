@@ -83,6 +83,60 @@ jobs:
             echo "Cloudflare rate limit (10429), retrying"
           done
           exit 1
+      - name: Record published blog posts in Logos Foundry
+        env:
+          LOGOS_INGEST_TOKEN: ${{ secrets.LOGOS_INGEST_TOKEN }}
+          LOGOS_BASE: https://logos-foundry.sovern.workers.dev
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${LOGOS_INGEST_TOKEN:-}" ]; then
+            echo 'LOGOS_INGEST_TOKEN is not configured' >&2
+            exit 1
+          fi
+
+          # Only newly-created post routes need a first distribution record.
+          # Editing an existing post must not create duplicate rows in Foundry.
+          mapfile -t slugs < <(
+            git diff --name-only --diff-filter=A "$BEFORE_SHA" "$AFTER_SHA" -- 'blog/app/blog/*/page.tsx' \
+              | awk -F/ 'NF == 5 { print $4 }'
+          )
+          if [ "${#slugs[@]}" -eq 0 ]; then
+            echo 'No new blog post routes; distribution tracking is unchanged.'
+            exit 0
+          fi
+
+          for slug in "${slugs[@]}"; do
+            SLUG="$slug" node <<'NODE'
+            const slug = process.env.SLUG;
+            const base = process.env.LOGOS_BASE;
+            const token = process.env.LOGOS_INGEST_TOKEN;
+            const publicRes = await fetch(`${base}/api/published/${encodeURIComponent(slug)}`);
+            if (!publicRes.ok) {
+              throw new Error(`published lookup failed for ${slug}: HTTP ${publicRes.status}`);
+            }
+            const piece = await publicRes.json();
+            if (!Number.isInteger(piece.id)) {
+              throw new Error(`published lookup returned no numeric piece id for ${slug}`);
+            }
+            const url = `https://mamaev.coach/blog/${slug}/`;
+            const recordRes = await fetch(`${base}/api/distributions`, {
+              method: 'POST',
+              headers: {
+                authorization: `Bearer ${token}`,
+                'content-type': 'application/json',
+              },
+              body: JSON.stringify({ pieceId: piece.id, channel: 'blog', url, status: 'published' }),
+            });
+            const body = await recordRes.json().catch(() => ({}));
+            if (!recordRes.ok) {
+              throw new Error(`distribution write failed for ${slug}: HTTP ${recordRes.status} ${body.error ?? ''}`.trim());
+            }
+            console.log(`Foundry distribution recorded: piece ${piece.id}, blog, published`);
+            NODE
+          done
 
   # ── mentor.mamaev.coach (B2B one-pager) ───────────────────
   deploy-mentor:
