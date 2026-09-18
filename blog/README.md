@@ -14,7 +14,7 @@
 
 - **Реестр постов:** `lib/posts.ts` — единственный источник правды (`Post[]` + `getAllPosts`/`getPost`/`formatDate`/`postUrl` + `SITE`).
 - **Индекс:** `/blog` (`app/blog/page.tsx` + `components/blog/blog-index.tsx`); EN — `app/en/blog/`.
-- **Пост:** `/blog/<slug>/` обёрнут в `components/blog/post-layout.tsx` (мастхед + «По теме» + JSON-LD). Тело поста — bespoke-компонент (как `components/prologue/`).
+- **Пост:** `/blog/<slug>/` обёрнут в `components/blog/post-layout.tsx` (мастхед + «По теме» + JSON-LD). Тело поста — bespoke-компонент (как `components/prologue/`). Для Markdown из Logos Foundry используй `components/blog/published-markdown-post.tsx`: адаптер сохраняет canonical Markdown, но убирает совпадающий первый заголовок, который уже рендерит `PostLayout`.
 - **Манифест для hub:** `app/posts-manifest.json/route.ts` эмитит `out/posts-manifest.json` — лендинг читает его для whole-site sitemap/llms (данные, не импорт исходников). Не мёржится в публичный сайт.
 - **Общий chrome** (`app/layout.tsx`, `components/site-header.tsx`, `theme-*`, `lang-suggest-banner`, `lib/dictionaries.ts`, `lib/theme-pref.ts`, `app/globals.css`, `themes/model-kit.css`) — **копии из `hub/`**, помеченные `// SHARED CHROME — mirror of hub/...`. Меняешь шапку/тему — синхронь обе копии.
 
