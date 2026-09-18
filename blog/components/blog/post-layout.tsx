@@ -29,50 +29,25 @@ export function PostLayout({ post, locale, children }: { post: Post; locale: Loc
       <Link href={locale === 'en' ? '/en/blog/' : '/blog/'} style={backLinkStyle}>{d.blog.backToBlog}</Link>
 
       <header style={{ margin: '1.5rem 0 2rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem' }}>
-          <div>
-            <h1 style={{
-              fontFamily: 'var(--font-display), system-ui, sans-serif',
-              fontSize: 'clamp(1.75rem, 4vw, 2.75rem)',
-              fontWeight: 900,
-              lineHeight: 1.05,
-              letterSpacing: '-0.03em',
-              color: 'var(--text-primary)',
-              margin: '0 0 0.75rem',
-            }}>
-              {r.title}
-            </h1>
-            <div style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: 'var(--text-xs)',
-              color: 'var(--text-secondary)',
-              letterSpacing: '0.04em',
-              opacity: 0.8,
-            }}>
-              {r.formattedDate} · {post.author} · {r.readingTime}
-            </div>
-          </div>
-          <button
-            title="Generate PPTX deck via Presenton"
-            style={{
-              background: 'transparent',
-              border: '1px solid var(--border-color)',
-              color: 'var(--text-secondary)',
-              fontFamily: 'var(--font-mono)',
-              fontSize: 'var(--text-xs)',
-              padding: '0.4rem 0.6rem',
-              borderRadius: 'var(--radius)',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              transition: 'all 0.2s ease'
-            }}
-            onClick={() => alert('Orchestrating Presentation via Presenton... (BYOK Required)')}
-          >
-            <span style={{ color: 'var(--text-accent)' }}>⬡</span>
-            DECK.pptx
-          </button>
+        <h1 style={{
+          fontFamily: 'var(--font-display), system-ui, sans-serif',
+          fontSize: 'clamp(1.75rem, 4vw, 2.75rem)',
+          fontWeight: 900,
+          lineHeight: 1.05,
+          letterSpacing: '-0.03em',
+          color: 'var(--text-primary)',
+          margin: '0 0 0.75rem',
+        }}>
+          {r.title}
+        </h1>
+        <div style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: 'var(--text-xs)',
+          color: 'var(--text-secondary)',
+          letterSpacing: '0.04em',
+          opacity: 0.8,
+        }}>
+          {r.formattedDate} · {post.author} · {r.readingTime}
         </div>
       </header>
 
