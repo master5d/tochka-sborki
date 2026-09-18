@@ -42,6 +42,17 @@ const EN_MONTHS = [
 
 export const posts: Post[] = [
   {
+    slug: 'odna-dver-v-mashinnyy-zal-kak-ya-perestal-razdavat-ai-klyuchi-kazhdomu-prilozhen',
+    title: 'Одна дверь в машинный зал: как я перестал раздавать AI-ключи каждому приложению',
+    description:
+      'Почему прямой доступ каждого приложения к провайдерам AI превращается в постоянный контроль ключей, моделей и отказов — и зачем нужна одна дверь в машинный зал.',
+    date: '2026-09-18',
+    author: 'Александр Мамаев',
+    readingTime: '~2 мин',
+    tags: ['AI', 'LiteLLM', 'gateway', 'observability', 'инфраструктура'],
+    related: ['the-site-itself', 'desops-hub'],
+  },
+  {
     slug: 'prologue',
     title: 'Точка Сборки. Пролог',
     description:
