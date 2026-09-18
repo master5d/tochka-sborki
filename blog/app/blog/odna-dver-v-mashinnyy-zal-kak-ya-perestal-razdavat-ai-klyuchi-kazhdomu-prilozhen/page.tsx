@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { MarkdownPost } from '@/components/blog/markdown-post'
+import { PublishedMarkdownPost } from '@/components/blog/published-markdown-post'
 import { PostLayout } from '@/components/blog/post-layout'
 import { getPost } from '@/lib/posts'
 
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 export default function GatewayPostPage() {
   return (
     <PostLayout post={getPost('odna-dver-v-mashinnyy-zal-kak-ya-perestal-razdavat-ai-klyuchi-kazhdomu-prilozhen')!} locale="ru">
-      <MarkdownPost content={content} lang="ru" />
+      <PublishedMarkdownPost content={content} title={title} lang="ru" />
     </PostLayout>
   )
 }
