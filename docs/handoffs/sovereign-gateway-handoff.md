@@ -87,10 +87,9 @@ trust_boundaries:
   private_pool: no_external_egress
 ```
 
-Имена физических машин в handoff не нужны. Используй только роли: `control-plane`,
-`inference-floor`, `edge-worker`, `observability` и `workstation`. Конкретные
-hostname, модель железа и адреса живут в закрытом fleet inventory, а не в публичной
-статье или общем runbook.
+Развёртывание описано через роли `control-plane`, `inference-floor`, `edge-worker`,
+`observability` и `workstation`; конкретная топология и адреса определяются в inventory
+окружения.
 
 Проверки должны иметь честный статус `pass`, `fail` или `not_checked`. Не превращай
 недоступный журнал в зелёный health.
@@ -176,8 +175,7 @@ gateway/
 `control-plane` публикует gateway по tailnet, а локальный `inference-floor` является
 терминальным fallback. Рабочая станция — только клиент/место разработки. Для
 `private`-пула fallback наружу запрещён; для public-пула может существовать отдельная
-политика данных. Не называй в этом документе физические машины, адреса LAN или
-названия железа из fleet inventory.
+политика данных.
 
 Никогда не подставляй сырые provider model names в приложение. Mapping «capability
 → участники» остаётся внутри gateway.
