@@ -37,6 +37,18 @@
 3. **Аварийный выход** — bounded retry, fallback и честный отказ без обхода privacy boundary.
 4. **Диспетчерская** — observability от входного запроса до фактического участника пула.
 
+Gateway обслуживает два связанных, но разных контура:
+
+- **orchestration plane** решает, кому поручить работу, выдаёт делегату brief и
+  принимает типизированный исход (`done`, `missing_evidence`, `run_failed`,
+  `needs_user_input`, `not_verified`);
+- **inference plane** gateway принимает запрос делегата, выбирает capability-полку,
+  применяет policy/retry/fallback и оставляет route event.
+
+Gateway не подменяет оркестратор: он не назначает задачи и не принимает `done` со
+слов модели. Делегат — такой же consumer gateway, но с собственной идентичностью,
+operation и `request_id`.
+
 ## 1. Сначала — паспорт лаборатории и границы доверия
 
 До установки чего-либо собери инвентарь. Не угадывай состояние узлов по README.
@@ -60,10 +72,10 @@ gateway:
   owner: team-inference
   config_revision: git-sha
 nodes:
-  - name: node-a
+  - name: control-plane
     role: gateway
     egress: restricted
-  - name: node-b
+  - name: inference-floor
     role: worker
     models: [local-fast]
     egress: denied
@@ -74,6 +86,11 @@ observability:
 trust_boundaries:
   private_pool: no_external_egress
 ```
+
+Имена физических машин в handoff не нужны. Используй только роли: `control-plane`,
+`inference-floor`, `edge-worker`, `observability` и `workstation`. Конкретные
+hostname, модель железа и адреса живут в закрытом fleet inventory, а не в публичной
+статье или общем runbook.
 
 Проверки должны иметь честный статус `pass`, `fail` или `not_checked`. Не превращай
 недоступный журнал в зелёный health.
@@ -90,6 +107,12 @@ trust_boundaries:
 Потребитель не получает провайдерские ключи, реальные имена моделей, внутренние
 адреса workers или возможность выбрать произвольный backend.
 
+Для агентских клиентов это означает один OpenAI-совместимый endpoint по tailnet.
+Профиль выбирает pool alias: например, обычный Codex может идти через `codex-pool`,
+а суверенный режим — через `codex-floor`. Если клиент говорит Responses API, gateway
+может использовать совместимый Responses→chat bridge; bridge обязан удалять
+неподдерживаемые поля и приводить tool schema к форме, которую принимает backend.
+
 ### 2.2 Полка обещает проверяемое поведение
 
 | Полка | Обещание | Минимальная проверка |
@@ -98,6 +121,11 @@ trust_boundaries:
 | `reasoning` | корректный результат сложной задачи | fixture/assertion, не только HTTP 200 |
 | `tools` | валидный вызов инструмента | нужное имя и schema в `tool_calls` |
 | `private` | данные не покидают доверенную границу | egress guard + synthetic marker |
+
+Не смешивай capability-пулы: `fast-pool` — текстовая рабочая лошадка и не
+tools-safe; `tools-pool` принимает только проверенных function-calling участников.
+Embeddings, STT и vision должны иметь отдельные маршруты и свои probes, а не
+проходить через обычный chat pool.
 
 Пул нельзя называть «healthy» только потому, что в нём перечислены два участника.
 Проверь, что они не делят одну скрытую квоту или один failure domain.
@@ -143,6 +171,13 @@ gateway/
 - quota/failure-domain labels;
 - явную privacy/egress policy;
 - версию модели и config revision.
+
+Суверенная топология состоит из обезличенных ролей: постоянно включённый
+`control-plane` публикует gateway по tailnet, а локальный `inference-floor` является
+терминальным fallback. Рабочая станция — только клиент/место разработки. Для
+`private`-пула fallback наружу запрещён; для public-пула может существовать отдельная
+политика данных. Не называй в этом документе физические машины, адреса LAN или
+названия железа из fleet inventory.
 
 Никогда не подставляй сырые provider model names в приложение. Mapping «capability
 → участники» остаётся внутри gateway.
