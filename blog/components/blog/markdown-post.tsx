@@ -9,7 +9,26 @@ type Props = { content: string; lang?: 'ru' | 'en' }
 export function MarkdownPost({ content, lang }: Props) {
   return (
     <div className={styles.prose} lang={lang}>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          a: ({ href, children, ...props }) => {
+            const external = Boolean(href?.startsWith('http://') || href?.startsWith('https://'))
+            return (
+              <a
+                {...props}
+                href={href}
+                target={external ? '_blank' : undefined}
+                rel={external ? 'noopener noreferrer' : undefined}
+              >
+                {children}
+              </a>
+            )
+          },
+        }}
+      >
+        {content}
+      </ReactMarkdown>
     </div>
   )
 }

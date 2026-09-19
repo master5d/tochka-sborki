@@ -9,6 +9,8 @@ describe("MarkdownPost", () => {
     expect(html).toContain("<h2>Заголовок</h2>");
     expect(html).toContain("<li>пункт один</li>");
     expect(html).toContain('href="https://example.com"');
+    expect(html).toContain('target="_blank"');
+    expect(html).toContain('rel="noopener noreferrer"');
     expect(html).toContain('lang="ru"');
   });
 
