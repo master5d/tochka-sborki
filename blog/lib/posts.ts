@@ -42,6 +42,17 @@ const EN_MONTHS = [
 
 export const posts: Post[] = [
   {
+    slug: 'komitet-dlya-odnoy-modeli-kak-solo-laboratoriya-za-odin-den-reshala-puskat-li-v',
+    title: 'Комитет для одной модели: как соло-лаборатория за один день решала, пускать ли в себя Jev',
+    description:
+      'Хроника одного дня: как любопытство к новой модели превратилось в процедуру, процедура — в замеры, а 28 кейсов и 7 кластеров дали ноль внедрений — и почему это результат.',
+    date: '2026-09-27',
+    author: 'Александр Мамаев',
+    readingTime: '~13 мин',
+    tags: ['AI', 'Jev', 'агенты', 'замеры', 'решения'],
+    related: ['odna-dver-v-mashinnyy-zal-kak-ya-perestal-razdavat-ai-klyuchi-kazhdomu-prilozhen'],
+  },
+  {
     slug: 'odna-dver-v-mashinnyy-zal-kak-ya-perestal-razdavat-ai-klyuchi-kazhdomu-prilozhen',
     title: 'Одна дверь в машинный зал: как я перестал раздавать AI-ключи каждому приложению',
     description:
