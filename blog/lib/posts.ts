@@ -20,6 +20,7 @@ export type Post = {
   kind?: 'note' | 'post'  // default 'post'; 'note' = atomic evergreen note (graph-only, excluded from index/RSS/manifest)
   ogImage?: string        // absolute URL; defaults to the post's own OG route
   en?: Localized          // present ⇒ translated; shown on EN surfaces
+  foundryPiece?: number   // Logos Foundry piece id (text canon); CI records the blog distribution by it
 }
 
 export const SITE = {
@@ -51,6 +52,7 @@ export const posts: Post[] = [
     readingTime: '~13 мин',
     tags: ['AI', 'Jev', 'агенты', 'замеры', 'решения'],
     related: ['odna-dver-v-mashinnyy-zal-kak-ya-perestal-razdavat-ai-klyuchi-kazhdomu-prilozhen'],
+    foundryPiece: 297,
   },
   {
     slug: 'odna-dver-v-mashinnyy-zal-kak-ya-perestal-razdavat-ai-klyuchi-kazhdomu-prilozhen',
@@ -62,6 +64,7 @@ export const posts: Post[] = [
     readingTime: '~2 мин',
     tags: ['AI', 'LiteLLM', 'gateway', 'observability', 'инфраструктура'],
     related: ['the-site-itself', 'desops-hub'],
+    foundryPiece: 296,
   },
   {
     slug: 'prologue',
