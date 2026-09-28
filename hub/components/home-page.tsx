@@ -357,6 +357,10 @@ export function HomePage({ locale }: Props) {
         letterSpacing: '0.05em',
       }}>
         © {new Date().getFullYear()} · mamaev.coach · {t.footerTagline}
+        {' · '}
+        <a href={locale === 'en' ? '/en/care/' : '/care/'} style={{ color: 'var(--text-secondary)' }}>
+          {locale === 'en' ? 'Care desk' : 'Служба заботы'}
+        </a>
       </footer>
     </main>
   )
