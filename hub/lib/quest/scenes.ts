@@ -100,6 +100,8 @@ export const ART_SIZES = {
   campWide: '(min-aspect-ratio: 3/2) 100vw, calc((100vh - 3.25rem) * 1.4906)',
   heroWide: '(min-aspect-ratio: 183/100) 100vw, calc((100vh - 3.25rem) * 1.83)',
   full: '100vw',
+  /** Outcome column: stacked edge to edge ≤ 720px, else half of a 56rem two-column grid. */
+  outcome: '(max-width: 720px) 100vw, (min-width: 60rem) 26.5rem, calc(50vw - 3.5rem)',
 } as const
 
 export const GUIDE_ASSETS = {
@@ -155,14 +157,16 @@ export function campWideLoop(state: SceneState): Art {
 }
 
 /**
- * L2: one tall illustration per road's outcome (640×960, NAUTILUS
+ * L2: one tall illustration per road's outcome (640×960 at @1x, NAUTILUS
  * `outcomes-v3/outcome-<fork>-<habit|detour>-<state>.webp`), keyed on the site
  * side by `Outcome.guide` (scroller/builder) — quest-assets.ps1 translates.
- * All twelve still wait for their 2K pair (awaiting-2k.json) and ship at 1K.
+ * 2K world (2026-09-30): a pair like every other still — @2x 1280×1920 is the
+ * v4-2k redraw (Gemini 3 Pro Image, shift 0 vs v3) downscaled to exactly twice
+ * the @1x frame; a path left on awaiting-2k.json ships its 1K file alone.
  */
 export const OUTCOME_ART_SIZE = { width: 640, height: 960 } as const
-export function outcomeArt(forkId: ForkId, guide: Guide, state: SceneState): string {
-  return `/quest/outcomes/${forkId}-${guide}-${state}.webp`
+export function outcomeArt(forkId: ForkId, guide: Guide, state: SceneState): Art {
+  return art(`/quest/outcomes/${forkId}-${guide}-${state}`, 'webp', OUTCOME_ART_SIZE.width, OUTCOME_ART_SIZE.height)
 }
 
 /**
