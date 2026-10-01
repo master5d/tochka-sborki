@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { Outcome, QuestContent } from '../../lib/quest/content'
 import type { PathMark } from '../../lib/quest/route'
-import { GUIDE_ASSETS, OUTCOME_ART_SIZE, outcomeArt, type ForkId } from '../../lib/quest/scenes'
+import { ART_SIZES, GUIDE_ASSETS, OUTCOME_ART_SIZE, outcomeArt, type ForkId } from '../../lib/quest/scenes'
 import { GuideChip } from './guide-chip'
 import { ThemedPicture } from './themed-picture'
 
@@ -65,6 +65,7 @@ export function OutcomeReveal({ forkId, title, outcomes, labels, chosen }: Props
                 night={outcomeArt(forkId, o.guide, 'night')}
                 width={OUTCOME_ART_SIZE.width}
                 height={OUTCOME_ART_SIZE.height}
+                sizes={ART_SIZES.outcome}
                 alt=""
               />
               <figcaption className="quest-card quest-outcome__card">

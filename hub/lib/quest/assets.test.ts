@@ -54,7 +54,8 @@ describe('quest assets (2K world)', () => {
   it('a frame that got its 2K pair no longer ships the old 1K file beside it', () => {
     for (const a of [...FLAT.flatMap((id) => [sceneAssets(id, 'day'), sceneAssets(id, 'night')]).flatMap((s) => [s.poster, s.loop]),
       campWide('day'), campWide('night'), campWideLoop('day'), campWideLoop('night'),
-      ...FORK_IDS.flatMap((f) => [detourScene(f, 'day'), detourScene(f, 'night')])]) {
+      ...FORK_IDS.flatMap((f) => [detourScene(f, 'day'), detourScene(f, 'night')]),
+      ...FORK_IDS.flatMap((f) => (['scroller', 'builder'] as const).flatMap((g) => [outcomeArt(f, g, 'day'), outcomeArt(f, g, 'night')]))]) {
       if (!a.x2) continue
       const legacy = a.x1.replace('@1x', '')
       expect(existsSync(join(PUBLIC, legacy)), `${legacy} should have been retired`).toBe(false)
@@ -75,19 +76,20 @@ describe('quest assets (2K world)', () => {
   it('Wave M retired the road strips: no roads/ folder ships', () => {
     expect(existsSync(join(PUBLIC, 'quest', 'roads'))).toBe(false)
   })
-  it('L2: six outcome illustrations (3 forks × 2 guides) in both states, each ≤ 250 KB', () => {
+  it('L2: six outcome illustrations (3 forks × 2 guides) in both states (@1x ≤ 250 KB, @2x ≤ 650 KB)', () => {
     for (const forkId of FORK_IDS) {
       for (const guide of ['scroller', 'builder'] as const) {
-        for (const state of ['day', 'night'] as const) {
-          expect(sizeOf(outcomeArt(forkId, guide, state)), `${forkId} ${guide} ${state}`).toBeLessThanOrEqual(250 * KB)
-        }
+        for (const state of ['day', 'night'] as const) checkArt(outcomeArt(forkId, guide, state), 250 * KB, 650 * KB, `${forkId} ${guide} ${state}`)
       }
     }
   })
   it('L3: three detour scenes for the curtain in both states (@1x ≤ 250 KB, @2x ≤ 650 KB)', () => {
     for (const forkId of FORK_IDS) for (const state of ['day', 'night'] as const) checkArt(detourScene(forkId, state), 250 * KB, 650 * KB, `${forkId} ${state}`)
   })
-  it('the quest folder stays under 40 MB on disk — what a READER downloads is measured per page load, not here', () => {
-    expect(dirSize(join(PUBLIC, 'quest'))).toBeLessThanOrEqual(40 * 1024 * KB)
+  // 40 MB was set on 2026-09-12 for a 2K world stopped at 22 frames; the complete world
+  // (2026-09-30: +16 stills as pairs, +2 loop pairs, 1K files retired) is 41.3 MB.
+  // A disk ceiling against runaway additions, not the reader's download (per page load).
+  it('the quest folder stays under 48 MB on disk — what a READER downloads is measured per page load, not here', () => {
+    expect(dirSize(join(PUBLIC, 'quest'))).toBeLessThanOrEqual(48 * 1024 * KB)
   })
 })

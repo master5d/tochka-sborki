@@ -26,12 +26,12 @@ describe('road scene pan stops (Wave M)', () => {
 
 describe('quest outcome art + detour scenes (L2/L3)', () => {
   it('outcome art is keyed by fork, guide and state (habit road = scroller, detour = builder)', () => {
-    expect(outcomeArt('boulder', 'scroller', 'day')).toBe('/quest/outcomes/boulder-scroller-day.webp')
-    expect(outcomeArt('gates', 'builder', 'night')).toBe('/quest/outcomes/gates-builder-night.webp')
+    expect(outcomeArt('boulder', 'scroller', 'day')).toEqual({ x1: '/quest/outcomes/boulder-scroller-day@1x.webp', x2: '/quest/outcomes/boulder-scroller-day@2x.webp', w1: 640, h1: 960 })
+    expect(outcomeArt('gates', 'builder', 'night')).toEqual({ x1: '/quest/outcomes/gates-builder-night@1x.webp', x2: '/quest/outcomes/gates-builder-night@2x.webp', w1: 640, h1: 960 })
   })
-  it('every fork has a detour scene in both states — a 2K pair, or the 1K file while it waits', () => {
+  it('every fork has a detour scene in both states as a 2K pair', () => {
     expect(detourScene('boulder', 'day')).toEqual({ x1: '/quest/detours/boulder-day@1x.webp', x2: '/quest/detours/boulder-day@2x.webp', w1: 848, h1: 1264 })
-    expect(detourScene('gates', 'night')).toEqual({ x1: '/quest/detours/gates-night.webp', w1: 848, h1: 1264 })
+    expect(detourScene('gates', 'night')).toEqual({ x1: '/quest/detours/gates-night@1x.webp', x2: '/quest/detours/gates-night@2x.webp', w1: 848, h1: 1264 })
     for (const f of FORK_IDS) for (const s of ['day', 'night'] as const) expect(detourScene(f, s).x1).toMatch(new RegExp(`^/quest/detours/${f}-${s}(@1x)?\\.webp$`))
   })
   it('outcome art is tall (2:3) and the detour scene shares the chapter scene frame', () => {
@@ -55,8 +55,9 @@ describe('quest scenes registry', () => {
     const day = sceneAssets('03-boulder', 'day')
     expect(day.poster).toEqual({ x1: '/quest/scenes/03-boulder-day@1x.webp', x2: '/quest/scenes/03-boulder-day@2x.webp', w1: 848, h1: 1264 })
     expect(day.loop).toEqual({ x1: '/quest/loops/03-boulder-day@1x.mp4', x2: '/quest/loops/03-boulder-day@2x.mp4', w1: 848, h1: 1264 })
-    const waiting = sceneAssets('04-temple', 'night')
-    expect(waiting.poster).toEqual({ x1: '/quest/scenes/04-temple-night.webp', w1: 848, h1: 1264 })
+    const night = sceneAssets('04-temple', 'night')
+    expect(night.poster).toEqual({ x1: '/quest/scenes/04-temple-night@1x.webp', x2: '/quest/scenes/04-temple-night@2x.webp', w1: 848, h1: 1264 })
+    expect(night.loop).toEqual({ x1: '/quest/loops/04-temple-night@1x.mp4', x2: '/quest/loops/04-temple-night@2x.mp4', w1: 848, h1: 1264 })
   })
   it('every sizes string names the drawn width in viewport units (the browser has no layout yet)', () => {
     for (const s of Object.values(ART_SIZES)) expect(s).toMatch(/vw|vh/)
