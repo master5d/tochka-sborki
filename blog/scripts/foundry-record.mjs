@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // blog/scripts/foundry-record.mjs — record new blog posts as distributions in Logos Foundry.
 // Run by CI (deploy-hub) after a successful deploy, for post routes ADDED by the push:
 //   node blog/scripts/foundry-record.mjs <slug>...        (env LOGOS_BASE, LOGOS_INGEST_TOKEN)
