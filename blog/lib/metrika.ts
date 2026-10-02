@@ -1,12 +1,12 @@
 // Яндекс Метрика блога (LF metrika-metrics.mjs читает visits/users по URL поста).
 // Dark-ship как analytics.ts: без NEXT_PUBLIC_YM_ID — no-op. Вебвизор выключен и в счётчике,
-// и здесь (запись сессий не нужна); defer:true — просмотры шлём сами на смену маршрута
-// (static export + client-навигация), иначе первый просмотр считался бы дважды.
+// и здесь (запись сессий не нужна). Первый просмотр шлёт сам tag.js при init (`defer:true` он
+// игнорировал — замер 2026-10-02: pv от init + pv от ручного hit = двойной счёт), поэтому
+// ручной hit — только на client-навигацию ПОСЛЕ первой страницы (см. AnalyticsProvider).
 
 export type MetrikaConfig = {
   id: number
   options: {
-    defer: true
     clickmap: boolean
     trackLinks: boolean
     accurateTrackBounce: boolean
@@ -19,7 +19,7 @@ export function buildMetrikaConfig(id: string | undefined): MetrikaConfig | null
   if (!id || !/^\d+$/.test(id.trim())) return null
   return {
     id: Number(id.trim()),
-    options: { defer: true, clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: false },
+    options: { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: false },
   }
 }
 
