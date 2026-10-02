@@ -43,6 +43,8 @@ jobs:
           # PUBLIC ingestion key (phc_…) — inlined into client JS by Next at build time.
           # Empty ⇒ posthog stays dark-ship (blog/lib/analytics.ts no-op). Set via repo variable.
           NEXT_PUBLIC_POSTHOG_KEY: ${{ vars.NEXT_PUBLIC_POSTHOG_KEY }}
+          # Yandex Metrika counter id (public). Empty ⇒ blog/lib/metrika.ts no-op. Repo variable.
+          NEXT_PUBLIC_YM_ID: ${{ vars.NEXT_PUBLIC_YM_ID }}
       - name: Install hub
         working-directory: hub
         run: npm ci
